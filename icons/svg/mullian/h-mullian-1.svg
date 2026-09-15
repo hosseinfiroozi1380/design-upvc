@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
+  <g>
+    <path d="M30,30H0V0h30V30z M1,29H29V1H1V29z" />
+    <path d="M26,25.9H3.5V3.7H26V25.9z M4.4,25h20.8V4.6H4.4V25z" />
+
+    <!-- مولین افقی 1 -->
+    <path d="M4.4,14.5H25.2V15.5H4.4z" />
+  </g>
+</svg>

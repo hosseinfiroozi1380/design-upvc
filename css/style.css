@@ -1,0 +1,2145 @@
+/* css/style.css */
+:root {
+  /* 1. پس‌زمینه کانواس */
+  --wd-canvas-bg: #eef0f3;
+  /* 2. پس‌زمینه منوهای راست و چپ */
+  --wd-menu-bg: #ffffff;
+  /* 3. پس‌زمینه دکمه‌ها */
+  --wd-button-bg: #3b82f6;
+  /* 4. هاور پس‌زمینه دکمه‌ها */
+  --wd-button-hover-bg: #2563eb;
+  /* 5. پررنگ متن‌ها و آیکون‌ها */
+  --wd-text-strong: #1f2937;
+  /* 6. کم‌رنگ متن‌ها و آیکون‌ها */
+  --wd-text-muted: #9ca3af;
+  /* 7. سایز فونت‌ها */
+  --wd-font-size: 13px;
+  /* 8. پس‌زمینه کم‌رنگ آبی */
+  --wd-soft-bg: #dbeafe;
+  /* 9. مرز پررنگ */
+  --wd-border-strong: #9ca3af;
+  /* 10. مرز کم‌رنگ */
+  --wd-border-soft: #e5e7eb;
+}
+
+/* canvas[resize] {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: #f9fbff;
+  background-image:
+    linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+    linear-gradient(rgba(59, 130, 246, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.045) 1px, transparent 1px);
+  background-size:
+    100px 100px,
+    100px 100px,
+    20px 20px,
+    20px 20px;
+  direction: ltr;
+} */
+
+canvas[resize] {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+
+  background-color: #f5f7fa;
+
+  background-image:
+    linear-gradient(rgba(71, 85, 105, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(71, 85, 105, 0.12) 1px, transparent 1px),
+    linear-gradient(rgba(71, 85, 105, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(71, 85, 105, 0.045) 1px, transparent 1px);
+
+  background-size:
+    100px 100px,
+    100px 100px,
+    20px 20px,
+    20px 20px;
+
+  direction: ltr;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+@font-face {
+  font-family: "IRANSansWeb";
+  src: url("../fonts/IRANSansWeb-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  font-family: "IRANSansWeb", Tahoma, Arial, sans-serif;
+  background: var(--wd-soft-bg);
+  color: var(--wd-text-strong);
+  overflow: hidden;
+}
+
+button,
+input {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.wd-app-shell {
+  width: 100%;
+  height: 100vh;
+  /* display: grid;
+  grid-template-columns:
+    300px minmax(0, 1fr) 320px; */
+  direction: ltr;
+}
+
+.wd-panel-right {
+  direction: rtl;
+  width: 300px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background: #ffffff;
+  border-left: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.wd-right-brand {
+  padding: 10px 16px;
+  border-bottom: 1px solid #e5e7eb;
+  flex-shrink: 0;
+}
+
+.wd-right-brand-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.wd-right-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--wd-button-bg);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 23px;
+}
+
+.wd-right-site-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.wd-right-site-info-addedit {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.wd-selection-close {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wd-right-site-title {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.wd-right-site-subtitle {
+  font-size: 11px;
+  color: var(--wd-text-strong);
+}
+
+.wd-right-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px;
+}
+
+.wd-right-scroll-none {
+  flex: 1;
+  /* overflow-y: auto; */
+  padding: 14px;
+}
+
+.wd-right-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.wd-right-scroll::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 10px;
+}
+
+/* =========================================================
+    SECTION
+========================================================= */
+.wd-section-block {
+  margin-bottom: 16px;
+}
+
+.wd-section-heading {
+  margin-bottom: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #6b7280;
+}
+
+.wd-main-tools-box {
+  width: 100%;
+  /* padding: 6px; */
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  /* background: var(--wd-soft-bg); */
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+}
+
+.wd-main-tool {
+  flex: 1;
+  min-width: 0;
+  height: 38px;
+  border: 0;
+  border-left: 1px solid #d1d5db;
+  border-radius: 0;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 8px;
+  color: #374151;
+  font-size: 12px;
+  text-align: center;
+  cursor: pointer;
+}
+
+/* آخرین دکمه خط نداشته باشد */
+.wd-main-tool:last-child {
+  border-left: 0;
+}
+
+.wd-main-tool i {
+  font-size: 17px;
+}
+
+.wd-main-tool.is-selected {
+  background: #111827;
+  color: #ffffff;
+  border-radius: 7px;
+}
+
+.wd-main-tool:hover {
+  background: var(--wd-button-hover-bg);
+  color: var(--wd-menu-bg);
+}
+
+/* گوشه هاور دکمه اول */
+.wd-main-tool:first-child:hover {
+  border-radius: 0 9px 9px 0;
+}
+
+/* گوشه هاور دکمه آخر */
+.wd-main-tool:last-child:hover {
+  border-radius: 9px 0 0 9px;
+}
+
+/* =========================================================
+   VIEW / HISTORY TOOLS
+========================================================= */
+.wd-view-tool {
+  flex: 1;
+  min-width: 0;
+  height: 38px;
+  border: 0;
+  border-left: 1px solid #d1d5db;
+  border-radius: 0;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  color: #374151;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.wd-view-tool:hover {
+  background: var(--wd-button-hover-bg);
+  color: var(--wd-menu-bg);
+}
+
+/* گوشه هاور دکمه اول */
+.wd-view-tool:first-child:hover {
+  border-radius: 0 9px 9px 0;
+}
+
+/* گوشه هاور دکمه آخر */
+.wd-view-tool:last-child:hover {
+  border-radius: 9px 0 0 9px;
+}
+
+.wd-view-tools-box {
+  width: 100%;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+}
+
+/* آخرین دکمه خط نداشته باشد */
+.wd-view-tool:last-child {
+  border-left: 0;
+}
+
+.wd-view-tool i {
+  font-size: 17px;
+}
+
+.wd-view-tool:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.wd-view-tool:disabled:hover {
+  background: transparent;
+}
+
+/* =========================================================
+    NEW UNIT
+========================================================= */
+.wd-create-unit-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.wd-create-unit-main {
+  flex: 1;
+  height: 42px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--wd-button-bg);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.wd-create-unit-main:hover {
+  background: var(--wd-button-hover-bg);
+  color: #ffffff;
+}
+
+.wd-create-unit-options {
+  width: 42px;
+  height: 42px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+/* =========================================================
+   ITEMS LIST
+========================================================= */
+.wd-items-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.wd-item-card {
+  width: 100%;
+  min-height: 58px;
+  padding: 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 9px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wd-item-card.is-active {
+  background: var(--wd-soft-bg);
+}
+
+.wd-item-symbol {
+  width: 50px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 7px;
+  /* background: #f3f4f6; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+}
+
+.wd-item-details {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.wd-item-title {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.wd-item-size {
+  font-size: 10px;
+  color: var(--wd-text-strong);
+}
+
+.wd-item-select {
+  flex-shrink: 0;
+}
+
+.wd-item-select input {
+  width: 15px;
+  height: 15px;
+  margin: 0;
+  accent-color: var(--wd-button-bg);
+  cursor: pointer;
+}
+
+.wd-item-brand {
+  flex-shrink: 0;
+  padding: 4px 7px;
+  border-radius: 5px;
+  background: var(--wd-button-bg);
+  color: #ffffff;
+  font-size: 9px;
+  font-weight: 700;
+}
+
+.wd-item-delete {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #ef4444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.wd-item-delete {
+  margin-right: auto;
+}
+
+.wd-item-delete i {
+  font-size: 16px;
+}
+
+.wd-item-delete:hover {
+  background: #fee2e2;
+}
+
+/* =========================================================
+    PROFILE SELECT
+========================================================= */
+.wd-profile-switch {
+  width: 100%;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid #e5e7eb;
+  border-radius: 9px;
+  overflow: hidden;
+  display: flex;
+}
+
+.wd-profile-option {
+  flex: 1;
+  width: 50%;
+  height: 40px;
+  border: 0;
+  background: #ffffff;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.wd-profile-option:first-child {
+  border-left: 1px solid #e5e7eb;
+}
+
+.wd-profile-option.is-active {
+  background: var(--wd-button-bg);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* =========================================================
+    FORM
+========================================================= */
+.wd-form-line {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.wd-form-label {
+  width: 65px;
+  flex-shrink: 0;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.wd-form-input {
+  flex: 1;
+  height: 40px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  outline: none;
+  padding: 0 10px;
+  background: #ffffff;
+  font-size: 12px;
+}
+
+.wd-form-input:focus {
+  border-color: var(--wd-text-strong);
+}
+
+/* =========================================================
+   SELECT BOX
+========================================================= */
+.wd-select-box {
+  flex: 1;
+  height: 40px;
+  border: 1px solid #dbe2ea;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #374151;
+  padding: 0 12px;
+  font-family: "IRANSansWeb", Tahoma, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  outline: none;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: left 10px center;
+  /* padding-left: 42px; */
+}
+
+.wd-select-box:hover {
+  border-color: #93c5fd;
+}
+
+.wd-select-box:focus {
+  border-color: var(--wd-button-bg);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.12);
+}
+
+/* =========================================================
+   COUNTER
+========================================================= */
+.wd-counter-control {
+  flex: 1;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  overflow: hidden;
+}
+
+/* =========================================================
+   BUTTON
+========================================================= */
+.wd-counter-button {
+  width: 42px;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: #fff;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* خط کنار + */
+.wd-counter-button:first-child {
+  border-left: 1px solid #e5e7eb;
+}
+
+/* خط کنار − */
+.wd-counter-button:last-child {
+  border-right: 1px solid #e5e7eb;
+}
+
+/* هاور */
+.wd-counter-button:hover {
+  background: #f8fafc;
+  color: #2563eb;
+}
+
+#fullShapeView {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center center;
+}
+
+/* =========================================================
+   NUMBER INPUT
+========================================================= */
+.wd-counter-number {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: #fff;
+  color: #111827;
+  text-align: center;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  -moz-appearance: textfield;
+}
+
+/* حذف فلش input number */
+.wd-counter-number::-webkit-outer-spin-button,
+.wd-counter-number::-webkit-inner-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+}
+
+/* فوکوس */
+.wd-counter-number:focus {
+  outline: none;
+}
+
+/* ========================================================= LARGE IMAGE / PREVIEW ========================================================= */
+.wd-preview-large {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wd-preview-large img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ========================================================= DIMENSION INPUTS ========================================================= */
+.wd-preview-large .positionMarker {
+  position: absolute;
+  z-index: 2;
+  width: 70px;
+  height: 28px;
+  padding: 2px 5px;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  background: #ffffff;
+  color: #374151;
+  font-size: 11px;
+  text-align: center;
+  outline: none;
+}
+
+.wd-preview-large .positionMarker:focus {
+  border-color: #2563eb;
+}
+
+/* ========================================================= CORNER DIMENSION INPUTS ========================================================= */
+.wd-preview-large #a,
+.wd-preview-large #b,
+.wd-preview-large #c,
+.wd-preview-large #d {
+  position: absolute;
+  width: 50px;
+  height: 26px;
+  padding: 2px 5px;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  background: #ffffff;
+  color: #374151;
+  font-size: 11px;
+  text-align: center;
+  outline: none;
+}
+
+/* مخفی بودن پیش‌فرض */
+.wd-preview-large #a,
+.wd-preview-large #b,
+.wd-preview-large #c,
+.wd-preview-large #d {
+  display: none;
+}
+
+/* وقتی JS نمایششان می‌دهد */
+.wd-preview-large #a:not([style*="display: none"]),
+.wd-preview-large #b:not([style*="display: none"]),
+.wd-preview-large #c:not([style*="display: none"]),
+.wd-preview-large #d:not([style*="display: none"]) {
+  display: block;
+}
+
+/* =========================================================
+   SMALL IMAGES / SHAPE SELECTOR
+========================================================= */
+.wd-preview-strip {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 5px;
+  margin-top: 20px;
+  direction: rtl;
+  margin-bottom: 15px;
+}
+
+.wd-preview-strip::-webkit-scrollbar {
+  height: 5px;
+}
+
+.wd-preview-strip::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 10px;
+}
+
+/* ========================================================= SHAPE ITEMS ========================================================= */
+.wd-preview-strip .form-imagecheck {
+  flex: 0 0 68px;
+  height: 55px;
+  cursor: pointer;
+}
+
+.wd-preview-strip .form-imagecheck-input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.wd-preview-strip .form-imagecheck-figure {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.wd-preview-strip .form-imagecheck-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ========================================================= SELECTED SHAPE ========================================================= */
+.wd-preview-strip .form-imagecheck-input:checked+.form-imagecheck-figure {
+  border-color: #2563eb;
+}
+
+/* ========================================================= FORM LINES ========================================================= */
+.wd-form-line {
+  width: 100%;
+}
+
+/* ========================================================= RIGHT ACTIONS ========================================================= */
+.wd-right-form-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.wd-right-confirm,
+.wd-right-cancel {
+  height: 42px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ========================================================= CONFIRM ========================================================= */
+.wd-right-confirm {
+  border: 0;
+  background: var(--wd-button-bg);
+  color: #ffffff;
+}
+
+.wd-right-confirm:hover {
+  background: var(--wd-button-hover-bg);
+  color: #ffffff;
+}
+
+/* ========================================================= CANCEL ========================================================= */
+.wd-right-cancel {
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  color: #374151;
+}
+
+.wd-right-cancel:hover {
+  background: #f9fafb;
+}
+
+/* =========================================================
+   DIMENSION INPUT POSITION
+========================================================= */
+/* عرض — روی مرز چپ تصویر، وسط ارتفاع */
+.wd-preview-large #itemWidth {
+  top: 60%;
+  left: -42px;
+  transform: translate(-50%, -50%);
+  rotate: 90deg;
+}
+
+.wd-preview-large #itemHeight {
+  top: auto;
+  left: 50%;
+  bottom: 5px;
+  transform: translate(-50%, 50%);
+  rotate: 0deg;
+}
+
+/* =========================================================
+    CANVAS
+========================================================= */
+.wd-canvas-zone {
+  direction: ltr;
+  width: 100%;
+  height: 100vh;
+  grid-column: 2;
+  position: relative;
+  background: var(--wd-canvas-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+  overflow: hidden;
+}
+
+.wd-canvas-frame {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#wd-design-board {
+  /* display: block;
+  max-width: 100%;
+  max-height: 100%;
+  background: #ffffff;
+  border: 1px solid #d1d5db;
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.08); */
+}
+
+.wd-canvas-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  color: var(--wd-text-strong);
+  font-size: 13px;
+}
+
+/* =========================================================
+    LEFT SIDEBAR
+========================================================= */
+.wd-panel-left {
+  direction: rtl;
+  width: 300px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+/* =========================================================
+    USER HEADER
+========================================================= */
+.wd-user-header {
+  padding: 10px 16px;
+  border-bottom: 1px solid #e5e7eb;
+  flex-shrink: 0;
+}
+
+.wd-user-header-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wd-user-avatar {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--wd-button-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+  color: var(--wd-menu-bg);
+}
+
+.wd-user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.wd-user-name {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.wd-user-role {
+  font-size: 10px;
+  color: var(--wd-text-strong);
+}
+
+/* =========================================================
+    LEFT CONTENT
+========================================================= */
+.wd-left-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px;
+}
+
+.wd-left-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.wd-left-scroll::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 10px;
+}
+
+/* =========================================================
+    LEFT FORM
+ ========================================================= */
+.wd-left-field {
+  margin-bottom: 12px;
+}
+
+.wd-left-field-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* دکمه نام یونیت */
+.wd-left-label {
+  width: auto;
+  flex-shrink: 0;
+}
+
+.wd-left-label button {
+  height: 40px;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 12px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.wd-left-label button:hover {
+  background: #1d4ed8;
+  color: #ffffff;
+}
+
+/* ورودی نام یونیت */
+.wd-input-box {
+  flex: 1;
+  min-width: 0;
+  height: 40px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 10px 10px;
+  outline: none;
+  font-size: 12px;
+  color: #1f2937;
+  background: #ffffff;
+}
+
+.wd-input-box:focus {
+  border-color: #2563eb;
+}
+
+/* =========================================================
+    LEFT COUNTER
+========================================================= */
+.wd-left-counter {
+  flex: 1;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.wd-left-counter-button {
+  width: 38px;
+  height: 100%;
+  border: 0;
+  border-left: 1px solid #e5e7eb;
+  background: var(--wd-menu-bg);
+  font-size: 17px;
+}
+
+.wd-left-counter-button:last-child {
+  border-left: 0;
+  border-right: 1px solid #e5e7eb;
+}
+
+.wd-left-counter-value {
+  flex: 1;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* =========================================================
+    LEFT ACTIONS
+========================================================= */
+.wd-left-tools-box {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+  background: var(--wd-soft-bg);
+}
+
+.wd-left-tool {
+  height: 48px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font-size: 12px;
+}
+
+.wd-left-tool i {
+  font-size: 18px;
+}
+
+.wd-left-tool:hover {
+  border-color: var(--wd-text-strong);
+}
+
+/* =========================================================
+    TOOL GRID
+========================================================= */
+.wd-components-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.wd-components-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.wd-component-button {
+  /* min-height: 90px; */
+  border: 1px solid #e5e7eb;
+  border-radius: 9px;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* gap: 8px; */
+  padding: 8px;
+}
+
+.wd-component-button:hover {
+  background: var(--wd-button-bg);
+  color: var(--wd-menu-bg);
+}
+
+.wd-component-button:hover .wd-component-icon {
+  filter: brightness(0) invert(1);
+}
+
+.wd-component-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  opacity: 1;
+  filter: none;
+}
+
+.wd-component-name {
+  font-size: 11px;
+}
+
+/* =========================================================
+   SELECT COMPONENT
+========================================================= */
+.wd-component-selection {
+  margin-top: 16px;
+}
+
+/* =========================================================
+   MESSAGE + CLOSE
+========================================================= */
+.wd-selection-message-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.wd-selection-message {
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.wd-selection-close {
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 6px;
+  background: #ef4444;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.wd-selection-close:hover {
+  background: #dc2626;
+}
+
+.wd-selection-close i {
+  font-size: 16px;
+}
+
+/* =========================================================
+   SELECTION HEADER
+========================================================= */
+.wd-selection-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.wd-selection-title {
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.wd-selection-line {
+  flex: 1;
+  height: 1px;
+  background: var(--wd-border-soft);
+}
+
+/* =========================================================
+   ITEMS GRID
+========================================================= */
+.wd-profile-items-grid {
+  margin-bottom: 16px;
+}
+
+/* =========================================================
+    PROFILE ITEMS
+========================================================= */
+.wd-profile-items-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7px;
+}
+
+.wd-profile-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #ffffff;
+  overflow: hidden;
+  padding: 5px;
+  text-align: center;
+}
+
+.wd-profile-item:hover {
+  border-radius: 8px;
+  color: var(--wd-menu-bg);
+  background: var(--wd-button-bg);
+}
+
+.wd-profile-item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.wd-profile-item-name {
+  display: block;
+  font-size: 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* =========================================================
+   MOBILE CATEGORY MENU
+========================================================= */
+.wd-mobile-category-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px;
+  margin-bottom: 6px;
+  overflow-x: auto;
+  direction: rtl;
+  background: var(--wd-menu-bg);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  scrollbar-width: none;
+  pointer-events: auto;
+}
+
+.wd-mobile-category-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.wd-mobile-category-bar button {
+  flex: 0 0 auto;
+  height: 36px;
+  padding: 0 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: #4b5563;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.wd-mobile-category-bar button img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.wd-mobile-category-bar button img {
+  filter: brightness(0) saturate(100%) invert(31%) sepia(9%) saturate(1042%) hue-rotate(176deg) brightness(91%) contrast(88%);
+}
+
+.wd-mobile-category-bar button:hover img,
+.wd-mobile-category-bar button.active img {
+  filter: brightness(0) invert(1);
+}
+
+.wd-mobile-category-bar button:hover {
+  background: var(--wd-button-hover-bg);
+  color: var(--wd-menu-bg);
+}
+
+.wd-mobile-category-bar button:hover img {
+  filter: brightness(0) invert(1);
+}
+
+.wd-mobile-category-bar button.active {
+  background: var(--wd-button-bg);
+  color: var(--wd-menu-bg);
+  border-color: var(--wd-button-bg);
+}
+
+.wd-mobile-category-bar button.active img {
+  filter: brightness(0) invert(1);
+}
+
+/* =========================================================
+ MOBILE SUBMENU
+========================================================= */
+.wd-mobile-submenu-bar {
+  display: none;
+  width: 100%;
+  padding: 6px;
+  margin-bottom: 8px;
+  box-sizing: border-box;
+  background: var(--wd-menu-bg);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  /* مهم */
+  pointer-events: auto;
+}
+
+.wd-mobile-submenu-bar.show {
+  display: block;
+}
+
+.wd-mobile-submenu-items {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  direction: rtl;
+  scrollbar-width: none;
+}
+
+.wd-mobile-submenu-items::-webkit-scrollbar {
+  display: none;
+}
+
+.wd-mobile-submenu-items.active {
+  display: flex;
+}
+
+.wd-mobile-submenu-item {
+  flex: 0 0 auto;
+  min-width: 75px;
+  height: 38px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #f8fafc;
+  color: #374151;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.wd-mobile-submenu-item:hover {
+  background: var(--wd-button-hover-bg);
+  color: var(--wd-menu-bg);
+}
+
+.wd-mobile-submenu-item i {
+  font-size: 16px;
+}
+
+.wd-mobile-submenu-item img {
+  filter: brightness(0) saturate(100%) invert(24%) sepia(10%) saturate(1050%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
+
+.wd-mobile-submenu-item:hover img {
+  filter: brightness(0) invert(1);
+}
+
+/* =========================================================
+    MOBILE MENU BUTTONS
+========================================================= */
+.wd-mobile-menu-bar {
+  display: none;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  z-index: 900;
+  pointer-events: none;
+}
+
+.wd-mobile-menu-bar-inner {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  direction: rtl;
+  pointer-events: none;
+}
+
+.wd-mobile-menu-button {
+  width: 20%;
+  height: 44px;
+  border: 1px solid var(--wd-button-bg);
+  border-radius: 9px;
+  background: var(--wd-button-bg);
+  color: var(--wd-menu-bg);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 13px;
+  pointer-events: auto;
+}
+
+.wd-mobile-menu-button:hover {
+  background: var(--wd-button-hover-bg);
+  color: var(--wd-menu-bg);
+  border-radius: 9px;
+}
+
+.wd-panel-right,
+.wd-panel-left {
+  background: var(--wd-menu-bg);
+  z-index: 2000;
+}
+
+/* Overlay کاملاً غیرفعال */
+.wd-mobile-overlay {
+  display: none !important;
+}
+
+/* =========================================================
+   UNIT DETAILS
+========================================================= */
+.wd-unit-details {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.wd-unit-detail-row {
+  display: flex;
+  margin-bottom: 9px;
+  font-size: 11px;
+  align-items: center;
+  gap: 8px;
+}
+
+.wd-unit-detail-value {
+  flex-shrink: 0;
+}
+
+.wd-unit-detail-label {
+  flex-shrink: 0;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.wd-unit-detail-value {
+  color: #374151;
+  font-weight: 500;
+}
+
+.wd-unit-detail-note {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #f1f5f9;
+  color: #6b7280;
+  font-size: 10px;
+  line-height: 1.8;
+}
+
+/* =========================================================
+   LEFT BOTTOM ACTIONS
+========================================================= */
+.wd-left-bottom-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.wd-left-bottom-button {
+  flex: 1;
+  height: 38px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.wd-left-bottom-button i {
+  font-size: 17px;
+}
+
+.wd-left-bottom-button:hover {
+  background: var(--wd-button-hover-bg);
+  color: #ffffff;
+}
+
+.wd-left-delete-all {
+  color: #ef4444;
+}
+
+.wd-left-delete-all:hover {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+/* فقط Offcanvas افزودن/ویرایش یونیت */
+#ofcAddNew.offcanvas {
+  display: flex;
+}
+
+#ofcAddNew.offcanvas:not(.show) {
+  visibility: hidden !important;
+  transform: translateX(100%) !important;
+}
+
+#ofcAddNew.offcanvas.show {
+  visibility: visible !important;
+  transform: translateX(0) !important;
+}
+
+/* =========================================================
+   ADD / EDIT UNIT PANEL
+   همیشه حرکتی - دسکتاپ و موبایل
+========================================================= */
+#ofcAddNew {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: auto;
+  width: 300px;
+  height: 100vh;
+  transform: translateX(100%);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    transform 0.3s ease,
+    visibility 0s linear 0.3s;
+}
+
+/* هنگام باز بودن */
+#ofcAddNew.show {
+  transform: translateX(0);
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    transform 0.3s ease,
+    visibility 0s linear 0s;
+}
+
+/* موبایل */
+@media (max-width: 430px) {
+  #ofcAddNew {
+    width: 75vw;
+  }
+}
+
+/* =========================================================
+   MULLION PANEL
+   همیشه حرکتی - دسکتاپ و موبایل
+========================================================= */
+#ofcMullian {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: auto;
+  width: 300px;
+  height: 100vh;
+  transform: translateX(-100%);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    transform 0.3s ease,
+    visibility 0s linear 0.3s;
+}
+
+/* هنگام باز بودن */
+#ofcMullian.show {
+  transform: translateX(0);
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    transform 0.3s ease,
+    visibility 0s linear 0s;
+}
+
+/* موبایل */
+@media (max-width: 430px) {
+  #ofcMullian {
+    width: 75vw;
+  }
+}
+
+#ofcWindow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: auto;
+  width: 300px;
+  height: 100vh;
+  transform: translateX(-100%);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    transform 0.3s ease,
+    visibility 0s linear 0.3s;
+}
+
+/* هنگام باز بودن */
+#ofcWindow.show {
+  transform: translateX(0);
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    transform 0.3s ease,
+    visibility 0s linear 0s;
+}
+
+/* موبایل */
+@media (max-width: 430px) {
+  #ofcWindow {
+    width: 75vw;
+  }
+}
+
+#ofcDoor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: auto;
+  width: 300px;
+  height: 100vh;
+  transform: translateX(-100%);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    transform 0.3s ease,
+    visibility 0s linear 0.3s;
+}
+
+/* هنگام باز بودن */
+#ofcDoor.show {
+  transform: translateX(0);
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    transform 0.3s ease,
+    visibility 0s linear 0s;
+}
+
+/* موبایل */
+@media (max-width: 430px) {
+  #ofcDoor {
+    width: 75vw;
+  }
+}
+
+#ofcPanel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: auto;
+  width: 300px;
+  height: 100vh;
+  transform: translateX(-100%);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    transform 0.3s ease,
+    visibility 0s linear 0.3s;
+}
+
+/* هنگام باز بودن */
+#ofcPanel.show {
+  transform: translateX(0);
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    transform 0.3s ease,
+    visibility 0s linear 0s;
+}
+
+/* موبایل */
+@media (max-width: 430px) {
+  #ofcPanel {
+    width: 75vw;
+  }
+}
+
+#ofcCoupling {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: auto;
+  width: 300px;
+  height: 100vh;
+  transform: translateX(-100%);
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    transform 0.3s ease,
+    visibility 0s linear 0.3s;
+}
+
+/* هنگام باز بودن */
+#ofcCoupling.show {
+  transform: translateX(0);
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    transform 0.3s ease,
+    visibility 0s linear 0s;
+}
+
+/* موبایل */
+@media (max-width: 430px) {
+  #ofcCoupling {
+    width: 75vw;
+  }
+}
+
+.wd-mobile-view-tools {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 9px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  pointer-events: auto;
+  overflow: hidden;
+}
+
+.wd-mobile-view-tool {
+  width: 36px;
+  height: 43px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+  color: #374151;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* خط جداکننده بین دکمه‌ها */
+.wd-mobile-view-tool+.wd-mobile-view-tool {
+  border-right: 1px solid #e5e7eb;
+}
+
+/* هاور */
+.wd-mobile-view-tool:hover {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+/* دکمه اول = سمت راست */
+.wd-mobile-view-tool:first-child {
+  border-radius: 0 8px 8px 0;
+}
+
+/* دکمه آخر = سمت چپ */
+.wd-mobile-view-tool:last-child {
+  border-radius: 8px 0 0 8px;
+}
+
+/* هاور */
+.wd-mobile-view-tool:hover {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+/* هاور دکمه سمت راست */
+.wd-mobile-view-tool:first-child:hover {
+  border-radius: 0 8px 8px 0;
+}
+
+/* هاور دکمه سمت چپ */
+.wd-mobile-view-tool:last-child:hover {
+  border-radius: 8px 0 0 8px;
+}
+
+/* =========================================================
+    MOBILE
+========================================================= */
+@media (max-width: 768px) {
+  body {
+    overflow: hidden;
+  }
+
+  .wd-app-shell {
+    display: block;
+  }
+
+  .wd-mobile-menu-bar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    direction: rtl;
+  }
+
+  .wd-mobile-menu-button {
+    width: 20%;
+    flex-shrink: 0;
+  }
+
+  .wd-mobile-view-tools {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .wd-mobile-menu-bar {
+    display: block;
+    z-index: 900;
+  }
+
+  .wd-canvas-zone {
+    width: 100%;
+    height: 100vh;
+    padding: 65px 10px 10px;
+  }
+
+  .wd-mobile-overlay {
+    display: none !important;
+  }
+
+  #wd-design-board {
+    width: 100%;
+    height: auto;
+  }
+
+  .wd-canvas-message {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .wd-panel-right,
+  .wd-panel-left {
+    display: flex !important;
+    width: min(88vw, 320px);
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    z-index: 2000;
+    transition:
+      transform 0.3s ease,
+      visibility 0s linear 0.3s;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .wd-panel-right {
+    right: 0;
+    left: auto;
+    transform: translateX(100%);
+  }
+
+  .wd-panel-left {
+    left: 0;
+    right: auto;
+    transform: translateX(-100%);
+  }
+
+  .wd-panel-right.wd-mobile-open,
+  .wd-panel-left.wd-mobile-open {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+    transition:
+      transform 0.3s ease,
+      visibility 0s linear 0s;
+  }
+
+  .wd-components-grid {
+    display: none;
+  }
+
+  .wd-view-tools-box {
+    display: none;
+  }
+}
+
+/* SMALL MOBILE */
+@media (max-width: 430px) {
+
+  .wd-panel-right,
+  .wd-panel-left {
+    width: 75vw;
+  }
+
+  .wd-right-scroll,
+  .wd-left-scroll {
+    padding: 12px;
+  }
+
+  .wd-preview-large {
+    height: 170px;
+  }
+}
+
+.wd-mullian-icon {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.wd-window-icon {
+  width: 32px;
+  height: 32px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.icon-3d {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* آیکون مولین عمودی 3 */
+.icon-mullian-v3 {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 3000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+/* پنجره سفید اصلی */
+.wd-3d-modal-content {
+  position: relative;
+  width: min(1100px, calc(100% - 40px));
+  height: min(800px, calc(100vh - 40px));
+  margin: 20px auto;
+  background: #ffffff;
+  border: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+/* دکمه‌های بالا سمت راست */
+.wd-3d-modal-actions {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  direction: rtl;
+}
+/* دکمه پیش نمایش */
+.wd-3d-preview-btn {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 7px;
+  background: #3b82f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.wd-3d-preview-btn:hover {
+  background: #2563eb;
+}
+
+.wd-3d-preview-btn i {
+  font-size: 21px;
+  color: #ffffff;
+  line-height: 1;
+}
+
+/* دکمه بستن */
+.wd-3d-close-btn {
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 7px;
+  background: #dc2626;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  float: none;
+  transition: background-color 0.15s ease;
+}
+
+.wd-3d-close-btn:hover {
+  background: #b91c1c;
+}
+
+.wd-3d-close-btn i {
+  font-size: 21px;
+  color: #ffffff;
+  line-height: 1;
+}
+
+/* فضای سه بعدی */
+.wd-3d-modal-body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  background: #ffffff;
+}
+
+/* کانتینر Three.js */
+.wd-3d-view {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+/* خود canvas سه بعدی */
+.wd-3d-view canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+/* موبایل */
+@media (max-width: 768px) {
+
+  .wd-3d-modal-body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .wd-3d-view {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .wd-3d-view canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+}

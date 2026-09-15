@@ -1,0 +1,1861 @@
+<!doctype html>
+<html lang="fa-IR" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>عایق فیروز | طراحی درب و پنجره</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.44.0/tabler-icons.min.css" />
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/sweetalert2.css" />
+  <script src="./js/script.js" defer></script>
+  <!-- Libraries -->
+  <script src="./js/lib/jquery.min.js"></script>
+  <script src="./js/lib/jquery-ui.js"></script>
+  <script src="./js/lib/jquery-migrate.min.js"></script>
+  <script src="./js/lib/demo-theme.min.js"></script>
+  <script src="./js/lib/jquery.ui.touch-punch.min.js"></script>
+  <script src="./js/lib/jquery.mousewheel.min.js"></script>
+  <!-- Paper -->
+  <script src="./js/lib/paper-full.min.js"></script>
+  <script src="./js/lib/paperjs-offset.min.js"></script>
+  <script src="./js/lib/hammer.min.js"></script>
+  <!-- UI Libraries -->
+  <script src="./js/lib/sweetalert2.all.min.js"></script>
+  <script src="./js/lib/select_all.js"></script>
+  <script src="./js/lib/tabler.min.js"></script>
+  <!-- Application -->
+  <script type="module" src="./js/lib/3d.js"></script>
+  <script type="module" src="./js/app/start.js"></script>
+</head>
+<body>
+  <!-- موبایل -->
+  <div class="wd-mobile-menu-bar">
+    <!-- دسته‌بندی بالا -->
+    <div class="wd-mobile-category-bar">
+      <button type="button" data-category="mullian">
+        <img src="./icons/mullion.svg" alt="" class="" />
+        <span>مولین</span>
+      </button>
+      <button type="button" data-category="window">
+        <img src="./icons/window.svg" alt="" class="" />
+        <span>پنجره</span>
+      </button>
+      <button type="button" data-category="door">
+        <img src="./icons/door.svg" alt="" class="" />
+        <span>در</span>
+      </button>
+      <button type="button" data-category="panel">
+        <img src="./icons/panel.svg" alt="" class="" />
+        <span>پنل</span>
+      </button>
+      <button type="button" data-category="other">
+        <img src="./icons/other.svg" alt="" class="" />
+        <span>سایر</span>
+      </button>
+    </div>
+    <!-- منوی دوم -->
+    <div class="wd-mobile-submenu-bar">
+      <!-- مولین -->
+      <div class="wd-mobile-submenu-items" data-submenu="mullian">
+        <!-- مولین عمودی 1 -->
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-type="vMullian"
+          data-bs-dismiss="offcanvas">
+          <img src="icons/svg/mullian/v-mullian-1.svg" class="icon-3d" alt="">
+          <span>مولین عمودی 1</span>
+        </button>
+        <!-- مولین عمودی 2 -->
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-type="2vMullian"
+          data-bs-dismiss="offcanvas">
+          <img src="icons/svg/mullian/v-mullian-2.svg" class="icon-3d" alt="">
+          <span>مولین عمودی 2</span>
+        </button>
+        <!-- مولین عمودی 3 -->
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-type="3vMullian"
+          data-bs-dismiss="offcanvas">
+          <img src="icons/svg/mullian/v-mullian-3.svg" class="icon-3d" alt="">
+          <span>مولین عمودی 3</span>
+        </button>
+        <!-- مولین افقی 1 -->
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-type="hMullian"
+          data-bs-dismiss="offcanvas">
+          <img src="icons/svg/mullian/h-mullian-1.svg" class="icon-3d" alt="">
+          <span>مولین افقی 1</span>
+        </button>
+        <!-- مولین افقی 2 -->
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-type="2hMullian"
+          data-bs-dismiss="offcanvas">
+          <img src="icons/svg/mullian/h-mullian-2.svg" class="icon-3d" alt="">
+          <span>مولین افقی 2</span>
+        </button>
+        <!-- مولین افقی 3 -->
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-type="3hMullian"
+          data-bs-dismiss="offcanvas">
+          <img src="icons/svg/mullian/h-mullian-3.svg" class="icon-3d" alt="">
+          <span>مولین افقی 3</span>
+        </button>
+        <!-- مولین سراسری عمودی -->
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-type="fullvMullian"
+          data-bs-dismiss="offcanvas">
+          <img src="icons/svg/mullian/v-mullian-1.svg" class="icon-3d" alt="">
+          <span>مولین سراسری عمودی</span>
+        </button>
+        <!-- مولین سراسری افقی -->
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-type="fullhMullian"
+          data-bs-dismiss="offcanvas">
+          <img src="icons/svg/mullian/h-mullian-1.svg" class="icon-3d" alt="">
+          <span>مولین سراسری افقی</span>
+        </button>
+      </div>
+      <!-- پنجره -->
+      <div class="wd-mobile-submenu-items" data-submenu="window">
+        <!-- پنجره تک حالته -->
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-type="window_simple_right"
+          data-bs-dismiss="offcanvas">
+          <img src="icons/svg/window/window-simple-right.svg" class="icon-3d" alt="">
+          <span>چپ بازشو</span>
+        </button>
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-bs-dismiss="offcanvas"
+          data-type="window_simple_left">
+          <img src="icons/svg/window/window-simple-left.svg" class="icon-3d" alt="">
+          <span>راست بازشو</span>
+        </button>
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-bs-dismiss="offcanvas"
+          data-type="window_simple_top">
+          <img src="icons/svg/window/window-simple-top.svg" class="icon-3d" alt="">
+          <span>بالا بازشو</span>
+        </button>
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-bs-dismiss="offcanvas"
+          data-type="window_simple_bottom">
+          <img src="icons/svg/window/window-simple-bottom.svg" class="icon-3d" alt="">
+          <span>پایین بازشو</span>
+        </button>
+        <!-- پنجره دو حالته -->
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-bs-dismiss="offcanvas"
+          data-type="window_dual_right">
+          <img src="icons/svg/window/window-dual-right.svg" class="icon-3d" alt="">
+          <span>دو حالته چپ بازشو</span>
+        </button>
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-bs-dismiss="offcanvas"
+          data-type="window_dual_left">
+          <img src="icons/svg/window/window-dual-left.svg" class="icon-3d" alt="">
+          <span>دو حالته راست بازشو</span>
+        </button>
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-bs-dismiss="offcanvas"
+          data-type="window_simple">
+          <img src="icons/svg/window/window-simple.svg" class="icon-3d" alt="">
+          <span>ساده</span>
+        </button>
+        <!-- پنجره محوری -->
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-bs-dismiss="offcanvas"
+          data-type="window_radial_right">
+          <img src="icons/svg/window/window_radial_left.svg" class="icon-3d" alt="">
+          <span>محوری چپ بازشو</span>
+        </button>
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-bs-dismiss="offcanvas"
+          data-type="window_radial_left">
+          <img src="icons/svg/window/window-radial-right.svg" class="icon-3d" alt="">
+          <span>محوری راست بازشو</span>
+        </button>
+        <!-- پنجره محوری -->
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-bs-dismiss="offcanvas"
+          data-type="window_radial_top">
+          <img src="icons/svg/window/window-radial-top.svg" class="icon-3d" alt="">
+          <span>محوری بالا بازشو</span>
+        </button>
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-bs-dismiss="offcanvas"
+          data-type="window_radial_bottom">
+          <img src="icons/svg/window/window-radial-bottom.svg" class="icon-3d" alt="">
+          <span>محوری پایین بازشو</span>
+        </button>
+        <!-- پنجره فولکس واگنی -->
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-bs-dismiss="offcanvas"
+          data-type="window_volkswagen_right">
+          <img src="icons/svg/window/window-volkswagen-right.svg" class="icon-3d" alt="">
+          <span>فولکس واگنی چپ بازشو</span>
+        </button>
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-bs-dismiss="offcanvas"
+          data-type="window_volkswagen_left">
+          <img src="icons/svg/window/window-volkswagen-left.svg" class="icon-3d" alt="">
+          <span>فولکس واگنی راست بازشو</span>
+        </button>
+        <!-- پنجره فرانسوی -->
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-bs-dismiss="offcanvas"
+          data-type="window_french_simple_right">
+          <img src="icons/svg/window/window-french-simple-right.svg" class="icon-3d" alt="">
+          <span>ساده راست بازشو</span>
+        </button>
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-bs-dismiss="offcanvas"
+          data-type="window_french_simple_left">
+          <svg style="width: 50px;" class="icon-3d" xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 58.8 30"
+            style="enable-background:new 0 0 58.8 30;" xml:space="preserve" class="injected-svg"
+            data-src="/static/media/ak_2_0.6e4660218d6c9e2958a5a848019aed00.svg">
+            <g>
+              <rect x="13" y="-6.8" transform="matrix(0.4722 -0.8815 0.8815 0.4722 0.5161 15.8448)" width="0.9"
+                height="28.6"></rect>
+              <rect x="-0.6" y="21" transform="matrix(0.8663 -0.4995 0.4995 0.8663 -8.883 9.7168)" width="28.6"
+                height="0.9"></rect>
+              <rect x="25.7" y="11" width="3.6" height="8.1"></rect>
+              <path d="M30,30H0V0h30V30z M0.9,29.1h28.2V0.9H0.9V29.1z"></path>
+              <path d="M26.6,25.9H4.1V3.8h22.5V25.9z M4.9,25h20.9V4.6H4.9V25z"></path>
+              <rect x="29.9" y="1.2" transform="matrix(0.4722 -0.8815 0.8815 0.4722 15.7322 41.2564)" width="0.9"
+                height="28.6"></rect>
+              <rect x="35.2" y="10" transform="matrix(0.8663 -0.4995 0.4995 0.8663 -5.0289 24.1168)" width="39.6"
+                height="0.9"></rect>
+              <path d="M58.8,30h-30V0h30V30z M29.7,29.1h28.2V0.9H29.7V29.1z"></path>
+              <path d="M55.4,25.9H32.9V3.8h22.5V25.9z M33.7,25h20.9V4.6H33.7V25z"></path>
+            </g>
+          </svg>
+          <span>ساده چپ بازشو</span>
+        </button>
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-bs-dismiss="offcanvas"
+          data-type="window_french_dual_right">
+          <i class="ti ti-columns-2"></i>
+          <span>دوحالته راست بازشو</span>
+        </button>
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-bs-dismiss="offcanvas"
+          data-type="window_french_dual_left">
+          <i class="ti ti-columns-2"></i>
+          <span>دوحالته چپ بازشو</span>
+        </button>
+      </div>
+      <!-- در -->
+      <div class="wd-mobile-submenu-items" data-submenu="door">
+        <!-- چپ بازشو -->
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-type="door_simple_right"
+          data-bs-dismiss="offcanvas">
+          <img src="icons/svg/door/door-simple-right.svg" class="icon-3d" alt="">
+          <span>چپ بازشو</span>
+        </button>
+        <!-- راست بازشو -->
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-type="door_simple_left"
+          data-bs-dismiss="offcanvas">
+          <img src="icons/svg/door/door-simple-left.svg" class="icon-3d" alt="">
+          <span>راست بازشو</span>
+        </button>
+        <!-- درب دوحالته - چپ بازشو -->
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-type="door_dual_right"
+          data-bs-dismiss="offcanvas">
+          <img src="icons/svg/door/door-dual-right.svg" class="icon-3d" alt="">
+          <span>درب دوحالته - چپ بازشو</span>
+        </button>
+        <!-- درب دوحالته - راست بازشو -->
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-type="door_dual_left"
+          data-bs-dismiss="offcanvas">
+          <img src="icons/svg/door/door-dual-left.svg" class="icon-3d" alt="">
+          <span>درب دوحالته - راست بازشو</span>
+        </button>
+        <!-- تک حالته راست بازشو -->
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-type="door_french_simple_right"
+          data-bs-dismiss="offcanvas">
+          <i class="ti ti-columns-2"></i>
+          <span>تک حالته راست بازشو</span>
+        </button>
+        <!-- تک حالته چپ بازشو -->
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-type="door_french_simple_left"
+          data-bs-dismiss="offcanvas">
+          <svg class="icon-3d" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
+            <g>
+              <path
+                d="M18,15.8c-0.1,0-0.2,0-0.3-0.1L0.6,1.3C0.4,1.1,0.4,0.8,0.6,0.6C0.7,0.4,1,0.4,1.2,0.6l17.1,14.4c0.2,0.2,0.2,0.5,0.1,0.7C18.3,15.7,18.2,15.8,18,15.8z">
+              </path>
+              <path
+                d="M0.9,29.3c-0.1,0-0.3-0.1-0.4-0.2c-0.2-0.2-0.1-0.5,0.1-0.7l17.1-13.5c0.2-0.2,0.5-0.1,0.7,0.1c0.2,0.2,0.1,0.5-0.1,0.7L1.2,29.2C1.1,29.2,1,29.3,0.9,29.3z">
+              </path>
+              <path d="M30,30H0V0h30V30z M1,29h28V1H1V29z"></path>
+              <path d="M17.6,26.5h-14V3.2h14V26.5z M4.4,25.6h12.3V4.1H4.4V25.6z"></path>
+              <path d="M27.4,26.8h-4.5V3.1h4.5V26.8z M23.8,25.8h2.6V4.1h-2.6V25.8z"></path>
+              <path
+                d="M19.9,29.7c-0.3,0-0.5-0.2-0.5-0.5V0.9c0-0.3,0.2-0.5,0.5-0.5s0.5,0.2,0.5,0.5v28.3C20.4,29.5,20.2,29.7,19.9,29.7z">
+              </path>
+              <rect x="16.7" y="11.3" width="3.5" height="8.1"></rect>
+            </g>
+          </svg>
+          <span>تک حالته چپ بازشو</span>
+        </button>
+        <!-- دو حالته راست بازشو -->
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-type="door_french_dual_right"
+          data-bs-dismiss="offcanvas">
+          <i class="ti ti-columns-2"></i>
+          <span>دو حالته راست بازشو</span>
+        </button>
+        <!-- دو حالته چپ بازشو -->
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-type="door_french_dual_left"
+          data-bs-dismiss="offcanvas">
+          <i class="ti ti-columns-2"></i>
+          <span>دو حالته چپ بازشو</span>
+        </button>
+      </div>
+      <!-- پنل -->
+      <div class="wd-mobile-submenu-items" data-submenu="panel">
+        <!-- پنل افقی -->
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-type="hPanel" data-bs-dismiss="offcanvas">
+          <img src="icons/svg/panel/panel-horizontal.svg" class="icon-mullian-v3" alt="">
+          <span>پنل افقی</span>
+        </button>
+        <!-- پنل عمودی -->
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-type="vPanel" data-bs-dismiss="offcanvas">
+          <img src="icons/svg/panel/panel-vertical.svg" class="icon-mullian-v3" alt="">
+          <span>پنل عمودی</span>
+        </button>
+      </div>
+      <!-- سایر -->
+      <div class="wd-mobile-submenu-items" data-submenu="other">
+        <!-- افزودن فریم کناره -->
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-type="lace" data-bs-dismiss="offcanvas">
+          <img src="icons/svg/other/add-side-frame.svg" class="icon-3d" alt="">
+          <span>افزودن فریم کناره</span>
+        </button>
+        <!-- افزودن توری -->
+        <button type="button" class="wd-mobile-submenu-item addNewItem" data-type="lace" data-bs-dismiss="offcanvas">
+          <img src="icons/svg/other/add-mesh.svg" class="icon-3d" alt="">
+          <span>افزودن توری</span>
+        </button>
+      </div>
+    </div>
+    <!-- منوی پایین فعلی -->
+    <div class="wd-mobile-menu-bar-inner">
+      <button type="button" class="wd-mobile-menu-button" id="wdOpenRightMenu" aria-label="باز کردن منوی راست">
+        <i class="ti ti-layout-sidebar-right"></i>
+        یونیت‌ها
+      </button>
+      <div class="wd-mobile-view-tools">
+        <button class="wd-mobile-view-tool" id="zoomOutButton" type="button" title="کوچک‌نمایی">
+          <i class="ti ti-minus"></i>
+        </button>
+        <button class="wd-mobile-view-tool" id="zoomInButton" type="button" title="بزرگ‌نمایی">
+          <i class="ti ti-plus"></i>
+        </button>
+        <button class="wd-mobile-view-tool" id="resetButton" type="button" title="بازنشانی بزرگ‌نمایی">
+          <i class="ti ti-arrows-maximize"></i>
+        </button>
+        <button class="wd-mobile-view-tool undo" id="undoButton" type="button" disabled title="بازگشت (Ctrl+Z)">
+          <i class="ti ti-arrow-back-up"></i>
+        </button>
+        <button class="wd-mobile-view-tool redo" id="redoButton" type="button" disabled title="انجام مجدد (Ctrl+Y)">
+          <i class="ti ti-arrow-forward-up"></i>
+        </button>
+        <button class="wd-mobile-view-tool" id="view3DButton" type="button" title="نمایش سه‌بعدی">
+          <i class="ti ti-box"></i>
+        </button>
+      </div>
+      <button type="button" class="wd-mobile-menu-button" id="wdOpenLeftMenu" aria-label="باز کردن منوی چپ">
+        <i class="ti ti-menu-2"></i>
+        ابزارها
+      </button>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const categoryButtons = document.querySelectorAll(
+        '.wd-mobile-category-bar button'
+      );
+      const submenuBar = document.querySelector(
+        '.wd-mobile-submenu-bar'
+      );
+      const submenuItems = document.querySelectorAll(
+        '.wd-mobile-submenu-items'
+      );
+      function showCategory(category) {
+        /* فعال کردن دکمه انتخاب‌شده */
+        categoryButtons.forEach(function (button) {
+          if (button.dataset.category === category) {
+            button.classList.add('active');
+          } else {
+            button.classList.remove('active');
+          }
+        });
+        /* مخفی کردن تمام منوها */
+        submenuItems.forEach(function (submenu) {
+          submenu.classList.remove('active');
+        });
+        /* پیدا کردن منوی مربوط به دکمه */
+        const selectedSubmenu = document.querySelector(
+          '.wd-mobile-submenu-items[data-submenu="' + category + '"]'
+        );
+        /* نمایش منوی مربوطه */
+        if (selectedSubmenu) {
+          selectedSubmenu.classList.add('active');
+          submenuBar.classList.add('show');
+        }
+      }
+      /* کلیک روی دکمه‌های بالایی */
+      categoryButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+          const category = this.dataset.category;
+          showCategory(category);
+        });
+      });
+      /* اولین دسته به صورت پیش‌فرض */
+      if (categoryButtons.length > 0) {
+        showCategory(
+          categoryButtons[0].dataset.category
+        );
+      }
+    });
+  </script>
+  <!-- MOBILE OVERLAY -->
+  <div class="wd-mobile-overlay" id="wdMobileOverlay"></div>
+  <div class="wd-app-shell">
+    <!-- منو راست -->
+    <aside class="wd-panel-right" id="wdRightPanel">
+      <!-- لوگو و نام سایت -->
+      <header class="wd-right-brand">
+        <div class="wd-right-brand-inner">
+          <div class="wd-right-logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" stroke="currentColor" stroke-width="2" />
+              <path d="M12 3V21M3 12H21" stroke="currentColor" stroke-width="2" />
+            </svg>
+          </div>
+          <div class="wd-right-site-info">
+            <strong class="wd-right-site-title"> عایق فیروز </strong>
+            <span class="wd-right-site-subtitle"> طراحی درب و پنجره </span>
+          </div>
+        </div>
+      </header>
+      <!-- RIGHT CONTENT -->
+      <div class="wd-right-scroll-none">
+        <!-- محاسبات و ذخیره -->
+        <section class="wd-section-block">
+          <div class="wd-main-tools-box">
+            <button class="wd-main-tool" href="" data-bs-toggle="tooltip" data-bs-placement="top"
+              data-bs-original-title="رفتن به محاسبات و قیمت گذاری">
+              <i class="ti ti-calculator"></i>
+              <span>محاسبات</span>
+            </button>
+            <button class="wd-main-tool" id="saveProject">
+              <i class="ti ti-device-floppy"></i>
+              <span>ذخیره</span>
+            </button>
+            <button class="wd-main-tool">
+              <i class="ti ti-settings"></i>
+              <span>تنظیمات</span>
+            </button>
+          </div>
+        </section>
+        <!-- کنترل -->
+        <section class="wd-section-block">
+          <div class="wd-view-tools-box">
+            <button class="wd-view-tool" id="zoomOutButton" type="button" title="کوچک‌نمایی">
+              <i class="ti ti-minus"></i>
+            </button>
+            <button class="wd-view-tool" id="zoomInButton" type="button" title="بزرگ‌نمایی">
+              <i class="ti ti-plus"></i>
+            </button>
+            <button class="wd-view-tool" id="resetButton" type="button" title="بازنشانی بزرگ‌نمایی">
+              <i class="ti ti-arrows-maximize"></i>
+            </button>
+            <button class="wd-view-tool undo" id="undoButton" type="button" disabled title="بازگشت (Ctrl+Z)">
+              <i class="ti ti-arrow-back-up"></i>
+            </button>
+            <button class="wd-view-tool redo" id="redoButton" type="button" disabled title="انجام مجدد (Ctrl+Y)">
+              <i class="ti ti-arrow-forward-up"></i>
+            </button>
+            <button class="wd-view-tool" id="view3DButton" type="button" title="نمایش سه‌بعدی">
+              <i class="ti ti-box"></i>
+            </button>
+          </div>
+        </section>
+        <!-- یونیت جدید -->
+        <section class="wd-section-block">
+          <div class="wd-create-unit-row">
+            <button class="wd-create-unit-main addNewLayer">
+              <i class="ti ti-plus"></i>
+              یونیت جدید
+              <!-- <span class="badge bg-white text-primary ms-2 d-none d-sm-block">U</span> -->
+            </button>
+            <button class="wd-create-unit-options" title="گزینه‌ها">
+              <i class="ti ti-dots"></i>
+            </button>
+          </div>
+        </section>
+        <!-- ITEMS -->
+        <section class="wd-section-block">
+          <div class="wd-items-stack" id="layerlist">
+          </div>
+        </section>
+        <!-- مدال نمایش سه‌بعدی -->
+        <!-- <div class="modal modal-blur fade" id="view3DModal" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header border-0">
+                <h5 class="modal-title">نمایش سه‌بعدی</h5>
+                <button type="button" class="btn btn-primary" id="preview3DButton">
+                  پیش‌نمایش
+                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
+              </div>
+              <div class="modal-body pt-0">
+                <div id="3d" class="wd-3d-view"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <style>
+          .wd-3d-view {
+            width: 100%;
+            height: 500px;
+            position: relative;
+            overflow: hidden;
+            background: #fff;
+          }
+          .wd-3d-view canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+          }
+        </style> -->
+      </div>
+    </aside>
+    <!-- بوم طراحی -->
+    <main class="wd-canvas-zone">
+      <div class="wd-canvas-frame designCardParent">
+        <canvas class="rounded" id="myCanvas" resize="" width="1039" height="1817" style="
+              -webkit-user-drag: none;
+              user-select: none;
+              -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+              touch-action: none;
+            ">
+        </canvas>
+      </div>
+    </main>
+    <!-- منو چپ -->
+    <aside class="wd-panel-left" id="wdLeftPanel">
+      <!-- کاربر -->
+      <header class="wd-user-header">
+        <div class="wd-user-header-main">
+          <div class="wd-user-avatar">
+            <i class="ti ti-user"></i>
+          </div>
+          <div class="wd-user-info">
+            <strong class="wd-user-name"> حسین فیروزی </strong>
+            <span class="wd-user-role"> کاربر </span>
+          </div>
+        </div>
+      </header>
+      <!-- LEFT CONTENT -->
+      <div class="wd-left-scroll">
+        <!-- نام یونیت -->
+        <section class="wd-left-field">
+          <div class="wd-left-field-row">
+            <label class="wd-left-label">
+              <button type="button">
+                <i class="ti ti-pencil me-1"></i> نام یونیت
+              </button>
+            </label>
+            <input class="wd-input-box layerName" data-id="" type="text" value="یونیت اصلی" />
+          </div>
+        </section>
+        <!-- تعداد -->
+        <section class="wd-left-field">
+          <div class="wd-left-field-row">
+            <label class="wd-left-label"> تعداد </label>
+            <div class="wd-left-counter">
+              <button type="button" class="wd-left-counter-button plusQuantity">
+                +
+              </button>
+              <span class="wd-left-counter-value layerQuantity" data-id="">
+                1
+              </span>
+              <button type="button" class="wd-left-counter-button minusQuantity">
+                −
+              </button>
+            </div>
+          </div>
+        </section>
+        <!-- کنترل -->
+        <section class="wd-section-block">
+          <div class="wd-view-tools-box">
+            <button class="wd-view-tool layerClone" id="copyButton" type="button" title="ایجاد کپی"
+              data-bs-dismiss="offcanvas">
+              <i class="ti ti-copy"></i>
+            </button>
+            <button class="wd-view-tool layerDisable" id="viewButton" type="button" title="مخفی کردن یونیت در محاسبات"
+              data-bs-dismiss="offcanvas">
+              <i class="ti ti-eye"></i>
+            </button>
+            <button class="wd-view-tool layerLock" id="lockButton" type="button" title="قفل کردن ویرایش یونیت"
+              data-bs-dismiss="offcanvas">
+              <i class="ti ti-lock-open"></i>
+            </button>
+            <button class="wd-view-tool toggleSashType" id="mirrorButton" type="button"
+              title="برعکس کردن چپ یا راست بازشو" data-bs-dismiss="offcanvas">
+              <i class="ti ti-flip-vertical"></i>
+            </button>
+            <button class="wd-view-tool vMullianEualling" id="widthRulerButton" type="button"
+              title="یکسان سازی مولین های عمودی" data-bs-dismiss="offcanvas">
+              <i class="ti ti-ruler-measure"></i>
+            </button>
+            <button class="wd-view-tool hMullianEualling" id="heightRulerButton" type="button"
+              title="یکسان سازی مولین های افقی" data-bs-dismiss="offcanvas">
+              <i class="ti ti-ruler-measure"></i>
+            </button>
+            <button class="wd-view-tool dellItem" id="deleteButton" type="button" title="حذف آیتم"
+              data-bs-dismiss="offcanvas">
+              <i class="ti ti-trash"></i>
+            </button>
+          </div>
+        </section>
+        <!-- افزودن به یونیت -->
+        <section class="wd-section-block">
+          <div class="wd-components-grid">
+            <!-- MULLION -->
+            <button class="wd-component-button" data-bs-toggle="offcanvas" data-bs-target="#ofcMullian">
+              <img src="./icons/mullion.svg" alt="" class="wd-component-icon" />
+              <span class="wd-component-name"> مولین </span>
+            </button>
+            <!-- WINDOW -->
+            <button class="wd-component-button ofcTurn" data-bs-toggle="offcanvas" data-bs-target="#ofcWindow">
+              <img src="./icons/window.svg" alt="" class="wd-component-icon" />
+              <span class="wd-component-name"> پنجره </span>
+            </button>
+            <!-- DOOR -->
+            <button class="wd-component-button ofcTurn" data-bs-toggle="offcanvas" data-bs-target="#ofcDoor">
+              <img src="./icons/door.svg" alt="" class="wd-component-icon" />
+              <span class="wd-component-name"> در </span>
+            </button>
+            <!-- PANEL -->
+            <button class="wd-component-button" data-bs-toggle="offcanvas" data-bs-target="#ofcPanel">
+              <img src="./icons/panel.svg" alt="" class="wd-component-icon" />
+              <span class="wd-component-name"> پنل </span>
+            </button>
+            <!-- OTHER -->
+            <button class="wd-component-button" data-bs-toggle="offcanvas" data-bs-target="#ofcCoupling">
+              <img src="./icons/other.svg" alt="" class="wd-component-icon" />
+              <span class="wd-component-name"> سایر </span>
+            </button>
+          </div>
+        </section>
+        <!-- UNIT DETAILS -->
+        <section class="wd-unit-details">
+          <div class="wd-unit-detail-row">
+            <span class="wd-unit-detail-label"> پروفیل: </span>
+            <div class="wd-selection-line"></div>
+            <span class="wd-unit-detail-value profileName"></span>
+          </div>
+          <div class="wd-unit-detail-row">
+            <span class="wd-unit-detail-label"> شیشه: </span>
+            <div class="wd-selection-line"></div>
+            <span class="wd-unit-detail-value glassName"></span>
+          </div>
+          <div class="wd-unit-detail-row">
+            <span class="wd-unit-detail-label"> یراق: </span>
+            <div class="wd-selection-line"></div>
+            <span class="wd-unit-detail-value accessoryName"></span>
+          </div>
+          <section class="wd-unit-details" style="display:none;"></section>
+          <!-- LEFT ACTIONS -->
+          <div class="wd-left-bottom-actions">
+            <button type="button" class="wd-left-bottom-button layerConfig" title="تنظیمات">
+              <i class="ti ti-settings"></i>
+            </button>
+            <button type="button" class="wd-left-bottom-button wd-left-delete-all clearDesign" title="حذف همه"
+              data-bs-dismiss="offcanvas">
+              <i class="ti ti-trash-x"></i>
+            </button>
+          </div>
+          <div class="wd-unit-detail-note">
+            برای جزئیات هر آیتم بر روی آن کلیک کنید.
+          </div>
+        </section>
+        <section class="wd-unit-details">
+          <!-- فریم -->
+          <div class="wd-form-line">
+            <label class="wd-form-label" for=""> فریم </label>
+            <select class="wd-select-box componentsInput frameInput" name="" id="" data-id="profile" autocomplete="">
+              <option value="8" data-profile_id="4" data-type="Frame" data-width="42" data-extra_frame_lenght="0"
+                data-slide="0" data-sash_space="0">فریم</option>
+              <option value="9" data-profile_id="4" data-type="Frame" data-width="48" data-extra_frame_lenght="0"
+                data-slide="0" data-sash_space="0">سوپر فریم</option>
+              <option value="10" data-profile_id="4" data-type="Frame" data-width="72" data-extra_frame_lenght="42"
+                data-slide="0" data-sash_space="0">فریم بازسازی</option>
+              <option value="11" data-profile_id="4" data-type="Window Sash" data-width="58" data-extra_frame_lenght="0"
+                data-slide="0" data-sash_space="0">سش پنجره</option>
+              <option value="13" data-profile_id="4" data-type="Door Sash" data-width="86" data-extra_frame_lenght="0"
+                data-slide="0" data-sash_space="0">سش در</option>
+              <option value="14" data-profile_id="4" data-type="Door Sash" data-width="86" data-extra_frame_lenght="0"
+                data-slide="0" data-sash_space="0">سش در بیرون بازشو</option>
+              <option value="2048" data-profile_id="112" data-type="Frame" data-width="45" data-extra_frame_lenght="0"
+                data-slide="0" data-sash_space="0" disabled style="display: none;">فریم</option>
+              <option value="2050" data-profile_id="112" data-type="Frame" data-width="65" data-extra_frame_lenght="35"
+                data-slide="0" data-sash_space="0" disabled style="display: none;">فریم بازسازی</option>
+              <option value="2051" data-profile_id="112" data-type="Window Sash" data-width="57"
+                data-extra_frame_lenght="0" data-slide="0" data-sash_space="0" disabled style="display: none;">سش پنجره
+              </option>
+              <option value="2053" data-profile_id="112" data-type="Door Sash" data-width="76"
+                data-extra_frame_lenght="0" data-slide="0" data-sash_space="0" disabled style="display: none;">سش در
+              </option>
+              <option value="2054" data-profile_id="112" data-type="Door Sash" data-width="76"
+                data-extra_frame_lenght="0" data-slide="0" data-sash_space="0" disabled style="display: none;">سش در
+                بیرون بازشو</option>
+              <option value="3931" data-profile_id="112" data-type="Door Sash" data-width="85"
+                data-extra_frame_lenght="0" data-slide="0" data-sash_space="0" disabled style="display: none;">سش درب 35
+              </option>
+            </select>
+          </div>
+          <!-- سش درب -->
+          <div class="wd-form-line">
+            <label class="wd-form-label" for=""> سش درب </label>
+            <select class="wd-select-box componentsInput doorSashInput" name="" id="" data-id="profile" autocomplete="">
+              <option value="13" data-profile_id="4" data-type="Door Sash" data-width="86" data-extra_frame_lenght="0"
+                data-slide="0" data-sash_space="0">سش در</option>
+              <option value="14" data-profile_id="4" data-type="Door Sash" data-width="86" data-extra_frame_lenght="0"
+                data-slide="0" data-sash_space="0">سش در بیرون بازشو</option>
+              <option value="2053" data-profile_id="112" data-type="Door Sash" data-width="76"
+                data-extra_frame_lenght="0" data-slide="0" data-sash_space="0" disabled="disabled"
+                style="display: none;">سش در</option>
+              <option value="2054" data-profile_id="112" data-type="Door Sash" data-width="76"
+                data-extra_frame_lenght="0" data-slide="0" data-sash_space="0" disabled="disabled"
+                style="display: none;">سش در بیرون بازشو</option>
+              <option value="3931" data-profile_id="112" data-type="Door Sash" data-width="85"
+                data-extra_frame_lenght="0" data-slide="0" data-sash_space="0" disabled="disabled"
+                style="display: none;">سش درب 35</option>
+            </select>
+          </div>
+          <!-- سش پنجره -->
+          <div class="wd-form-line">
+            <label class="wd-form-label" for=""> سش پنجره </label>
+            <select class="wd-select-box componentsInput windowSashInput" name="" id="" data-id="profile"
+              autocomplete="">
+              <option value="11" data-profile_id="4" data-type="Window Sash" data-width="58" data-extra_frame_lenght="0"
+                data-slide="0" data-sash_space="0">سش پنجره</option>
+              <option value="2051" data-profile_id="112" data-type="Window Sash" data-width="57"
+                data-extra_frame_lenght="0" data-slide="0" data-sash_space="0" disabled="disabled"
+                style="display: none;">سش پنجره</option>
+            </select>
+          </div>
+          <!-- پانل -->
+          <div class="wd-form-line">
+            <label class="wd-form-label" for=""> پانل </label>
+            <select class="wd-select-box componentsInput panelInput" name="" id="" data-id="profile" autocomplete="">
+              <option value="17" data-profile_id="4" data-type="Panel" data-width="125" data-extra_frame_lenght="0"
+                data-slide="0" data-sash_space="0">پانل 125</option>
+              <option value="18" data-profile_id="4" data-type="Panel" data-width="100" data-extra_frame_lenght="0"
+                data-slide="0" data-sash_space="0">پانل 100</option>
+              <option value="2057" data-profile_id="112" data-type="Panel" data-width="150" data-extra_frame_lenght="0"
+                data-slide="0" data-sash_space="0" disabled="disabled" style="display: none;">پانل 150</option>
+            </select>
+          </div>
+          <!-- مولین -->
+          <div class="wd-form-line">
+            <label class="wd-form-label" for=""> مولین </label>
+            <select class="wd-select-box componentsInput mullianInput" name="" id="" data-id="profile" autocomplete="">
+              <option value="15" data-profile_id="4" data-type="Mullian" data-width="42" data-extra_frame_lenght="0"
+                data-slide="0" data-sash_space="3" style="">مولین</option>
+              <option value="16" data-profile_id="4" data-type="Overhung" data-width="34" data-extra_frame_lenght="0"
+                data-slide="0" data-sash_space="3" style="">مولین متحرک</option>
+              <option value="2055" data-profile_id="112" data-type="Mullian" data-width="40" data-extra_frame_lenght="0"
+                data-slide="0" data-sash_space="3" disabled="disabled" style="display: none;">مولین</option>
+              <option value="2056" data-profile_id="112" data-type="Overhung" data-width="34"
+                data-extra_frame_lenght="0" data-slide="0" data-sash_space="0" disabled="disabled"
+                style="display: none;">مولین متحرک</option>
+            </select>
+          </div>
+          <!-- یراق -->
+          <div class="wd-form-line">
+            <label class="wd-form-label" for=""> یراق </label>
+            <select class="wd-select-box componentsInput accessoryInput" name="" id="" data-id="accessory"
+              autocomplete="">
+              <option value="11" data-system="UPVC" style="">آکادو Accado</option>
+              <option value="112" data-system="UPVC" style="">GU</option>
+              <option value="114" data-system="Al" disabled="disabled" style="display: none;">یراق آلومینیوم</option>
+            </select>
+          </div>
+          <!-- نوع یراق -->
+          <div class="wd-form-line">
+            <label class="wd-form-label" for=""> نوع یراق </label>
+            <select class="wd-select-box componentsInput accessoryTypeInput" name="" id="" data-id="accessoryType"
+              autocomplete="">
+              <option data-accessorycompany="11" data-type="window" data-system="UPVC" data-opening="simple" value="4">
+                یراق پنجره تک حالته
+              </option>
+              <option data-accessorycompany="11" data-type="window" data-system="UPVC" data-opening="dual" value="6">
+                یراق پنجره دو حالته
+              </option>
+              <option data-accessorycompany="11" data-type="window" data-system="UPVC" data-opening="slide" value="14">
+                یراق پنجره کشویی
+              </option>
+              <option data-accessorycompany="11" data-type="door" data-system="UPVC" data-opening="simple" value="18">
+                یراق درب تک حالته
+              </option>
+              <option data-accessorycompany="11" data-type="door" data-system="UPVC" data-opening="dual" value="19">
+                یراق درب دو حالته
+              </option>
+            </select>
+          </div>
+          <!-- شیشه -->
+          <div class="wd-form-line">
+            <label class="wd-form-label" for=""> شیشه </label>
+            <select class="wd-select-box componentsInput glassInput" name="" id="" data-id="glass" autocomplete="">
+              <option value="1" data-color="#e0f3ff" data-group="2">
+                شیشه 4+12+4 ساده ساده
+              </option>
+              <option value="9" data-color="#f5f5f5" data-group="2">
+                شیشه 4+12+4 ساده سیلور
+              </option>
+              <option value="10" data-color="#ffffff" data-group="2">
+                شیشه 4+12+4 آیینه مشجر
+              </option>
+              <option value="14" data-color="#dedede" data-group="2">
+                شیشه 4+12+4 رفلکس دودی
+              </option>
+              <option value="15" data-color="#ffe6db" data-group="2">
+                شیشه 4+12+4 ساده برنز لایت
+              </option>
+            </select>
+          </div>
+          <!-- توری -->
+          <div class="wd-form-line">
+            <label class="wd-form-label" for=""> توری </label>
+            <select class="wd-select-box componentsInput laceInput" name="" id="" data-id="lace" autocomplete="">
+              <option value="0">بدون توری</option>
+              <option value="1">توری پلیسه</option>
+              <option value="2">توری ثابت</option>
+              <option value="3">توری پشه بند</option>
+            </select>
+          </div>
+          <!-- زهوار -->
+          <div class="wd-form-line">
+            <label class="wd-form-label" for=""> زهوار </label>
+            <select class="wd-select-box componentsInput glazingInput" name="" id="" data-id="glazing" autocomplete="">
+              <option value="25" data-profile_id="4" data-type="Glazing" data-width="15" data-extra_frame_lenght="0"
+                data-slide="0" data-sash_space="0" style="">
+                زهوار تک جداره
+              </option>
+              <option value="26" data-profile_id="4" data-type="Glazing" data-width="20" data-extra_frame_lenght="0"
+                data-slide="0" data-sash_space="0" style="">
+                زهوار دو جداره
+              </option>
+              <option value="27" data-profile_id="4" data-type="Glazing" data-width="30" data-extra_frame_lenght="0"
+                data-slide="0" data-sash_space="0" style="">
+                زهوار سه جداره
+              </option>
+              <option value="2066" data-profile_id="112" data-type="Glazing" data-width="15" data-extra_frame_lenght="0"
+                data-slide="0" data-sash_space="0" disabled="disabled" style="display: none;">
+                زهوار تک جداره
+              </option>
+              <option value="2067" data-profile_id="112" data-type="Glazing" data-width="20" data-extra_frame_lenght="0"
+                data-slide="0" data-sash_space="0" disabled="disabled" style="display: none;">
+                زهوار دو جداره
+              </option>
+              <option value="2068" data-profile_id="112" data-type="Glazing" data-width="30" data-extra_frame_lenght="0"
+                data-slide="0" data-sash_space="0" disabled="disabled" style="display: none;">
+                زهوار سه جداره
+              </option>
+            </select>
+          </div>
+          <!-- اتصال -->
+          <div class="wd-form-line">
+            <label class="wd-form-label" for=""> اتصال </label>
+            <select class="wd-select-box componentsInput couplingInput" name="" id="" data-id="profile" autocomplete="">
+              <option value="19" data-profile_id="4" data-type="Coupling" data-width="78" data-extra_frame_lenght="0"
+                data-slide="0" data-sash_space="0" style="">لوله و آداپتور</option>
+              <option value="21" data-profile_id="4" data-type="Coupling" data-width="63" data-extra_frame_lenght="0"
+                data-slide="0" data-sash_space="0" style="">اتصال 135</option>
+              <option value="22" data-profile_id="4" data-type="Coupling" data-width="130" data-extra_frame_lenght="0"
+                data-slide="0" data-sash_space="0" style="">اتصال 90</option>
+              <option value="23" data-profile_id="4" data-type="Coupling" data-width="3" data-extra_frame_lenght="0"
+                data-slide="0" data-sash_space="0" style="">اتصال قاب</option>
+              <option value="24" data-profile_id="4" data-type="Coupling" data-width="35" data-extra_frame_lenght="0"
+                data-slide="0" data-sash_space="0" style="">ارتفاع دهنده 35</option>
+              <option value="2059" data-profile_id="112" data-type="Coupling" data-width="82"
+                data-extra_frame_lenght="0" data-slide="0" data-sash_space="0" disabled="disabled"
+                style="display: none;">لوله و آداپتور</option>
+              <option value="2062" data-profile_id="112" data-type="Coupling" data-width="140"
+                data-extra_frame_lenght="0" data-slide="0" data-sash_space="0" disabled="disabled"
+                style="display: none;">اتصال 90</option>
+              <option value="2065" data-profile_id="112" data-type="Coupling" data-width="3" data-extra_frame_lenght="0"
+                data-slide="0" data-sash_space="0" disabled="disabled" style="display: none;">اتصال قاب</option>
+            </select>
+          </div>
+          <!-- اینترلاک -->
+          <div class="wd-form-line">
+            <label class="wd-form-label" for=""> اینترلاک </label>
+            <select class="wd-select-box componentsInput enterlockInput" name="" id="" data-id="profile"
+              autocomplete="">
+            </select>
+          </div>
+          <!-- قفل -->
+          <div class="wd-form-line">
+            <label class="wd-form-label" for=""> قفل </label>
+            <select class="wd-select-box componentsInput doorSashLock lockTypeInput" name="" id="" data-id="lockType"
+              autocomplete="">
+              <option value="Normal">نرمال</option>
+              <option value="service">سرویسی</option>
+              <option value="serviceWithToope">سرویسی با توپی</option>
+              <option value="winDoorType">قفل پنجره ای دوطرفه</option>
+              <option value="doorWinlock">قفل پنجره روی درب بیرون بازشو</option>
+              <option value="doorWinlock2">قفل پنجره روی درب داخل بازشو</option>
+            </select>
+            <!-- <span class="text-muted fs-6">این مورد جهت تولید رباتیک می باشد</span> -->
+          </div>
+          <!-- <div class="wd-unit-detail-note">
+            برای جزئیات هر آیتم بر روی آن کلیک کنید.
+          </div> -->
+        </section>
+        <style>
+          /* پنل جزئیات آیتم */
+          .wd-unit-details {
+            display: none;
+            position: fixed;
+            width: 280px;
+            max-width: calc(100vw - 20px);
+            padding: 12px;
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            box-shadow:
+              0 8px 24px rgba(0, 0, 0, 0.10),
+              0 2px 6px rgba(0, 0, 0, 0.06);
+            direction: rtl;
+            text-align: right;
+            z-index: 9999;
+            font-family: IRANSansWeb, sans-serif;
+          }
+          /* هر ردیف */
+          .wd-unit-details .wd-form-line {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-height: 38px;
+            margin-bottom: 7px;
+          }
+          .wd-unit-details .wd-form-line:last-of-type {
+            margin-bottom: 0;
+          }
+          /* عنوان */
+          .wd-unit-details .wd-form-label {
+            flex: 0 0 65px;
+            margin: 0;
+            font-size: 12px;
+            font-weight: 500;
+            color: #374151;
+            white-space: nowrap;
+          }
+          /* Select */
+          .wd-unit-details .wd-select-box {
+            flex: 1;
+            width: 100%;
+            min-width: 0;
+            height: 34px;
+            padding: 0 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            background: #ffffff;
+            color: #374151;
+            font-family: inherit;
+            font-size: 12px;
+            outline: none;
+            cursor: pointer;
+            transition:
+              border-color .15s ease,
+              box-shadow .15s ease;
+          }
+          /* فوکوس */
+          .wd-unit-details .wd-select-box:focus {
+            border-color: #3b82f6;
+            box-shadow:
+              0 0 0 2px rgba(59, 130, 246, 0.12);
+          }
+          /* هاور */
+          .wd-unit-details .wd-select-box:hover {
+            border-color: #9ca3af;
+          }
+          /* گزینه غیرفعال */
+          .wd-unit-details .wd-select-box option:disabled {
+            color: #9ca3af;
+          }
+          /* توضیح پایین فرم */
+          .wd-unit-details .wd-unit-detail-note {
+            margin-top: 10px;
+            padding-top: 9px;
+            border-top: 1px solid #f0f0f0;
+            color: #9ca3af;
+            font-size: 10px;
+            line-height: 1.8;
+            text-align: right;
+          }
+          /* اسکرول اگر گزینه‌های زیادی نمایش داده شد */
+          .wd-unit-details {
+            max-height: calc(100vh - 20px);
+            overflow-y: auto;
+          }
+          /* اسکرول بار */
+          .wd-unit-details::-webkit-scrollbar {
+            width: 4px;
+          }
+          .wd-unit-details::-webkit-scrollbar-thumb {
+            background: #d1d5db;
+            border-radius: 10px;
+          }
+          /* موبایل */
+          @media (max-width: 768px) {
+            .wd-unit-details {
+              width: 270px;
+              padding: 10px;
+            }
+            .wd-unit-details .wd-form-line {
+              min-height: 36px;
+            }
+            .wd-unit-details .wd-form-label {
+              flex-basis: 60px;
+              font-size: 11px;
+            }
+            .wd-unit-details .wd-select-box {
+              height: 32px;
+              font-size: 11px;
+            }
+          }
+        </style>
+      </div>
+    </aside>
+  </div>
+  <!-- مدال سه بعدی -->
+  <div id="myModal" class="modal">
+    <div class="modal-content wd-3d-modal-content">
+      <div class="wd-3d-modal-actions">
+        <button type="button" class="wd-3d-close-btn close" title="بستن">
+          <i class="ti ti-x"></i>
+        </button>
+        <button type="button" class="wd-3d-preview-btn" id="preview3DButton" title="پیش‌نمایش">
+          <i class="ti ti-video"></i>
+        </button>
+      </div>
+      <div class="wd-3d-modal-body">
+        <div id="3d" class="wd-3d-view"></div>
+      </div>
+    </div>
+  </div>
+  <!-- منو راست افزودن یونیت / ویرایش -->
+  <aside class="wd-panel-right offcanvas offcanvas-start" id="ofcAddNew" tabindex="-1">
+    <!-- <aside class="wd-panel-right offcanvas-start" id="ofcAddNew" tabindex="-1"> -->
+    <!-- افزودن/ویرایش یونیت -->
+    <header class="wd-right-brand">
+      <div class="wd-right-brand-inner">
+        <div class="wd-right-site-info-addedit">
+          <strong class="wd-right-site-title"> افزودن/ویرایش یونیت </strong>
+          <button type="button" class="wd-selection-close" data-bs-dismiss="offcanvas" aria-label="Close">
+            <i class="ti ti-x"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+    <div class="wd-right-scroll offcanvas-body">
+      <!-- فرم -->
+      <form method="POST" id="form1" class="wd-section-block">
+        <!-- سیستم -->
+        <div class="wd-form-line">
+          <label class="wd-form-label"> سیستم </label>
+          <div class="wd-profile-switch">
+            <button type="button" class="wd-profile-option is-active system_stat" name="system" value="UPVC"
+              id="system_UPVC" data-system="UPVC">
+              UPVC
+            </button>
+            <button type="button" class="wd-profile-option system_stat" name="system" value="Al" id="system_Al"
+              data-system="Al">
+              AL
+            </button>
+          </div>
+          <input type="hidden" name="system" id="system" value="UPVC" />
+        </div>
+        <!-- الگو -->
+        <div class="wd-form-line">
+          <label class="wd-form-label" for="pattern_id"> الگو </label>
+          <select class="wd-select-box" name="pattern_id" id="pattern_id" autocomplete="off">
+            <option value="0">انتخاب الگو</option>
+          </select>
+        </div>
+        <!-- پروفیل -->
+        <div class="wd-form-line">
+          <label class="wd-form-label"> پروفیل </label>
+          <select class="wd-select-box frameInput" name="profile_id" class="form-select fs-5" id="profile_id"
+            data-id="profile">
+            <option value="4" data-system="UPVC" data-type="Turn" data-profile_id="4" data-width="60">
+              وینتک سری 640 /لولایی
+            </option>
+            <option value="112" data-system="UPVC" data-type="Turn" data-profile_id="112" data-width="60">
+              بوتیا لولایی 2500 /لولایی
+            </option>
+          </select>
+        </div>
+        <!-- رنگ -->
+        <div class="wd-form-line">
+          <label class="wd-form-label" for="profile_color"> رنگ </label>
+          <select class="wd-select-box" autocomplete="off" name="profile_color" id="profile_color">
+            <option value="1" data-system="UPVC" data-hex="#ffffff">
+              سفید
+            </option>
+            <option value="2" data-system="UPVC" data-hex="#fffcd6">
+              داخل رنگ
+            </option>
+            <option value="4" data-system="UPVC" data-hex="#b3ff00">
+              بیرون رنگ
+            </option>
+            <option value="5" data-system="UPVC" data-hex="#9c590d">
+              داخل لمینت
+            </option>
+            <option value="6" data-system="UPVC" data-hex="#ffbb00">
+              بیرون لمینت
+            </option>
+            <option value="7" data-system="UPVC" data-hex="#fbdbff">
+              تمام رنگ
+            </option>
+            <option value="8" data-system="Al" data-hex="#ffffff" style="display: none">
+              پودری
+            </option>
+            <option value="9" data-system="UPVC" data-hex="#b0a100">
+              دو طرف لمینت
+            </option>
+          </select>
+        </div>
+        <!-- یراق -->
+        <div class="wd-form-line">
+          <label class="wd-form-label" for="accessory_id"> یراق </label>
+          <select class="wd-select-box" name="accessory_id" autocomplete="off" id="accessory_id">
+            <option value="11" data-system="UPVC">آکادو Accado</option>
+            <option value="112" data-system="UPVC">GU</option>
+            <option value="114" data-system="Al" style="display: none">
+              یراق آلومینیوم
+            </option>
+            <option value="120" data-system="UPVC">اندو Endow</option>
+            <option value="121" data-system="UPVC">ویناک Winac</option>
+          </select>
+        </div>
+        <!-- شیشه -->
+        <div class="wd-form-line">
+          <label class="wd-form-label" for="glass_id"> شیشه </label>
+          <select class="wd-select-box" name="glass_id" autocomplete="off" id="glass_id">
+            <option value="1" data-color="#e0f3ff">
+              شیشه 4+12+4 ساده ساده
+            </option>
+            <option value="9" data-color="#f5f5f5">
+              شیشه 4+12+4 ساده سیلور
+            </option>
+            <option value="10" data-color="#ffffff">
+              شیشه 4+12+4 آیینه مشجر
+            </option>
+            <option value="11" data-color="#fdffeb">
+              شیشه 4+12+4 مشجر مشجر
+            </option>
+            <option value="13" data-color="#fffdcc">
+              شیشه 4+12+4 ساده طلایی
+            </option>
+            <option value="14" data-color="#dedede">
+              شیشه 4+12+4 رفلکس دودی
+            </option>
+            <option value="15" data-color="#ffe6db">
+              شیشه 4+12+4 ساده برنز لایت
+            </option>
+            <option value="16" data-color="#e5ffff">
+              شیشه 6+8+6 ساده ساده
+            </option>
+            <option value="17" data-color="#c2f7ff">
+              شیشه 4+10+6 ساده ساده
+            </option>
+            <option value="18" data-color="#feffad">
+              شیشه 6+10+4 ساده طلایی
+            </option>
+            <option value="19" data-color="#ededed">
+              شیشه 6+10+4 ساده سیلور
+            </option>
+            <option value="20" data-color="#ffefc2">
+              شیشه 6+10+4 ساده رفلکس برنز
+            </option>
+            <option value="21" data-color="#f2f2f2">
+              شیشه 6+10+4 ساده دودی لایت
+            </option>
+            <option value="22" data-color="#e0e0e0">
+              شیشه 6+10+4 ساده رفلکس دودی
+            </option>
+            <option value="23" data-color="#fff4d6">
+              شیشه 6+10+4 ساده برنز لایت
+            </option>
+            <option value="24" data-color="#f4ebf1">
+              شیشه 6+10+4 سکوریت ساده
+            </option>
+            <option value="25" data-color="#f9dbff">
+              شیشه 6+8+6 سکوریت سکوریت
+            </option>
+            <option value="26" data-color="#fafafa">
+              شیشه 4+12+4 آیینه آیینه
+            </option>
+            <option value="27" data-color="#dbfffb">
+              شیشه 4+12+4 سندبلاست ساده
+            </option>
+            <option value="28" data-color="#fcfff0">
+              شیشه 4+10+4 ساده ساده
+            </option>
+            <option value="29" data-color="#fef5ff">
+              شیشه 4-8-4 ساده ساده
+            </option>
+            <option value="30" data-color="#f5f5f5">
+              شیشه 4+12+4 ساده دودی
+            </option>
+            <option value="31" data-color="#f4e0ff">
+              شیشه 4+12+4 آینه ساتینا
+            </option>
+            <option value="32" data-color="#e3eef2">
+              شیشه 4+12+4 ساتینا ساتینا
+            </option>
+            <option value="33" data-color="#e5e8ff">
+              شیشه 4+12+4 ساده ساتینا
+            </option>
+            <option value="34" data-color="#cbfbe2">
+              شیشه 4+10+6 ساده ساده سوپرکلیر
+            </option>
+            <option value="35" data-color="#e0ffee">
+              شیشه 4+12+4 ساده مشجر
+            </option>
+          </select>
+        </div>
+        <!-- تعداد -->
+        <div class="wd-form-line">
+          <label class="wd-form-label" for="quantity"> تعداد </label>
+          <div class="wd-counter-control">
+            <button type="button" class="wd-counter-button quantity_minus">
+              +
+            </button>
+            <input type="number" name="quantity" id="quantity" class="wd-counter-number" placeholder="تعداد" value="1"
+              min="1" />
+            <button type="button" class="wd-counter-button quantity_plus">
+              −
+            </button>
+          </div>
+        </div>
+        <!-- به روز رسانی -->
+        <div class="col-md-12 updateDiv" style="display: none">
+          <button type="button" class="btn btn-warning w-100 mb-2 update_profile_selection">
+            بروزرسانی
+          </button>
+        </div>
+        <!-- PREVIEW -->
+        <div class="wd-preview-large">
+          <img id="fullShapeView" class="shape-preview" src="./icons/shapes/rectangle.svg" alt="پیش‌نمایش" />
+          <!-- ابعاد -->
+          <input type="number" name="itemWidth" id="itemWidth" class="positionMarker" placeholder="?" value="1000" />
+          <input type="number" name="itemHeight" id="itemHeight" class="positionMarker" placeholder="?" value="1000" />
+          <!-- ابعاد گوشه‌ها -->
+          <input type="number" name="a" id="a" class="positionMarker" placeholder="?" value="200"
+            style="display: none" />
+          <input type="number" name="b" id="b" class="positionMarker" placeholder="?" value="200"
+            style="display: none" />
+          <input type="number" name="c" id="c" class="positionMarker" placeholder="?" value="200"
+            style="display: none" />
+          <input type="number" name="d" id="d" class="positionMarker" placeholder="?" value="200"
+            style="display: none" />
+        </div>
+        <!-- SHAPE SELECTOR -->
+        <div class="wd-preview-strip">
+          <!-- مستطیل -->
+          <label class="form-imagecheck">
+            <input name="shape" type="radio" class="form-imagecheck-input" value="simple_rectangle"
+              data-position="39,42,0,22,4,90,0,0,0,0,0,0,0,0,0,0,0,0" checked />
+            <span class="form-imagecheck-figure">
+              <img class="form-imagecheck-image" src="./icons/shapes/rectangle.svg" alt="" />
+            </span>
+          </label>
+          <!-- متوازی‌الاضلاع بالا -->
+          <label class="form-imagecheck">
+            <input name="shape" type="radio" class="form-imagecheck-input" value="Parallelogram_top"
+              data-position="39,42,0,22,4,90,2,11,0,2,73,0,0,0,0,0,0,0" />
+            <span class="form-imagecheck-figure">
+              <img class="form-imagecheck-image" src="./icons/shapes/parallelogram-top.svg" alt="" />
+            </span>
+          </label>
+          <!-- متوازی‌الاضلاع پایین -->
+          <label class="form-imagecheck">
+            <input name="shape" type="radio" class="form-imagecheck-input" value="Parallelogram_bottom"
+              data-position="5,42,0,22,4,90,39,11,0,39,73,0,0,0,0,0,0,0" />
+            <span class="form-imagecheck-figure">
+              <img class="form-imagecheck-image" src="./icons/shapes/parallelogram-bottom.svg" alt="" />
+            </span>
+          </label>
+          <!-- متوازی‌الاضلاع چپ -->
+          <label class="form-imagecheck">
+            <input name="shape" type="radio" class="form-imagecheck-input" value="Parallelogram_left"
+              data-position="5,42,0,22,4,90,39,11,0,5,73,0,0,0,0,0,0,0" />
+            <span class="form-imagecheck-figure">
+              <img class="form-imagecheck-image" src="./icons/shapes/parallelogram-left.svg" alt="" />
+            </span>
+          </label>
+          <!-- متوازی‌الاضلاع راست -->
+          <label class="form-imagecheck">
+            <input name="shape" type="radio" class="form-imagecheck-input" value="Parallelogram_right"
+              data-position="5,42,0,22,4,90,39,73,0,5,11,0,0,0,0,0,0,0" />
+            <span class="form-imagecheck-figure">
+              <img class="form-imagecheck-image" src="./icons/shapes/parallelogram-right.svg" alt="" />
+            </span>
+          </label>
+          <!-- مثلث -->
+          <label class="form-imagecheck">
+            <input name="shape" type="radio" class="form-imagecheck-input" value="triangle"
+              data-position="39,42,0,22,4,90,5,14,0,0,0,0,0,0,0,0,0,0" />
+            <span class="form-imagecheck-figure">
+              <img class="form-imagecheck-image" src="./icons/shapes/triangle.svg" alt="" />
+            </span>
+          </label>
+          <!-- چندضلعی -->
+          <label class="form-imagecheck">
+            <input name="shape" type="radio" class="form-imagecheck-input" value="polygon"
+              data-position="39,42,0,28,4,90,8,21,-35,0,0,0,0,0,0,0,0,0" />
+            <span class="form-imagecheck-figure">
+              <img class="form-imagecheck-image" src="./icons/shapes/polygon.svg" alt="" />
+            </span>
+          </label>
+          <!-- دایره -->
+          <label class="form-imagecheck">
+            <input name="shape" type="radio" class="form-imagecheck-input" value="circle"
+              data-position="39,42,0,22,4,90,0,0,0,0,0,0,0,0,0,0,0,0" />
+            <span class="form-imagecheck-figure">
+              <img class="form-imagecheck-image" src="./icons/shapes/circle.svg" alt="" />
+            </span>
+          </label>
+          <!-- نیم‌دایره -->
+          <label class="form-imagecheck">
+            <input name="shape" type="radio" class="form-imagecheck-input" value="half_circle"
+              data-position="39,42,0,22,4,90,0,0,0,0,0,0,0,0,0,0,0,0" />
+            <span class="form-imagecheck-figure">
+              <img class="form-imagecheck-image" src="./icons/shapes/half-circle.svg" alt="" />
+            </span>
+          </label>
+          <!-- نیم‌دایره معکوس -->
+          <label class="form-imagecheck">
+            <input name="shape" type="radio" class="form-imagecheck-input" value="half_circle_reverse"
+              data-position="11,42,0,22,4,90,0,0,0,0,0,0,0,0,0,0,0,0" />
+            <span class="form-imagecheck-figure">
+              <img class="form-imagecheck-image" src="./icons/shapes/half-circle-reverse.svg" alt="" />
+            </span>
+          </label>
+          <!-- گوشه گرد چپ -->
+          <label class="form-imagecheck">
+            <input name="shape" type="radio" class="form-imagecheck-input" value="quarter_circle_left"
+              data-position="39,42,0,22,77,90,0,0,0,0,0,0,0,0,0,0,0,0" />
+            <span class="form-imagecheck-figure">
+              <img class="form-imagecheck-image" src="./images/quarter_circle_left.png" alt="" />
+            </span>
+          </label>
+          <!-- گوشه گرد راست -->
+          <label class="form-imagecheck">
+            <input name="shape" type="radio" class="form-imagecheck-input" value="quarter_circle_right"
+              data-position="39,42,0,22,4,90,0,0,0,0,0,0,0,0,0,0,0,0" />
+            <span class="form-imagecheck-figure">
+              <img class="form-imagecheck-image" src="./images/quarter_circle_right.png" alt="" />
+            </span>
+          </label>
+          <!-- مستطیل گرد -->
+          <label class="form-imagecheck">
+            <input name="shape" type="radio" class="form-imagecheck-input" value="round_rectangle"
+              data-position="39,42,0,22,4,90,3,1,0,3,85,0,40,3,0,40,85,0" />
+            <span class="form-imagecheck-figure">
+              <img class="form-imagecheck-image" src="./icons/shapes/round-rectangle.svg" alt="" />
+            </span>
+          </label>
+          <!-- قوس -->
+          <label class="form-imagecheck">
+            <input name="shape" type="radio" class="form-imagecheck-input" value="arc_rectangle"
+              data-position="39,42,0,22,4,90,5,3,90,5,82,90,0,0,0,0,0,0" />
+            <span class="form-imagecheck-figure">
+              <img class="form-imagecheck-image" src="./images/arc_rectangle.png" alt="" />
+            </span>
+          </label>
+          <!-- مثلث قوسی -->
+          <label class="form-imagecheck">
+            <input name="shape" type="radio" class="form-imagecheck-input" value="arc_triangle"
+              data-position="39,42,0,22,4,90,0,0,0,0,0,0,0,0,0,0,0,0" />
+            <span class="form-imagecheck-figure">
+              <img class="form-imagecheck-image" src="./images/arc_triangle.png" alt="" />
+            </span>
+          </label>
+        </div>
+        <!-- بادخور -->
+        <div class="wd-form-line">
+          <label class="wd-form-label" for="widthSpace"> بادخور عرض </label>
+          <input type="text" name="widthSpace" id="widthSpace" class="wd-input-box" placeholder="?" value="0" />
+        </div>
+        <div class="wd-form-line">
+          <label class="wd-form-label" for="heightSpace">
+            بادخور ارتفاع
+          </label>
+          <input type="text" name="heightSpace" id="heightSpace" class="wd-input-box" placeholder="?" value="0" />
+        </div>
+        <!-- AI -->
+        <input type="hidden" name="ai" value="0" class="form-selectgroup-input" />
+        <!-- ACTIONS -->
+        <div class="wd-right-form-actions">
+          <button type="submit" class="wd-right-confirm" id="createLayerBtn" data-bs-dismiss="offcanvas"
+            aria-label="Close">
+            افزودن
+          </button>
+          <button type="button" class="wd-right-cancel" data-bs-dismiss="offcanvas" aria-label="Close">
+            لغو
+          </button>
+        </div>
+      </form>
+    </div>
+  </aside>
+  <!-- منو چپ مولین -->
+  <aside class="wd-panel-left offcanvas offcanvas-end" tabindex="-1" id="ofcMullian">
+    <header class="wd-right-brand">
+      <div class="wd-right-brand-inner">
+        <div class="wd-right-site-info-addedit">
+          <strong class="wd-right-site-title" id="offcanvasWithBothOptionsLabel">
+            لطفاً یکی انتخاب کنید
+          </strong>
+          <button class="wd-selection-close" type="button" data-bs-dismiss="offcanvas" aria-label="Close">
+            <i class="ti ti-x"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+    <div class="wd-left-scroll">
+      <section class="wd-component-selection">
+        <!-- مولین عمودی -->
+        <div class="wd-selection-header">
+          <strong class="wd-selection-title"> مولین عمودی </strong>
+          <div class="wd-selection-line"></div>
+        </div>
+        <!-- مولین عمودی 1 - 2 - 3 -->
+        <div class="wd-profile-items-grid">
+          <!-- ITEM 1 -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="vMullian">
+            <div class="wd-profile-item-image">
+              <img src="./images/vMullian.jpg" alt="مولین عمودی ۱" />
+            </div>
+            <span class="wd-profile-item-name"> 1 </span>
+          </button>
+          <!-- ITEM 2 -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="2vMullian">
+            <div class="wd-profile-item-image">
+              <img src="./images/2vMullian.jpg" alt="مولین عمودی ۲" />
+            </div>
+            <span class="wd-profile-item-name"> 2 </span>
+          </button>
+          <!-- ITEM 3 -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="3vMullian">
+            <div class="wd-profile-item-image">
+              <img src="./images/3vMullian.jpg" alt="مولین عمودی ۳" />
+            </div>
+            <span class="wd-profile-item-name"> 3 </span>
+          </button>
+        </div>
+        <!-- مولین افقی -->
+        <div class="wd-selection-header">
+          <strong class="wd-selection-title"> مولین افقی </strong>
+          <div class="wd-selection-line"></div>
+        </div>
+        <!-- مولین افقی 1 - 2 - 3 -->
+        <div class="wd-profile-items-grid">
+          <!-- ITEM 1 -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="hMullian">
+            <div class="wd-profile-item-image">
+              <img src="./images/hMullian.jpg" alt="مولین افقی ۱" />
+            </div>
+            <span class="wd-profile-item-name"> 1 </span>
+          </button>
+          <!-- ITEM 2 -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="2hMullian">
+            <div class="wd-profile-item-image">
+              <img src="./images/2hMullian.jpg" alt="مولین افقی ۲" />
+            </div>
+            <span class="wd-profile-item-name"> 2 </span>
+          </button>
+          <!-- ITEM 3 -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="3hMullian">
+            <div class="wd-profile-item-image">
+              <img src="./images/3hMullian.jpg" alt="مولین افقی ۳" />
+            </div>
+            <span class="wd-profile-item-name"> 3 </span>
+          </button>
+        </div>
+        <!-- مولین سرتاسری -->
+        <div class="wd-selection-header">
+          <strong class="wd-selection-title"> مولین سرتاسری </strong>
+          <div class="wd-selection-line"></div>
+        </div>
+        <!-- مولین سرتاسری -->
+        <div class="wd-profile-items-grid">
+          <!-- سرتاسری عمودی -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="fullvMullian">
+            <div class="wd-profile-item-image">
+              <img src="./images/vMullian.jpg" alt="مولین سرتاسری عمودی" />
+            </div>
+            <span class="wd-profile-item-name" style="font-size: 10px">
+              سرتاسری عمودی
+            </span>
+          </button>
+          <!-- سرتاسری افقی -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="fullhMullian">
+            <div class="wd-profile-item-image">
+              <img src="./images/hMullian.jpg" alt="مولین سرتاسری افقی" />
+            </div>
+            <span class="wd-profile-item-name" style="font-size: 10px">
+              سرتاسری افقی
+            </span>
+          </button>
+        </div>
+      </section>
+    </div>
+  </aside>
+  <!-- منو چپ پنجره -->
+  <aside class="wd-panel-left offcanvas offcanvas-end" tabindex="-1" id="ofcWindow">
+    <header class="wd-right-brand">
+      <div class="wd-right-brand-inner">
+        <div class="wd-right-site-info-addedit">
+          <strong class="wd-right-site-title" id="offcanvasWithBothOptionsLabel">
+            لطفاً یکی انتخاب کنید
+          </strong>
+          <button class="wd-selection-close" type="button" data-bs-dismiss="offcanvas" aria-label="Close">
+            <i class="ti ti-x"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+    <div class="wd-left-scroll">
+      <section class="wd-component-selection">
+        <!-- پنجره تک حالته -->
+        <div class="wd-selection-header">
+          <strong class="wd-selection-title"> پنجره تک حالته </strong>
+          <div class="wd-selection-line"></div>
+        </div>
+        <!-- پنجره تک حالته -->
+        <div class="wd-profile-items-grid">
+          <!-- چپ بازشو -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="window_simple_right">
+            <div class="wd-profile-item-image">
+              <img src="./images/window_simple_right.jpg" alt="چپ بازشو" />
+            </div>
+            <span class="wd-profile-item-name"> چپ بازشو </span>
+          </button>
+          <!-- راست بازشو -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="window_simple_left">
+            <div class="wd-profile-item-image">
+              <img src="./images/window_simple_left.jpg" alt="راست بازشو" />
+            </div>
+            <span class="wd-profile-item-name"> راست بازشو </span>
+          </button>
+          <!-- بالا بازشو -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="window_simple_top">
+            <div class="wd-profile-item-image">
+              <img src="./images/window_simple_top.jpg" alt="بالا بازشو" />
+            </div>
+            <span class="wd-profile-item-name"> بالا بازشو </span>
+          </button>
+          <!-- پایین بازشو -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="window_simple_bottom">
+            <div class="wd-profile-item-image">
+              <img src="./images/window_simple_bottom.jpg" alt="پایین بازشو" />
+            </div>
+            <span class="wd-profile-item-name"> پایین بازشو </span>
+          </button>
+        </div>
+        <!-- پنجره دو حالته -->
+        <div class="wd-selection-header">
+          <strong class="wd-selection-title"> پنجره دو حالته </strong>
+          <div class="wd-selection-line"></div>
+        </div>
+        <!-- پنجره دو حالته / ساده -->
+        <div class="wd-profile-items-grid">
+          <!-- چپ بازشو -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="window_dual_right">
+            <div class="wd-profile-item-image">
+              <img src="./images/window_dual_right.jpg" alt="چپ بازشو" />
+            </div>
+            <span class="wd-profile-item-name"> چپ بازشو </span>
+          </button>
+          <!-- راست بازشو -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="window_dual_left">
+            <div class="wd-profile-item-image">
+              <img src="./images/window_dual_left.jpg" alt="راست بازشو" />
+            </div>
+            <span class="wd-profile-item-name"> راست بازشو </span>
+          </button>
+          <!-- ساده -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="window_simple">
+            <div class="wd-profile-item-image">
+              <img src="./images/window_simple.jpg" alt="پنجره ساده" />
+            </div>
+            <span class="wd-profile-item-name"> ساده </span>
+          </button>
+        </div>
+        <!-- پنجره محوری -->
+        <div class="wd-selection-header">
+          <strong class="wd-selection-title"> پنجره محوری </strong>
+          <div class="wd-selection-line"></div>
+        </div>
+        <div class="wd-profile-items-grid">
+          <!-- چپ بازشو -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="window_radial_right">
+            <div class="wd-profile-item-image">
+              <img src="./images/window_radial_right.jpg" alt="چپ بازشو" />
+            </div>
+            <span class="wd-profile-item-name"> چپ بازشو </span>
+          </button>
+          <!-- راست بازشو -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="window_radial_left">
+            <div class="wd-profile-item-image">
+              <img src="./images/window_radial_left.jpg" alt="راست بازشو" />
+            </div>
+            <span class="wd-profile-item-name"> راست بازشو </span>
+          </button>
+          <!-- بالا بازشو -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="window_radial_top">
+            <div class="wd-profile-item-image">
+              <img src="./images/window_radial_top.jpg" alt="بالا بازشو" />
+            </div>
+            <span class="wd-profile-item-name"> بالا بازشو </span>
+          </button>
+          <!-- پایین بازشو -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="window_radial_bottom">
+            <div class="wd-profile-item-image">
+              <img src="./images/window_radial_bottom.jpg" alt="پایین بازشو" />
+            </div>
+            <span class="wd-profile-item-name"> پایین بازشو </span>
+          </button>
+        </div>
+        <!-- پنجره فولکس واگنی -->
+        <div class="wd-selection-header">
+          <strong class="wd-selection-title"> پنجره فولکس واگنی </strong>
+          <div class="wd-selection-line"></div>
+        </div>
+        <div class="wd-profile-items-grid">
+          <!-- چپ بازشو -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="window_volkswagen_right">
+            <div class="wd-profile-item-image">
+              <img src="./images/window_volkswagen_right.jpg" alt="چپ بازشو" />
+            </div>
+            <span class="wd-profile-item-name"> چپ بازشو </span>
+          </button>
+          <!-- راست بازشو -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="window_volkswagen_left">
+            <div class="wd-profile-item-image">
+              <img src="./images/window_volkswagen_left.jpg" alt="راست بازشو" />
+            </div>
+            <span class="wd-profile-item-name"> راست بازشو </span>
+          </button>
+        </div>
+        <!-- پنجره فرانسوی -->
+        <div class="wd-selection-header">
+          <strong class="wd-selection-title"> پنجره فرانسوی </strong>
+          <div class="wd-selection-line"></div>
+        </div>
+        <div class="wd-profile-items-grid">
+          <!-- ساده راست بازشو -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="window_french_simple_right">
+            <div class="wd-profile-item-image">
+              <img src="./images/window_french_simple_right.jpg" alt="ساده راست بازشو" />
+            </div>
+            <span class="wd-profile-item-name" style="font-size: 10px">
+              ساده راست بازشو
+            </span>
+          </button>
+          <!-- ساده چپ بازشو -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="window_french_simple_left">
+            <div class="wd-profile-item-image">
+              <img src="./images/window_french_simple_left.jpg" alt="ساده چپ بازشو" />
+            </div>
+            <span class="wd-profile-item-name" style="font-size: 10px">
+              ساده چپ بازشو
+            </span>
+          </button>
+          <!-- دوحالته راست بازشو -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="window_french_dual_right">
+            <div class="wd-profile-item-image">
+              <img src="./images/window_french_dual_right.jpg" alt="دوحالته راست بازشو" />
+            </div>
+            <span class="wd-profile-item-name" style="font-size: 9px">
+              دوحالته راست بازشو
+            </span>
+          </button>
+        </div>
+        <div class="wd-profile-items-grid">
+          <!-- دوحالته چپ بازشو -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="window_french_dual_left">
+            <div class="wd-profile-item-image">
+              <img src="./images/window_french_dual_left.jpg" alt="دوحالته چپ بازشو" />
+            </div>
+            <span class="wd-profile-item-name" style="font-size: 9px">
+              دوحالته چپ بازشو
+            </span>
+          </button>
+        </div>
+      </section>
+    </div>
+  </aside>
+  <!-- منو چپ در -->
+  <aside class="wd-panel-left offcanvas offcanvas-end" tabindex="-1" id="ofcDoor">
+    <header class="wd-right-brand">
+      <div class="wd-right-brand-inner">
+        <div class="wd-right-site-info-addedit">
+          <strong class="wd-right-site-title" id="offcanvasWithBothOptionsLabel">
+            لطفاً یکی انتخاب کنید
+          </strong>
+          <button class="wd-selection-close" type="button" data-bs-dismiss="offcanvas" aria-label="Close">
+            <i class="ti ti-x"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+    <div class="wd-left-scroll">
+      <section class="wd-component-selection">
+        <!-- درب تک حالته -->
+        <div class="wd-selection-header">
+          <strong class="wd-selection-title"> درب تک حالته </strong>
+          <div class="wd-selection-line"></div>
+        </div>
+        <div class="wd-profile-items-grid">
+          <!-- چپ بازشو -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="door_simple_right">
+            <div class="wd-profile-item-image">
+              <img src="./images/door_simple_right.jpg" alt="چپ بازشو" />
+            </div>
+            <span class="wd-profile-item-name"> چپ بازشو </span>
+          </button>
+          <!-- راست بازشو -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="door_simple_left">
+            <div class="wd-profile-item-image">
+              <img src="./images/door_simple_left.jpg" alt="راست بازشو" />
+            </div>
+            <span class="wd-profile-item-name"> راست بازشو </span>
+          </button>
+        </div>
+        <!-- درب دوحالته -->
+        <div class="wd-selection-header">
+          <strong class="wd-selection-title"> درب دوحالته </strong>
+          <div class="wd-selection-line"></div>
+        </div>
+        <div class="wd-profile-items-grid">
+          <!-- چپ بازشو -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="door_dual_right">
+            <div class="wd-profile-item-image">
+              <img src="./images/door_dual_right.jpg" alt="چپ بازشو" />
+            </div>
+            <span class="wd-profile-item-name"> چپ بازشو </span>
+          </button>
+          <!-- راست بازشو -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="door_dual_left">
+            <div class="wd-profile-item-image">
+              <img src="./images/door_dual_left.jpg" alt="راست بازشو" />
+            </div>
+            <span class="wd-profile-item-name"> راست بازشو </span>
+          </button>
+        </div>
+        <!-- درب فرانسوی -->
+        <div class="wd-selection-header">
+          <strong class="wd-selection-title"> درب فرانسوی </strong>
+          <div class="wd-selection-line"></div>
+        </div>
+        <div class="wd-profile-items-grid">
+          <!-- تک حالته راست بازشو -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="door_french_simple_right">
+            <div class="wd-profile-item-image">
+              <img src="./images/door_french_simple_right.jpg" alt="تک حالته راست بازشو" />
+            </div>
+            <span class="wd-profile-item-name"> تک حالته راست بازشو </span>
+          </button>
+          <!-- تک حالته چپ بازشو -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="door_french_simple_left">
+            <div class="wd-profile-item-image">
+              <img src="./images/door_french_simple_left.jpg" alt="تک حالته چپ بازشو" />
+            </div>
+            <span class="wd-profile-item-name"> تک حالته چپ بازشو </span>
+          </button>
+          <!-- دو حالته راست بازشو -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="door_french_dual_right">
+            <div class="wd-profile-item-image">
+              <img src="./images/door_french_dual_right.jpg" alt="دو حالته راست بازشو" />
+            </div>
+            <span class="wd-profile-item-name"> دو حالته راست بازشو </span>
+          </button>
+        </div>
+        <div class="wd-profile-items-grid">
+          <!-- دو حالته چپ بازشو -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="door_french_dual_left">
+            <div class="wd-profile-item-image">
+              <img src="./images/door_french_dual_left.jpg" alt="دو حالته چپ بازشو" />
+            </div>
+            <span class="wd-profile-item-name"> دو حالته چپ بازشو </span>
+          </button>
+        </div>
+      </section>
+    </div>
+  </aside>
+  <!-- منو چپ پنل -->
+  <aside class="wd-panel-left offcanvas offcanvas-end" tabindex="-1" id="ofcPanel">
+    <header class="wd-right-brand">
+      <div class="wd-right-brand-inner">
+        <div class="wd-right-site-info-addedit">
+          <strong class="wd-right-site-title" id="offcanvasWithBothOptionsLabel">
+            لطفاً یکی انتخاب کنید
+          </strong>
+          <button class="wd-selection-close" type="button" data-bs-dismiss="offcanvas" aria-label="Close">
+            <i class="ti ti-x"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+    <div class="wd-left-scroll">
+      <section class="wd-component-selection">
+        <div class="wd-profile-items-grid">
+          <!-- پنل افقی -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="hPanel">
+            <div class="wd-profile-item-image">
+              <img src="./images/hPanel.jpg" alt="پنل افقی" />
+            </div>
+            <span class="wd-profile-item-name"> افقی </span>
+          </button>
+          <!-- پنل عمودی -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="vPanel">
+            <div class="wd-profile-item-image">
+              <img src="./images/vPanel.jpg" alt="پنل عمودی" />
+            </div>
+            <span class="wd-profile-item-name"> عمودی </span>
+          </button>
+        </div>
+      </section>
+    </div>
+  </aside>
+  <!-- منو چپ سایر -->
+  <aside class="wd-panel-left offcanvas offcanvas-end" tabindex="-1" id="ofcCoupling">
+    <header class="wd-right-brand">
+      <div class="wd-right-brand-inner">
+        <div class="wd-right-site-info-addedit">
+          <strong class="wd-right-site-title" id="offcanvasWithBothOptionsLabel">
+            لطفاً یکی انتخاب کنید
+          </strong>
+          <button class="wd-selection-close" type="button" data-bs-dismiss="offcanvas" aria-label="Close">
+            <i class="ti ti-x"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+    <div class="wd-left-scroll">
+      <section class="wd-component-selection">
+        <!-- افزونه -->
+        <div class="wd-selection-header">
+          <strong class="wd-selection-title"> افزونه </strong>
+          <div class="wd-selection-line"></div>
+        </div>
+        <div class="wd-profile-items-grid">
+          <!-- افزودن فریم کناره -->
+          <button class="wd-profile-item addExtension" data-bs-dismiss="offcanvas" data-type="lace">
+            <div class="wd-profile-item-image">
+              <img src="./images/vCoupling.jpg" alt="افزودن فریم کناره" />
+            </div>
+            <span class="wd-profile-item-name"> افزودن فریم کناره </span>
+          </button>
+          <!-- افزودن توری -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="lace">
+            <div class="wd-profile-item-image">
+              <img src="./images/lace.jpg" alt="افزودن توری" />
+            </div>
+            <span class="wd-profile-item-name"> افزودن توری </span>
+          </button>
+        </div>
+      </section>
+    </div>
+  </aside>
+</body>
+</html>

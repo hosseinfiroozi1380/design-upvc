@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 58.8 30">
+  <g>
+    <rect x="13" y="-6.8" transform="matrix(0.4722 -0.8815 0.8815 0.4722 0.5161 15.8448)" width="0.9" height="28.6"></rect>
+    <rect x="-0.6" y="21" transform="matrix(0.8663 -0.4995 0.4995 0.8663 -8.883 9.7168)" width="28.6" height="0.9"></rect>
+    <rect x="25.7" y="11" width="3.6" height="8.1"></rect>
+    <path d="M30,30H0V0h30V30z M0.9,29.1h28.2V0.9H0.9V29.1z"></path>
+    <path d="M26.6,25.9H4.1V3.8h22.5V25.9z M4.9,25h20.9V4.6H4.9V25z"></path>
+    <rect x="29.9" y="1.2" transform="matrix(0.4722 -0.8815 0.8815 0.4722 15.7322 41.2564)" width="0.9" height="28.6"></rect>
+    <rect x="35.2" y="10" transform="matrix(0.8663 -0.4995 0.4995 0.8663 -5.0289 24.1168)" width="39.6" height="0.9"></rect>
+    <path d="M58.8,30h-30V0h30V30z M29.7,29.1h28.2V0.9H29.7V29.1z"></path>
+    <path d="M55.4,25.9H32.9V3.8h22.5V25.9z M33.7,25h20.9V4.6H33.7V25z"></path>
+  </g>
+</svg>

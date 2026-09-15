@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
+  <g>
+    <rect x="22" y="2.2" transform="matrix(0.8815 -0.4722 0.4722 0.8815 -5.1227 12.5711)" width="1" height="28.5" />
+    <rect x="-6.5" y="16.2" transform="matrix(0.5005 -0.8658 0.8658 0.5005 -10.3098 15.5721)" width="29.6" height="1" />
+    <rect x="11" y="0.8" width="8.1" height="3.6" />
+    <path d="M30,30H0V0h30V30z M1,29H29V1H1V29z" />
+    <path d="M26.3,26H4.1V3.5h22.1V26z M5,25.1h20.4V4.4H5V25.1z" />
+  </g>
+</svg>

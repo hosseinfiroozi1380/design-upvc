@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
+  <g>
+    <path d="M24.6,30H5.4V0h19.3L24.6,30L24.6,30z M6.3,29h17.3V1H6.3V29z"></path>
+    <path d="M20.6,25.3H9.4V4.7h11.2C20.5,4.7,20.5,25.3,20.6,25.3z M10.3,24.4h9.3V5.6h-9.3V24.4z"></path>
+    <rect x="3" y="21.5" transform="matrix(0.6898 -0.724 0.724 0.6898 -11.8132 16.4666)" width="20.7" height="1"></rect>
+    <rect x="12.9" y="-2.5" transform="matrix(0.701 -0.7131 0.7131 0.701 -1.3493 11.79)" width="1" height="20"></rect>
+    <ellipse cx="22.4" cy="14.5" rx="2.2" ry="2.3"></ellipse>
+  </g>
+</svg>

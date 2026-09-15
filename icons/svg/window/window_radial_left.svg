@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
+  <g>
+    <rect x="25.6" y="11" width="3.6" height="8.1" />
+    <path d="M30,30H0V0h30V30z M1,29H29V1H1V29z" />
+    <path d="M26.5,25.9H4V3.7h22.5V25.9z M4.9,25h20.8V4.6H4.9V25z" />
+    <path d="M15,5 L25.5,15 L15,25.5 L4.5,15 Z"
+          fill="none"
+          stroke="black"
+          stroke-width="2" />
+  </g>
+</svg>

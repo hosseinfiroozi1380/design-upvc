@@ -201,9 +201,9 @@ button {
   border-radius: 10px;
 }
 
-/* =========================================================
+/* 
     SECTION
-========================================================= */
+*/
 .wd-section-block {
   margin-bottom: 16px;
 }
@@ -275,9 +275,9 @@ button {
   border-radius: 9px 0 0 9px;
 }
 
-/* =========================================================
+/* 
    VIEW / HISTORY TOOLS
-========================================================= */
+*/
 .wd-view-tool {
   flex: 1;
   min-width: 0;
@@ -337,9 +337,9 @@ button {
   background: transparent;
 }
 
-/* =========================================================
+/* 
     NEW UNIT
-========================================================= */
+*/
 .wd-create-unit-row {
   display: flex;
   align-items: center;
@@ -378,9 +378,9 @@ button {
   font-size: 18px;
 }
 
-/* =========================================================
+/* 
    ITEMS LIST
-========================================================= */
+*/
 .wd-items-stack {
   display: flex;
   flex-direction: column;
@@ -480,9 +480,9 @@ button {
   background: #fee2e2;
 }
 
-/* =========================================================
+/* 
     PROFILE SELECT
-========================================================= */
+*/
 .wd-profile-switch {
   width: 100%;
   grid-template-columns: 1fr 1fr;
@@ -512,15 +512,59 @@ button {
   font-weight: 600;
 }
 
-/* =========================================================
-    FORM
-========================================================= */
+/* FORM  */
 .wd-form-line {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
 }
+/* بادخور */
 
+.wd-gap-fields {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+.wd-gap-field {
+  width: calc(50% - 4px);
+  display: block;
+  box-sizing: border-box;
+}
+
+.wd-gap-label {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0 0 6px 0;
+  padding: 0;
+  font-size: 12px;
+  line-height: 18px;
+  color: #6b7280;
+  text-align: right;
+  box-sizing: border-box;
+}
+
+.wd-gap-input {
+  display: block;
+  width: 100%;
+  height: 40px;
+  margin: 0;
+  padding: 0 10px;
+  box-sizing: border-box;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  outline: none;
+  background: #ffffff;
+  font-size: 12px;
+}
+
+.wd-gap-input:focus {
+  border-color: var(--wd-text-strong);
+}
 .wd-form-label {
   width: 65px;
   flex-shrink: 0;
@@ -543,9 +587,9 @@ button {
   border-color: var(--wd-text-strong);
 }
 
-/* =========================================================
+/* 
    SELECT BOX
-========================================================= */
+*/
 .wd-select-box {
   flex: 1;
   height: 40px;
@@ -579,9 +623,9 @@ button {
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.12);
 }
 
-/* =========================================================
+/* 
    COUNTER
-========================================================= */
+*/
 .wd-counter-control {
   flex: 1;
   height: 42px;
@@ -593,9 +637,9 @@ button {
   overflow: hidden;
 }
 
-/* =========================================================
+/* 
    BUTTON
-========================================================= */
+*/
 .wd-counter-button {
   width: 42px;
   height: 100%;
@@ -636,9 +680,9 @@ button {
   object-position: center center;
 }
 
-/* =========================================================
+/* 
    NUMBER INPUT
-========================================================= */
+*/
 .wd-counter-number {
   flex: 1;
   min-width: 0;
@@ -668,7 +712,7 @@ button {
   outline: none;
 }
 
-/* ========================================================= LARGE IMAGE / PREVIEW ========================================================= */
+/* LARGE IMAGE / PREVIEW */
 .wd-preview-large {
   position: relative;
   width: 100%;
@@ -683,7 +727,7 @@ button {
   height: 100%;
 }
 
-/* ========================================================= DIMENSION INPUTS ========================================================= */
+/* DIMENSION INPUTS */
 .wd-preview-large .positionMarker {
   position: absolute;
   z-index: 2;
@@ -703,7 +747,7 @@ button {
   border-color: #2563eb;
 }
 
-/* ========================================================= CORNER DIMENSION INPUTS ========================================================= */
+/* CORNER DIMENSION INPUTS */
 .wd-preview-large #a,
 .wd-preview-large #b,
 .wd-preview-large #c,
@@ -737,9 +781,9 @@ button {
   display: block;
 }
 
-/* =========================================================
+/* 
    SMALL IMAGES / SHAPE SELECTOR
-========================================================= */
+*/
 .wd-preview-strip {
   width: 100%;
   display: flex;
@@ -762,7 +806,7 @@ button {
   border-radius: 10px;
 }
 
-/* ========================================================= SHAPE ITEMS ========================================================= */
+/* SHAPE ITEMS */
 .wd-preview-strip .form-imagecheck {
   flex: 0 0 68px;
   height: 55px;
@@ -794,17 +838,17 @@ button {
   object-fit: contain;
 }
 
-/* ========================================================= SELECTED SHAPE ========================================================= */
+/* SELECTED SHAPE */
 .wd-preview-strip .form-imagecheck-input:checked+.form-imagecheck-figure {
   border-color: #2563eb;
 }
 
-/* ========================================================= FORM LINES ========================================================= */
+/* FORM LINES */
 .wd-form-line {
   width: 100%;
 }
 
-/* ========================================================= RIGHT ACTIONS ========================================================= */
+/* RIGHT ACTIONS */
 .wd-right-form-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -821,7 +865,7 @@ button {
   cursor: pointer;
 }
 
-/* ========================================================= CONFIRM ========================================================= */
+/* CONFIRM */
 .wd-right-confirm {
   border: 0;
   background: var(--wd-button-bg);
@@ -833,7 +877,7 @@ button {
   color: #ffffff;
 }
 
-/* ========================================================= CANCEL ========================================================= */
+/* CANCEL */
 .wd-right-cancel {
   border: 1px solid #e5e7eb;
   background: #ffffff;
@@ -844,9 +888,9 @@ button {
   background: #f9fafb;
 }
 
-/* =========================================================
+/* 
    DIMENSION INPUT POSITION
-========================================================= */
+*/
 /* عرض — روی مرز چپ تصویر، وسط ارتفاع */
 .wd-preview-large #itemWidth {
   top: 60%;
@@ -863,9 +907,9 @@ button {
   rotate: 0deg;
 }
 
-/* =========================================================
+/* 
     CANVAS
-========================================================= */
+*/
 .wd-canvas-zone {
   direction: ltr;
   width: 100%;
@@ -909,9 +953,9 @@ button {
   font-size: 13px;
 }
 
-/* =========================================================
+/* 
     LEFT SIDEBAR
-========================================================= */
+*/
 .wd-panel-left {
   direction: rtl;
   width: 300px;
@@ -927,9 +971,9 @@ button {
   z-index: 1000;
 }
 
-/* =========================================================
+/* 
     USER HEADER
-========================================================= */
+*/
 .wd-user-header {
   padding: 10px 16px;
   border-bottom: 1px solid #e5e7eb;
@@ -971,9 +1015,9 @@ button {
   color: var(--wd-text-strong);
 }
 
-/* =========================================================
+/* 
     LEFT CONTENT
-========================================================= */
+*/
 .wd-left-scroll {
   flex: 1;
   overflow-y: auto;
@@ -989,9 +1033,9 @@ button {
   border-radius: 10px;
 }
 
-/* =========================================================
+/* 
     LEFT FORM
- ========================================================= */
+ */
 .wd-left-field {
   margin-bottom: 12px;
 }
@@ -1049,9 +1093,9 @@ button {
   border-color: #2563eb;
 }
 
-/* =========================================================
+/* 
     LEFT COUNTER
-========================================================= */
+*/
 .wd-left-counter {
   flex: 1;
   height: 40px;
@@ -1083,9 +1127,9 @@ button {
   font-weight: 600;
 }
 
-/* =========================================================
+/* 
     LEFT ACTIONS
-========================================================= */
+*/
 .wd-left-tools-box {
   width: 100%;
   padding: 8px;
@@ -1117,9 +1161,9 @@ button {
   border-color: var(--wd-text-strong);
 }
 
-/* =========================================================
+/* 
     TOOL GRID
-========================================================= */
+*/
 .wd-components-title {
   display: flex;
   align-items: center;
@@ -1169,16 +1213,16 @@ button {
   font-size: 11px;
 }
 
-/* =========================================================
+/* 
    SELECT COMPONENT
-========================================================= */
+*/
 .wd-component-selection {
   margin-top: 16px;
 }
 
-/* =========================================================
+/* 
    MESSAGE + CLOSE
-========================================================= */
+*/
 .wd-selection-message-row {
   display: flex;
   align-items: center;
@@ -1212,9 +1256,9 @@ button {
   font-size: 16px;
 }
 
-/* =========================================================
+/* 
    SELECTION HEADER
-========================================================= */
+*/
 .wd-selection-header {
   display: flex;
   align-items: center;
@@ -1234,16 +1278,16 @@ button {
   background: var(--wd-border-soft);
 }
 
-/* =========================================================
+/* 
    ITEMS GRID
-========================================================= */
+*/
 .wd-profile-items-grid {
   margin-bottom: 16px;
 }
 
-/* =========================================================
+/* 
     PROFILE ITEMS
-========================================================= */
+*/
 .wd-profile-items-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -1279,9 +1323,9 @@ button {
   text-overflow: ellipsis;
 }
 
-/* =========================================================
+/* 
    MOBILE CATEGORY MENU
-========================================================= */
+*/
 .wd-mobile-category-bar {
   display: flex;
   align-items: center;
@@ -1354,9 +1398,9 @@ button {
   filter: brightness(0) invert(1);
 }
 
-/* =========================================================
+/* 
  MOBILE SUBMENU
-========================================================= */
+*/
 .wd-mobile-submenu-bar {
   display: none;
   width: 100%;
@@ -1427,9 +1471,9 @@ button {
   filter: brightness(0) invert(1);
 }
 
-/* =========================================================
+/* 
     MOBILE MENU BUTTONS
-========================================================= */
+*/
 .wd-mobile-menu-bar {
   display: none;
   position: fixed;
@@ -1482,9 +1526,9 @@ button {
   display: none !important;
 }
 
-/* =========================================================
+/* 
    UNIT DETAILS
-========================================================= */
+*/
 .wd-unit-details {
   margin-top: 16px;
   padding-top: 14px;
@@ -1523,9 +1567,9 @@ button {
   line-height: 1.8;
 }
 
-/* =========================================================
+/* 
    LEFT BOTTOM ACTIONS
-========================================================= */
+*/
 .wd-left-bottom-actions {
   display: flex;
   gap: 8px;
@@ -1578,10 +1622,10 @@ button {
   transform: translateX(0) !important;
 }
 
-/* =========================================================
+/* 
    ADD / EDIT UNIT PANEL
    همیشه حرکتی - دسکتاپ و موبایل
-========================================================= */
+*/
 #ofcAddNew {
   position: fixed;
   top: 0;
@@ -1614,10 +1658,10 @@ button {
   }
 }
 
-/* =========================================================
+/* 
    MULLION PANEL
    همیشه حرکتی - دسکتاپ و موبایل
-========================================================= */
+*/
 #ofcMullian {
   position: fixed;
   top: 0;
@@ -1845,9 +1889,9 @@ button {
   border-radius: 8px 0 0 8px;
 }
 
-/* =========================================================
+/* 
     MOBILE
-========================================================= */
+*/
 @media (max-width: 768px) {
   body {
     overflow: hidden;
@@ -2022,6 +2066,7 @@ button {
   overflow: auto;
   background-color: rgba(0, 0, 0, 0.4);
 }
+
 /* پنجره سفید اصلی */
 .wd-3d-modal-content {
   position: relative;
@@ -2034,6 +2079,7 @@ button {
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
 }
+
 /* دکمه‌های بالا سمت راست */
 .wd-3d-modal-actions {
   position: absolute;
@@ -2045,6 +2091,7 @@ button {
   gap: 8px;
   direction: rtl;
 }
+
 /* دکمه پیش نمایش */
 .wd-3d-preview-btn {
   width: 40px;
@@ -2119,6 +2166,7 @@ button {
   width: 100%;
   height: 100%;
 }
+
 /* موبایل */
 @media (max-width: 768px) {
 

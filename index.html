@@ -25,6 +25,7 @@
   <script src="./js/lib/tabler.min.js"></script>
   <!-- Application -->
   <script type="module" src="./js/lib/3d.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script type="module" src="./js/app/start.js"></script>
 </head>
 <body>
@@ -897,7 +898,6 @@
           </div> -->
         </section>
         <style>
-          /* پنل جزئیات آیتم */
           .wd-unit-details {
             display: none;
             position: fixed;
@@ -915,7 +915,6 @@
             z-index: 9999;
             font-family: IRANSansWeb, sans-serif;
           }
-          /* هر ردیف */
           .wd-unit-details .wd-form-line {
             display: flex;
             align-items: center;
@@ -926,7 +925,6 @@
           .wd-unit-details .wd-form-line:last-of-type {
             margin-bottom: 0;
           }
-          /* عنوان */
           .wd-unit-details .wd-form-label {
             flex: 0 0 65px;
             margin: 0;
@@ -935,7 +933,6 @@
             color: #374151;
             white-space: nowrap;
           }
-          /* Select */
           .wd-unit-details .wd-select-box {
             flex: 1;
             width: 100%;
@@ -954,21 +951,17 @@
               border-color .15s ease,
               box-shadow .15s ease;
           }
-          /* فوکوس */
           .wd-unit-details .wd-select-box:focus {
             border-color: #3b82f6;
             box-shadow:
               0 0 0 2px rgba(59, 130, 246, 0.12);
           }
-          /* هاور */
           .wd-unit-details .wd-select-box:hover {
             border-color: #9ca3af;
           }
-          /* گزینه غیرفعال */
           .wd-unit-details .wd-select-box option:disabled {
             color: #9ca3af;
           }
-          /* توضیح پایین فرم */
           .wd-unit-details .wd-unit-detail-note {
             margin-top: 10px;
             padding-top: 9px;
@@ -978,12 +971,10 @@
             line-height: 1.8;
             text-align: right;
           }
-          /* اسکرول اگر گزینه‌های زیادی نمایش داده شد */
           .wd-unit-details {
             max-height: calc(100vh - 20px);
             overflow-y: auto;
           }
-          /* اسکرول بار */
           .wd-unit-details::-webkit-scrollbar {
             width: 4px;
           }
@@ -991,7 +982,6 @@
             background: #d1d5db;
             border-radius: 10px;
           }
-          /* موبایل */
           @media (max-width: 768px) {
             .wd-unit-details {
               width: 270px;
@@ -1371,15 +1361,21 @@
           </label>
         </div>
         <!-- بادخور -->
-        <div class="wd-form-line">
-          <label class="wd-form-label" for="widthSpace"> بادخور عرض </label>
-          <input type="text" name="widthSpace" id="widthSpace" class="wd-input-box" placeholder="?" value="0" />
-        </div>
-        <div class="wd-form-line">
-          <label class="wd-form-label" for="heightSpace">
-            بادخور ارتفاع
-          </label>
-          <input type="text" name="heightSpace" id="heightSpace" class="wd-input-box" placeholder="?" value="0" />
+        <div class="wd-gap-fields">
+          <!-- بادخور عرض -->
+          <div class="wd-gap-field">
+            <label for="widthSpace" class="wd-gap-label">
+              بادخور عرض
+            </label>
+            <input type="text" name="widthSpace" id="widthSpace" class="wd-gap-input" placeholder="?" value="0" />
+          </div>
+          <!-- بادخور ارتفاع -->
+          <div class="wd-gap-field">
+            <label for="heightSpace" class="wd-gap-label">
+              بادخور ارتفاع
+            </label>
+            <input type="text" name="heightSpace" id="heightSpace" class="wd-gap-input" placeholder="?" value="0" />
+          </div>
         </div>
         <!-- AI -->
         <input type="hidden" name="ai" value="0" class="form-selectgroup-input" />

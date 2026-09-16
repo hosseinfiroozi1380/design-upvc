@@ -5,7 +5,8 @@ import { findGlassMargin } from '../utils/findGlassMargin.js';
 import { setDefaultData } from '../utils/setDefaultData.js';
 import { showMessage } from '../utils/showMessage.js';
 import { enableSave } from '../services/enableSave.js';
-
+import { updateLayerPreview } from "../utils/updateLayerPreview.js";
+import { updateTempDesignSnapshot } from "../utils/updateTempDesignSnapshot.js";
 // add Panel
 export function addPanel(addNewItemType, flatToAdd, toAddGroup = false, data = false) {
     state.panelColor = state.unitData['profile_color_hex'];
@@ -66,16 +67,22 @@ export function addPanel(addNewItemType, flatToAdd, toAddGroup = false, data = f
         }
     }
     panelFlat.remove();
-    if (toAddGroup) {
-        toAddGroup.addChild(panelGroup);
-    }
+
     flatToAdd.name = "base";
+
     let baseGroup = new state.paper.Group();
     baseGroup.name = "baseGroup";
+
     baseGroup.addChild(flatToAdd);
     baseGroup.addChild(panelGroup);
+
     if (toAddGroup) {
         toAddGroup.addChild(baseGroup);
     }
+
     enableSave();
+    updateTempDesignSnapshot();
+    updateLayerPreview();
+
+    return panelGroup;
 }

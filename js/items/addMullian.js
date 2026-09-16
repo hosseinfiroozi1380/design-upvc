@@ -59,7 +59,6 @@ export function addMullian(addNewItemType, flatToAdd, toAddPoint = false, toAddG
     console.log("PAPER TEST", state.paper);
     console.log("PATH", state.paper.Path);
     console.log("POINT", state.paper.Point);
-
     //create mullian
     let mullian = flatToAdd.intersect(tempMullian);
     mullian.strokeColor = state.strokeColor;
@@ -112,10 +111,7 @@ export function addMullian(addNewItemType, flatToAdd, toAddPoint = false, toAddG
     }
     tmpFlat.remove();
     updateTempDesignSnapshot();
-
     updateLayerPreview();
-    
     enableSave();
-    
     return mullian;
 }

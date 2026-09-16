@@ -148,7 +148,6 @@ const state = {
     dragThreshold: 10,
     activeLayer: null,
     firstLockType: 0,
-
 };
 window.state = state;
 Object.defineProperty(state, "addNewItemType", {

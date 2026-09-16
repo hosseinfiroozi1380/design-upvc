@@ -30,90 +30,81 @@ import { addRemoveBottomdoor } from "../items/addRemoveBottomdoor.js";
 import { setDefaultData } from "../utils/setDefaultData.js";
 import { changeTempLayerById } from "../utils/changeTempLayerById.js";
 import { updateTempDesignSnapshot } from "../utils/updateTempDesignSnapshot.js";
+import { exportDesignPDF } from "../utils/exportDesignPDF.js";
 export function initClickEvents() {
-   // نمایش سه بعدی
-$(document).on("click", "#view3DButton", async function (event) {
-    event.preventDefault();
-
-    // طراحی فعلی
-    const targetItem =
-        state.paper?.project?.activeLayer?.getItem({
-            name: "section"
-        });
-
-    console.log("========== 3D CHECK ==========");
-    console.log("SECTION:", targetItem);
-    console.log("SECTION CHILDREN:", targetItem?.children);
-    console.log("SECTION BOUNDS:", targetItem?.bounds);
-    console.log("MAIN SECTION:", state.mainSection);
-    console.log("MAIN FRAME:", state.mainFrame);
-    console.log(
-        "ACTIVE LAYER:",
-        state.paper?.project?.activeLayer
-    );
-    console.log("================================");
-
-    if (!targetItem) {
-        console.warn(
-            "SECTION برای نمایش سه بعدی پیدا نشد"
-        );
-        return;
-    }
-
-    // مدال سه بعدی
-    const modalElement =
-        document.getElementById("myModal");
-
-    if (!modalElement) {
-        console.error("#myModal پیدا نشد");
-        return;
-    }
-
-    // کانتینر سه بعدی
-    const container =
-        document.getElementById("3d");
-
-    if (!container) {
-        console.error("#3d پیدا نشد");
-        return;
-    }
-
-    console.log("OPEN 3D MODAL");
-
-    // باز کردن مدال
-    modalElement.style.display = "block";
-
-    // صبر می‌کنیم تا مدال واقعاً اندازه بگیرد
-    requestAnimationFrame(async () => {
-
-        try {
-
-            // ساخت مدل سه بعدی از طراحی فعلی
-            await set3D(
-                targetItem,
-                state.currentDesignID
-            );
-
-            // اصلاح اندازه بعد از ساخت مدل
-            requestAnimationFrame(() => {
-
-                if (window.resize3D) {
-                    window.resize3D();
-                }
-
-            });
-
-        } catch (error) {
-
-            console.error(
-                "خطا در نمایش سه بعدی:",
-                error
-            );
-
+    // ذخیره PDF
+    $(document).on(
+        "click",
+        "#saveProject",
+        async function (e) {
+            e.preventDefault();
+            await exportDesignPDF();
         }
-
+    );
+    // نمایش سه بعدی
+    $(document).on("click", "#view3DButton", async function (event) {
+        event.preventDefault();
+        // طراحی فعلی
+        const targetItem =
+            state.paper?.project?.activeLayer?.getItem({
+                name: "section"
+            });
+        console.log("========== 3D CHECK ==========");
+        console.log("SECTION:", targetItem);
+        console.log("SECTION CHILDREN:", targetItem?.children);
+        console.log("SECTION BOUNDS:", targetItem?.bounds);
+        console.log("MAIN SECTION:", state.mainSection);
+        console.log("MAIN FRAME:", state.mainFrame);
+        console.log(
+            "ACTIVE LAYER:",
+            state.paper?.project?.activeLayer
+        );
+        console.log("================================");
+        if (!targetItem) {
+            console.warn(
+                "SECTION برای نمایش سه بعدی پیدا نشد"
+            );
+            return;
+        }
+        // مدال سه بعدی
+        const modalElement =
+            document.getElementById("myModal");
+        if (!modalElement) {
+            console.error("#myModal پیدا نشد");
+            return;
+        }
+        // کانتینر سه بعدی
+        const container =
+            document.getElementById("3d");
+        if (!container) {
+            console.error("#3d پیدا نشد");
+            return;
+        }
+        console.log("OPEN 3D MODAL");
+        // باز کردن مدال
+        modalElement.style.display = "block";
+        // صبر می‌کنیم تا مدال واقعاً اندازه بگیرد
+        requestAnimationFrame(async () => {
+            try {
+                // ساخت مدل سه بعدی از طراحی فعلی
+                await set3D(
+                    targetItem,
+                    state.currentDesignID
+                );
+                // اصلاح اندازه بعد از ساخت مدل
+                requestAnimationFrame(() => {
+                    if (window.resize3D) {
+                        window.resize3D();
+                    }
+                });
+            } catch (error) {
+                console.error(
+                    "خطا در نمایش سه بعدی:",
+                    error
+                );
+            }
+        });
     });
-});
     // addNewItemButtonClick
     $(document).on('click', '#addNewItemButton, .layerClone, .configMenuDropDown, .saveProject, .addNewItem, .vMullianEualling, .hMullianEualling', function () {
         cancelAll();

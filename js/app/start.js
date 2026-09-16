@@ -11,42 +11,29 @@ import { initHistory } from "../events/initHistory.js";
 import { initContextMenu } from "../events/initContextMenu.js";
 import { initPinchZoom } from "../events/initPinchZoom.js";
 $(function () {
-
   console.log("DOM READY");
-
   try {
-
     console.log("before initApplication");
     initApplication();
     console.log("after initApplication");
-
     // زوم لمسی بعد از آماده شدن Paper.js
     initPinchZoom();
-
     console.log("before initClickEvents");
     initClickEvents();
     console.log("after initClickEvents");
-
     console.log("before initFormEvents");
     initFormEvents();
     console.log("after initFormEvents");
-
     console.log("before initLayerEvents");
     initLayerEvents();
     console.log("after initLayerEvents");
-
     console.log("before initPaperToolEvents");
     initPaperToolEvents();
     console.log("after initPaperToolEvents");
-
     initBeforeUnload();
     initHistory();
     initContextMenu();
-
   } catch (e) {
-
     console.error("START ERROR:", e);
-
   }
-
 });

@@ -30,9 +30,32 @@ export function drawOpeningLines(
         olPath.moveTo(
             hingePositions[hingePsition][0] ?? itemGroup.bounds.center
         );
-        olPath.lineTo(
-            handlePositions[handlePosition] ?? itemGroup.bounds.center
-        );
+        const handlePoint =
+            handlePositions[handlePosition] ?? itemGroup.bounds.center;
+        const handleOffset = 25;
+        let adjustedHandlePoint = handlePoint;
+        if (handlePosition === "right") {
+            adjustedHandlePoint = new state.paper.Point(
+                handlePoint.x - handleOffset,
+                handlePoint.y
+            );
+        } else if (handlePosition === "left") {
+            adjustedHandlePoint = new state.paper.Point(
+                handlePoint.x + handleOffset,
+                handlePoint.y
+            );
+        } else if (handlePosition === "top") {
+            adjustedHandlePoint = new state.paper.Point(
+                handlePoint.x,
+                handlePoint.y + handleOffset
+            );
+        } else if (handlePosition === "bottom") {
+            adjustedHandlePoint = new state.paper.Point(
+                handlePoint.x,
+                handlePoint.y - handleOffset
+            );
+        }
+        olPath.lineTo(adjustedHandlePoint);
         olPath.lineTo(
             hingePositions[hingePsition][hingePositions[hingePsition].length - 1]
             ?? itemGroup.bounds.center
@@ -43,103 +66,172 @@ export function drawOpeningLines(
         itemGroup.addChild(olPath);
     }
     else if (["dual"].includes(olType)) {
+
+        const handleOffset = 25;
+    
+        const leftTip = new state.paper.Point(
+            itemGroup.bounds.leftCenter.x + handleOffset,
+            itemGroup.bounds.leftCenter.y
+        );
+    
+        const rightTip = new state.paper.Point(
+            itemGroup.bounds.rightCenter.x - handleOffset,
+            itemGroup.bounds.rightCenter.y
+        );
+    
+        const topTip = new state.paper.Point(
+            itemGroup.bounds.topCenter.x,
+            itemGroup.bounds.topCenter.y + handleOffset
+        );
+    
         if (handlePosition === "left") {
+    
             olPath = new state.paper.Path();
-            olPath.moveTo(itemGroup.bounds.topRight);
-            olPath.lineTo(itemGroup.bounds.leftCenter);
-            olPath.lineTo(itemGroup.bounds.bottomRight);
+    
+            olPath.moveTo(
+                hingePositions["right"][0] ?? itemGroup.bounds.topRight
+            );
+    
+            olPath.lineTo(leftTip);
+    
+            olPath.lineTo(
+                hingePositions["right"][hingePositions["right"].length - 1]
+                ?? itemGroup.bounds.bottomRight
+            );
+    
             olPath.strokeColor = state.olColor;
             olPath.strokeWidth = 2;
             olPath.name = "ol";
             itemGroup.addChild(olPath);
+    
         } else {
+    
             olPath = new state.paper.Path();
-            olPath.moveTo(itemGroup.bounds.topLeft);
-            olPath.lineTo(itemGroup.bounds.rightCenter);
-            olPath.lineTo(itemGroup.bounds.bottomLeft);
+    
+            olPath.moveTo(
+                hingePositions["left"][0] ?? itemGroup.bounds.topLeft
+            );
+    
+            olPath.lineTo(rightTip);
+    
+            olPath.lineTo(
+                hingePositions["left"][hingePositions["left"].length - 1]
+                ?? itemGroup.bounds.bottomLeft
+            );
+    
             olPath.strokeColor = state.olColor;
             olPath.strokeWidth = 2;
             olPath.name = "ol";
             itemGroup.addChild(olPath);
         }
+    
         olPath = new state.paper.Path();
-        olPath.moveTo(itemGroup.bounds.bottomLeft);
-        olPath.lineTo(itemGroup.bounds.topCenter);
-        olPath.lineTo(itemGroup.bounds.bottomRight);
+    
+        olPath.moveTo(
+            hingePositions["bottom"][0] ?? itemGroup.bounds.bottomLeft
+        );
+    
+        olPath.lineTo(topTip);
+    
+        olPath.lineTo(
+            hingePositions["bottom"][hingePositions["bottom"].length - 1]
+            ?? itemGroup.bounds.bottomRight
+        );
+    
         olPath.strokeColor = state.olColor;
         olPath.strokeWidth = 2;
         olPath.name = "ol";
+    
         itemGroup.addChild(olPath);
     }
     else if (["radial"].includes(olType)) {
+        const offset = 25;
+        const bottom = new state.paper.Point(
+            handlePositions["bottom"]?.x,
+            handlePositions["bottom"]?.y - offset
+        );
+        const left = new state.paper.Point(
+            handlePositions["left"]?.x + offset,
+            handlePositions["left"]?.y
+        );
+        const top = new state.paper.Point(
+            handlePositions["top"]?.x,
+            handlePositions["top"]?.y + offset
+        );
+        const right = new state.paper.Point(
+            handlePositions["right"]?.x - offset,
+            handlePositions["right"]?.y
+        );
         olPath = new state.paper.Path();
-        olPath.moveTo(
-            handlePositions["bottom"] ?? itemGroup.bounds.center
-        );
-        olPath.lineTo(
-            handlePositions["left"] ?? itemGroup.bounds.center
-        );
-        olPath.lineTo(
-            handlePositions["top"] ?? itemGroup.bounds.center
-        );
-        olPath.lineTo(
-            handlePositions["right"] ?? itemGroup.bounds.center
-        );
-        olPath.lineTo(
-            handlePositions["bottom"] ?? itemGroup.bounds.center
-        );
+        olPath.moveTo(bottom);
+        olPath.lineTo(left);
+        olPath.lineTo(top);
+        olPath.lineTo(right);
+        olPath.lineTo(bottom);
         olPath.strokeColor = state.olColor;
         olPath.strokeWidth = 2;
         olPath.name = "ol";
         itemGroup.addChild(olPath);
     }
     else if (["volkswagen"].includes(olType)) {
+        const offset = 25;
         if (handlePosition === "left") {
+            const left = handlePositions["left"] ?? itemGroup.bounds.center;
+            const top = handlePositions["top"] ?? itemGroup.bounds.center;
+            const right = handlePositions["right"] ?? itemGroup.bounds.center;
             olPath = new state.paper.Path();
             olPath.moveTo(
-                handlePositions["left"] ?? itemGroup.bounds.center
+                new state.paper.Point(
+                    left.x + offset,
+                    left.y
+                )
+            );
+            olPath.lineTo(top);
+            olPath.lineTo(
+                new state.paper.Point(
+                    top.x,
+                    left.y
+                )
             );
             olPath.lineTo(
-                handlePositions["top"] ?? itemGroup.bounds.center
-            );
-            olPath.lineTo(
-                handlePositions["top"] && handlePositions["left"]
-                    ? [
-                        handlePositions["top"].x,
-                        handlePositions["left"].y
-                      ]
-                    : itemGroup.bounds.center
-            );
-            olPath.lineTo(
-                handlePositions["right"] ?? itemGroup.bounds.center
+                new state.paper.Point(
+                    right.x - offset,
+                    right.y
+                )
             );
             olPath.lineTo([
-                handlePositions["right"].x - 100,
-                handlePositions["right"].y - 100
+                right.x - 100,
+                right.y - 100
             ]);
             olPath.strokeColor = state.olColor;
             olPath.strokeWidth = 2;
             olPath.name = "ol";
             itemGroup.addChild(olPath);
-        }
-        else if (handlePosition === "right") {
+        } else if (handlePosition === "right") {
+            const right = handlePositions["right"] ?? itemGroup.bounds.center;
+            const top = handlePositions["top"] ?? itemGroup.bounds.center;
+            const left = handlePositions["left"] ?? itemGroup.bounds.center;
             olPath = new state.paper.Path();
             olPath.moveTo(
-                handlePositions["right"] ?? itemGroup.bounds.center
+                new state.paper.Point(
+                    right.x - offset,
+                    right.y
+                )
             );
-            olPath.lineTo(
-                handlePositions["top"] ?? itemGroup.bounds.center
-            );
+            olPath.lineTo(top);
             olPath.lineTo([
-                handlePositions["top"].x,
-                handlePositions["right"].y
+                top.x,
+                right.y
             ]);
             olPath.lineTo(
-                handlePositions["left"]
+                new state.paper.Point(
+                    left.x + offset,
+                    left.y
+                )
             );
             olPath.lineTo([
-                handlePositions["left"].x + 100,
-                handlePositions["left"].y - 100
+                left.x + 100,
+                left.y - 100
             ]);
             olPath.strokeColor = state.olColor;
             olPath.strokeWidth = 2;

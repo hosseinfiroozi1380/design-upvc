@@ -1,7 +1,6 @@
 // src/services/enableSave.js
 import state from "../core/state.js";
 import { saveDesign } from "./saveDesign.js";
-
 // Something changed
 export function enableSave(
     delay = 100,
@@ -15,39 +14,33 @@ export function enableSave(
             );
         }
         state.saveTimeout =
-    setTimeout(() => {
-
-        // طراحی موقت است؛ ذخیره در سرور انجام نشود
-        if (
-            state.tempDesigns?.some(
-                item =>
-                    String(item.id) ===
-                    String(state.currentDesignID)
-            )
-        ) {
-            return;
-        }
-
-        state.saveTimeout = setTimeout(() => {
-
-            if (
-                state.tempDesigns?.some(
-                    item =>
-                        String(item.id) ===
-                        String(state.currentDesignID)
-                )
-            ) {
-                return;
-            }
-
-            saveDesign(
-                state.currentDesignID,
-                true
-            );
-
-        }, delay);
-
-    }, delay);
+            setTimeout(() => {
+                // طراحی موقت است؛ ذخیره در سرور انجام نشود
+                if (
+                    state.tempDesigns?.some(
+                        item =>
+                            String(item.id) ===
+                            String(state.currentDesignID)
+                    )
+                ) {
+                    return;
+                }
+                state.saveTimeout = setTimeout(() => {
+                    if (
+                        state.tempDesigns?.some(
+                            item =>
+                                String(item.id) ===
+                                String(state.currentDesignID)
+                        )
+                    ) {
+                        return;
+                    }
+                    saveDesign(
+                        state.currentDesignID,
+                        true
+                    );
+                }, delay);
+            }, delay);
     } else {
         $('.saveCard')
             .removeClass(

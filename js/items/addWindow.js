@@ -150,11 +150,11 @@ export function addWindow(addNewItemType, flatToAdd, toAddGroup = false, data = 
             HandlePosition = "bottom";
             olType = 'normal';
         } else if (addNewItemType == 'window_dual_right') {
-            HingePosition = false;
+            HingePosition = "left";
             HandlePosition = "right";
             olType = 'dual';
         } else if (addNewItemType == 'window_dual_left') {
-            HingePosition = false;
+            HingePosition = "right";
             HandlePosition = "left";
             olType = 'dual';
         } else if (addNewItemType == 'window_radial_right') {

@@ -601,20 +601,15 @@ async function build3DFromSVG(
     initMaterials();
     refreshMaterials();
     for (const path of svgData.paths) {
-
       const origId =
         path.userData?.id ||
         path.userData?.node?.id ||
         "";
-
       console.log("3D SVG PATH:", origId);
-
       const type =
         getPathType(origId);
-
       const openingInfo =
         getOpeningInfo(path);
-
       if (type === "other") {
         continue;
       }
@@ -710,168 +705,135 @@ async function build3DFromSVG(
           -depth / 2
         );
         const mesh =
-        new THREE.Mesh(
+          new THREE.Mesh(
             geometry,
             material
-        );
-    
-    mesh.castShadow = false;
-    mesh.receiveShadow = false;
-    
-    mesh.position.z =
-        zOffset;
-    
-    mesh.userData.svgId =
-        origId;
-    
-// ========================================================
-// مرز فریم‌ها
-// ========================================================
-if (type === "frame") {
-
-  const pathId =
-    String(origId).toLowerCase();
-
-const isMainFrame =
-    pathId === "mainframe";
-
-const isWindowFrame =
-    pathId === "windowframe";
-
-  const edgeGeometry =
-      new THREE.EdgesGeometry(
-          geometry,
-          15
-      );
-
-  const positions =
-      edgeGeometry.attributes.position.array;
-
-  const filteredPositions = [];
-
-  // ====================================================
-  // فریم اصلی:
-  // فقط مرزهای داخلی
-  // مرز بیرونی حذف می‌شود
-  // ====================================================
-  if (isWindowFrame) {
-
-      const geometryBox =
-          new THREE.Box3().setFromBufferAttribute(
-              geometry.attributes.position,
-              0
           );
-
-      const minX = geometryBox.min.x;
-      const maxX = geometryBox.max.x;
-      const minY = geometryBox.min.y;
-      const maxY = geometryBox.max.y;
-
-      const margin = 1;
-
-      for (
-          let i = 0;
-          i < positions.length;
-          i += 6
-      ) {
-
-          const x1 = positions[i];
-          const y1 = positions[i + 1];
-
-          const x2 = positions[i + 3];
-          const y2 = positions[i + 4];
-
-          const isOuterEdge =
-              (
+        mesh.castShadow = false;
+        mesh.receiveShadow = false;
+        mesh.position.z =
+          zOffset;
+        mesh.userData.svgId =
+          origId;
+        // ========================================================
+        // مرز فریم‌ها
+        // ========================================================
+        if (type === "frame") {
+          const pathId =
+            String(origId).toLowerCase();
+          const isMainFrame =
+            pathId === "mainframe";
+          const isWindowFrame =
+            pathId === "windowframe";
+          const edgeGeometry =
+            new THREE.EdgesGeometry(
+              geometry,
+              15
+            );
+          const positions =
+            edgeGeometry.attributes.position.array;
+          const filteredPositions = [];
+          // ====================================================
+          // فریم اصلی:
+          // فقط مرزهای داخلی
+          // مرز بیرونی حذف می‌شود
+          // ====================================================
+          if (isWindowFrame) {
+            const geometryBox =
+              new THREE.Box3().setFromBufferAttribute(
+                geometry.attributes.position,
+                0
+              );
+            const minX = geometryBox.min.x;
+            const maxX = geometryBox.max.x;
+            const minY = geometryBox.min.y;
+            const maxY = geometryBox.max.y;
+            const margin = 1;
+            for (
+              let i = 0;
+              i < positions.length;
+              i += 6
+            ) {
+              const x1 = positions[i];
+              const y1 = positions[i + 1];
+              const x2 = positions[i + 3];
+              const y2 = positions[i + 4];
+              const isOuterEdge =
+                (
                   Math.abs(x1 - minX) < margin &&
                   Math.abs(x2 - minX) < margin
-              ) ||
-              (
+                ) ||
+                (
                   Math.abs(x1 - maxX) < margin &&
                   Math.abs(x2 - maxX) < margin
-              ) ||
-              (
+                ) ||
+                (
                   Math.abs(y1 - minY) < margin &&
                   Math.abs(y2 - minY) < margin
-              ) ||
-              (
+                ) ||
+                (
                   Math.abs(y1 - maxY) < margin &&
                   Math.abs(y2 - maxY) < margin
-              );
-
-          if (!isOuterEdge) {
-
-              filteredPositions.push(
+                );
+              if (!isOuterEdge) {
+                filteredPositions.push(
                   x1,
                   y1,
                   positions[i + 2],
-
                   x2,
                   y2,
                   positions[i + 5]
+                );
+              }
+            }
+          } else {
+            // =================================================
+            // مولین + فریم پنجره
+            // مرز آن‌ها نمایش داده می‌شود
+            // =================================================
+            for (
+              let i = 0;
+              i < positions.length;
+              i += 6
+            ) {
+              filteredPositions.push(
+                positions[i],
+                positions[i + 1],
+                positions[i + 2],
+                positions[i + 3],
+                positions[i + 4],
+                positions[i + 5]
               );
+            }
           }
-      }
-
-  } else {
-
-      // =================================================
-      // مولین + فریم پنجره
-      // مرز آن‌ها نمایش داده می‌شود
-      // =================================================
-
-      for (
-          let i = 0;
-          i < positions.length;
-          i += 6
-      ) {
-
-          filteredPositions.push(
-              positions[i],
-              positions[i + 1],
-              positions[i + 2],
-
-              positions[i + 3],
-              positions[i + 4],
-              positions[i + 5]
-          );
-      }
-  }
-
-  // ====================================================
-  // ساخت خط مرزی
-  // ====================================================
-
-  if (filteredPositions.length > 0) {
-
-      const filteredGeometry =
-          new THREE.BufferGeometry();
-
-      filteredGeometry.setAttribute(
-          "position",
-          new THREE.Float32BufferAttribute(
-              filteredPositions,
-              3
-          )
-      );
-
-      const edgeMaterial =
-      new THREE.LineBasicMaterial({
-        color: 0x9ca3af,
-        transparent: true,
-        opacity: 0.45
-    });
-      const edgeLines =
-          new THREE.LineSegments(
-              filteredGeometry,
-              edgeMaterial
-          );
-
-      edgeLines.renderOrder = 10;
-
-      mesh.add(edgeLines);
-  }
-}
+          // ====================================================
+          // ساخت خط مرزی
+          // ====================================================
+          if (filteredPositions.length > 0) {
+            const filteredGeometry =
+              new THREE.BufferGeometry();
+            filteredGeometry.setAttribute(
+              "position",
+              new THREE.Float32BufferAttribute(
+                filteredPositions,
+                3
+              )
+            );
+            const edgeMaterial =
+              new THREE.LineBasicMaterial({
+                color: 0x9ca3af,
+                transparent: true,
+                opacity: 0.45
+              });
+            const edgeLines =
+              new THREE.LineSegments(
+                filteredGeometry,
+                edgeMaterial
+              );
+            edgeLines.renderOrder = 10;
+            mesh.add(edgeLines);
+          }
+        }
         // قرار دادن قطعات بازشو در گروه مخصوص خودشان
         if (openingInfo) {
           let sashGroup =

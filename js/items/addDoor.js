@@ -9,6 +9,8 @@ import { setDefaultData } from "../utils/setDefaultData.js";
 import { addHingeAndHandle } from "./addHingeAndHandle.js";
 import { enableSave } from "../services/enableSave.js";
 import { drawDoorOpeningLines } from "../drawing/drawDoorOpeningLines.js";
+import { updateTempDesignSnapshot } from "../utils/updateTempDesignSnapshot.js";
+import { updateLayerPreview } from "../utils/updateLayerPreview.js";
 
 //add Door function
 export function addDoor(
@@ -99,7 +101,7 @@ export function addDoor(
             flatToAddNew,
             -state.frameSizeDoor
         );
-        windowsFlat.fillColor = state.flatColor;
+        windowsFlat.fillColor = new state.paper.Color("#8acde8");
         windowsFlat.name = "flat";
         setDefaultData(
             windowsFlat,
@@ -225,6 +227,8 @@ export function addDoor(
         }
         flatToAddNew.remove();
         enableSave();
+        updateTempDesignSnapshot();
+        updateLayerPreview();
         return DoorsGroup;
     }
 }

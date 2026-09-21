@@ -9,7 +9,7 @@ export function loadApplication(savedImport) {
   importToProject(savedImport.design);
   $('.layerName').val(state.unitData.name);
   $('.location').val(state.unitData.location);
-  $('.layerQuantity').val(state.unitData.quantity);
+  $('.layerQuantity').text(state.unitData.quantity);
   loadLayerList();
   $('.preloadPage').addClass('d-none');
  } else {

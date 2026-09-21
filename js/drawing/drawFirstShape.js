@@ -11,8 +11,8 @@ import { loadLayerList } from "../services/loadLayerList.js";
 export function drawFirstShape(formData, redraw = false, mainFrameData = false, section = false) {
     console.log("ENTER drawFirstShape", {
         formData,
-        paper:state.paper
-       });
+        paper: state.paper
+    });
     state.unitData.name = (
         redraw
             ? state.unitData.name
@@ -45,7 +45,7 @@ export function drawFirstShape(formData, redraw = false, mainFrameData = false, 
         state.unitData.system == "Al" ? 0 : 3;
     $('.layerName').val(state.unitData.name);
     $('.location').val(state.unitData.location);
-    $('.layerQuantity').val(state.unitData.quantity);
+    $('.layerQuantity').text(state.unitData.quantity);
     updateLayerDetailsMenuOptions();
     let bottomDoorHeight = 0;
     state.extra_frame_lenght =
@@ -87,12 +87,11 @@ export function drawFirstShape(formData, redraw = false, mainFrameData = false, 
             Number(formData.dimension[0]) +
             (Number(state.extra_frame_lenght) * 2)
         );
-        let itemHeight =
+    let itemHeight =
         parseFloat(
             Number(formData.dimension[1]) +
             (Number(state.extra_frame_lenght) * 2)
         );
-    
     // ذخیره ابعاد نهایی طراحی
     state.unitData.width = itemWidth;
     state.unitData.height = itemHeight;
@@ -120,6 +119,38 @@ export function drawFirstShape(formData, redraw = false, mainFrameData = false, 
         );
         tmpShape.lineTo(
             new state.paper.Point(startX + itemWidth, startY)
+        );
+        tmpShape.closed = true;
+    }
+    if (itemType == "Trapezoid") {
+        tmpShape = new state.paper.Path();
+        tmpShape.moveTo(
+            new state.paper.Point(a, 0)
+        );
+        tmpShape.lineTo(
+            new state.paper.Point(itemWidth - b, 0)
+        );
+        tmpShape.lineTo(
+            new state.paper.Point(itemWidth, itemHeight)
+        );
+        tmpShape.lineTo(
+            new state.paper.Point(0, itemHeight)
+        );
+        tmpShape.closed = true;
+    }
+    if (itemType == "Trapezoid_reverse") {
+        tmpShape = new state.paper.Path();
+        tmpShape.moveTo(
+            new state.paper.Point(0, 0)
+        );
+        tmpShape.lineTo(
+            new state.paper.Point(itemWidth, 0)
+        );
+        tmpShape.lineTo(
+            new state.paper.Point(itemWidth - b, itemHeight)
+        );
+        tmpShape.lineTo(
+            new state.paper.Point(a, itemHeight)
         );
         tmpShape.closed = true;
     }
@@ -221,35 +252,56 @@ export function drawFirstShape(formData, redraw = false, mainFrameData = false, 
     }
     if (itemType == "triangle") {
         tmpShape = new state.paper.Path();
+        // رأس مثلث در وسط
         tmpShape.moveTo(
-            new state.paper.Point(a, 0)
+            new state.paper.Point(
+                startX + itemWidth / 2,
+                startY
+            )
         );
+        // گوشه پایین چپ
         tmpShape.lineTo(
-            new state.paper.Point(0, itemHeight)
+            new state.paper.Point(
+                startX,
+                startY + itemHeight
+            )
         );
+        // گوشه پایین راست
         tmpShape.lineTo(
-            new state.paper.Point(itemWidth, itemHeight)
+            new state.paper.Point(
+                startX + itemWidth,
+                startY + itemHeight
+            )
         );
         tmpShape.closed = true;
     }
     if (itemType == "polygon") {
         tmpShape = new state.paper.Path.RegularPolygon({
-            center: [
-                itemWidth / 2,
-                itemHeight / 2
-            ],
-            sides: a,
-            radius: itemWidth / 2
+            center: new state.paper.Point(
+                startX + itemWidth / 2,
+                startY + itemHeight / 2
+            ),
+            sides: 5,
+            radius: 1
         });
         tmpShape.closed = true;
+        const bounds = tmpShape.bounds;
+        const scaleX = itemWidth / bounds.width;
+        const scaleY = itemHeight / bounds.height;
+        tmpShape.scale(
+            scaleX,
+            scaleY,
+            new state.paper.Point(
+                startX + itemWidth / 2,
+                startY + itemHeight / 2
+            )
+        );
     }
     if (itemType == "circle") {
         tmpShape = new state.paper.Path.Ellipse(
-            new state.paper.Point(
-                itemWidth / 2,
-                itemHeight / 2
-            ),
-            new state.paper.Size(
+            new state.paper.Rectangle(
+                startX,
+                startY,
                 itemWidth,
                 itemHeight
             )
@@ -257,43 +309,65 @@ export function drawFirstShape(formData, redraw = false, mainFrameData = false, 
         tmpShape.closed = true;
     }
     if (itemType == "half_circle") {
+        const radius = itemWidth / 2;
         tmpShape = new state.paper.Path();
         tmpShape.moveTo(
-            new state.paper.Point(0, itemHeight)
+            new state.paper.Point(
+                startX,
+                startY + radius
+            )
         );
         tmpShape.lineTo(
-            new state.paper.Point(itemWidth, itemHeight)
+            new state.paper.Point(
+                startX + itemWidth,
+                startY + radius
+            )
         );
         tmpShape.arcTo(
             new state.paper.Point(
-                itemWidth / 2,
-                0
+                startX + itemWidth / 2,
+                startY
             ),
             new state.paper.Point(
-                0,
-                itemHeight
+                startX,
+                startY + radius
             )
         );
         tmpShape.closed = true;
     }
     if (itemType == "half_circle_reverse") {
+        const radius = itemWidth / 2;
+    
         tmpShape = new state.paper.Path();
+    
+        // بالا راست
         tmpShape.moveTo(
-            new state.paper.Point(itemWidth, 0)
-        );
-        tmpShape.lineTo(
-            new state.paper.Point(0, 0)
-        );
-        tmpShape.arcTo(
             new state.paper.Point(
-                itemWidth / 2,
-                itemHeight
-            ),
-            new state.paper.Point(
-                itemWidth,
-                0
+                startX + itemWidth,
+                startY + radius
             )
         );
+    
+        // بالا چپ
+        tmpShape.lineTo(
+            new state.paper.Point(
+                startX,
+                startY + radius
+            )
+        );
+    
+        // قوس نیم‌دایره به سمت پایین
+        tmpShape.arcTo(
+            new state.paper.Point(
+                startX + itemWidth / 2,
+                startY + itemHeight
+            ),
+            new state.paper.Point(
+                startX + itemWidth,
+                startY + radius
+            )
+        );
+    
         tmpShape.closed = true;
     }
     if (itemType == "quarter_circle_left") {
@@ -480,25 +554,25 @@ export function drawFirstShape(formData, redraw = false, mainFrameData = false, 
         new state.paper.Color(glassColor);
     state.frameColor =
         state.unitData.profile_color_hex;
-   console.log("EXIT drawFirstShape",{
- children:state.paper.project.activeLayer.children.length,
- mainFrame:state.mainFrame
-});
-console.log("========== BEFORE BUILD FRAME ==========");
-console.log("state.firstFrame:", state.firstFrame);
-console.log("formData.profile_id:", formData.profile_id);
-console.log(
-    "frame option:",
-    $('.frameInput option[value="' + state.firstFrame + '"]').length
-);
-console.log(
-    "profile option:",
-    $('.frameInput option[value="' + formData.profile_id + '"]').length
-);
-console.log("tmpShape:", tmpShape);
-console.log("itemWidth:", itemWidth);
-console.log("itemHeight:", itemHeight);
-console.log("========================================");
+    console.log("EXIT drawFirstShape", {
+        children: state.paper.project.activeLayer.children.length,
+        mainFrame: state.mainFrame
+    });
+    console.log("========== BEFORE BUILD FRAME ==========");
+    console.log("state.firstFrame:", state.firstFrame);
+    console.log("formData.profile_id:", formData.profile_id);
+    console.log(
+        "frame option:",
+        $('.frameInput option[value="' + state.firstFrame + '"]').length
+    );
+    console.log(
+        "profile option:",
+        $('.frameInput option[value="' + formData.profile_id + '"]').length
+    );
+    console.log("tmpShape:", tmpShape);
+    console.log("itemWidth:", itemWidth);
+    console.log("itemHeight:", itemHeight);
+    console.log("========================================");
     buildFrame(
         tmpShape,
         false,
@@ -509,7 +583,7 @@ console.log("========================================");
         "AFTER BUILD FRAME",
         state.paper.project.activeLayer.children.length,
         state.mainFrame
-       );
+    );
     $('.closeModal').trigger('click');
     if (!redraw) {
         filterAutomateCreationBtns();

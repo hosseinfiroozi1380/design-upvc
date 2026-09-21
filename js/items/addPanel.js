@@ -67,22 +67,16 @@ export function addPanel(addNewItemType, flatToAdd, toAddGroup = false, data = f
         }
     }
     panelFlat.remove();
-
     flatToAdd.name = "base";
-
     let baseGroup = new state.paper.Group();
     baseGroup.name = "baseGroup";
-
     baseGroup.addChild(flatToAdd);
     baseGroup.addChild(panelGroup);
-
     if (toAddGroup) {
         toAddGroup.addChild(baseGroup);
     }
-
     enableSave();
     updateTempDesignSnapshot();
     updateLayerPreview();
-
     return panelGroup;
 }

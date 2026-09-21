@@ -1713,3 +1713,73 @@ body.swal2-no-backdrop .swal2-shown.swal2-bottom-right {
   position: initial !important
  }
 }
+
+/* فرم تایید حذف طراحی */
+.swal2-popup {
+ width: 320px !important;
+ min-height: auto !important;
+ padding: 22px 20px !important;
+ border-radius: 10px !important;
+}
+
+/* عنوان */
+.swal2-popup .swal2-title {
+ margin: 0 0 8px !important;
+ font-size: 16px !important;
+ font-weight: 600 !important;
+ color: #222 !important;
+}
+
+/* متن */
+.swal2-popup .swal2-content {
+ margin: 0 !important;
+ font-size: 13px !important;
+ line-height: 1.8 !important;
+ color: #666 !important;
+}
+
+/* ردیف دکمه‌ها */
+.swal2-popup .swal2-actions {
+ display: flex !important;
+ flex-direction: row !important;
+ align-items: center !important;
+ justify-content: center !important;
+ gap: 8px !important;
+ margin: 18px auto 0 !important;
+}
+
+/* هر دو دکمه */
+.swal2-popup .swal2-styled {
+ width: 82px !important;
+ height: 34px !important;
+ margin: 0 !important;
+ padding: 0 !important;
+ border-radius: 6px !important;
+ font-size: 12px !important;
+ font-weight: 500 !important;
+ box-shadow: none !important;
+}
+
+/* دکمه حذف */
+.swal2-popup .swal2-styled.swal2-confirm {
+ background-color: #dc2626 !important;
+ color: #fff !important;
+ border: 0 !important;
+}
+
+.swal2-popup .swal2-styled.swal2-confirm:hover {
+ background-color: #b91c1c !important;
+ box-shadow: 0 4px 10px rgba(220, 38, 38, 0.25) !important;
+}
+
+/* دکمه لغو */
+.swal2-popup .swal2-styled.swal2-cancel {
+ background-color: #fff !important;
+ color: #222 !important;
+ border: 1px solid #d1d5db !important;
+}
+
+.swal2-popup .swal2-styled.swal2-cancel:hover {
+ background-color: #f8f8f8 !important;
+ color: #111 !important;
+}

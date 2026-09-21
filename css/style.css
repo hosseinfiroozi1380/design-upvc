@@ -1,7 +1,7 @@
 /* css/style.css */
 :root {
   /* 1. پس‌زمینه کانواس */
-  --wd-canvas-bg: #eef0f3;
+  --wd-canvas-bg: #ffffff;
   /* 2. پس‌زمینه منوهای راست و چپ */
   --wd-menu-bg: #ffffff;
   /* 3. پس‌زمینه دکمه‌ها */
@@ -39,26 +39,21 @@
     20px 20px;
   direction: ltr;
 } */
-
 canvas[resize] {
   width: 100%;
   height: 100%;
   aspect-ratio: 1 / 1;
-
   background-color: #f5f7fa;
-
   background-image:
     linear-gradient(rgba(71, 85, 105, 0.12) 1px, transparent 1px),
     linear-gradient(90deg, rgba(71, 85, 105, 0.12) 1px, transparent 1px),
     linear-gradient(rgba(71, 85, 105, 0.045) 1px, transparent 1px),
     linear-gradient(90deg, rgba(71, 85, 105, 0.045) 1px, transparent 1px);
-
   background-size:
     100px 100px,
     100px 100px,
     20px 20px,
     20px 20px;
-
   direction: ltr;
 }
 
@@ -261,7 +256,7 @@ button {
 }
 
 .wd-main-tool:hover {
-  background: var(--wd-button-hover-bg);
+  background: var(--wd-button-bg);
   color: var(--wd-menu-bg);
 }
 
@@ -382,102 +377,192 @@ button {
    ITEMS LIST
 */
 .wd-items-stack {
+
   display: flex;
+
   flex-direction: column;
-  gap: 6px;
+
+  gap: 10px;
+
+  max-height: 420px;
+
+  overflow-y: auto;
+
+  overflow-x: hidden;
+
 }
 
+/* اسکرول بار لیست آیتم‌ها */
+
+.wd-items-stack::-webkit-scrollbar {
+  width: 6px;
+}
+
+.wd-items-stack::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 10px;
+}
+
+.wd-items-stack::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.wd-items-stack::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* کارت */
 .wd-item-card {
   width: 100%;
-  min-height: 58px;
-  padding: 8px;
-  border: 1px solid #e5e7eb;
-  border-radius: 9px;
+  min-height: 100px;
+  padding: 10px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
   background: #ffffff;
   display: flex;
+  flex-direction: row-reverse;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
+/* کارت انتخاب شده */
 .wd-item-card.is-active {
-  background: var(--wd-soft-bg);
+  background: #eff6ff;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.08);
 }
 
+/* کارت انتخاب نشده */
+.wd-item-card:not(.is-active) {
+  background: #ffffff;
+  border-color: #e5e7eb;
+  box-shadow: none;
+}
+
+/* تصویر / SVG طرح */
 .wd-item-symbol {
-  width: 50px;
-  height: 38px;
+  width: 75px;
+  height: 70px;
   flex-shrink: 0;
-  border-radius: 7px;
-  /* background: #f3f4f6; */
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 19px;
+  overflow: hidden;
+  border-radius: 6px;
 }
 
+/* خود SVG */
+.wd-item-symbol svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* بخش اطلاعات */
 .wd-item-details {
   min-width: 0;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  align-items: flex-end;
+  gap: 5px;
 }
 
+/* عنوان */
 .wd-item-title {
-  font-size: 12px;
+  width: 100%;
+  font-size: 13px;
+  line-height: 1.5;
   font-weight: 600;
-}
-
-.wd-item-size {
-  font-size: 10px;
   color: var(--wd-text-strong);
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.wd-item-select {
-  flex-shrink: 0;
+/* ابعاد */
+.wd-item-size {
+  width: 100%;
+  font-size: 11px;
+  line-height: 1.5;
+  color: #64748b;
+  text-align: right;
 }
 
-.wd-item-select input {
-  width: 15px;
-  height: 15px;
-  margin: 0;
-  accent-color: var(--wd-button-bg);
-  cursor: pointer;
-}
-
-.wd-item-brand {
-  flex-shrink: 0;
-  padding: 4px 7px;
-  border-radius: 5px;
+/* دکمه انتخاب */
+.wd-item-select-btn {
+  width: 55px;
+  height: 30px;
+  margin-top: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 7px;
   background: var(--wd-button-bg);
   color: #ffffff;
-  font-size: 9px;
-  font-weight: 700;
-}
-
-.wd-item-delete {
-  flex-shrink: 0;
-  width: 28px;
-  height: 28px;
-  border: 0;
-  border-radius: 6px;
-  background: transparent;
-  color: #ef4444;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
 }
 
+/* هاور دکمه انتخاب */
+.wd-item-select-btn:hover {
+  background: #1d4ed8;
+}
+
+/* کلیک دکمه انتخاب */
+.wd-item-select-btn:active {
+  transform: scale(0.97);
+}
+
+.wd-item-bottom {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  margin-top: 3px;
+  direction: rtl;
+}
+
+/* حذف */
 .wd-item-delete {
-  margin-right: auto;
+  flex-shrink: 0;
+  width: 40px;
+  height: 30px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 7px;
+  background: #ef4444;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
 }
 
+/* آیکن حذف */
 .wd-item-delete i {
-  font-size: 16px;
+  font-size: 15px;
 }
 
+/* هاور حذف */
 .wd-item-delete:hover {
-  background: #fee2e2;
+  background: #dc2626;
 }
 
 /* 
@@ -518,8 +603,8 @@ button {
   align-items: center;
   margin-bottom: 10px;
 }
-/* بادخور */
 
+/* بادخور */
 .wd-gap-fields {
   width: 100%;
   display: flex;
@@ -565,8 +650,9 @@ button {
 .wd-gap-input:focus {
   border-color: var(--wd-text-strong);
 }
+
 .wd-form-label {
-  width: 65px;
+  width: 46px;
   flex-shrink: 0;
   font-size: 12px;
   color: #6b7280;
@@ -637,16 +723,15 @@ button {
   overflow: hidden;
 }
 
-/* 
-   BUTTON
-*/
+/* BUTTON */
+
 .wd-counter-button {
   width: 42px;
   height: 100%;
   padding: 0;
   border: 0;
   background: #fff;
-  color: #374151;
+  color: #000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -668,8 +753,8 @@ button {
 
 /* هاور */
 .wd-counter-button:hover {
-  background: #f8fafc;
-  color: #2563eb;
+  background: #2563eb;
+  color: #fff;
 }
 
 #fullShapeView {
@@ -710,75 +795,6 @@ button {
 /* فوکوس */
 .wd-counter-number:focus {
   outline: none;
-}
-
-/* LARGE IMAGE / PREVIEW */
-.wd-preview-large {
-  position: relative;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.wd-preview-large img {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-/* DIMENSION INPUTS */
-.wd-preview-large .positionMarker {
-  position: absolute;
-  z-index: 2;
-  width: 70px;
-  height: 28px;
-  padding: 2px 5px;
-  border: 1px solid #d1d5db;
-  border-radius: 5px;
-  background: #ffffff;
-  color: #374151;
-  font-size: 11px;
-  text-align: center;
-  outline: none;
-}
-
-.wd-preview-large .positionMarker:focus {
-  border-color: #2563eb;
-}
-
-/* CORNER DIMENSION INPUTS */
-.wd-preview-large #a,
-.wd-preview-large #b,
-.wd-preview-large #c,
-.wd-preview-large #d {
-  position: absolute;
-  width: 50px;
-  height: 26px;
-  padding: 2px 5px;
-  border: 1px solid #d1d5db;
-  border-radius: 5px;
-  background: #ffffff;
-  color: #374151;
-  font-size: 11px;
-  text-align: center;
-  outline: none;
-}
-
-/* مخفی بودن پیش‌فرض */
-.wd-preview-large #a,
-.wd-preview-large #b,
-.wd-preview-large #c,
-.wd-preview-large #d {
-  display: none;
-}
-
-/* وقتی JS نمایششان می‌دهد */
-.wd-preview-large #a:not([style*="display: none"]),
-.wd-preview-large #b:not([style*="display: none"]),
-.wd-preview-large #c:not([style*="display: none"]),
-.wd-preview-large #d:not([style*="display: none"]) {
-  display: block;
 }
 
 /* 
@@ -889,25 +905,6 @@ button {
 }
 
 /* 
-   DIMENSION INPUT POSITION
-*/
-/* عرض — روی مرز چپ تصویر، وسط ارتفاع */
-.wd-preview-large #itemWidth {
-  top: 60%;
-  left: -42px;
-  transform: translate(-50%, -50%);
-  rotate: 90deg;
-}
-
-.wd-preview-large #itemHeight {
-  top: auto;
-  left: 50%;
-  bottom: 5px;
-  transform: translate(-50%, 50%);
-  rotate: 0deg;
-}
-
-/* 
     CANVAS
 */
 .wd-canvas-zone {
@@ -931,6 +928,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
+  transform: translateY(25px);
 }
 
 #wd-design-board {
@@ -951,6 +949,113 @@ button {
   pointer-events: none;
   color: var(--wd-text-strong);
   font-size: 13px;
+}
+
+/* کنترل های بالای بوم */
+.wd-canvas-controls {
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  height: auto;
+}
+
+/* جعبه کنترل */
+.wd-canvas-controls .wd-view-tools-box {
+  min-width: 0;
+  margin: 0;
+}
+
+/* جعبه کنترل */
+.wd-canvas-controls .wd-view-tools-box {
+  width: auto;
+  /* min-width: auto; */
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 0;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #ffffff;
+}
+
+.wd-canvas-controls .wd-view-tool {
+  flex: 0 0 36px;
+  width: 36px;
+  min-width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+/* آیکون */
+.wd-canvas-controls .wd-view-tool i {
+  font-size: 18px;
+  line-height: 1;
+  color: #374151;
+}
+
+/* هاور */
+.wd-canvas-controls .wd-view-tool:hover {
+  background: var(--wd-button-bg);
+  color: var(--wd-menu-bg);
+}
+
+.wd-canvas-controls .wd-view-tool:hover i {
+  color: var(--wd-menu-bg);
+}
+
+/* خط بین دکمه ها */
+.wd-canvas-controls .wd-view-tool+.wd-view-tool {
+  border-left: 1px solid #e5e7eb;
+}
+
+/* دکمه اول - گوشه های سمت چپ */
+.wd-canvas-controls .wd-view-tool:first-child,
+.wd-canvas-controls .wd-view-tool:first-child:hover {
+  border-radius: 7px 0 0 7px;
+}
+
+/* دکمه آخر - سه بعدی - گوشه های سمت راست */
+.wd-canvas-controls .wd-view-tool:last-child,
+.wd-canvas-controls .wd-view-tool:last-child:hover {
+  border-radius: 0 7px 7px 0;
+}
+
+/* دکمه های وسط */
+.wd-canvas-controls .wd-view-tool:not(:first-child):not(:last-child),
+.wd-canvas-controls .wd-view-tool:not(:first-child):not(:last-child):hover {
+  border-radius: 0;
+}
+
+/* غیرفعال */
+.wd-canvas-controls .wd-view-tool:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: transparent;
+}
+
+.wd-canvas-controls .wd-view-tool:disabled i {
+  color: #9ca3af;
+}
+
+/* مخفی کردن کنترل ها در موبایل */
+@media (max-width: 767.98px) {
+  .wd-canvas-controls {
+    display: none;
+  }
 }
 
 /* 
@@ -1061,17 +1166,14 @@ button {
   gap: 4px;
   border: none;
   border-radius: 8px;
-  background: #2563eb;
+  background: var(--wd-button-bg);
   color: #ffffff;
   font-size: 12px;
   cursor: pointer;
-  transition:
-    background-color 0.2s ease,
-    transform 0.2s ease;
 }
 
 .wd-left-label button:hover {
-  background: #1d4ed8;
+  /* background: var(--wd-button-hover-bg); */
   color: #ffffff;
 }
 
@@ -1161,7 +1263,7 @@ button {
   border-color: var(--wd-text-strong);
 }
 
-/* 
+/*
     TOOL GRID
 */
 .wd-components-title {
@@ -1175,26 +1277,41 @@ button {
 
 .wd-components-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(6, 1fr);
   gap: 8px;
 }
 
+/* سطر اول: هر دکمه 2 ستون */
 .wd-component-button {
-  /* min-height: 90px; */
+  grid-column: span 2;
+  height: 68px;
   border: 1px solid #e5e7eb;
-  border-radius: 9px;
+  border-radius: 8px;
   background: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* gap: 8px; */
-  padding: 8px;
+  gap: 5px;
+  padding: 5px;
+  color: #374151;
+  cursor: pointer;
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease;
+}
+
+/* سطر دوم: پنل و سایر عرض یکسان */
+.wd-component-button:nth-child(4),
+.wd-component-button:nth-child(5) {
+  grid-column: span 3;
 }
 
 .wd-component-button:hover {
   background: var(--wd-button-bg);
   color: var(--wd-menu-bg);
+  border-color: var(--wd-button-bg);
 }
 
 .wd-component-button:hover .wd-component-icon {
@@ -1211,6 +1328,7 @@ button {
 
 .wd-component-name {
   font-size: 11px;
+  line-height: 1.2;
 }
 
 /* 
@@ -1282,18 +1400,15 @@ button {
    ITEMS GRID
 */
 .wd-profile-items-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 7px;
   margin-bottom: 16px;
 }
 
 /* 
-    PROFILE ITEMS
+   PROFILE ITEMS
 */
-.wd-profile-items-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 7px;
-}
-
 .wd-profile-item {
   border: 1px solid #e5e7eb;
   border-radius: 8px;
@@ -1301,26 +1416,63 @@ button {
   overflow: hidden;
   padding: 5px;
   text-align: center;
+  color: #111827;
 }
 
 .wd-profile-item:hover {
   border-radius: 8px;
-  color: var(--wd-menu-bg);
+  color: #ffffff;
   background: var(--wd-button-bg);
 }
 
-.wd-profile-item-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.wd-component-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  opacity: 1;
+
+  /* هم‌رنگ متن دکمه */
+  filter: brightness(0) saturate(100%) invert(24%) sepia(8%) saturate(1050%) hue-rotate(182deg) brightness(94%) contrast(91%);
 }
 
+/* 
+   PROFILE ITEM IMAGE
+*/
+.wd-profile-item-image {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wd-profile-item-image img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  /* رنگ عادی آیکون */
+  filter: brightness(0);
+}
+
+/* 
+   هاور آیکون
+*/
+.wd-profile-item:hover .wd-profile-item-image img {
+  /* سفید شدن آیکون */
+  filter: brightness(0) invert(1);
+}
+
+/* 
+   PROFILE ITEM NAME
+*/
 .wd-profile-item-name {
   display: block;
   font-size: 12px;
+  color: inherit;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin-top: 5px;
 }
 
 /* 
@@ -2005,10 +2157,6 @@ button {
   .wd-left-scroll {
     padding: 12px;
   }
-
-  .wd-preview-large {
-    height: 170px;
-  }
 }
 
 .wd-mullian-icon {
@@ -2099,7 +2247,7 @@ button {
   padding: 0;
   border: 0;
   border-radius: 7px;
-  background: #3b82f6;
+  background: var(--wd-button-bg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2108,7 +2256,7 @@ button {
 }
 
 .wd-3d-preview-btn:hover {
-  background: #2563eb;
+  background: var(--wd-button-hover-bg);
 }
 
 .wd-3d-preview-btn i {
@@ -2169,7 +2317,6 @@ button {
 
 /* موبایل */
 @media (max-width: 768px) {
-
   .wd-3d-modal-body {
     display: flex;
     align-items: center;
@@ -2189,5 +2336,394 @@ button {
     width: 100% !important;
     height: 100% !important;
   }
+}
 
+.wd-unit-details {
+  display: none;
+  position: fixed;
+  width: 280px;
+  max-width: calc(100vw - 20px);
+  padding: 12px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.10),
+    0 2px 6px rgba(0, 0, 0, 0.06);
+  direction: rtl;
+  text-align: right;
+  z-index: 9999;
+  font-family: IRANSansWeb, sans-serif;
+}
+
+.wd-unit-details .wd-form-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 38px;
+  margin-bottom: 7px;
+}
+
+.wd-unit-details .wd-form-line:last-of-type {
+  margin-bottom: 0;
+}
+
+.wd-unit-details .wd-form-label {
+  flex: 0 0 65px;
+  margin: 0;
+  font-size: 12px;
+  font-weight: 500;
+  color: #374151;
+  white-space: nowrap;
+}
+
+.wd-unit-details .wd-select-box {
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  height: 34px;
+  padding: 0 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #374151;
+  font-family: inherit;
+  font-size: 12px;
+  outline: none;
+  cursor: pointer;
+  transition:
+    border-color .15s ease,
+    box-shadow .15s ease;
+}
+
+.wd-unit-details .wd-select-box:focus {
+  border-color: #3b82f6;
+  box-shadow:
+    0 0 0 2px rgba(59, 130, 246, 0.12);
+}
+
+.wd-unit-details .wd-select-box:hover {
+  border-color: #9ca3af;
+}
+
+.wd-unit-details .wd-select-box option:disabled {
+  color: #9ca3af;
+}
+
+.wd-unit-details .wd-unit-detail-note {
+  margin-top: 10px;
+  padding-top: 9px;
+  border-top: 1px solid #f0f0f0;
+  color: #9ca3af;
+  font-size: 10px;
+  line-height: 1.8;
+  text-align: right;
+}
+
+.wd-unit-details {
+  max-height: calc(100vh - 20px);
+  overflow-y: auto;
+}
+
+.wd-unit-details::-webkit-scrollbar {
+  width: 4px;
+}
+
+.wd-unit-details::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+  .wd-unit-details {
+    width: 270px;
+    padding: 10px;
+  }
+
+  .wd-unit-details .wd-form-line {
+    min-height: 36px;
+  }
+
+  .wd-unit-details .wd-form-label {
+    flex-basis: 60px;
+    font-size: 11px;
+  }
+
+  .wd-unit-details .wd-select-box {
+    height: 32px;
+    font-size: 11px;
+  }
+}
+
+/* =========================================
+   پیش‌نمایش شکل
+========================================= */
+.shape-preview-box {
+  position: relative;
+  width: 100%;
+  height: 260px;
+  min-height: 260px;
+  max-height: 260px;
+  box-sizing: border-box;
+  display: block;
+  overflow: visible;
+}
+
+/* تصویر اصلی */
+.shape-preview-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 210px;
+  height: 210px;
+  transform: translate(-50%, -50%);
+  display: block;
+  object-fit: contain;
+  object-position: center center;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* =========================================
+   ورودی‌های ابعاد
+========================================= */
+.shape-dimension-input {
+  position: absolute;
+  z-index: 10;
+  width: 70px;
+  height: 28px;
+  box-sizing: border-box;
+  padding: 2px 5px;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  background: #ffffff;
+  color: #374151;
+  font-size: 11px;
+  font-family: inherit;
+  text-align: center;
+  outline: none;
+  margin: 0;
+}
+
+/* عرض */
+.shape-preview-box #itemWidth {
+  top: 60%;
+  left: -42px;
+  transform: translate(-50%, -50%);
+  rotate: 90deg;
+}
+
+/* ارتفاع */
+.shape-preview-box #itemHeight {
+  top: auto;
+  left: 50%;
+  bottom: 5px;
+  transform: translate(-50%, 50%);
+  rotate: 0deg;
+}
+
+/* فوکوس */
+.shape-dimension-input:focus {
+  border-color: #2563eb;
+}
+
+/* =========================================
+   ورودی گوشه‌ها
+========================================= */
+.shape-corner-input {
+  position: absolute;
+  z-index: 11;
+  width: 50px;
+  height: 26px;
+  box-sizing: border-box;
+  padding: 2px 5px;
+  border: 1px solid #d1d5db;
+  border-radius: 5px;
+  background: #ffffff;
+  color: #374151;
+  font-size: 11px;
+  font-family: inherit;
+  text-align: center;
+  outline: none;
+  margin: 0;
+}
+
+/* وقتی JS نمایش می‌دهد */
+.shape-preview-box #a,
+.shape-preview-box #b,
+.shape-preview-box #c,
+.shape-preview-box #d {
+  position: absolute;
+}
+
+/* =========================================
+   انتخاب شکل‌ها
+========================================= */
+.shape-selector-list {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0 0 5px 0;
+  margin: 20px 0 15px 0;
+  box-sizing: border-box;
+  direction: rtl;
+  scrollbar-width: thin;
+}
+
+/* اسکرول */
+.shape-selector-list::-webkit-scrollbar {
+  height: 5px;
+}
+
+.shape-selector-list::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 10px;
+}
+
+.shape-selector-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* =========================================
+   آیتم شکل
+========================================= */
+.shape-selector-item {
+  position: relative;
+  flex: 0 0 68px;
+  width: 68px;
+  height: 55px;
+  min-width: 68px;
+  min-height: 55px;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+/* رادیو */
+.shape-selector-radio {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* =========================================
+   کادر شکل
+========================================= */
+.shape-selector-box {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #ffffff;
+  overflow: hidden;
+  transition: border-color 0.15s ease;
+}
+
+/* تصویر کوچک */
+.shape-selector-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center center;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* انتخاب شده */
+.shape-selector-radio:checked+.shape-selector-box {
+  border-color: #2563eb;
+}
+
+/* باکس تایید حذف */
+.wd-confirm-delete-box {
+  width: 320px;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+/* عنوان */
+.wd-confirm-delete-title {
+  font-size: 16px !important;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* متن */
+.wd-confirm-delete-text {
+  font-size: 13px !important;
+  color: #6b7280;
+}
+
+/* دکمه حذف */
+.wd-confirm-delete-btn {
+  width: 90px;
+  height: 36px;
+  border-radius: 7px;
+  border: none;
+  background: #dc2626 !important;
+  color: #fff !important;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.wd-confirm-delete-btn:hover {
+  background: #b91c1c !important;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, .35);
+}
+
+/* دکمه لغو */
+.wd-confirm-cancel-btn {
+  width: 90px;
+  height: 36px;
+  border-radius: 7px;
+  border: 1px solid #d1d5db !important;
+  background: #fff !important;
+  color: #111827 !important;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.wd-confirm-cancel-btn:hover {
+  background: #f3f4f6 !important;
+}
+
+.wd-ruler-vertical {
+  transform: rotate(90deg);
+}
+
+.wd-color-select-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.wd-color-select-wrapper .wd-select-box {
+  flex: 1;
+}
+
+.wd-color-preview {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #ffffff;
+  box-sizing: border-box;
 }

@@ -12,7 +12,7 @@ import { addNewItem } from "../items/addNewItem.js";
 import { mullianEuallingSpace } from "../items/mullianEuallingSpace.js";
 import { reDrawMullianChildsOnDelete } from "../drawing/reDrawMullianChildsOnDelete.js";
 import { reDrawMainFrame } from "../drawing/reDrawMainFrame.js";
-import { setZoom } from "../events/setZoom.js";
+import { setZoom } from "./setZoom.js";
 import { changeLayerById } from "../utils/changeLayerById.js";
 // import { downloadPNG } from "../utils/downloadPNG.js";
 import { importToProject } from "../services/importToProject.js";
@@ -202,7 +202,7 @@ export function initClickEvents() {
                                 tmpShape.lineTo(new state.paper.Point(coupling.bounds.topRight.x + w, coupling.bounds.topRight.y + h));
                                 tmpShape.lineTo(new state.paper.Point(coupling.bounds.topRight.x, coupling.bounds.topRight.y + h));
                                 tmpShape.closed = true;
-                                buildFrame(tmpShape);
+                                buildFrame(tmpShape, false, false, true);
                                 setZoom();
                             } else { //down
                                 let couplingWidth = (w > lastSection.bounds.width) ? lastSection.bounds.width : w;
@@ -218,7 +218,7 @@ export function initClickEvents() {
                                 tmpShape.lineTo(new state.paper.Point(coupling.bounds.bottomLeft.x + w, coupling.bounds.bottomLeft.y + h));
                                 tmpShape.lineTo(new state.paper.Point(coupling.bounds.bottomLeft.x, coupling.bounds.bottomLeft.y + h));
                                 tmpShape.closed = true;
-                                buildFrame(tmpShape);
+                                buildFrame(tmpShape, false, false, true);
                                 setZoom();
                             }
                         }
@@ -351,39 +351,52 @@ export function initClickEvents() {
     $(document).on('change', "input[name='shape']", function () {
         const shapeImages = {
             simple_rectangle: './icons/shapes/rectangle.svg',
-            Parallelogram_top: './icons/shapes/parallelogram-top.svg',
-            Parallelogram_bottom: './icons/shapes/parallelogram-bottom.svg',
-            Parallelogram_left: './icons/shapes/parallelogram-left.svg',
-            Parallelogram_right: './icons/shapes/parallelogram-right.svg',
+        
+            Trapezoid: './icons/shapes/trapezoid.svg',
+            Trapezoid_reverse: './icons/shapes/trapezoid_reverse.svg',
+        
+            Parallelogram_left: './icons/shapes/parallelogram_left.svg',
+            Parallelogram_right: './icons/shapes/parallelogram_right.svg',
+        
             triangle: './icons/shapes/triangle.svg',
             polygon: './icons/shapes/polygon.svg',
+        
             circle: './icons/shapes/circle.svg',
-            half_circle: './icons/shapes/half-circle.svg',
-            half_circle_reverse: './icons/shapes/half-circle-reverse.svg',
-            quarter_circle_left: './icons/shapes/quarter-circle-left.svg',
-            quarter_circle_right: './icons/shapes/quarter-circle-right.svg',
-            round_rectangle: './icons/shapes/round-rectangle.svg',
-            arc_rectangle: './icons/shapes/arc-rectangle.svg',
-            arc_triangle: './icons/shapes/arc-triangle.svg'
+        
+            half_circle: './icons/shapes/half_circle.svg',
+            half_circle_reverse: './icons/shapes/half_circle_reverse.svg',
+        
+            quarter_circle_left: './icons/shapes/quarter_circle_left.svg',
+            quarter_circle_right: './icons/shapes/quarter_circle_right.svg',
+        
+            round_rectangle: './icons/shapes/round_rectangle.svg',
+            arc_rectangle: './icons/shapes/arc_rectangle.svg',
+            arc_triangle: './icons/shapes/arc_triangle.svg'
         };
+
         const imageSrc = shapeImages[$(this).val()];
+
         if (imageSrc) {
             $('#fullShapeView').attr('src', imageSrc);
         }
+
         // موقعیت‌ها
         let positions = $(this).attr('data-position').split(',');
+
         // عرض
         $('#itemWidth').css({
             top: positions[0] + '%',
             left: positions[1] + '%',
             rotate: positions[2] + 'deg'
         });
+
         // ارتفاع
         $('#itemHeight').css({
             top: positions[3] + '%',
             left: positions[4] + '%',
             rotate: positions[5] + 'deg'
         });
+
         // A
         if (positions[6] == 0) {
             $('#a').hide();
@@ -394,6 +407,7 @@ export function initClickEvents() {
                 rotate: positions[8] + 'deg'
             });
         }
+
         // B
         if (positions[9] == 0) {
             $('#b').hide();
@@ -404,6 +418,7 @@ export function initClickEvents() {
                 rotate: positions[11] + 'deg'
             });
         }
+
         // C
         if (positions[12] == 0) {
             $('#c').hide();
@@ -414,6 +429,7 @@ export function initClickEvents() {
                 rotate: positions[14] + 'deg'
             });
         }
+
         // D
         if (positions[15] == 0) {
             $('#d').hide();
@@ -662,27 +678,45 @@ export function initClickEvents() {
     });
     // undo
     $(document).on('click', '.undo', function () {
-        if (state.history_index > 0) {
-            state.history_index--;
-            importToProject(
-                state.history[state.history_index]
-            );
-            $('.redo').prop('disabled', false);
-        } else {
+        if (state.history_index <= 0) {
             $('.undo').prop('disabled', true);
+            return;
         }
+        state.history_index--;
+        importToProject(
+            state.history[state.history_index]
+        );
+        $('.undo').prop(
+            'disabled',
+            state.history_index <= 0
+        );
+        $('.redo').prop(
+            'disabled',
+            false
+        );
     });
     // redo
     $(document).on('click', '.redo', function () {
-        if (state.history_index < state.history.length) {
-            importToProject(
-                state.history[state.history_index]
-            );
-            $('.undo').prop('disabled', false);
-            state.history_index++;
-        } else {
+        if (
+            state.history_index >=
+            state.history.length - 1
+        ) {
             $('.redo').prop('disabled', true);
+            return;
         }
+        state.history_index++;
+        importToProject(
+            state.history[state.history_index]
+        );
+        $('.undo').prop(
+            'disabled',
+            false
+        );
+        $('.redo').prop(
+            'disabled',
+            state.history_index >=
+            state.history.length - 1
+        );
     });
     //open config ,emu by click itemDetails
     $(document).on('click', '.loadConfig', function () {
@@ -802,16 +836,25 @@ export function initClickEvents() {
         $('#leftCanvas').offcanvas('hide');
     });
     $(document).on('click', '.plusQuantity', function () {
-        let layerQuantity = parseInt($('.layerQuantity').val()) || 1;
-        $('.layerQuantity').val(layerQuantity + 1);
-        state.unitData.quantity = parseInt(layerQuantity + 1);
+        let layerQuantity = parseInt($('.layerQuantity').text()) || 1;
+    
+        layerQuantity++;
+    
+        $('.layerQuantity').text(layerQuantity);
+        state.unitData.quantity = layerQuantity;
+    
         enableSave(3000);
     });
+    
     $(document).on('click', '.minusQuantity', function () {
-        let layerQuantity = parseInt($('.layerQuantity').val());
+        let layerQuantity = parseInt($('.layerQuantity').text()) || 1;
+    
         if (layerQuantity > 1) {
-            $('.layerQuantity').val(layerQuantity - 1);
-            state.unitData.quantity = parseInt(layerQuantity - 1);
+            layerQuantity--;
+    
+            $('.layerQuantity').text(layerQuantity);
+            state.unitData.quantity = layerQuantity;
+    
             enableSave(3000);
         }
     });

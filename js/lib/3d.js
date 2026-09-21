@@ -638,10 +638,10 @@ async function build3DFromSVG(
       if (type === "glass") {
         material = new THREE.MeshStandardMaterial({
           color: 0x2196f3,
-          roughness: 0.18,
+          roughness: 0.12,
           metalness: 0.02,
           transparent: true,
-          opacity: 0.72,
+          opacity: 0.35,
           side: THREE.DoubleSide
         });
         depth = 10;
@@ -674,14 +674,11 @@ async function build3DFromSVG(
       }
       // پنل
       else if (type === "panel") {
-        if (svgColor) {
-          material =
-            new THREE.MeshStandardMaterial({
-              color: svgColor,
-              roughness: 0.28,
-              metalness: 0.12,
-            });
-        }
+        material = new THREE.MeshStandardMaterial({
+          color: svgColor || 0xd1d5db,
+          roughness: 0.35,
+          metalness: 0.08,
+        });
         depth = 28;
         zOffset = 10;
       }
@@ -715,6 +712,24 @@ async function build3DFromSVG(
           zOffset;
         mesh.userData.svgId =
           origId;
+        // خط‌های پنل
+        if (type === "panel") {
+          const panelEdgeGeometry = new THREE.EdgesGeometry(
+            geometry,
+            1
+          );
+          const panelEdgeMaterial = new THREE.LineBasicMaterial({
+            color: 0x9ca3af,
+            transparent: true,
+            opacity: 0.45,
+          });
+          const panelEdgeLines = new THREE.LineSegments(
+            panelEdgeGeometry,
+            panelEdgeMaterial
+          );
+          panelEdgeLines.renderOrder = 20;
+          mesh.add(panelEdgeLines);
+        }
         // ========================================================
         // مرز فریم‌ها
         // ========================================================

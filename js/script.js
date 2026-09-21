@@ -198,7 +198,7 @@ function adjustHeight() {
   $('#rightCanvas, #leftCanvas').removeClass('offcanvas offcanvas-start offcanvas-end');
   $('.toolsBtns').removeAttr('data-bs-dismiss');
   $('.closeOffCanvas').addClass('d-none');
-  $('#layerlist').css('max-height', '26rem');
+  $('#layerlist').css('max-height', '28rem');
   $('.toolsDiv').css('max-height', '12rem');
  } else {
   availableHeight = screenHeight - headerHeight - footerHeight - rightDiv;
@@ -214,7 +214,7 @@ function adjustHeight() {
  }
  $('.designCardParent').css('height', Math.max(100, availableHeight) + 'px');
  $('.leftDiv').css('height', Math.max(100, availableHeight) + 'px');
- $("#resetButton").trigger('click');
+ // $("#resetButton").trigger('click');
 }
 adjustHeight();
 $(window).resize(adjustHeight);
@@ -248,3 +248,24 @@ document.addEventListener("DOMContentLoaded", function () {
   }
  });
 });
+
+const profileColor = document.getElementById('profile_color');
+const profileColorPreview = document.getElementById('profile_color_preview');
+function updateProfileColorPreview() {
+  const selectedOption = profileColor.options[profileColor.selectedIndex];
+  const color = selectedOption.dataset.hex || '#ffffff';
+  profileColorPreview.style.backgroundColor = color;
+}
+profileColor.addEventListener('change', updateProfileColorPreview);
+updateProfileColorPreview();
+
+const glassSelect = document.getElementById('glass_id');
+const glassColorPreview = document.getElementById('glass_color_preview');
+
+function updateGlassColorPreview() {
+  const selectedOption = glassSelect.options[glassSelect.selectedIndex];
+  const color = selectedOption.dataset.color || '#ffffff';
+  glassColorPreview.style.backgroundColor = color;
+}
+glassSelect.addEventListener('change', updateGlassColorPreview);
+updateGlassColorPreview();

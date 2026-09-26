@@ -6,6 +6,6 @@
     <polygon points="15,5 25.5,15 15,25.5 4.5,15"
              fill="none"
              stroke="black"
-             stroke-width="2" />
+             stroke-width="1" />
   </g>
 </svg>

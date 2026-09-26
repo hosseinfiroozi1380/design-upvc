@@ -1,0 +1,12 @@
+<svg class="icon-3d" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
+  <g>
+    <path d="M30,30H0V0h30V30z M1,29H29V1H1V29z"/>
+    <path d="M4,4H14V26H4V4z M4.9,4.9V25.1H13.1V4.9H4.9z"/>
+    <path d="M16,4H26V26H16V4z M16.9,4.9V25.1H25.1V4.9H16.9z"/>
+    <path d="M1,1L14.2,15" fill="none" stroke="black" stroke-width="0.9"/>
+    <path d="M1,29L14.2,15" fill="none" stroke="black" stroke-width="0.9"/>
+    <path d="M1,29L7.5,1" fill="none" stroke="black" stroke-width="0.9" stroke-dasharray="3,2"/>
+    <path d="M14,29L7.5,1" fill="none" stroke="black" stroke-width="0.9" stroke-dasharray="3,2"/>
+    <rect x="13.8" y="10.95" width="2.4" height="8.1" rx="0.5"/>
+  </g>
+</svg>

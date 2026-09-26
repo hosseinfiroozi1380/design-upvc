@@ -131,16 +131,7 @@ export function initFormEvents() {
                     );
                 });
         }
-        /*
-         * ==========================================
-         * فرم جدید = طراحی جدید
-         * ==========================================
-         *
-         * این خط خیلی مهم است.
-         *
-         * Snapshot قبلی داخل tempDesigns باقی می‌ماند،
-         * اما طراحی جدید ID جدید می‌گیرد.
-         */
+        /* فرم جدید = طراحی جدید */
         state.currentDesignID = 0;
         /*
          * پاک کردن Canvas
@@ -153,9 +144,13 @@ export function initFormEvents() {
             "FORM DATA:",
             formData
         );
-        /*
-         * ساخت طراحی جدید
-         */
+        console.log(
+            "SHAPE:",
+            formData.shape
+        );
+        if (!formData.shape) {
+            formData.shape = 'simple_rectangle';
+        }
         drawFirstShape(formData);
     });
 }

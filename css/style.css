@@ -57,6 +57,29 @@ canvas[resize] {
   direction: ltr;
 }
 
+/* بوم */
+.designer-canvas-area {
+  min-width: 0;
+  min-height: 0;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background-color: #f5f7fa;
+  background-image:
+    linear-gradient(rgba(71, 85, 105, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(71, 85, 105, 0.12) 1px, transparent 1px),
+    linear-gradient(rgba(71, 85, 105, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(71, 85, 105, 0.045) 1px, transparent 1px);
+  background-size:
+    100px 100px,
+    100px 100px,
+    20px 20px,
+    20px 20px;
+  direction: ltr;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -156,18 +179,9 @@ button {
   gap: 10px;
 }
 
-.wd-selection-close {
-  flex-shrink: 0;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .wd-right-site-title {
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .wd-right-site-subtitle {
@@ -353,7 +367,7 @@ button {
   justify-content: center;
   gap: 7px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .wd-create-unit-main:hover {
@@ -600,7 +614,8 @@ button {
 /* FORM  */
 .wd-form-line {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: stretch;
   margin-bottom: 10px;
 }
 
@@ -610,6 +625,7 @@ button {
   display: flex;
   flex-direction: row;
   gap: 8px;
+  padding-top: 10px;
   margin-bottom: 10px;
   box-sizing: border-box;
 }
@@ -652,14 +668,17 @@ button {
 }
 
 .wd-form-label {
-  width: 46px;
-  flex-shrink: 0;
+  width: 100%;
+  margin-bottom: 6px;
   font-size: 12px;
+  line-height: 18px;
   color: #6b7280;
+  text-align: right;
 }
 
 .wd-form-input {
-  flex: 1;
+  width: 100%;
+  flex: none;
   height: 40px;
   border: 1px solid #e5e7eb;
   border-radius: 8px;
@@ -677,7 +696,8 @@ button {
    SELECT BOX
 */
 .wd-select-box {
-  flex: 1;
+  width: 100%;
+  flex: none;
   height: 40px;
   border: 1px solid #dbe2ea;
   border-radius: 8px;
@@ -723,15 +743,14 @@ button {
   overflow: hidden;
 }
 
-/* BUTTON */
-
+/* دکمه های شمارنده */
 .wd-counter-button {
   width: 42px;
   height: 100%;
   padding: 0;
   border: 0;
   background: #fff;
-  color: #000;
+  color: #6b7280;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -741,33 +760,23 @@ button {
   cursor: pointer;
 }
 
-/* خط کنار + */
+/* خط کنار + سمت چپ */
 .wd-counter-button:first-child {
   border-left: 1px solid #e5e7eb;
 }
 
-/* خط کنار − */
+/* خط کنار − سمت راست */
 .wd-counter-button:last-child {
   border-right: 1px solid #e5e7eb;
 }
 
 /* هاور */
 .wd-counter-button:hover {
-  background: #2563eb;
-  color: #fff;
+  background: #f3f4f6;
+  color: #6b7280;
 }
 
-#fullShapeView {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center center;
-}
-
-/* 
-   NUMBER INPUT
-*/
+/* عدد وسط */
 .wd-counter-number {
   flex: 1;
   min-width: 0;
@@ -777,7 +786,7 @@ button {
   border: 0;
   outline: none;
   background: #fff;
-  color: #111827;
+  color: #6b7280;
   text-align: center;
   font-family: inherit;
   font-size: 14px;
@@ -797,6 +806,13 @@ button {
   outline: none;
 }
 
+#fullShapeView {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center center;
+}
 /* 
    SMALL IMAGES / SHAPE SELECTOR
 */
@@ -877,7 +893,7 @@ button {
   height: 42px;
   border-radius: 8px;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
 }
 
@@ -1112,7 +1128,7 @@ button {
 
 .wd-user-name {
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 500;
 }
 
 .wd-user-role {
@@ -1354,8 +1370,8 @@ button {
 }
 
 .wd-selection-close {
-  width: 28px;
-  height: 28px;
+  width: 34px;
+  height: 34px;
   border: 0;
   border-radius: 6px;
   background: #ef4444;
@@ -1364,7 +1380,9 @@ button {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  flex-shrink: 0;
 }
+
 
 .wd-selection-close:hover {
   background: #dc2626;
@@ -1386,7 +1404,7 @@ button {
 
 .wd-selection-title {
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 500;
   white-space: nowrap;
 }
 
@@ -1481,38 +1499,36 @@ button {
 .wd-mobile-category-bar {
   display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: space-between;
+  gap: 4px;
   padding: 6px;
-  margin-bottom: 6px;
-  overflow-x: auto;
+  margin-bottom: 1px;
+  overflow: hidden;
   direction: rtl;
   background: var(--wd-menu-bg);
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-  scrollbar-width: none;
   pointer-events: auto;
 }
 
-.wd-mobile-category-bar::-webkit-scrollbar {
-  display: none;
-}
-
 .wd-mobile-category-bar button {
-  flex: 0 0 auto;
+  flex: 1 1 0;
+  min-width: 0;
   height: 36px;
-  padding: 0 13px;
+  padding: 0 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 5px;
   border: 1px solid transparent;
   border-radius: 8px;
   background: transparent;
   color: #4b5563;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .wd-mobile-category-bar button img {
@@ -1520,15 +1536,7 @@ button {
   height: 18px;
   object-fit: contain;
   flex-shrink: 0;
-}
-
-.wd-mobile-category-bar button img {
   filter: brightness(0) saturate(100%) invert(31%) sepia(9%) saturate(1042%) hue-rotate(176deg) brightness(91%) contrast(88%);
-}
-
-.wd-mobile-category-bar button:hover img,
-.wd-mobile-category-bar button.active img {
-  filter: brightness(0) invert(1);
 }
 
 .wd-mobile-category-bar button:hover {
@@ -1557,7 +1565,7 @@ button {
   display: none;
   width: 100%;
   padding: 6px;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
   box-sizing: border-box;
   background: var(--wd-menu-bg);
   border: 1px solid rgba(0, 0, 0, 0.08);
@@ -1656,8 +1664,8 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  font-size: 13px;
+  /* gap: 6px; */
+  font-size: 18px;
   pointer-events: auto;
 }
 
@@ -1774,46 +1782,70 @@ button {
   transform: translateX(0) !important;
 }
 
-/* 
-   ADD / EDIT UNIT PANEL
-   همیشه حرکتی - دسکتاپ و موبایل
-*/
+/* ADD / EDIT UNIT MODAL */
+
 #ofcAddNew {
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: auto;
-  width: 300px;
-  height: 100vh;
-  transform: translateX(100%);
-  visibility: hidden;
-  pointer-events: none;
-  transition:
-    transform 0.3s ease,
-    visibility 0s linear 0.3s;
+  direction: rtl;
 }
 
-/* هنگام باز بودن */
-#ofcAddNew.show {
-  transform: translateX(0);
-  visibility: visible;
-  pointer-events: auto;
-  transition:
-    transform 0.3s ease,
-    visibility 0s linear 0s;
+#ofcAddNew .modal-dialog {
+  width: calc(100% - 30px);
+  max-width: 850px;
+  margin: 1.75rem auto;
+}
+
+#ofcAddNew .modal-content {
+  width: 100%;
+  max-height: 90vh;
+  border: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #ffffff;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+}
+
+#ofcAddNew .wd-right-brand {
+  flex-shrink: 0;
+  background: #ffffff;
+}
+
+#ofcAddNew .wd-right-scroll {
+  max-height: calc(90vh - 65px);
+  overflow-y: auto;
+  padding: 14px;
+}
+
+#ofcAddNew .wd-right-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+#ofcAddNew .wd-right-scroll::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 10px;
 }
 
 /* موبایل */
-@media (max-width: 430px) {
-  #ofcAddNew {
-    width: 75vw;
+
+@media (max-width: 576px) {
+  #ofcAddNew .modal-dialog {
+    width: calc(100% - 20px);
+    max-width: none;
+    margin: 10px auto;
+  }
+
+  #ofcAddNew .modal-content {
+    max-height: calc(100vh - 20px);
+    border-radius: 12px;
+  }
+
+  #ofcAddNew .wd-right-scroll {
+    max-height: calc(100vh - 75px);
   }
 }
 
-/* 
-   MULLION PANEL
-   همیشه حرکتی - دسکتاپ و موبایل
-*/
+
+/* MULLION PANEL */
+
 #ofcMullian {
   position: fixed;
   top: 0;
@@ -1829,7 +1861,6 @@ button {
     visibility 0s linear 0.3s;
 }
 
-/* هنگام باز بودن */
 #ofcMullian.show {
   transform: translateX(0);
   visibility: visible;
@@ -1839,12 +1870,14 @@ button {
     visibility 0s linear 0s;
 }
 
-/* موبایل */
 @media (max-width: 430px) {
   #ofcMullian {
     width: 75vw;
   }
 }
+
+
+/* WINDOW PANEL */
 
 #ofcWindow {
   position: fixed;
@@ -1861,7 +1894,6 @@ button {
     visibility 0s linear 0.3s;
 }
 
-/* هنگام باز بودن */
 #ofcWindow.show {
   transform: translateX(0);
   visibility: visible;
@@ -1871,12 +1903,14 @@ button {
     visibility 0s linear 0s;
 }
 
-/* موبایل */
 @media (max-width: 430px) {
   #ofcWindow {
     width: 75vw;
   }
 }
+
+
+/* DOOR PANEL */
 
 #ofcDoor {
   position: fixed;
@@ -1893,7 +1927,6 @@ button {
     visibility 0s linear 0.3s;
 }
 
-/* هنگام باز بودن */
 #ofcDoor.show {
   transform: translateX(0);
   visibility: visible;
@@ -1903,12 +1936,14 @@ button {
     visibility 0s linear 0s;
 }
 
-/* موبایل */
 @media (max-width: 430px) {
   #ofcDoor {
     width: 75vw;
   }
 }
+
+
+/* PANEL */
 
 #ofcPanel {
   position: fixed;
@@ -1925,7 +1960,6 @@ button {
     visibility 0s linear 0.3s;
 }
 
-/* هنگام باز بودن */
 #ofcPanel.show {
   transform: translateX(0);
   visibility: visible;
@@ -1935,12 +1969,14 @@ button {
     visibility 0s linear 0s;
 }
 
-/* موبایل */
 @media (max-width: 430px) {
   #ofcPanel {
     width: 75vw;
   }
 }
+
+
+/* COUPLING PANEL */
 
 #ofcCoupling {
   position: fixed;
@@ -1957,7 +1993,6 @@ button {
     visibility 0s linear 0.3s;
 }
 
-/* هنگام باز بودن */
 #ofcCoupling.show {
   transform: translateX(0);
   visibility: visible;
@@ -1967,25 +2002,71 @@ button {
     visibility 0s linear 0s;
 }
 
-/* موبایل */
 @media (max-width: 430px) {
   #ofcCoupling {
     width: 75vw;
   }
 }
 
+/* گرید فرم */
+
+.wd-form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.wd-form-grid .wd-form-line {
+  margin-bottom: 0;
+}
+
+.wd-input-box,
+.wd-select-box {
+  width: 100%;
+  min-width: 0;
+}
+
+
+/* لپتاپ کوچک */
+
+@media (max-width: 900px) {
+  .wd-form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* موبایل */
+
+@media (max-width: 576px) {
+  .wd-form-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+}
 .wd-mobile-view-tools {
   flex: 1;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 0;
   background: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: 9px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   pointer-events: auto;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  direction: rtl;
+  flex-wrap: nowrap;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+}
+
+.wd-mobile-view-tools::-webkit-scrollbar {
+  display: none;
 }
 
 .wd-mobile-view-tool {
@@ -1999,13 +2080,13 @@ button {
   align-items: center;
   justify-content: center;
   font-size: 15px;
-  flex-shrink: 0;
+  flex: 0 0 36px;
   color: #374151;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* خط جداکننده بین دکمه‌ها */
-.wd-mobile-view-tool+.wd-mobile-view-tool {
+.wd-mobile-view-tool + .wd-mobile-view-tool {
   border-right: 1px solid #e5e7eb;
 }
 
@@ -2025,12 +2106,6 @@ button {
   border-radius: 8px 0 0 8px;
 }
 
-/* هاور */
-.wd-mobile-view-tool:hover {
-  background: #2563eb;
-  color: #ffffff;
-}
-
 /* هاور دکمه سمت راست */
 .wd-mobile-view-tool:first-child:hover {
   border-radius: 0 8px 8px 0;
@@ -2041,9 +2116,7 @@ button {
   border-radius: 8px 0 0 8px;
 }
 
-/* 
-    MOBILE
-*/
+/* MOBILE */
 @media (max-width: 768px) {
   body {
     overflow: hidden;
@@ -2057,18 +2130,30 @@ button {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 10px;
+    gap: 5px;
     direction: rtl;
   }
 
   .wd-mobile-menu-button {
-    width: 20%;
+    width: 12%;
     flex-shrink: 0;
   }
 
   .wd-mobile-view-tools {
     flex: 1;
     min-width: 0;
+    justify-content: flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    direction: rtl;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
+  }
+
+  .wd-mobile-view-tools::-webkit-scrollbar {
+    display: none;
   }
 
   .wd-mobile-menu-bar {
@@ -2434,6 +2519,31 @@ button {
   border-radius: 10px;
 }
 
+.wd-form-grid .wd-counter-control {
+  width: 100%;
+  height: 40px;
+  min-height: 40px;
+}
+
+@media (max-width: 576px) {
+  .wd-form-line {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .wd-form-label {
+    width: 65px;
+    flex-shrink: 0;
+    margin-bottom: 0;
+  }
+
+  .wd-form-input,
+  .wd-select-box {
+    flex: 1;
+    width: auto;
+  }
+}
+
 @media (max-width: 768px) {
   .wd-unit-details {
     width: 270px;
@@ -2458,6 +2568,7 @@ button {
 /* =========================================
    پیش‌نمایش شکل
 ========================================= */
+
 .shape-preview-box {
   position: relative;
   width: 100%;
@@ -2470,6 +2581,7 @@ button {
 }
 
 /* تصویر اصلی */
+
 .shape-preview-image {
   position: absolute;
   top: 50%;
@@ -2486,8 +2598,44 @@ button {
 }
 
 /* =========================================
-   ورودی‌های ابعاد
+ خطوط اندازه گیری
 ========================================= */
+
+.shape-preview-box::before {
+  content: "";
+  position: absolute;
+  top: calc(50% - 120px);
+  bottom: calc(50% - 120px);
+  left: calc(50% - 145px);
+  width: 2px;
+  background: #9ca3af;
+}
+
+/* خط اصلی عرض */
+.shape-preview-box::after {
+  content: "";
+  position: absolute;
+  left: calc(50% - 120px);
+  right: calc(50% - 120px);
+  top: calc(50% + 145px);
+  height: 2px;
+  background: #9ca3af;
+}
+
+/* سرهای خط ارتفاع */
+
+.shape-preview-box .height-line-top,
+.shape-preview-box .height-line-bottom,
+.shape-preview-box .width-line-left,
+.shape-preview-box .width-line-right {
+  position: absolute;
+  background: #9ca3af;
+}
+
+/* =========================================
+ ورودی‌های ابعاد
+========================================= */
+
 .shape-dimension-input {
   position: absolute;
   z-index: 10;
@@ -2506,31 +2654,142 @@ button {
   margin: 0;
 }
 
-/* عرض */
-.shape-preview-box #itemWidth {
-  top: 60%;
-  left: -42px;
-  transform: translate(-50%, -50%);
-  rotate: 90deg;
+/* ارتفاع - وسط خط سمت چپ */
+
+.shape-preview-box #itemHeight {
+  top: 50%;
+  left: calc(50% - 145px);
+  transform: translate(-50%, -50%) rotate(-90deg);
 }
 
-/* ارتفاع */
-.shape-preview-box #itemHeight {
+/* عرض - وسط خط پایین */
+
+.shape-preview-box #itemWidth {
   top: auto;
   left: 50%;
-  bottom: 5px;
+  bottom: -15px;
   transform: translate(-50%, 50%);
-  rotate: 0deg;
+}
+
+/* =========================================
+ خطوط کوتاه ابتدا و انتها
+========================================= */
+
+/* دو خط کوتاه بالا و پایین ارتفاع */
+.height-line-top,
+.height-line-bottom {
+  position: absolute;
+  width: 12px;
+  height: 2px;
+  left: calc(50% - 151px);
+  background: #9ca3af;
+}
+
+.shape-preview-box .height-line-top,
+.shape-preview-box .height-line-bottom {
+    position: absolute;
+    width: 12px;
+    height: 1px;
+    left: calc(50% - 151px);
+    background: #9ca3af;
+}
+
+.shape-preview-box .height-line-top {
+    top: calc(50% - 120px);
+}
+
+.shape-preview-box .height-line-bottom {
+    top: calc(50% + 120px);
+}
+
+.shape-preview-box .width-line-left,
+.shape-preview-box .width-line-right {
+    position: absolute;
+    width: 1px;
+    height: 12px;
+    top: calc(50% + 139px);
+    background: #9ca3af;
+}
+
+.shape-preview-box .width-line-left {
+    left: calc(50% - 120px);
+}
+
+.shape-preview-box .width-line-right {
+    left: calc(50% + 120px);
+}
+
+.height-line-top {
+  position: absolute;
+  width: 12px;
+  height: 2px;
+  left: calc(50% - 151px);
+  top: calc(50% - 120px);
+  background: #9ca3af;
+}
+
+/* خط کوچک پایین ارتفاع */
+.height-line-bottom {
+  position: absolute;
+  width: 12px;
+  height: 2px;
+  left: calc(50% - 151px);
+  top: calc(50% + 120px);
+  background: #9ca3af;
+}
+
+.width-line-left {
+  position: absolute;
+  width: 2px;
+  height: 12px;
+  left: calc(50% - 120px);
+  top: calc(50% + 139px);
+  background: #9ca3af;
+}
+
+/* خط کوچک راست عرض */
+.width-line-right {
+  position: absolute;
+  width: 2px;
+  height: 12px;
+  left: calc(50% + 120px);
+  top: calc(50% + 139px);
+  background: #9ca3af;
+}
+
+.shape-preview-box .height-line-bottom {
+  bottom: 25px;
+}
+
+/* دو خط کوتاه چپ و راست عرض */
+
+.shape-preview-box .width-line-left,
+.shape-preview-box .width-line-right {
+    position: absolute;
+    width: 2px;
+    height: 12px;
+    top: calc(50% + 139px);
+    background: #9ca3af;
+}
+
+.shape-preview-box .width-line-left {
+    left: calc(50% - 120px);
+}
+
+.shape-preview-box .width-line-right {
+    left: calc(50% + 120px);
 }
 
 /* فوکوس */
+
 .shape-dimension-input:focus {
   border-color: #2563eb;
 }
 
 /* =========================================
-   ورودی گوشه‌ها
+ ورودی گوشه‌ها
 ========================================= */
+
 .shape-corner-input {
   position: absolute;
   z-index: 11;
@@ -2549,7 +2808,6 @@ button {
   margin: 0;
 }
 
-/* وقتی JS نمایش می‌دهد */
 .shape-preview-box #a,
 .shape-preview-box #b,
 .shape-preview-box #c,
@@ -2558,8 +2816,9 @@ button {
 }
 
 /* =========================================
-   انتخاب شکل‌ها
+ انتخاب شکل‌ها
 ========================================= */
+
 .shape-selector-list {
   width: 100%;
   display: flex;
@@ -2576,6 +2835,7 @@ button {
 }
 
 /* اسکرول */
+
 .shape-selector-list::-webkit-scrollbar {
   height: 5px;
 }
@@ -2590,8 +2850,9 @@ button {
 }
 
 /* =========================================
-   آیتم شکل
+ آیتم شکل
 ========================================= */
+
 .shape-selector-item {
   position: relative;
   flex: 0 0 68px;
@@ -2608,8 +2869,8 @@ button {
 /* رادیو */
 .shape-selector-radio {
   position: absolute;
-  width: 1px;
-  height: 1px;
+  width: 2px;
+  height: 2px;
   opacity: 0;
   pointer-events: none;
 }
@@ -2670,6 +2931,115 @@ button {
   color: #6b7280;
 }
 
+/* چیدمان فرم غیرمستطیل */
+.wd-nonrect-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 20px;
+  direction: rtl;
+  align-items: start;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+/* پیش‌نمایش سمت راست */
+.wd-nonrect-layout .shape-preview-box {
+  grid-column: 1;
+  width: 100%;
+  min-width: 0;
+}
+
+/* فهرست شکل‌ها سمت چپ */
+.wd-nonrect-layout .shape-selector-list {
+  grid-column: 2;
+  display: block;
+  width: 100%;
+  height: 500px;
+  max-height: 65vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin: 0;
+  direction: rtl;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 12px;
+}
+/* دسته‌بندی شکل‌ها */
+.shape-category {
+  margin-bottom: 18px;
+}
+
+.shape-category-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+}
+
+.shape-category-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.shape-category-line {
+  flex: 1;
+  height: 1px;
+  background: #ddd;
+}
+
+/* دکمه‌های هر دسته */
+.shape-category-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.wd-nonrect-layout .shape-selector-item {
+  width: 100%;
+  min-width: 0;
+  height: 55px;
+}
+
+/* اسکرول عمودی */
+.wd-nonrect-layout .shape-selector-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.wd-nonrect-layout .shape-selector-list::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+/* موبایل */
+@media (max-width: 700px) {
+  .wd-nonrect-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 45px;
+  }
+
+  .wd-nonrect-layout .shape-preview-box {
+    grid-column: 1;
+  }
+
+  .wd-nonrect-layout .shape-selector-list {
+    grid-column: 1;
+    height: 280px;
+    max-height: 40vh;
+  }
+}
+/* وسط‌چین کردن پیش‌نمایش مستطیل */
+#ofcAddNew:not(.wd-non-rectangle-mode) .wd-nonrect-layout {
+  display: flex;
+  justify-content: center;
+}
+
+#ofcAddNew:not(.wd-non-rectangle-mode) .shape-preview-box {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
 /* دکمه حذف */
 .wd-confirm-delete-btn {
   width: 90px;
@@ -2720,10 +3090,38 @@ button {
 
 .wd-color-preview {
   width: 28px;
-  height: 28px;
-  flex: 0 0 28px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
+  height: 40px;
+  flex: 0 0 40px;
+  border: 1px solid #dbe2ea;
+  border-radius: 8px;
   background: #ffffff;
   box-sizing: border-box;
+}
+
+/* دکمه بستن منوی موبایل */
+.wd-mobile-close {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border-radius: 8px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .wd-mobile-close {
+    display: flex;
+  }
+
+  .wd-right-brand-inner {
+    display: flex;
+    align-items: center;
+  }
+
+  .wd-mobile-close {
+    margin-right: auto;
+  }
 }

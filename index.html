@@ -320,31 +320,52 @@
     <div class="wd-mobile-menu-bar-inner">
       <button type="button" class="wd-mobile-menu-button" id="wdOpenRightMenu" aria-label="باز کردن منوی راست">
         <i class="ti ti-layout-sidebar-right"></i>
-        یونیت‌ها
       </button>
       <div class="wd-mobile-view-tools">
-        <button class="wd-mobile-view-tool" id="zoomOutButton" type="button" title="کوچک‌نمایی">
-          <i class="ti ti-minus"></i>
-        </button>
-        <button class="wd-mobile-view-tool" id="zoomInButton" type="button" title="بزرگ‌نمایی">
-          <i class="ti ti-plus"></i>
-        </button>
-        <button class="wd-mobile-view-tool" id="resetButton" type="button" title="بازنشانی بزرگ‌نمایی">
-          <i class="ti ti-arrows-maximize"></i>
-        </button>
-        <button class="wd-mobile-view-tool undo" id="undoButton" type="button" disabled title="بازگشت (Ctrl+Z)">
-          <i class="ti ti-arrow-back-up"></i>
+        <!-- دکمه‌های قبلی سمت راست -->
+        <button class="wd-mobile-view-tool" id="view3DButton" type="button" title="نمایش سه‌بعدی">
+          <i class="ti ti-box"></i>
         </button>
         <button class="wd-mobile-view-tool redo" id="redoButton" type="button" disabled title="انجام مجدد (Ctrl+Y)">
           <i class="ti ti-arrow-forward-up"></i>
         </button>
-        <button class="wd-mobile-view-tool" id="view3DButton" type="button" title="نمایش سه‌بعدی">
-          <i class="ti ti-box"></i>
+        <button class="wd-mobile-view-tool undo" id="undoButton" type="button" disabled title="بازگشت (Ctrl+Z)">
+          <i class="ti ti-arrow-back-up"></i>
+        </button>
+        <button class="wd-mobile-view-tool" id="resetButton" type="button" title="بازنشانی بزرگ‌نمایی">
+          <i class="ti ti-arrows-maximize"></i>
+        </button>
+        <button class="wd-mobile-view-tool" id="zoomInButton" type="button" title="بزرگ‌نمایی">
+          <i class="ti ti-plus"></i>
+        </button>
+        <button class="wd-mobile-view-tool" id="zoomOutButton" type="button" title="کوچک‌نمایی">
+          <i class="ti ti-minus"></i>
+        </button>
+        <!-- دکمه‌های جدید سمت چپ -->
+        <button class="wd-mobile-view-tool" id="deleteButton" type="button" title="حذف آیتم">
+          <i class="ti ti-trash"></i>
+        </button>
+        <button class="wd-mobile-view-tool" id="heightRulerButton" type="button" title="یکسان سازی مولین های افقی">
+          <i class="ti ti-ruler-measure wd-ruler-vertical"></i>
+        </button>
+        <button class="wd-mobile-view-tool" id="widthRulerButton" type="button" title="یکسان سازی مولین های عمودی">
+          <i class="ti ti-ruler-measure"></i>
+        </button>
+        <button class="wd-mobile-view-tool" id="mirrorButton" type="button" title="برعکس کردن چپ یا راست بازشو">
+          <i class="ti ti-flip-vertical"></i>
+        </button>
+        <button class="wd-mobile-view-tool" id="lockButton" type="button" title="قفل کردن ویرایش یونیت">
+          <i class="ti ti-lock-open"></i>
+        </button>
+        <button class="wd-mobile-view-tool" id="viewButton" type="button" title="مخفی کردن یونیت در محاسبات">
+          <i class="ti ti-eye"></i>
+        </button>
+        <button class="wd-mobile-view-tool" id="copyButton" type="button" title="ایجاد کپی">
+          <i class="ti ti-copy"></i>
         </button>
       </div>
       <button type="button" class="wd-mobile-menu-button" id="wdOpenLeftMenu" aria-label="باز کردن منوی چپ">
         <i class="ti ti-menu-2"></i>
-        ابزارها
       </button>
     </div>
   </div>
@@ -413,9 +434,13 @@
             </svg>
           </div>
           <div class="wd-right-site-info">
-            <strong class="wd-right-site-title"> عایق فیروز </strong>
-            <span class="wd-right-site-subtitle"> طراحی درب و پنجره </span>
+            <strong class="wd-right-site-title">عایق فیروز</strong>
+            <span class="wd-right-site-subtitle">طراحی درب و پنجره</span>
           </div>
+          <!-- دکمه بستن مخصوص موبایل -->
+          <button type="button" class="wd-selection-close wd-mobile-close" id="wdRightClose" aria-label="بستن منو">
+            <i class="ti ti-x"></i>
+          </button>
         </div>
       </header>
       <!-- RIGHT CONTENT -->
@@ -439,40 +464,26 @@
             </button>
           </div>
         </section>
-        <!-- کنترل -->
-        <!-- <section class="wd-section-block">
-          <div class="wd-view-tools-box">
-            <button class="wd-view-tool" id="zoomOutButton" type="button" title="کوچک‌نمایی">
-              <i class="ti ti-minus"></i>
-            </button>
-            <button class="wd-view-tool" id="zoomInButton" type="button" title="بزرگ‌نمایی">
-              <i class="ti ti-plus"></i>
-            </button>
-            <button class="wd-view-tool" id="resetButton" type="button" title="بازنشانی بزرگ‌نمایی">
-              <i class="ti ti-arrows-maximize"></i>
-            </button>
-            <button class="wd-view-tool undo" id="undoButton" type="button" disabled title="بازگشت (Ctrl+Z)">
-              <i class="ti ti-arrow-back-up"></i>
-            </button>
-            <button class="wd-view-tool redo" id="redoButton" type="button" disabled title="انجام مجدد (Ctrl+Y)">
-              <i class="ti ti-arrow-forward-up"></i>
-            </button>
-            <button class="wd-view-tool" id="view3DButton" type="button" title="نمایش سه‌بعدی">
-              <i class="ti ti-box"></i>
-            </button>
-          </div>
-        </section> -->
-        <!-- یونیت جدید -->
+        <!-- آیتم جدید -->
         <section class="wd-section-block">
           <div class="wd-create-unit-row">
-            <button class="wd-create-unit-main addNewLayer">
-              <i class="ti ti-plus"></i>
-              یونیت جدید
-              <!-- <span class="badge bg-white text-primary ms-2 d-none d-sm-block">U</span> -->
+            <button class="wd-create-unit-main addNewLayer" data-type="rectangle">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2.5" y="5" width="19" height="14" />
+              </svg>
+              مستطیل
             </button>
-            <button class="wd-create-unit-options" title="گزینه‌ها">
+            <button class="wd-create-unit-main addNewLayer" data-type="non-rectangle">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3.5 5h17l2 14H1.5l2-14z" />
+              </svg>
+              غیر مستطیل
+            </button>
+            <!-- <button class="wd-create-unit-options" title="گزینه‌ها">
               <i class="ti ti-dots"></i>
-            </button>
+            </button> -->
           </div>
         </section>
         <!-- ITEMS -->
@@ -536,7 +547,7 @@
         </div>
       </section>
       <!-- Canvas اصلی؛ هیچ تغییری نکند -->
-      <div class="wd-canvas-frame designCardParent">
+      <div class="wd-canvas-frame designCardParent designer-canvas-area">
         <canvas class="rounded" id="myCanvas" resize="" width="1039" height="1817" style="
       -webkit-user-drag: none;
       user-select: none;
@@ -554,9 +565,13 @@
             <i class="ti ti-user"></i>
           </div>
           <div class="wd-user-info">
-            <strong class="wd-user-name"> حسین فیروزی </strong>
-            <span class="wd-user-role"> کاربر </span>
+            <strong class="wd-user-name">حسین فیروزی</strong>
+            <span class="wd-user-role">کاربر</span>
           </div>
+          <!-- دکمه بستن مخصوص موبایل -->
+          <button type="button" class="wd-selection-close wd-mobile-close" id="wdLeftClose" aria-label="بستن منو">
+            <i class="ti ti-x"></i>
+          </button>
         </div>
       </header>
       <!-- LEFT CONTENT -->
@@ -589,39 +604,6 @@
             </div>
           </div>
         </section>
-        <!-- کنترل -->
-        <!-- <section class="wd-section-block">
-          <div class="wd-view-tools-box">
-            <button class="wd-view-tool layerClone" id="copyButton" type="button" title="ایجاد کپی"
-              data-bs-dismiss="offcanvas">
-              <i class="ti ti-copy"></i>
-            </button>
-            <button class="wd-view-tool layerDisable" id="viewButton" type="button" title="مخفی کردن یونیت در محاسبات"
-              data-bs-dismiss="offcanvas">
-              <i class="ti ti-eye"></i>
-            </button>
-            <button class="wd-view-tool layerLock" id="lockButton" type="button" title="قفل کردن ویرایش یونیت"
-              data-bs-dismiss="offcanvas">
-              <i class="ti ti-lock-open"></i>
-            </button>
-            <button class="wd-view-tool toggleSashType" id="mirrorButton" type="button"
-              title="برعکس کردن چپ یا راست بازشو" data-bs-dismiss="offcanvas">
-              <i class="ti ti-flip-vertical"></i>
-            </button>
-            <button class="wd-view-tool vMullianEualling" id="widthRulerButton" type="button"
-              title="یکسان سازی مولین های عمودی" data-bs-dismiss="offcanvas">
-              <i class="ti ti-ruler-measure"></i>
-            </button>
-            <button class="wd-view-tool hMullianEualling" id="heightRulerButton" type="button"
-              title="یکسان سازی مولین های افقی" data-bs-dismiss="offcanvas">
-              <i class="ti ti-ruler-measure wd-ruler-vertical"></i>
-            </button>
-            <button class="wd-view-tool dellItem" id="deleteButton" type="button" title="حذف آیتم"
-              data-bs-dismiss="offcanvas">
-              <i class="ti ti-trash"></i>
-            </button>
-          </div>
-        </section> -->
         <!-- افزودن به یونیت -->
         <section class="wd-section-block">
           <div class="wd-components-grid">
@@ -938,327 +920,393 @@
       </div>
     </div>
   </div>
-  <!-- منو راست افزودن یونیت / ویرایش -->
-  <aside class="wd-panel-right offcanvas offcanvas-start" id="ofcAddNew" tabindex="-1">
-    <!-- <aside class="wd-panel-right offcanvas-start" id="ofcAddNew" tabindex="-1"> -->
-    <!-- افزودن/ویرایش یونیت -->
-    <header class="wd-right-brand">
-      <div class="wd-right-brand-inner">
-        <div class="wd-right-site-info-addedit">
-          <strong class="wd-right-site-title"> مشخصات و تنظیمات یونیت </strong>
-          <button type="button" class="wd-selection-close" data-bs-dismiss="offcanvas" aria-label="Close">
-            <i class="ti ti-x"></i>
-          </button>
+  <!-- مدال آیتم مستطیل -->
+  <div class="modal fade" id="ofcAddNew" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content wd-add-item-modal">
+        <header class="wd-right-brand">
+          <div class="wd-right-brand-inner">
+            <div class="wd-right-site-info-addedit">
+              <strong class="wd-right-site-title"> افزودن آیتم مستطیل </strong>
+              <button type="button" class="wd-selection-close" data-bs-dismiss="modal" aria-label="Close">
+                <i class="ti ti-x"></i>
+              </button>
+            </div>
+          </div>
+        </header>
+        <div class="wd-right-scroll modal-body">
+          <!-- فرم -->
+          <form method="POST" id="form1" class="wd-section-block">
+            <!-- اطلاعات آیتم -->
+            <div class="wd-form-grid">
+              <div class="wd-form-line">
+                <label class="wd-form-label" for="itemNumber">شماره آیتم</label>
+                <input type="text" name="itemNumber" id="itemNumber" class="wd-input-box" placeholder="شماره آیتم">
+              </div>
+              <div class="wd-form-line">
+                <label class="wd-form-label" for="itemName">نام آیتم</label>
+                <input type="text" name="itemName" id="itemName" class="wd-input-box" placeholder="نام آیتم">
+              </div>
+              <div class="wd-form-line">
+                <label class="wd-form-label" for="installationCode">کد نصب</label>
+                <input type="text" name="installationCode" id="installationCode" class="wd-input-box"
+                  placeholder="کد نصب">
+              </div>
+              <!-- سیستم -->
+              <div class="wd-form-line">
+                <label class="wd-form-label" for="system">سیستم</label>
+                <select class="wd-select-box" name="system" id="system">
+                  <option value="UPVC">UPVC</option>
+                  <option value="Al">AL</option>
+                </select>
+              </div>
+              <!-- الگو -->
+              <!-- <div class="wd-form-line">
+                <label class="wd-form-label" for="pattern_id"> الگو </label>
+                <select class="wd-select-box" name="pattern_id" id="pattern_id" autocomplete="off">
+                  <option value="0">انتخاب الگو</option>
+                </select>
+              </div> -->
+              <!-- پروفیل -->
+              <div class="wd-form-line">
+                <label class="wd-form-label"> پروفیل </label>
+                <select class="wd-select-box frameInput" name="profile_id" class="form-select fs-5" id="profile_id"
+                  data-id="profile">
+                  <option value="4" data-system="UPVC" data-type="Turn" data-profile_id="4" data-width="60">
+                    وینتک سری 640 /لولایی
+                  </option>
+                  <option value="112" data-system="UPVC" data-type="Turn" data-profile_id="112" data-width="60">
+                    بوتیا لولایی 2500 /لولایی
+                  </option>
+                </select>
+              </div>
+              <!-- رنگ -->
+              <div class="wd-form-line">
+                <label class="wd-form-label" for="profile_color">رنگ</label>
+                <div class="wd-color-select-wrapper">
+                  <select class="wd-select-box" autocomplete="off" name="profile_color" id="profile_color">
+                    <option value="1" data-system="UPVC" data-hex="#ffffff">
+                      سفید
+                    </option>
+                    <option value="2" data-system="UPVC" data-hex="#fffcd6">
+                      داخل رنگ
+                    </option>
+                    <option value="4" data-system="UPVC" data-hex="#b3ff00">
+                      بیرون رنگ
+                    </option>
+                    <option value="5" data-system="UPVC" data-hex="#9c590d">
+                      داخل لمینت
+                    </option>
+                    <option value="6" data-system="UPVC" data-hex="#ffbb00">
+                      بیرون لمینت
+                    </option>
+                    <option value="7" data-system="UPVC" data-hex="#fbdbff">
+                      تمام رنگ
+                    </option>
+                    <option value="8" data-system="Al" data-hex="#ffffff" style="display: none">
+                      پودری
+                    </option>
+                    <option value="9" data-system="UPVC" data-hex="#b0a100">
+                      دو طرف لمینت
+                    </option>
+                  </select>
+                  <span class="wd-color-preview" id="profile_color_preview"></span>
+                </div>
+              </div>
+              <!-- یراق -->
+              <div class="wd-form-line">
+                <label class="wd-form-label" for="accessory_id"> یراق </label>
+                <select class="wd-select-box" name="accessory_id" autocomplete="off" id="accessory_id">
+                  <option value="11" data-system="UPVC">آکادو Accado</option>
+                  <option value="112" data-system="UPVC">GU</option>
+                  <option value="114" data-system="Al" style="display: none">
+                    یراق آلومینیوم
+                  </option>
+                  <option value="120" data-system="UPVC">اندو Endow</option>
+                  <option value="121" data-system="UPVC">ویناک Winac</option>
+                </select>
+              </div>
+              <!-- شیشه -->
+              <div class="wd-form-line">
+                <label class="wd-form-label" for="glass_id">شیشه</label>
+                <div class="wd-color-select-wrapper">
+                  <select class="wd-select-box" name="glass_id" autocomplete="off" id="glass_id">
+                    <option value="1" data-color="#e0f3ff">شیشه 4+12+4 ساده ساده</option>
+                    <option value="9" data-color="#f5f5f5">شیشه 4+12+4 ساده سیلور</option>
+                    <option value="10" data-color="#ffffff">شیشه 4+12+4 آیینه مشجر</option>
+                    <option value="11" data-color="#fdffeb">شیشه 4+12+4 مشجر مشجر</option>
+                    <option value="13" data-color="#fffdcc">شیشه 4+12+4 ساده طلایی</option>
+                    <option value="14" data-color="#dedede">شیشه 4+12+4 رفلکس دودی</option>
+                    <option value="15" data-color="#ffe6db">شیشه 4+12+4 ساده برنز لایت</option>
+                    <option value="16" data-color="#e5ffff">شیشه 6+8+6 ساده ساده</option>
+                    <option value="17" data-color="#c2f7ff">شیشه 4+10+6 ساده ساده</option>
+                    <option value="18" data-color="#feffad">شیشه 6+10+4 ساده طلایی</option>
+                    <option value="19" data-color="#ededed">شیشه 6+10+4 ساده سیلور</option>
+                    <option value="20" data-color="#ffefc2">شیشه 6+10+4 ساده رفلکس برنز</option>
+                    <option value="21" data-color="#f2f2f2">شیشه 6+10+4 ساده دودی لایت</option>
+                    <option value="22" data-color="#e0e0e0">شیشه 6+10+4 ساده رفلکس دودی</option>
+                    <option value="23" data-color="#fff4d6">شیشه 6+10+4 ساده برنز لایت</option>
+                    <option value="24" data-color="#f4ebf1">شیشه 6+10+4 سکوریت ساده</option>
+                    <option value="25" data-color="#f9dbff">شیشه 6+8+6 سکوریت سکوریت</option>
+                    <option value="26" data-color="#fafafa">شیشه 4+12+4 آیینه آیینه</option>
+                    <option value="27" data-color="#dbfffb">شیشه 4+12+4 سندبلاست ساده</option>
+                    <option value="28" data-color="#fcfff0">شیشه 4+10+4 ساده ساده</option>
+                    <option value="29" data-color="#fef5ff">شیشه 4-8-4 ساده ساده</option>
+                    <option value="30" data-color="#f5f5f5">شیشه 4+12+4 ساده دودی</option>
+                    <option value="31" data-color="#f4e0ff">شیشه 4+12+4 آینه ساتینا</option>
+                    <option value="32" data-color="#e3eef2">شیشه 4+12+4 ساتینا ساتینا</option>
+                    <option value="33" data-color="#e5e8ff">شیشه 4+12+4 ساده ساتینا</option>
+                    <option value="34" data-color="#cbfbe2">شیشه 4+10+6 ساده ساده سوپرکلیر</option>
+                    <option value="35" data-color="#e0ffee">شیشه 4+12+4 ساده مشجر</option>
+                  </select>
+                  <span class="wd-color-preview" id="glass_color_preview"></span>
+                </div>
+              </div>
+              <!-- تعداد -->
+              <div class="wd-form-line">
+                <label class="wd-form-label" for="quantity"> تعداد </label>
+                <div class="wd-counter-control">
+                  <button type="button" class="wd-counter-button quantity_plus">
+                    +
+                  </button>
+                  <input type="number" name="quantity" id="quantity" class="wd-counter-number" placeholder="تعداد"
+                    value="1" min="1" />
+                  <button type="button" class="wd-counter-button quantity_minus">
+                    −
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- به روز رسانی -->
+            <div class="col-md-12 updateDiv" style="display: none">
+              <button type="button" class="btn btn-warning w-100 mb-2 update_profile_selection">
+                بروزرسانی
+              </button>
+            </div>
+            <!-- PREVIEW -->
+            <div class="wd-nonrect-layout">
+              <!-- پیش‌نمایش شکل -->
+              <div class="shape-preview-box">
+                <img id="fullShapeView" class="shape-preview-image" src="./icons/shapes/rectangle.svg"
+                  alt="پیش‌نمایش" />
+                <div class="height-line-top"></div>
+                <div class="height-line-bottom"></div>
+                <div class="width-line-left"></div>
+                <div class="width-line-right"></div>
+                <!-- ابعاد -->
+                <input type="number" name="itemWidth" id="itemWidth" class="shape-dimension-input" placeholder="?"
+                  value="1000" />
+                <input type="number" name="itemHeight" id="itemHeight" class="shape-dimension-input" placeholder="?"
+                  value="1000" />
+                <!-- ابعاد گوشه‌ها -->
+                <input type="number" name="a" id="a" class="shape-corner-input" placeholder="?" value="200"
+                  style="display: none" />
+                <input type="number" name="b" id="b" class="shape-corner-input" placeholder="?" value="200"
+                  style="display: none" />
+                <input type="number" name="c" id="c" class="shape-corner-input" placeholder="?" value="200"
+                  style="display: none" />
+                <input type="number" name="d" id="d" class="shape-corner-input" placeholder="?" value="200"
+                  style="display: none" />
+              </div>
+              <!-- سمت چپ: دسته‌بندی شکل‌ها -->
+              <div class="shape-selector-list">
+                <!-- چهارضلعی -->
+                <div class="shape-category">
+                  <div class="shape-category-title">
+                    <span>چهارضلعی</span>
+                    <span class="shape-category-line"></span>
+                  </div>
+                  <div class="shape-category-options">
+                    <label class="shape-selector-item">
+                      <input name="shape" type="radio" class="shape-selector-radio" id="Trapezoid" value="Trapezoid"
+                        data-position="39,42,0,22,4,90,2,11,0,2,73,0,0,0,0,0,0,0" />
+                      <span class="shape-selector-box">
+                        <img class="shape-selector-image" src="./icons/shapes/trapezoid.svg" alt="" />
+                      </span>
+                    </label>
+                    <label class="shape-selector-item">
+                      <input name="shape" type="radio" class="shape-selector-radio" id="Trapezoid_reverse"
+                        value="Trapezoid_reverse" data-position="5,42,0,22,4,90,39,11,0,39,73,0,0,0,0,0,0,0" />
+                      <span class="shape-selector-box">
+                        <img class="shape-selector-image" src="./icons/shapes/trapezoid_reverse.svg" alt="" />
+                      </span>
+                    </label>
+                    <label class="shape-selector-item">
+                      <input name="shape" type="radio" class="shape-selector-radio" id="Parallelogram_left"
+                        value="Parallelogram_left" data-position="5,42,0,22,4,90,39,11,0,5,73,0,0,0,0,0,0,0" />
+                      <span class="shape-selector-box">
+                        <img class="shape-selector-image" src="./icons/shapes/parallelogram_left.svg" alt="" />
+                      </span>
+                    </label>
+                    <label class="shape-selector-item">
+                      <input name="shape" type="radio" class="shape-selector-radio" id="Parallelogram_right"
+                        value="Parallelogram_right" data-position="5,42,0,22,4,90,39,73,0,5,11,0,0,0,0,0,0,0" />
+                      <span class="shape-selector-box">
+                        <img class="shape-selector-image" src="./icons/shapes/parallelogram_right.svg" alt="" />
+                      </span>
+                    </label>
+                  </div>
+                </div>
+                <!-- مستطیل کمان‌دار -->
+                <div class="shape-category">
+                  <div class="shape-category-title">
+                    مستطیل کمان‌دار
+                    <span class="shape-category-line"></span>
+                  </div>
+                  <div class="shape-category-options">
+                    <label class="shape-selector-item">
+                      <input name="shape" type="radio" class="shape-selector-radio" id="arc_rectangle"
+                        value="arc_rectangle" data-position="39,42,0,22,4,90,5,3,90,5,82,90,0,0,0,0,0,0" />
+                      <span class="shape-selector-box">
+                        <img class="shape-selector-image" src="./icons/shapes/arc_rectangle.svg" alt="" />
+                      </span>
+                    </label>
+                  </div>
+                </div>
+                <!-- مستطیل گوشه‌گرد -->
+                <div class="shape-category">
+                  <div class="shape-category-title">
+                    مستطیل گوشه‌گرد
+                    <span class="shape-category-line"></span>
+                  </div>
+                  <div class="shape-category-options">
+                    <label class="shape-selector-item">
+                      <input name="shape" type="radio" class="shape-selector-radio" id="round_rectangle"
+                        value="round_rectangle" data-position="39,42,0,22,4,90,3,1,0,3,85,0,40,3,0,40,85,0" />
+                      <span class="shape-selector-box">
+                        <img class="shape-selector-image" src="./icons/shapes/round_rectangle.svg" alt="" />
+                      </span>
+                    </label>
+                    <label class="shape-selector-item">
+                      <input name="shape" type="radio" class="shape-selector-radio" id="quarter_circle_left"
+                        value="quarter_circle_left" data-position="39,42,0,22,77,90,0,0,0,0,0,0,0,0,0,0,0,0" />
+                      <span class="shape-selector-box">
+                        <img class="shape-selector-image" src="./icons/shapes/quarter_circle_left.svg" alt="" />
+                      </span>
+                    </label>
+                    <label class="shape-selector-item">
+                      <input name="shape" type="radio" class="shape-selector-radio" id="quarter_circle_right"
+                        value="quarter_circle_right" data-position="39,42,0,22,4,90,0,0,0,0,0,0,0,0,0,0,0,0" />
+                      <span class="shape-selector-box">
+                        <img class="shape-selector-image" src="./icons/shapes/quarter_circle_right.svg" alt="" />
+                      </span>
+                    </label>
+                  </div>
+                </div>
+                <!-- چندضلعی قائمه -->
+                <div class="shape-category">
+                  <div class="shape-category-title">
+                    چندضلعی قائمه
+                    <span class="shape-category-line"></span>
+                  </div>
+                  <div class="shape-category-options">
+                    <!-- در شکل‌های فعلی، گزینه مستقلی برای این دسته وجود ندارد -->
+                  </div>
+                </div>
+                <!-- دایره -->
+                <div class="shape-category">
+                  <div class="shape-category-title">
+                    دایره
+                    <span class="shape-category-line"></span>
+                  </div>
+                  <div class="shape-category-options">
+                    <label class="shape-selector-item">
+                      <input name="shape" type="radio" class="shape-selector-radio" id="circle" value="circle"
+                        data-position="39,42,0,22,4,90,0,0,0,0,0,0,0,0,0,0,0,0" />
+                      <span class="shape-selector-box">
+                        <img class="shape-selector-image" src="./icons/shapes/circle.svg" alt="" />
+                      </span>
+                    </label>
+                    <label class="shape-selector-item">
+                      <input name="shape" type="radio" class="shape-selector-radio" id="half_circle" value="half_circle"
+                        data-position="39,42,0,22,4,90,0,0,0,0,0,0,0,0,0,0,0,0" />
+                      <span class="shape-selector-box">
+                        <img class="shape-selector-image" src="./icons/shapes/half_circle.svg" alt="" />
+                      </span>
+                    </label>
+                    <label class="shape-selector-item">
+                      <input name="shape" type="radio" class="shape-selector-radio" id="half_circle_reverse"
+                        value="half_circle_reverse" data-position="11,42,0,22,4,90,0,0,0,0,0,0,0,0,0,0,0,0" />
+                      <span class="shape-selector-box">
+                        <img class="shape-selector-image" src="./icons/shapes/half_circle_reverse.svg" alt="" />
+                      </span>
+                    </label>
+                  </div>
+                </div>
+                <!-- مثلث -->
+                <div class="shape-category">
+                  <div class="shape-category-title">
+                    مثلث
+                    <span class="shape-category-line"></span>
+                  </div>
+                  <div class="shape-category-options">
+                    <label class="shape-selector-item">
+                      <input name="shape" type="radio" class="shape-selector-radio" id="triangle" value="triangle"
+                        data-position="39,42,0,22,4,90,5,14,0,0,0,0,0,0,0,0,0,0" />
+                      <span class="shape-selector-box">
+                        <img class="shape-selector-image" src="./icons/shapes/triangle.svg" alt="" />
+                      </span>
+                    </label>
+                    <label class="shape-selector-item">
+                      <input name="shape" type="radio" class="shape-selector-radio" id="arc_triangle"
+                        value="arc_triangle" data-position="39,42,0,22,4,90,0,0,0,0,0,0,0,0,0,0,0,0" />
+                      <span class="shape-selector-box">
+                        <img class="shape-selector-image" src="./icons/shapes/arc_triangle.svg" alt="" />
+                      </span>
+                    </label>
+                  </div>
+                </div>
+                <!-- چندضلعی منتظم -->
+                <div class="shape-category">
+                  <div class="shape-category-title">
+                    چندضلعی منتظم
+                    <span class="shape-category-line"></span>
+                  </div>
+                  <div class="shape-category-options">
+                    <label class="shape-selector-item">
+                      <input name="shape" type="radio" class="shape-selector-radio" id="polygon" value="polygon"
+                        data-position="39,42,0,28,4,90,8,21,-35,0,0,0,0,0,0,0,0,0" />
+                      <span class="shape-selector-box">
+                        <img class="shape-selector-image" src="./icons/shapes/polygon.svg" alt="" />
+                      </span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- بادخور -->
+            <div class="wd-gap-fields">
+              <!-- بادخور عرض -->
+              <div class="wd-gap-field">
+                <label for="widthSpace" class="wd-gap-label">
+                  بادخور عرض
+                </label>
+                <input type="text" name="widthSpace" id="widthSpace" class="wd-gap-input" placeholder="?" value="0" />
+              </div>
+              <!-- بادخور ارتفاع -->
+              <div class="wd-gap-field">
+                <label for="heightSpace" class="wd-gap-label">
+                  بادخور ارتفاع
+                </label>
+                <input type="text" name="heightSpace" id="heightSpace" class="wd-gap-input" placeholder="?" value="0" />
+              </div>
+            </div>
+            <!-- AI -->
+            <input type="hidden" name="ai" value="0" class="form-selectgroup-input" />
+            <!-- عملیات -->
+            <div class="wd-right-form-actions">
+              <button type="submit" class="wd-right-confirm" id="createLayerBtn" data-bs-dismiss="modal">
+                افزودن
+              </button>
+              <button type="button" class="wd-right-cancel" data-bs-dismiss="modal">
+                لغو
+              </button>
+            </div>
+          </form>
         </div>
       </div>
-    </header>
-    <div class="wd-right-scroll offcanvas-body">
-      <!-- فرم -->
-      <form method="POST" id="form1" class="wd-section-block">
-        <!-- سیستم -->
-        <div class="wd-form-line">
-          <label class="wd-form-label" for="system">سیستم</label>
-          <select class="wd-select-box" name="system" id="system">
-            <option value="UPVC">UPVC</option>
-            <option value="Al">AL</option>
-          </select>
-        </div>
-        <!-- الگو -->
-        <div class="wd-form-line">
-          <label class="wd-form-label" for="pattern_id"> الگو </label>
-          <select class="wd-select-box" name="pattern_id" id="pattern_id" autocomplete="off">
-            <option value="0">انتخاب الگو</option>
-          </select>
-        </div>
-        <!-- پروفیل -->
-        <div class="wd-form-line">
-          <label class="wd-form-label"> پروفیل </label>
-          <select class="wd-select-box frameInput" name="profile_id" class="form-select fs-5" id="profile_id"
-            data-id="profile">
-            <option value="4" data-system="UPVC" data-type="Turn" data-profile_id="4" data-width="60">
-              وینتک سری 640 /لولایی
-            </option>
-            <option value="112" data-system="UPVC" data-type="Turn" data-profile_id="112" data-width="60">
-              بوتیا لولایی 2500 /لولایی
-            </option>
-          </select>
-        </div>
-        <!-- رنگ -->
-        <div class="wd-form-line">
-          <label class="wd-form-label" for="profile_color">رنگ</label>
-          <div class="wd-color-select-wrapper">
-            <select class="wd-select-box" autocomplete="off" name="profile_color" id="profile_color">
-              <option value="1" data-system="UPVC" data-hex="#ffffff">
-                سفید
-              </option>
-              <option value="2" data-system="UPVC" data-hex="#fffcd6">
-                داخل رنگ
-              </option>
-              <option value="4" data-system="UPVC" data-hex="#b3ff00">
-                بیرون رنگ
-              </option>
-              <option value="5" data-system="UPVC" data-hex="#9c590d">
-                داخل لمینت
-              </option>
-              <option value="6" data-system="UPVC" data-hex="#ffbb00">
-                بیرون لمینت
-              </option>
-              <option value="7" data-system="UPVC" data-hex="#fbdbff">
-                تمام رنگ
-              </option>
-              <option value="8" data-system="Al" data-hex="#ffffff" style="display: none">
-                پودری
-              </option>
-              <option value="9" data-system="UPVC" data-hex="#b0a100">
-                دو طرف لمینت
-              </option>
-            </select>
-            <span class="wd-color-preview" id="profile_color_preview"></span>
-          </div>
-        </div>
-        <!-- یراق -->
-        <div class="wd-form-line">
-          <label class="wd-form-label" for="accessory_id"> یراق </label>
-          <select class="wd-select-box" name="accessory_id" autocomplete="off" id="accessory_id">
-            <option value="11" data-system="UPVC">آکادو Accado</option>
-            <option value="112" data-system="UPVC">GU</option>
-            <option value="114" data-system="Al" style="display: none">
-              یراق آلومینیوم
-            </option>
-            <option value="120" data-system="UPVC">اندو Endow</option>
-            <option value="121" data-system="UPVC">ویناک Winac</option>
-          </select>
-        </div>
-        <!-- شیشه -->
-        <div class="wd-form-line">
-          <label class="wd-form-label" for="glass_id">شیشه</label>
-          <div class="wd-color-select-wrapper">
-            <select class="wd-select-box" style="font-size: 11px;" name="glass_id" autocomplete="off" id="glass_id">
-              <option value="1" data-color="#e0f3ff">شیشه 4+12+4 ساده ساده</option>
-              <option value="9" data-color="#f5f5f5">شیشه 4+12+4 ساده سیلور</option>
-              <option value="10" data-color="#ffffff">شیشه 4+12+4 آیینه مشجر</option>
-              <option value="11" data-color="#fdffeb">شیشه 4+12+4 مشجر مشجر</option>
-              <option value="13" data-color="#fffdcc">شیشه 4+12+4 ساده طلایی</option>
-              <option value="14" data-color="#dedede">شیشه 4+12+4 رفلکس دودی</option>
-              <option value="15" data-color="#ffe6db">شیشه 4+12+4 ساده برنز لایت</option>
-              <option value="16" data-color="#e5ffff">شیشه 6+8+6 ساده ساده</option>
-              <option value="17" data-color="#c2f7ff">شیشه 4+10+6 ساده ساده</option>
-              <option value="18" data-color="#feffad">شیشه 6+10+4 ساده طلایی</option>
-              <option value="19" data-color="#ededed">شیشه 6+10+4 ساده سیلور</option>
-              <option value="20" data-color="#ffefc2">شیشه 6+10+4 ساده رفلکس برنز</option>
-              <option value="21" data-color="#f2f2f2">شیشه 6+10+4 ساده دودی لایت</option>
-              <option value="22" data-color="#e0e0e0">شیشه 6+10+4 ساده رفلکس دودی</option>
-              <option value="23" data-color="#fff4d6">شیشه 6+10+4 ساده برنز لایت</option>
-              <option value="24" data-color="#f4ebf1">شیشه 6+10+4 سکوریت ساده</option>
-              <option value="25" data-color="#f9dbff">شیشه 6+8+6 سکوریت سکوریت</option>
-              <option value="26" data-color="#fafafa">شیشه 4+12+4 آیینه آیینه</option>
-              <option value="27" data-color="#dbfffb">شیشه 4+12+4 سندبلاست ساده</option>
-              <option value="28" data-color="#fcfff0">شیشه 4+10+4 ساده ساده</option>
-              <option value="29" data-color="#fef5ff">شیشه 4-8-4 ساده ساده</option>
-              <option value="30" data-color="#f5f5f5">شیشه 4+12+4 ساده دودی</option>
-              <option value="31" data-color="#f4e0ff">شیشه 4+12+4 آینه ساتینا</option>
-              <option value="32" data-color="#e3eef2">شیشه 4+12+4 ساتینا ساتینا</option>
-              <option value="33" data-color="#e5e8ff">شیشه 4+12+4 ساده ساتینا</option>
-              <option value="34" data-color="#cbfbe2">شیشه 4+10+6 ساده ساده سوپرکلیر</option>
-              <option value="35" data-color="#e0ffee">شیشه 4+12+4 ساده مشجر</option>
-            </select>
-            <span class="wd-color-preview" id="glass_color_preview"></span>
-          </div>
-        </div>
-        <!-- تعداد -->
-        <div class="wd-form-line">
-          <label class="wd-form-label" for="quantity"> تعداد </label>
-          <div class="wd-counter-control">
-            <button type="button" class="wd-counter-button quantity_plus">
-              +
-            </button>
-            <input type="number" name="quantity" id="quantity" class="wd-counter-number" placeholder="تعداد" value="1"
-              min="1" />
-            <button type="button" class="wd-counter-button quantity_minus">
-              −
-            </button>
-          </div>
-        </div>
-        <!-- به روز رسانی -->
-        <div class="col-md-12 updateDiv" style="display: none">
-          <button type="button" class="btn btn-warning w-100 mb-2 update_profile_selection">
-            بروزرسانی
-          </button>
-        </div>
-        <!-- PREVIEW -->
-        <!-- پیش‌نمایش شکل -->
-        <div class="shape-preview-box">
-          <img id="fullShapeView" class="shape-preview-image" src="./icons/shapes/rectangle.svg" alt="پیش‌نمایش" />
-          <!-- ابعاد -->
-          <input type="number" name="itemWidth" id="itemWidth" class="shape-dimension-input" placeholder="?"
-            value="1000" />
-          <input type="number" name="itemHeight" id="itemHeight" class="shape-dimension-input" placeholder="?"
-            value="1000" />
-          <!-- ابعاد گوشه‌ها -->
-          <input type="number" name="a" id="a" class="shape-corner-input" placeholder="?" value="200"
-            style="display: none" />
-          <input type="number" name="b" id="b" class="shape-corner-input" placeholder="?" value="200"
-            style="display: none" />
-          <input type="number" name="c" id="c" class="shape-corner-input" placeholder="?" value="200"
-            style="display: none" />
-          <input type="number" name="d" id="d" class="shape-corner-input" placeholder="?" value="200"
-            style="display: none" />
-        </div>
-        <!-- انتخاب شکل -->
-        <div class="shape-selector-list">
-          <!-- مستطیل -->
-          <label class="shape-selector-item">
-            <input name="shape" type="radio" class="shape-selector-radio" id="simple_rectangle" value="simple_rectangle"
-              data-position="39,42,0,22,4,90,0,0,0,0,0,0,0,0,0,0,0,0" checked />
-            <span class="shape-selector-box">
-              <img class="shape-selector-image" src="./icons/shapes/rectangle.svg" alt="" />
-            </span>
-          </label>
-          <!-- ذوزنقه -->
-          <label class="shape-selector-item">
-            <input name="shape" type="radio" class="shape-selector-radio" id="Trapezoid" value="Trapezoid"
-              data-position="39,42,0,22,4,90,2,11,0,2,73,0,0,0,0,0,0,0" />
-            <span class="shape-selector-box">
-              <img class="shape-selector-image" src="./icons/shapes/trapezoid.svg" alt="" />
-            </span>
-          </label>
-          <!-- ذوزنقه برعکس -->
-          <label class="shape-selector-item">
-            <input name="shape" type="radio" class="shape-selector-radio" id="Trapezoid_reverse"
-              value="Trapezoid_reverse" data-position="5,42,0,22,4,90,39,11,0,39,73,0,0,0,0,0,0,0" />
-            <span class="shape-selector-box">
-              <img class="shape-selector-image" src="./icons/shapes/trapezoid_reverse.svg" alt="" />
-            </span>
-          </label>
-          <!-- متوازی‌الاضلاع چپ -->
-          <label class="shape-selector-item">
-            <input name="shape" type="radio" class="shape-selector-radio" id="Parallelogram_left"
-              value="Parallelogram_left" data-position="5,42,0,22,4,90,39,11,0,5,73,0,0,0,0,0,0,0" />
-            <span class="shape-selector-box">
-              <img class="shape-selector-image" src="./icons/shapes/parallelogram_left.svg" alt="" />
-            </span>
-          </label>
-          <!-- متوازی‌الاضلاع راست -->
-          <label class="shape-selector-item">
-            <input name="shape" type="radio" class="shape-selector-radio" id="Parallelogram_right"
-              value="Parallelogram_right" data-position="5,42,0,22,4,90,39,73,0,5,11,0,0,0,0,0,0,0" />
-            <span class="shape-selector-box">
-              <img class="shape-selector-image" src="./icons/shapes/parallelogram_right.svg" alt="" />
-            </span>
-          </label>
-          <!-- مثلث -->
-          <label class="shape-selector-item">
-            <input name="shape" type="radio" class="shape-selector-radio" id="triangle" value="triangle"
-              data-position="39,42,0,22,4,90,5,14,0,0,0,0,0,0,0,0,0,0" />
-            <span class="shape-selector-box">
-              <img class="shape-selector-image" src="./icons/shapes/triangle.svg" alt="" />
-            </span>
-          </label>
-          <!-- 5 ضلعی -->
-          <label class="shape-selector-item">
-            <input name="shape" type="radio" class="shape-selector-radio" id="polygon" value="polygon"
-              data-position="39,42,0,28,4,90,8,21,-35,0,0,0,0,0,0,0,0,0" />
-            <span class="shape-selector-box">
-              <img class="shape-selector-image" src="./icons/shapes/polygon.svg" alt="" />
-            </span>
-          </label>
-          <!-- دایره -->
-          <label class="shape-selector-item">
-            <input name="shape" type="radio" class="shape-selector-radio" id="circle" value="circle"
-              data-position="39,42,0,22,4,90,0,0,0,0,0,0,0,0,0,0,0,0" />
-            <span class="shape-selector-box">
-              <img class="shape-selector-image" src="./icons/shapes/circle.svg" alt="" />
-            </span>
-          </label>
-          <!-- نیم‌دایره -->
-          <label class="shape-selector-item">
-            <input name="shape" type="radio" class="shape-selector-radio" id="half_circle" value="half_circle"
-              data-position="39,42,0,22,4,90,0,0,0,0,0,0,0,0,0,0,0,0" />
-            <span class="shape-selector-box">
-              <img class="shape-selector-image" src="./icons/shapes/half_circle.svg" alt="" />
-            </span>
-          </label>
-          <!-- نیم‌دایره معکوس -->
-          <label class="shape-selector-item">
-            <input name="shape" type="radio" class="shape-selector-radio" id="half_circle_reverse"
-              value="half_circle_reverse" data-position="11,42,0,22,4,90,0,0,0,0,0,0,0,0,0,0,0,0" />
-            <span class="shape-selector-box">
-              <img class="shape-selector-image" src="./icons/shapes/half_circle_reverse.svg" alt="" />
-            </span>
-          </label>
-          <!-- گوشه گرد چپ -->
-          <label class="shape-selector-item">
-            <input name="shape" type="radio" class="shape-selector-radio" id="quarter_circle_left"
-              value="quarter_circle_left" data-position="39,42,0,22,77,90,0,0,0,0,0,0,0,0,0,0,0,0" />
-            <span class="shape-selector-box">
-              <img class="shape-selector-image" src="./icons/shapes/quarter_circle_left.svg" alt="" />
-            </span>
-          </label>
-          <!-- گوشه گرد راست -->
-          <label class="shape-selector-item">
-            <input name="shape" type="radio" class="shape-selector-radio" id="quarter_circle_right"
-              value="quarter_circle_right" data-position="39,42,0,22,4,90,0,0,0,0,0,0,0,0,0,0,0,0" />
-            <span class="shape-selector-box">
-              <img class="shape-selector-image" src="./icons/shapes/quarter_circle_right.svg" alt="" />
-            </span>
-          </label>
-          <!-- مستطیل گرد -->
-          <label class="shape-selector-item">
-            <input name="shape" type="radio" class="shape-selector-radio" id="round_rectangle" value="round_rectangle"
-              data-position="39,42,0,22,4,90,3,1,0,3,85,0,40,3,0,40,85,0" />
-            <span class="shape-selector-box">
-              <img class="shape-selector-image" src="./icons/shapes/round_rectangle.svg" alt="" />
-            </span>
-          </label>
-          <!-- قوس -->
-          <label class="shape-selector-item">
-            <input name="shape" type="radio" class="shape-selector-radio" id="arc_rectangle" value="arc_rectangle"
-              data-position="39,42,0,22,4,90,5,3,90,5,82,90,0,0,0,0,0,0" />
-            <span class="shape-selector-box">
-              <img class="shape-selector-image" src="./icons/shapes/arc_rectangle.svg" alt="" />
-            </span>
-          </label>
-          <!-- مثلث قوسی -->
-          <label class="shape-selector-item">
-            <input name="shape" type="radio" class="shape-selector-radio" id="arc_triangle" value="arc_triangle"
-              data-position="39,42,0,22,4,90,0,0,0,0,0,0,0,0,0,0,0,0" />
-            <span class="shape-selector-box">
-              <img class="shape-selector-image" src="./icons/shapes/arc_triangle.svg" alt="" />
-            </span>
-          </label>
-        </div>
-        <!-- بادخور -->
-        <div class="wd-gap-fields">
-          <!-- بادخور عرض -->
-          <div class="wd-gap-field">
-            <label for="widthSpace" class="wd-gap-label">
-              بادخور عرض
-            </label>
-            <input type="text" name="widthSpace" id="widthSpace" class="wd-gap-input" placeholder="?" value="0" />
-          </div>
-          <!-- بادخور ارتفاع -->
-          <div class="wd-gap-field">
-            <label for="heightSpace" class="wd-gap-label">
-              بادخور ارتفاع
-            </label>
-            <input type="text" name="heightSpace" id="heightSpace" class="wd-gap-input" placeholder="?" value="0" />
-          </div>
-        </div>
-        <!-- AI -->
-        <input type="hidden" name="ai" value="0" class="form-selectgroup-input" />
-        <!-- ACTIONS -->
-        <div class="wd-right-form-actions">
-          <button type="submit" class="wd-right-confirm" id="createLayerBtn" data-bs-dismiss="offcanvas"
-            aria-label="Close">
-            افزودن
-          </button>
-          <button type="button" class="wd-right-cancel" data-bs-dismiss="offcanvas" aria-label="Close">
-            لغو
-          </button>
-        </div>
-      </form>
     </div>
-  </aside>
+  </div>
   <!-- منو چپ مولین -->
   <aside class="wd-panel-left offcanvas offcanvas-end" tabindex="-1" id="ofcMullian">
     <header class="wd-right-brand">
@@ -1267,7 +1315,7 @@
           <strong class="wd-right-site-title" id="offcanvasWithBothOptionsLabel">
             لطفاً یکی انتخاب کنید
           </strong>
-          <button class="wd-selection-close" type="button" data-bs-dismiss="offcanvas" aria-label="Close">
+          <button class="wd-selection-close" type="button" data-bs-dismiss="offcanvas" aria-label="بستن">
             <i class="ti ti-x"></i>
           </button>
         </div>
@@ -1370,7 +1418,7 @@
           <strong class="wd-right-site-title" id="offcanvasWithBothOptionsLabel">
             لطفاً یکی انتخاب کنید
           </strong>
-          <button class="wd-selection-close" type="button" data-bs-dismiss="offcanvas" aria-label="Close">
+          <button class="wd-selection-close" type="button" data-bs-dismiss="offcanvas" aria-label="بستن">
             <i class="ti ti-x"></i>
           </button>
         </div>
@@ -1503,15 +1551,6 @@
           <div class="wd-selection-line"></div>
         </div>
         <div class="wd-profile-items-grid">
-          <!-- ساده راست بازشو -->
-          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="window_french_simple_right">
-            <div class="wd-profile-item-image">
-              <img src="icons/svg/window/window-french-simple-right.svg" class="icon-3d" alt="ساده راست بازشو">
-            </div>
-            <span class="wd-profile-item-name" style="font-size: 10px">
-              ساده راست بازشو
-            </span>
-          </button>
           <!-- ساده چپ بازشو -->
           <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="window_french_simple_left">
             <div class="wd-profile-item-image">
@@ -1521,17 +1560,15 @@
               ساده چپ بازشو
             </span>
           </button>
-          <!-- دوحالته راست بازشو -->
-          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="window_french_dual_right">
+          <!-- ساده راست بازشو -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="window_french_simple_right">
             <div class="wd-profile-item-image">
-              <img src="icons/svg/window/window-french-dual-right.svg" class="icon-3d" alt="دوحالته راست بازشو">
+              <img src="icons/svg/window/window-french-simple-right.svg" class="icon-3d" alt="ساده راست بازشو">
             </div>
-            <span class="wd-profile-item-name" style="font-size: 9px">
-              دوحالته راست بازشو
+            <span class="wd-profile-item-name" style="font-size: 10px">
+              ساده راست بازشو
             </span>
           </button>
-        </div>
-        <div class="wd-profile-items-grid">
           <!-- دوحالته چپ بازشو -->
           <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="window_french_dual_left">
             <div class="wd-profile-item-image">
@@ -1539,6 +1576,15 @@
             </div>
             <span class="wd-profile-item-name" style="font-size: 9px">
               دوحالته چپ بازشو
+            </span>
+          </button>
+          <!-- دوحالته راست بازشو -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="window_french_dual_right">
+            <div class="wd-profile-item-image">
+              <img src="icons/svg/window/window-french-dual-right.svg" class="icon-3d" alt="دوحالته راست بازشو">
+            </div>
+            <span class="wd-profile-item-name" style="font-size: 9px">
+              دوحالته راست بازشو
             </span>
           </button>
         </div>
@@ -1553,7 +1599,7 @@
           <strong class="wd-right-site-title" id="offcanvasWithBothOptionsLabel">
             لطفاً یکی انتخاب کنید
           </strong>
-          <button class="wd-selection-close" type="button" data-bs-dismiss="offcanvas" aria-label="Close">
+          <button class="wd-selection-close" type="button" data-bs-dismiss="offcanvas" aria-label="بستن">
             <i class="ti ti-x"></i>
           </button>
         </div>
@@ -1609,22 +1655,31 @@
           <div class="wd-selection-line"></div>
         </div>
         <div class="wd-profile-items-grid">
-          <!-- تک حالته راست بازشو -->
-          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="door_french_simple_right">
-            <div class="wd-profile-item-image">
-              <img src="icons/svg/door/door-french-simple-right.svg" class="icon-3d" alt="تک حالته راست بازشو">
-            </div>
-            <span class="wd-profile-item-name">
-              تک حالته راست بازشو
-            </span>
-          </button>
           <!-- تک حالته چپ بازشو -->
           <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="door_french_simple_left">
             <div class="wd-profile-item-image">
               <img src="icons/svg/door/door-french-simple-left.svg" class="icon-3d" alt="تک حالته چپ بازشو">
             </div>
-            <span class="wd-profile-item-name">
+            <span class="wd-profile-item-name" style="font-size: 9px;">
               تک حالته چپ بازشو
+            </span>
+          </button>
+          <!-- تک حالته راست بازشو -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="door_french_simple_right">
+            <div class="wd-profile-item-image">
+              <img src="icons/svg/door/door-french-simple-right.svg" class="icon-3d" alt="تک حالته راست بازشو">
+            </div>
+            <span class="wd-profile-item-name" style="font-size: 8px;">
+              تک حالته راست بازشو
+            </span>
+          </button>
+          <!-- دو حالته چپ بازشو -->
+          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="door_french_dual_left">
+            <div class="wd-profile-item-image">
+              <img src="icons/svg/door/door-french-dual-left.svg" class="icon-3d" alt="دو حالته چپ بازشو">
+            </div>
+            <span class="wd-profile-item-name" style="font-size: 9px;">
+              دو حالته چپ بازشو
             </span>
           </button>
           <!-- دو حالته راست بازشو -->
@@ -1632,19 +1687,8 @@
             <div class="wd-profile-item-image">
               <img src="icons/svg/door/door-french-dual-right.svg" class="icon-3d" alt="دو حالته راست بازشو">
             </div>
-            <span class="wd-profile-item-name">
+            <span class="wd-profile-item-name" style="font-size: 8px;">
               دو حالته راست بازشو
-            </span>
-          </button>
-        </div>
-        <div class="wd-profile-items-grid">
-          <!-- دو حالته چپ بازشو -->
-          <button class="wd-profile-item addNewItem" data-bs-dismiss="offcanvas" data-type="door_french_dual_left">
-            <div class="wd-profile-item-image">
-              <img src="icons/svg/door/door-french-dual-left.svg" class="icon-3d" alt="دو حالته چپ بازشو">
-            </div>
-            <span class="wd-profile-item-name">
-              دو حالته چپ بازشو
             </span>
           </button>
         </div>
@@ -1659,7 +1703,7 @@
           <strong class="wd-right-site-title" id="offcanvasWithBothOptionsLabel">
             لطفاً یکی انتخاب کنید
           </strong>
-          <button class="wd-selection-close" type="button" data-bs-dismiss="offcanvas" aria-label="Close">
+          <button class="wd-selection-close" type="button" data-bs-dismiss="offcanvas" aria-label="بستن">
             <i class="ti ti-x"></i>
           </button>
         </div>
@@ -1694,7 +1738,7 @@
           <strong class="wd-right-site-title" id="offcanvasWithBothOptionsLabel">
             لطفاً یکی انتخاب کنید
           </strong>
-          <button class="wd-selection-close" type="button" data-bs-dismiss="offcanvas" aria-label="Close">
+          <button class="wd-selection-close" type="button" data-bs-dismiss="offcanvas" aria-label="بستن">
             <i class="ti ti-x"></i>
           </button>
         </div>

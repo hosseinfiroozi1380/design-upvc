@@ -351,52 +351,74 @@ export function initClickEvents() {
     $(document).on('change', "input[name='shape']", function () {
         const shapeImages = {
             simple_rectangle: './icons/shapes/rectangle.svg',
-        
             Trapezoid: './icons/shapes/trapezoid.svg',
             Trapezoid_reverse: './icons/shapes/trapezoid_reverse.svg',
-        
             Parallelogram_left: './icons/shapes/parallelogram_left.svg',
             Parallelogram_right: './icons/shapes/parallelogram_right.svg',
-        
             triangle: './icons/shapes/triangle.svg',
             polygon: './icons/shapes/polygon.svg',
-        
             circle: './icons/shapes/circle.svg',
-        
             half_circle: './icons/shapes/half_circle.svg',
             half_circle_reverse: './icons/shapes/half_circle_reverse.svg',
-        
             quarter_circle_left: './icons/shapes/quarter_circle_left.svg',
             quarter_circle_right: './icons/shapes/quarter_circle_right.svg',
-        
             round_rectangle: './icons/shapes/round_rectangle.svg',
             arc_rectangle: './icons/shapes/arc_rectangle.svg',
             arc_triangle: './icons/shapes/arc_triangle.svg'
         };
-
         const imageSrc = shapeImages[$(this).val()];
-
         if (imageSrc) {
             $('#fullShapeView').attr('src', imageSrc);
         }
-
+        // عرض و ارتفاع بر اساس اندازه واقعی شکل
+        const updateShapeDimensions = () => {
+            const image = document.getElementById('fullShapeView');
+            if (!image) return;
+            const box = document.querySelector('.shape-preview-box');
+            if (!box) return;
+            const imageRect = image.getBoundingClientRect();
+            const boxRect = box.getBoundingClientRect();
+            const shapeWidth = imageRect.width;
+            const shapeHeight = imageRect.height;
+            // فاصله خطوط از شکل
+            const gap = 30;
+            // خط ارتفاع
+            const heightX = imageRect.left - boxRect.left - gap;
+            const heightTop = imageRect.top - boxRect.top;
+            const heightBottom = imageRect.bottom - boxRect.top;
+            $('.shape-preview-box::before');
+            $(box).css('--height-line-x', `${heightX}px`);
+            $(box).css('--height-line-top', `${heightTop}px`);
+            $(box).css('--height-line-height', `${heightBottom - heightTop}px`);
+            // خط عرض
+            const widthY = imageRect.bottom - boxRect.top + gap;
+            const widthLeft = imageRect.left - boxRect.left;
+            const widthRight = imageRect.right - boxRect.left;
+            $(box).css('--width-line-y', `${widthY}px`);
+            $(box).css('--width-line-left', `${widthLeft}px`);
+            $(box).css('--width-line-width', `${widthRight - widthLeft}px`);
+        };
+        if ($('#fullShapeView')[0].complete) {
+            updateShapeDimensions();
+        } else {
+            $('#fullShapeView').one('load', updateShapeDimensions);
+        }
         // موقعیت‌ها
         let positions = $(this).attr('data-position').split(',');
-
         // عرض
         $('#itemWidth').css({
-            top: positions[0] + '%',
-            left: positions[1] + '%',
-            rotate: positions[2] + 'deg'
+            top: 'calc(50% + 145px)',
+            left: '50%',
+            rotate: '0deg',
+            transform: 'translate(-50%, -50%)'
         });
-
         // ارتفاع
         $('#itemHeight').css({
-            top: positions[3] + '%',
-            left: positions[4] + '%',
-            rotate: positions[5] + 'deg'
+            top: 'calc(35% - 10px)',
+            left: 'calc(50% - 165px)',
+            rotate: '-90deg',
+            transform: 'translate(-50%, -50%)'
         });
-
         // A
         if (positions[6] == 0) {
             $('#a').hide();
@@ -407,7 +429,6 @@ export function initClickEvents() {
                 rotate: positions[8] + 'deg'
             });
         }
-
         // B
         if (positions[9] == 0) {
             $('#b').hide();
@@ -418,7 +439,6 @@ export function initClickEvents() {
                 rotate: positions[11] + 'deg'
             });
         }
-
         // C
         if (positions[12] == 0) {
             $('#c').hide();
@@ -429,7 +449,6 @@ export function initClickEvents() {
                 rotate: positions[14] + 'deg'
             });
         }
-
         // D
         if (positions[15] == 0) {
             $('#d').hide();
@@ -507,7 +526,29 @@ export function initClickEvents() {
     });
     //add New layer
     $(document).on('click', '.addNewLayer', function () {
-        //save previous works
+        // نوع آیتم
+        const itemType = $(this).data('type');
+        if (itemType === 'rectangle') {
+            $('#ofcAddNew').removeClass('wd-non-rectangle-mode');
+            $('#ofcAddNew .wd-right-site-title').text('افزودن آیتم مستطیل');
+            $('#ofcAddNew .shape-selector-list').hide();
+            $('#ofcAddNew .wd-gap-fields').show();
+            // مخفی کردن ورودی‌های مخصوص غیرمستطیل
+            $('#ofcAddNew .shape-corner-input').hide();
+            $('#ofcAddNew input[name="shape"]').prop('checked', false);
+            $('#fullShapeView').attr('src', './icons/shapes/rectangle.svg');
+        } else {
+            $('#ofcAddNew').addClass('wd-non-rectangle-mode');
+            $('#ofcAddNew .shape-selector-list').show();
+            $('#ofcAddNew .wd-gap-fields').hide();
+            $('#ofcAddNew input[name="shape"]').prop('checked', false);
+            $('#ofcAddNew input[name="shape"]:not(#simple_rectangle)')
+                .first()
+                .prop('checked', true)
+                .trigger('change');
+            $('#ofcAddNew .wd-right-site-title').text('افزودن آیتم غیر مستطیل');
+            $('#fullShapeView').attr('src', './icons/shapes/trapezoid.svg');
+        }
         saveDesign(state.currentDesignID).then(function (message) {
             if (typeof message !== "undefined") {
                 showMessage(message);
@@ -524,11 +565,15 @@ export function initClickEvents() {
         $('.updateDiv').hide();
         $('.select_windows_type_bar').show();
         $('.select_windows_detials_bar').show();
-        $('#ofcAddNew').offcanvas('show');
+        $('#ofcAddNew').modal('show');
         let selectedSystem = state.unitData['system'] ?? 'UPVC';
-        (selectedSystem == "UPVC") ? $('#system_UPVC').prop('checked', true) : $('#system_Al').prop('checked', true);
+        (selectedSystem == "UPVC")
+            ? $('#system_UPVC').prop('checked', true)
+            : $('#system_Al').prop('checked', true);
         $('#profile_id option[data-system], #profile_color option[data-system], #accessory_id option[data-system]').each(function () {
-            $(this).data('system') == selectedSystem ? $(this).show() : $(this).hide();
+            $(this).data('system') == selectedSystem
+                ? $(this).show()
+                : $(this).hide();
         });
         $('#profile_id, #profile_color, #accessory_id').each(function () {
             let firstVisible = $(this).find('option').filter(function () {
@@ -549,7 +594,7 @@ export function initClickEvents() {
         if (state.unitData['accessory_id']) {
             $('#accessory_id').val(state.unitData['accessory_id']);
         }
-        $('#ofcAddNew > .offcanvas-body').get(0).scroll({
+        $('#ofcAddNew .modal-body').get(0).scroll({
             top: 10,
             behavior: 'smooth'
         });
@@ -837,24 +882,17 @@ export function initClickEvents() {
     });
     $(document).on('click', '.plusQuantity', function () {
         let layerQuantity = parseInt($('.layerQuantity').text()) || 1;
-    
         layerQuantity++;
-    
         $('.layerQuantity').text(layerQuantity);
         state.unitData.quantity = layerQuantity;
-    
         enableSave(3000);
     });
-    
     $(document).on('click', '.minusQuantity', function () {
         let layerQuantity = parseInt($('.layerQuantity').text()) || 1;
-    
         if (layerQuantity > 1) {
             layerQuantity--;
-    
             $('.layerQuantity').text(layerQuantity);
             state.unitData.quantity = layerQuantity;
-    
             enableSave(3000);
         }
     });

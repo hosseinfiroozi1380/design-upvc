@@ -1,0 +1,81 @@
+js/
+│
+├── app/
+│   ├── start.js
+│   └── loader.js
+│
+├── core/
+│   ├── engine.js
+│   ├── runtime.js
+│   ├── store.js
+│   └── paper.js
+│
+├── config/
+│   ├── constants.js
+│   ├── colors.js
+│   └── sizes.js
+│
+├── canvas/
+│   ├── viewport.js
+│   ├── zoom.js
+│   ├── gestures.js
+│   └── tool.js
+│
+├── geometry/
+│   ├── points/
+│   ├── shapes/
+│   ├── measurements/
+│   └── calculations/
+│
+├── structure/
+│   ├── frame.js
+│   ├── divider.js
+│   ├── boundary.js
+│   └── glass.js
+│
+├── elements/
+│   ├── window.js
+│   ├── door.js
+│   ├── panel.js
+│   ├── mullion.js
+│   ├── slide.js
+│   └── accessories.js
+│
+├── dimensions/
+│   ├── dimension.js
+│   └── labels.js
+│
+├── history/
+│   ├── manager.js
+│   ├── undo.js
+│   └── redo.js
+│
+├── layers/
+│   ├── manager.js
+│   ├── create.js
+│   ├── remove.js
+│   └── preview.js
+│
+├── events/
+│   ├── mouse.js
+│   ├── keyboard.js
+│   ├── forms.js
+│   ├── layers.js
+│   └── contextMenu.js
+│
+├── services/
+│   ├── save.js
+│   ├── import.js
+│   └── export.js
+│
+├── helpers/
+│   ├── numbers.js
+│   ├── messages.js
+│   ├── selection.js
+│   └── profiles.js
+│
+├── lib/
+│   └── ...
+│
+├── script.js
+└── upvc.js

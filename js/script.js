@@ -269,3 +269,31 @@ function updateGlassColorPreview() {
 }
 glassSelect.addEventListener('change', updateGlassColorPreview);
 updateGlassColorPreview();
+
+// بستن منو با لمس بیرون از پنل
+document.addEventListener("pointerdown", function (event) {
+  const target = event.target;
+
+  const clickedInsideRightPanel = wdRightPanel.contains(target);
+  const clickedInsideLeftPanel = wdLeftPanel.contains(target);
+  const clickedRightButton = wdOpenRightMenu.contains(target);
+  const clickedLeftButton = wdOpenLeftMenu.contains(target);
+
+  if (
+      !clickedInsideRightPanel &&
+      !clickedInsideLeftPanel &&
+      !clickedRightButton &&
+      !clickedLeftButton
+  ) {
+      wdCloseMobileMenus();
+  }
+});
+
+// بستن منوی راست با ضربدر
+document.getElementById("wdRightClose").addEventListener("click", function () {
+  wdRightPanel.classList.remove("wd-mobile-open");
+});
+// بستن منوی چپ در موبایل
+document.getElementById("wdLeftClose").addEventListener("click", function () {
+  wdLeftPanel.classList.remove("wd-mobile-open");
+});

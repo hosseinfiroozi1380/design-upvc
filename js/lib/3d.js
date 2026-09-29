@@ -204,8 +204,11 @@ export function init3D(containerId = "3d") {
     antialias: true,
     alpha: false,
     powerPreference: "high-performance",
-  });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    logarithmicDepthBuffer: true,
+});
+renderer.setPixelRatio(
+  Math.min(window.devicePixelRatio, 1.25)
+);
   renderer.setSize(
     width,
     height
@@ -842,17 +845,26 @@ async function build3DFromSVG(
             geometry,
             1
           );
-          const panelEdgeMaterial = new THREE.LineBasicMaterial({
-            color: 0x9ca3af,
-            transparent: true,
-            opacity: 0.45,
-          });
-          const panelEdgeLines = new THREE.LineSegments(
-            panelEdgeGeometry,
-            panelEdgeMaterial
+          const panelEdgeMaterial =
+    new THREE.LineBasicMaterial({
+        color: 0x9ca3af,
+        transparent: true,
+        opacity: 0.30,
+        depthTest: true,
+        depthWrite: false
+    });
+          const panelEdgeLines =
+          new THREE.LineSegments(
+              panelEdgeGeometry,
+              panelEdgeMaterial
           );
-          panelEdgeLines.renderOrder = 20;
-          mesh.add(panelEdgeLines);
+      
+      panelEdgeLines.renderOrder = 20;
+      
+      // جلوگیری از تداخل خط با سطح پنل
+      panelEdgeLines.position.z = 0.5;
+      
+      mesh.add(panelEdgeLines);
         }
         // مرز فریم‌ها
         if (type === "frame") {
@@ -865,7 +877,7 @@ async function build3DFromSVG(
           const edgeGeometry =
             new THREE.EdgesGeometry(
               geometry,
-              15
+              25
             );
           const positions =
             edgeGeometry.attributes.position.array;
@@ -953,18 +965,25 @@ async function build3DFromSVG(
               )
             );
             const edgeMaterial =
-              new THREE.LineBasicMaterial({
-                color: 0x9ca3af,
-                transparent: true,
-                opacity: 0.45
-              });
-            const edgeLines =
+    new THREE.LineBasicMaterial({
+        color: 0x9ca3af,
+        transparent: true,
+        opacity: 0.32,
+        depthTest: true,
+        depthWrite: false
+    });
+              const edgeLines =
               new THREE.LineSegments(
-                filteredGeometry,
-                edgeMaterial
+                  filteredGeometry,
+                  edgeMaterial
               );
-            edgeLines.renderOrder = 10;
-            mesh.add(edgeLines);
+          
+          edgeLines.renderOrder = 10;
+          
+          // کمی جلوتر از سطح قرار می‌گیرد
+          edgeLines.position.z = 0.5;
+          
+          mesh.add(edgeLines);
           }
         }
         // قرار دادن قطعات بازشو در گروه مخصوص خودشان

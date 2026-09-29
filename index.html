@@ -4,7 +4,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>عایق فیروز | طراحی درب و پنجره</title>
+
+  <!-- لوگوی سایت در تب مرورگر -->
+  <link
+    rel="icon"
+    type="image/svg+xml"
+    href="./icons/favicon.svg"
+  />
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.44.0/tabler-icons.min.css" />
   <link rel="stylesheet" href="./css/style.css" />
   <link rel="stylesheet" href="./css/sweetalert2.css" />
@@ -336,142 +345,6 @@
       </button>
     </div>
   </div>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const categoryButtons = document.querySelectorAll(
-        '.wd-mobile-category-bar button'
-      );
-      const submenuBar = document.querySelector(
-        '.wd-mobile-submenu-bar'
-      );
-      const submenuItems = document.querySelectorAll(
-        '.wd-mobile-submenu-items'
-      );
-      // --------------------------------
-      // انتخاب دسته
-      // --------------------------------
-      function showCategory(category) {
-        // فعال کردن دکمه انتخاب‌شده
-        categoryButtons.forEach(function (button) {
-          if (
-            button.dataset.category === category
-          ) {
-            button.classList.add('active');
-          } else {
-            button.classList.remove('active');
-          }
-        });
-        // مخفی کردن تمام منوها
-        submenuItems.forEach(function (submenu) {
-          submenu.classList.remove('active');
-        });
-        // پیدا کردن منوی مربوط به دسته
-        const selectedSubmenu =
-          document.querySelector(
-            '.wd-mobile-submenu-items[data-submenu="' +
-            category +
-            '"]'
-          );
-        // نمایش منوی مربوطه
-        if (selectedSubmenu) {
-          selectedSubmenu.classList.add('active');
-          submenuBar.classList.add('show');
-        }
-      }
-      // --------------------------------
-      // کلیک روی دسته‌های بالایی
-      // --------------------------------
-      categoryButtons.forEach(function (button) {
-        button.addEventListener(
-          'click',
-          function () {
-            const category =
-              this.dataset.category;
-            showCategory(category);
-          }
-        );
-      });
-      // --------------------------------
-      // جلوگیری از کلیک هنگام اسکرول افقی
-      // --------------------------------
-      const submenuButtons =
-        document.querySelectorAll(
-          '.wd-mobile-submenu-item'
-        );
-      submenuButtons.forEach(function (button) {
-        let startX = 0;
-        let startY = 0;
-        let isMoving = false;
-        // شروع لمس
-        button.addEventListener(
-          'touchstart',
-          function (event) {
-            const touch =
-              event.touches[0];
-            startX =
-              touch.clientX;
-            startY =
-              touch.clientY;
-            isMoving = false;
-          },
-          {
-            passive: true
-          }
-        );
-        // حرکت انگشت
-        button.addEventListener(
-          'touchmove',
-          function (event) {
-            const touch =
-              event.touches[0];
-            const moveX =
-              Math.abs(
-                touch.clientX - startX
-              );
-            const moveY =
-              Math.abs(
-                touch.clientY - startY
-              );
-            // اگر حرکت افقی باشد
-            // یعنی کاربر در حال اسکرول است
-            if (
-              moveX > 10 &&
-              moveX > moveY
-            ) {
-              isMoving = true;
-            }
-          },
-          {
-            passive: true
-          }
-        );
-        // کلیک
-        button.addEventListener(
-          'click',
-          function (event) {
-            // اگر در حال کشیدن بوده
-            // کلیک اجرا نشود
-            if (isMoving) {
-              event.preventDefault();
-              event.stopPropagation();
-              isMoving = false;
-              return;
-            }
-            // لمس بدون حرکت
-            // کلیک واقعی محسوب می‌شود
-          }
-        );
-      });
-      // --------------------------------
-      // اولین دسته به صورت پیش‌فرض
-      // --------------------------------
-      if (categoryButtons.length > 0) {
-        showCategory(
-          categoryButtons[0].dataset.category
-        );
-      }
-    });
-  </script>
   <!-- MOBILE OVERLAY -->
   <div class="wd-mobile-overlay" id="wdMobileOverlay"></div>
   <div class="wd-app-shell">

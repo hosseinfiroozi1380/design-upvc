@@ -217,9 +217,38 @@ export function initFormEvents() {
             quantity: formData.quantity
         };
         // پاک کردن فرم برای طراحی بعدی
+        // پاک کردن فرم برای طراحی بعدی
+
+        // اطلاعات آیتم
         $("#itemNumber").val("");
         $("#itemName").val("");
         $("#installationCode").val("");
+
+        // ابعاد اصلی
+        $("#itemWidth").val("1000");
+        $("#itemHeight").val("1000");
+
+        // بادخور
+        $("#widthSpace").val("0");
+        $("#heightSpace").val("0");
+
+        // چهار مقدار مخصوص شکل‌های غیرمستطیل
+        $("#a").val("200");
+        $("#b").val("200");
+        $("#c").val("200");
+        $("#d").val("200");
+
+        // مخفی کردن ورودی‌های گوشه در شروع فرم جدید
+        $("#a").hide();
+        $("#b").hide();
+        $("#c").hide();
+        $("#d").hide();
+
+        // انتخاب شکل پیش‌فرض
+        $("#shape-selector input[name='shape']").prop(
+            "checked",
+            false
+        );
         // پاک کردن پیام‌های خطا
         $("#itemNumberError")
             .text("")

@@ -1,137 +1,263 @@
 // js/utils/exportDesignPDF.js
 import state from "../core/state.js";
 async function paperJSONToPNGDataURL(paperJSON) {
+
     if (!paperJSON) {
-        console.warn(
-            "Paper JSON برای این طراحی وجود ندارد"
-        );
         return null;
     }
+
+    let tempScope = null;
+
     try {
-        // Canvas ثابت برای تصویر PDF
-        const canvasSize = 1000;
+
+        // --------------------------------
+        // Canvas خروجی
+        // --------------------------------
+
+        const canvasWidth = 1000;
+        const canvasHeight = 1000;
+
         const tempCanvas =
             document.createElement("canvas");
-        tempCanvas.width = canvasSize;
-        tempCanvas.height = canvasSize;
-        const tempScope =
+
+        tempCanvas.width = canvasWidth;
+        tempCanvas.height = canvasHeight;
+
+        tempScope =
             new paper.PaperScope();
+
         tempScope.setup(tempCanvas);
-        // وارد کردن طراحی
-        tempScope.project.importJSON(
-            paperJSON
-        );
+
+        tempScope.project.importJSON(paperJSON);
+
         const project =
             tempScope.project;
+
         const activeLayer =
             project.activeLayer;
+
         if (!activeLayer) {
-            console.warn(
-                "Active Layer پیدا نشد"
-            );
-            tempScope.project.remove();
             return null;
         }
-        // ضخامت فریم
+
+        // --------------------------------
+        // اصلاح فریم اصلی
+        // --------------------------------
+
         const mainFrames =
             activeLayer.getItems({
                 name: "mainFrame"
             });
+
         mainFrames.forEach((item) => {
+
             item.strokeColor =
                 new tempScope.Color("#000000");
+
             item.strokeWidth = 2;
+
             item.strokeScaling = true;
+
         });
-        // محدوده واقعی طراحی
-        const bounds =
-            activeLayer.bounds.clone();
+
+        // --------------------------------
+        // پیدا کردن محدوده واقعی طراحی
+        // --------------------------------
+
+        const items =
+            activeLayer.children.filter((item) => {
+
+                return (
+                    item.visible !== false &&
+                    item.name !== "dimensions" &&
+                    item.name !== "dimension" &&
+                    item.name !== "guide" &&
+                    item.name !== "glG"
+                );
+
+            });
+
+        if (!items.length) {
+            return null;
+        }
+
+        // --------------------------------
+        // Bounds واقعی کل طراحی
+        // --------------------------------
+
+        let bounds = null;
+
+        items.forEach((item) => {
+
+            if (
+                !item.bounds ||
+                item.bounds.width <= 0 ||
+                item.bounds.height <= 0
+            ) {
+                return;
+            }
+
+            if (!bounds) {
+
+                bounds =
+                    item.bounds.clone();
+
+            } else {
+
+                bounds =
+                    bounds.unite(
+                        item.bounds
+                    );
+
+            }
+
+        });
+
         if (
             !bounds ||
             bounds.width <= 0 ||
             bounds.height <= 0
         ) {
-            console.warn(
-                "محدوده طراحی معتبر نیست"
-            );
-            tempScope.project.remove();
             return null;
         }
-        console.log(
-            "PDF DESIGN BOUNDS:",
-            bounds.width,
-            bounds.height
-        );
-        // فاصله از اطراف تصویر
-        const padding = 100;
+
+        // --------------------------------
+        // فضای امن
+        // --------------------------------
+
+        const padding = 70;
+
         const availableWidth =
-            canvasSize -
+            canvasWidth -
             padding * 2;
+
         const availableHeight =
-            canvasSize -
+            canvasHeight -
             padding * 2;
-        // Scale متناسب
+
+        // --------------------------------
+        // Scale
+        // --------------------------------
+
         const scaleX =
             availableWidth /
             bounds.width;
+
         const scaleY =
             availableHeight /
             bounds.height;
+
         const scale =
             Math.min(
                 scaleX,
                 scaleY
             );
-        // مرکز Canvas
+
+        // --------------------------------
+        // مرکز واقعی Canvas
+        // --------------------------------
+
         const canvasCenter =
             new tempScope.Point(
-                canvasSize / 2,
-                canvasSize / 2
+                canvasWidth / 2,
+                canvasHeight / 2
             );
-        // مرکز طراحی
-        const designCenter =
-            bounds.center;
-        // کوچک / بزرگ کردن طراحی
-        // بدون تغییر نسبت
+
+        // --------------------------------
+        // Scale حول مرکز واقعی
+        // --------------------------------
+
         activeLayer.scale(
             scale,
-            designCenter
+            bounds.center
         );
-        // بعد از Scale
-        // محدوده جدید طراحی
-        const scaledBounds =
+
+        // --------------------------------
+        // Bounds بعد از Scale
+        // --------------------------------
+
+        bounds =
             activeLayer.bounds.clone();
-        // انتقال دقیق به مرکز Canvas
-        const moveX =
-            canvasCenter.x -
-            scaledBounds.center.x;
-        const moveY =
-            canvasCenter.y -
-            scaledBounds.center.y;
+
+        // --------------------------------
+        // انتقال دقیق به مرکز
+        // --------------------------------
+
+        const centerOffset =
+            canvasCenter.subtract(
+                bounds.center
+            );
+
         activeLayer.translate(
-            new tempScope.Point(
-                moveX,
-                moveY
-            )
+            centerOffset
         );
-        // بروزرسانی Paper
+
+        // --------------------------------
+        // اصلاح نهایی
+        // --------------------------------
+
+        bounds =
+            activeLayer.bounds.clone();
+
+        const finalOffset =
+            canvasCenter.subtract(
+                bounds.center
+            );
+
+        activeLayer.translate(
+            finalOffset
+        );
+
+        // --------------------------------
+        // تنظیم View
+        // --------------------------------
+
+        tempScope.view.viewSize =
+            new tempScope.Size(
+                canvasWidth,
+                canvasHeight
+            );
+
+        tempScope.view.zoom = 1;
+
         tempScope.view.center =
             canvasCenter;
-        tempScope.view.zoom = 1;
+
         tempScope.view.update();
-        // خروجی PNG
+
+        tempScope.view.draw();
+
+        // --------------------------------
+        // خروجی
+        // --------------------------------
+
         const png =
             tempCanvas.toDataURL(
                 "image/png"
             );
-        // حذف پروژه موقت
+
+        // --------------------------------
+        // پاکسازی
+        // --------------------------------
+
         tempScope.project.remove();
+
+        tempScope = null;
+
         return png;
+
     } catch (error) {
-        console.error(
-            "خطا در تبدیل Paper JSON به PNG:",
-            error
-        );
+
+        if (tempScope) {
+
+            try {
+                tempScope.project.remove();
+            } catch (e) {
+                // ignore
+            }
+
+        }
+
         return null;
     }
 }
@@ -239,15 +365,41 @@ export async function exportDesignPDF() {
                 <td>
                     ${index + 1}
                 </td>
-                <td>
-                    <div class="invoice-item">
-                        <img
-                            class="invoice-item-image"
-                            src="${unitDesignImage || ""}"
-                            alt="طرح ${unitName}"
-                        >
-                    </div>
-                </td>
+                <td style="
+                text-align:center;
+                vertical-align:middle;
+                padding:10px;
+            ">
+            
+                <div
+                    class="invoice-item"
+                    style="
+                        width:100%;
+                        display:flex;
+                        justify-content:center;
+                        align-items:center;
+                        text-align:center;
+                        margin:0 auto;
+                    "
+                >
+            
+                    <img
+                        class="invoice-item-image"
+                        src="${unitDesignImage || ""}"
+                        alt="طرح ${unitName}"
+                        style="
+                            display:block;
+                            width:250px;
+                            height:250px;
+                            object-fit:contain;
+                            object-position:center center;
+                            margin:0 auto;
+                        "
+                    >
+            
+                </div>
+            
+            </td>
                 <td>
                     <div class="invoice-item">
                         <div class="invoice-item-info">

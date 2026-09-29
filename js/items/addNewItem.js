@@ -36,7 +36,6 @@ import {
 import {
     hideGLs
 } from '../utils/hideGLs.js';
-
 export function addNewItem(addNewItemType, flatToAdd, toAddPoint = false) {
     console.log("ADD NEW ITEM TYPE:", addNewItemType);
     console.log("FLAT:", flatToAdd);
@@ -62,10 +61,8 @@ export function addNewItem(addNewItemType, flatToAdd, toAddPoint = false) {
                     let flatPartWidth = flatToAdd.bounds.width / 3;
                     let firstAddingPoint = new state.paper.Point(flatToAdd.bounds.x + flatPartWidth - state.frameSize / 6, flatToAdd.bounds.centerY);
                     let secondAddingPoint = new state.paper.Point(flatToAdd.bounds.x + flatPartWidth * 2 + state.frameSize / 6, flatToAdd.bounds.centerY);
-                    
                     //add First Mullian
                     addMullian('vMullian', flatToAdd, firstAddingPoint, flatToAdd.parent);
-
                     //add Second Mullian
                     let allFlats =state.paper.project.activeLayer.getItems({name: "flat"});
                     $.each(allFlats, function(key, findNewFlat) {
@@ -83,10 +80,8 @@ export function addNewItem(addNewItemType, flatToAdd, toAddPoint = false) {
                     let firstAddingPoint = new state.paper.Point(flatToAdd.bounds.x + flatPartWidth - state.frameSize / 4, flatToAdd.bounds.centerY);
                     let secondAddingPoint = new state.paper.Point(flatToAdd.bounds.x + flatPartWidth * 2, flatToAdd.bounds.centerY);
                     let thirdAddingPoint = new state.paper.Point(flatToAdd.bounds.x + flatPartWidth * 3 + state.frameSize / 4, flatToAdd.bounds.centerY);
-
                     //add First Mullian
                     addMullian('vMullian', flatToAdd, firstAddingPoint, flatToAdd.parent);
-
                     //add Second Mullian
                     let allFlats =state.paper.project.activeLayer.getItems({name: "flat"});
                     $.each(allFlats, function(key, findNewFlat) {
@@ -94,7 +89,6 @@ export function addNewItem(addNewItemType, flatToAdd, toAddPoint = false) {
                             addMullian('vMullian', findNewFlat, secondAddingPoint, findNewFlat.parent);
                         }
                     });
-
                     //add Third Mullian
                     allFlats =state.paper.project.activeLayer.getItems({name: "flat"});
                     $.each(allFlats, function(key, findNewFlat) {
@@ -111,10 +105,8 @@ export function addNewItem(addNewItemType, flatToAdd, toAddPoint = false) {
                     let flatPartHeight = flatToAdd.bounds.height / 3;
                     let firstAddingPoint = new state.paper.Point(flatToAdd.bounds.centerX, flatToAdd.bounds.y + flatPartHeight - state.frameSize / 6);
                     let secondAddingPoint = new state.paper.Point(flatToAdd.bounds.centerX, flatToAdd.bounds.y + flatPartHeight * 2 + state.frameSize / 6);
-
                     //add First Mullian
                     addMullian('hMullian', flatToAdd, firstAddingPoint, flatToAdd.parent);
-
                     //add Second Mullian
                     let allFlats =state.paper.project.activeLayer.getItems({name: "flat"});
                     $.each(allFlats, function(key, findNewFlat) {
@@ -125,7 +117,6 @@ export function addNewItem(addNewItemType, flatToAdd, toAddPoint = false) {
                 } else {
                     showMessage('صفحه بیش از اندازه کوچک است');
                 }
-
             } else if (addNewItemType == '3hMullian') {
                 if (flatToAdd.bounds.height > 240) {
                     //find Points
@@ -133,10 +124,8 @@ export function addNewItem(addNewItemType, flatToAdd, toAddPoint = false) {
                     let firstAddingPoint = new state.paper.Point(flatToAdd.bounds.centerX, flatToAdd.bounds.y + flatPartHeight - state.frameSize / 4);
                     let secondAddingPoint = new state.paper.Point(flatToAdd.bounds.centerX, flatToAdd.bounds.y + flatPartHeight * 2);
                     let thirdAddingPoint = new state.paper.Point(flatToAdd.bounds.centerX, flatToAdd.bounds.y + flatPartHeight * 3 + state.frameSize / 4);
-
                     //add First Mullian
                     addMullian('hMullian', flatToAdd, firstAddingPoint, flatToAdd.parent);
-
                     //add Second Mullian
                     let allFlats =state.paper.project.activeLayer.getItems({name: "flat"});
                     $.each(allFlats, function(key, findNewFlat) {
@@ -144,7 +133,6 @@ export function addNewItem(addNewItemType, flatToAdd, toAddPoint = false) {
                             addMullian('hMullian', findNewFlat, secondAddingPoint, findNewFlat.parent);
                         }
                     });
-
                     //add Third Mullian
                     allFlats =state.paper.project.activeLayer.getItems({name: "flat"});
                     $.each(allFlats, function(key, findNewFlat) {
@@ -155,7 +143,6 @@ export function addNewItem(addNewItemType, flatToAdd, toAddPoint = false) {
                 } else {
                     showMessage('صفحه بیش از اندازه کوچک است');
                 }
-
             } else if (addNewItemType == 'fullhMullian') {
                 let toAddCenterPosition = toAddPoint.y;
                 if(state.shiftKeyPressed){
@@ -166,14 +153,12 @@ export function addNewItem(addNewItemType, flatToAdd, toAddPoint = false) {
                     state.paper.project.activeLayer.bounds.left,
                     toAddCenterPosition
                 );
-                
                 let to = new state.paper.Point(
                     state.paper.project.activeLayer.bounds.right,
                     toAddCenterPosition
                 );                let tempLine = new state.paper.Path.Line(from, to);
                 tempLine.name = "temp";
                 // tempLine.strokeColor = 'black';
-                
                 let allFlats =state.paper.project.activeLayer.getItems({name: "flat"});
                 $.each(allFlats, function(key, flat) {
                     if(tempLine.intersects(flat)){
@@ -183,7 +168,6 @@ export function addNewItem(addNewItemType, flatToAdd, toAddPoint = false) {
                     }
                 });
                tempLine.remove();
-
             } else if (addNewItemType == 'fullvMullian') {
                 let toAddCenterPosition = toAddPoint.x;
                 if(state.shiftKeyPressed){
@@ -195,7 +179,6 @@ export function addNewItem(addNewItemType, flatToAdd, toAddPoint = false) {
                 let tempLine = new state.paper.Path.Line(from, to);
                 tempLine.name = "temp";
                 //tempLine.strokeColor = 'black';
-
                 let allFlats =state.paper.project.activeLayer.getItems({name: "flat"});
                 $.each(allFlats, function(key, flat) {
                     if(tempLine.intersects(flat)){
@@ -205,7 +188,6 @@ export function addNewItem(addNewItemType, flatToAdd, toAddPoint = false) {
                     }
                 });
                tempLine.remove();
-
             } else if (addNewItemType == 'vPanel' || addNewItemType == 'hPanel') {
                 if ((addNewItemType == 'vPanel' && flatToAdd.bounds.width > 120) || (addNewItemType == 'hPanel' && flatToAdd.bounds.height > 120)) {
                     addPanel(addNewItemType, flatToAdd, flatToAdd.parent);
@@ -231,22 +213,22 @@ export function addNewItem(addNewItemType, flatToAdd, toAddPoint = false) {
                     showMessage('صفحه بیش از اندازه کوچک است');
                 }
             }
-
            state.paper.project.deselectAll();
             cancelAll();
             createDimensionBar();
             saveHistory();
         } else {
-            showMessage('لطفا یک صفحه را انتخاب کنید');
+            showMessage(
+                "برای ادامه، لطفاً اطلاعات فرم را تکمیل کنید.",
+                "error"
+            );
             hideGLs();
         }
     }
-
     if(!$('#glassBox').hasClass('closed')){
         $('#glassBox').addClass('closed');
         $('#toggleIcon').html('<i class="ti ti-chevron-left"></i>');
     }
-
    state.paper.project.deselectAll();
     mouseHelperHide();
 }

@@ -1,5 +1,124 @@
 // js/utils/exportDesignPDF.js
 import state from "../core/state.js";
+function createPDFDesignImage() {
+    const sourceProject = window.paper?.project;
+    if (!sourceProject) {
+        console.error("Paper.js project پیدا نشد");
+        return state.canvas.toDataURL("image/png");
+    }
+    const tempCanvas = document.createElement("canvas");
+    tempCanvas.width = 1000;
+    tempCanvas.height = 1000;
+    const tempScope = new paper.PaperScope();
+    tempScope.setup(tempCanvas);
+    try {
+        const projectJSON = sourceProject.exportJSON({
+            asString: true
+        });
+        tempScope.project.importJSON(projectJSON);
+        const bounds =
+            tempScope.project.activeLayer.bounds;
+        if (!bounds || bounds.width <= 0 || bounds.height <= 0) {
+            console.warn("محدوده طراحی پیدا نشد");
+            return tempCanvas.toDataURL("image/png");
+        }
+        const padding = 50;
+        const availableWidth =
+            tempCanvas.width - padding * 2;
+        const availableHeight =
+            tempCanvas.height - padding * 2;
+        const zoomX =
+            availableWidth / bounds.width;
+        const zoomY =
+            availableHeight / bounds.height;
+        const zoom =
+            Math.min(zoomX, zoomY);
+        tempScope.view.zoom = zoom;
+        tempScope.view.center = bounds.center;
+        tempScope.view.center =
+            tempScope.project.activeLayer.bounds.center;
+        tempScope.view.update();
+        return tempCanvas.toDataURL(
+            "image/png"
+        );
+    } finally {
+        tempScope.project.remove();
+    }
+}
+async function svgToPNGDataURL(svg) {
+    if (!svg) {
+        console.warn("SVG برای این طراحی وجود ندارد");
+        return null;
+    }
+    try {
+        const fullSVG = `
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                width="1000"
+                height="1000"
+                viewBox="0 0 1000 1000"
+            >
+                ${svg}
+            </svg>
+        `;
+        const svgBlob = new Blob(
+            [fullSVG],
+            {
+                type: "image/svg+xml;charset=utf-8"
+            }
+        );
+        const url =
+            URL.createObjectURL(svgBlob);
+        try {
+            const img =
+                new Image();
+            await new Promise(
+                (resolve, reject) => {
+                    img.onload = resolve;
+                    img.onerror = () => {
+                        reject(
+                            new Error(
+                                "SVG image load failed"
+                            )
+                        );
+                    };
+                    img.src = url;
+                }
+            );
+            const outputCanvas =
+                document.createElement("canvas");
+            outputCanvas.width = 1000;
+            outputCanvas.height = 1000;
+            const ctx =
+                outputCanvas.getContext("2d");
+            ctx.clearRect(
+                0,
+                0,
+                1000,
+                1000
+            );
+            ctx.drawImage(
+                img,
+                0,
+                0,
+                1000,
+                1000
+            );
+            return outputCanvas.toDataURL(
+                "image/png"
+            );
+        } finally {
+            URL.revokeObjectURL(url);
+        }
+    } catch (error) {
+        console.error(
+            "خطا در تبدیل SVG به PNG:",
+            error
+        );
+        return null;
+    }
+}
 async function paperJSONToPNGDataURL(paperJSON) {
     if (!paperJSON) {
         console.warn(
@@ -8,16 +127,13 @@ async function paperJSONToPNGDataURL(paperJSON) {
         return null;
     }
     try {
-        // Canvas ثابت برای تصویر PDF
-        const canvasSize = 1000;
         const tempCanvas =
             document.createElement("canvas");
-        tempCanvas.width = canvasSize;
-        tempCanvas.height = canvasSize;
+        tempCanvas.width = 1300;
+        tempCanvas.height = 1300;
         const tempScope =
             new paper.PaperScope();
         tempScope.setup(tempCanvas);
-        // وارد کردن طراحی
         tempScope.project.importJSON(
             paperJSON
         );
@@ -25,14 +141,7 @@ async function paperJSONToPNGDataURL(paperJSON) {
             tempScope.project;
         const activeLayer =
             project.activeLayer;
-        if (!activeLayer) {
-            console.warn(
-                "Active Layer پیدا نشد"
-            );
-            tempScope.project.remove();
-            return null;
-        }
-        // ضخامت فریم
+        // تقویت خط فریم اصلی برای خروجی PDF
         const mainFrames =
             activeLayer.getItems({
                 name: "mainFrame"
@@ -43,89 +152,90 @@ async function paperJSONToPNGDataURL(paperJSON) {
             item.strokeWidth = 2;
             item.strokeScaling = true;
         });
-        // محدوده واقعی طراحی
-        const bounds =
-            activeLayer.bounds.clone();
-        if (
-            !bounds ||
-            bounds.width <= 0 ||
-            bounds.height <= 0
-        ) {
+        if (!activeLayer) {
             console.warn(
-                "محدوده طراحی معتبر نیست"
+                "Active Layer پیدا نشد"
             );
-            tempScope.project.remove();
+            tempScope.project.clear();
             return null;
         }
+        /*
+         * محدوده واقعی تمام آیتم‌های طراحی
+         */
+        const bounds =
+            activeLayer.bounds;
         console.log(
             "PDF DESIGN BOUNDS:",
-            bounds.width,
-            bounds.height
+            bounds
         );
-        // فاصله از اطراف تصویر
-        const padding = 100;
-        const availableWidth =
-            canvasSize -
-            padding * 2;
-        const availableHeight =
-            canvasSize -
-            padding * 2;
-        // Scale متناسب
-        const scaleX =
-            availableWidth /
-            bounds.width;
-        const scaleY =
-            availableHeight /
-            bounds.height;
-        const scale =
-            Math.min(
-                scaleX,
-                scaleY
-            );
-        // مرکز Canvas
-        const canvasCenter =
-            new tempScope.Point(
-                canvasSize / 2,
-                canvasSize / 2
-            );
-        // مرکز طراحی
-        const designCenter =
-            bounds.center;
-        // کوچک / بزرگ کردن طراحی
-        // بدون تغییر نسبت
-        activeLayer.scale(
-            scale,
-            designCenter
-        );
-        // بعد از Scale
-        // محدوده جدید طراحی
-        const scaledBounds =
-            activeLayer.bounds.clone();
-        // انتقال دقیق به مرکز Canvas
-        const moveX =
-            canvasCenter.x -
-            scaledBounds.center.x;
-        const moveY =
-            canvasCenter.y -
-            scaledBounds.center.y;
+        /*
+         * فضای اضافه برای خطوط
+         * عرض و ارتفاع و اعداد
+         */
+        const padding = 120;
+        const offsetX =
+            -bounds.x +
+            padding;
+        const offsetY =
+            -bounds.y +
+            padding;
+        /*
+         * کل طراحی را جابه‌جا می‌کنیم
+         * تا هیچ قسمت از dimensionها
+         * از canvas بیرون نباشد
+         */
         activeLayer.translate(
             new tempScope.Point(
-                moveX,
-                moveY
+                offsetX,
+                offsetY
             )
         );
-        // بروزرسانی Paper
-        tempScope.view.center =
-            canvasCenter;
-        tempScope.view.zoom = 1;
         tempScope.view.update();
-        // خروجی PNG
+        /*
+         * بعد از جابه‌جایی، محدوده جدید
+         */
+        const finalBounds =
+            activeLayer.bounds;
+        const contentWidth =
+            Math.ceil(
+                finalBounds.width +
+                padding
+            );
+        const contentHeight =
+            Math.ceil(
+                finalBounds.height +
+                padding
+            );
+        /*
+         * اندازه canvas بر اساس
+         * کل محتوا
+         */
+        tempCanvas.width =
+            Math.max(
+                1000,
+                contentWidth
+            );
+        tempCanvas.height =
+            Math.max(
+                1000,
+                contentHeight
+            );
+        /*
+         * تغییر اندازه Canvas باعث
+         * reset شدن Paper View می‌شود،
+         * بنابراین دوباره setup می‌کنیم.
+         */
+        tempScope.view.viewSize =
+            new tempScope.Size(
+                tempCanvas.width,
+                tempCanvas.height
+            );
+        tempScope.view.update();
         const png =
             tempCanvas.toDataURL(
                 "image/png"
             );
-        // حذف پروژه موقت
-        tempScope.project.remove();
+        tempScope.project.clear();
         return png;
     } catch (error) {
         console.error(
@@ -562,5 +672,6 @@ export async function exportDesignPDF() {
     pdf.save(
         "pish-factor.pdf"
     );
+    // حذف HTML موقت
     box.remove();
 }

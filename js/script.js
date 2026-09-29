@@ -220,34 +220,34 @@ adjustHeight();
 $(window).resize(adjustHeight);
 
 
-document.addEventListener("DOMContentLoaded", function () {
- const modal = document.getElementById("myModal");
- const btn = document.getElementById("view3DButton");
- const closeBtn = document.querySelector("#myModal .close");
- if (!modal || !btn || !closeBtn) {
-  console.error("Modal elements not found");
-  return;
- }
- btn.addEventListener("click", function () {
-  modal.style.display = "block";
-  setTimeout(() => {
-   if (typeof window.init3D === "function") {
-    window.init3D();
-   }
-   if (typeof window.resize3D === "function") {
-    window.resize3D();
-   }
-  }, 100);
- });
- closeBtn.addEventListener("click", function () {
-  modal.style.display = "none";
- });
- window.addEventListener("click", function (event) {
-  if (event.target === modal) {
-   modal.style.display = "none";
-  }
- });
-});
+// document.addEventListener("DOMContentLoaded", function () {
+//  const modal = document.getElementById("myModal");
+//  const btn = document.getElementById("view3DButton");
+//  const closeBtn = document.querySelector("#myModal .close");
+//  if (!modal || !btn || !closeBtn) {
+//   console.error("Modal elements not found");
+//   return;
+//  }
+//  btn.addEventListener("click", function () {
+//   modal.style.display = "block";
+//   setTimeout(() => {
+//    if (typeof window.init3D === "function") {
+//     window.init3D();
+//    }
+//    if (typeof window.resize3D === "function") {
+//     window.resize3D();
+//    }
+//   }, 100);
+//  });
+//  closeBtn.addEventListener("click", function () {
+//   modal.style.display = "none";
+//  });
+//  window.addEventListener("click", function (event) {
+//   if (event.target === modal) {
+//    modal.style.display = "none";
+//   }
+//  });
+// });
 
 const profileColor = document.getElementById('profile_color');
 const profileColorPreview = document.getElementById('profile_color_preview');

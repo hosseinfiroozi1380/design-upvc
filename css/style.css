@@ -39,10 +39,14 @@
     20px 20px;
   direction: ltr;
 } */
-canvas[resize] {
+.designer-canvas-area {
+  min-width: 0;
+  min-height: 0;
+  position: relative;
   width: 100%;
   height: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: auto;
+  overflow: hidden;
   background-color: #f5f7fa;
   background-image:
     linear-gradient(rgba(71, 85, 105, 0.12) 1px, transparent 1px),
@@ -57,15 +61,9 @@ canvas[resize] {
   direction: ltr;
 }
 
-/* بوم */
-.designer-canvas-area {
-  min-width: 0;
-  min-height: 0;
-  position: relative;
+canvas[resize] {
   width: 100%;
   height: 100%;
-  aspect-ratio: 1 / 1;
-  overflow: hidden;
   background-color: #f5f7fa;
   background-image:
     linear-gradient(rgba(71, 85, 105, 0.12) 1px, transparent 1px),
@@ -141,7 +139,7 @@ button {
 }
 
 .wd-right-brand {
-  padding: 10px 16px;
+  padding: 15px 15px;
   border-bottom: 1px solid #e5e7eb;
   flex-shrink: 0;
 }
@@ -284,6 +282,20 @@ button {
   border-radius: 9px 0 0 9px;
 }
 
+.wd-form-error {
+  display: none;
+  margin-top: 5px;
+  color: #dc2626;
+  font-size: 12px;
+  line-height: 1.8;
+  height: auto;
+  flex: none;
+}
+
+.wd-form-grid>.wd-form-line {
+  align-self: start;
+}
+
 /* 
    VIEW / HISTORY TOOLS
 */
@@ -391,23 +403,15 @@ button {
    ITEMS LIST
 */
 .wd-items-stack {
-
   display: flex;
-
   flex-direction: column;
-
   gap: 10px;
-
   max-height: 420px;
-
   overflow-y: auto;
-
   overflow-x: hidden;
-
 }
 
 /* اسکرول بار لیست آیتم‌ها */
-
 .wd-items-stack::-webkit-scrollbar {
   width: 6px;
 }
@@ -490,7 +494,7 @@ button {
   width: 100%;
   font-size: 13px;
   line-height: 1.5;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--wd-text-strong);
   text-align: right;
   white-space: nowrap;
@@ -519,7 +523,7 @@ button {
   color: #ffffff;
   font-family: inherit;
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -543,7 +547,7 @@ button {
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  gap: 8px;
+  gap: 5px;
   margin-top: 3px;
   direction: rtl;
 }
@@ -577,6 +581,39 @@ button {
 /* هاور حذف */
 .wd-item-delete:hover {
   background: #dc2626;
+}
+
+/* دکمه ویرایش */
+.wd-item-edit {
+  width: 40px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  background: #22c55e;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* آیکون ویرایش */
+.wd-item-edit i {
+  color: #ffffff;
+  font-size: 16px;
+}
+
+/* هاور دکمه ویرایش */
+.wd-item-edit:hover {
+  background: #16a34a;
+  color: #ffffff;
+}
+
+/* آیکون در هاور */
+.wd-item-edit:hover i {
+  color: #ffffff;
 }
 
 /* 
@@ -652,7 +689,7 @@ button {
 .wd-gap-input {
   display: block;
   width: 100%;
-  height: 40px;
+  height: 42px;
   margin: 0;
   padding: 0 10px;
   box-sizing: border-box;
@@ -698,12 +735,11 @@ button {
 .wd-select-box {
   width: 100%;
   flex: none;
-  height: 40px;
   border: 1px solid #dbe2ea;
   border-radius: 8px;
   background: #ffffff;
   color: #374151;
-  padding: 0 12px;
+  padding: 10px 10px;
   font-family: "IRANSansWeb", Tahoma, Arial, sans-serif;
   font-size: 12px;
   font-weight: 500;
@@ -733,8 +769,9 @@ button {
    COUNTER
 */
 .wd-counter-control {
-  flex: 1;
-  height: 42px;
+  width: 100%;
+  flex: none;
+  height: 40px;
   display: flex;
   align-items: center;
   border: 1px solid #e5e7eb;
@@ -813,6 +850,7 @@ button {
   object-fit: contain;
   object-position: center center;
 }
+
 /* 
    SMALL IMAGES / SHAPE SELECTOR
 */
@@ -926,25 +964,27 @@ button {
 .wd-canvas-zone {
   direction: ltr;
   width: 100%;
-  height: 100vh;
+  height: 100%;
+  min-height: 0;
   grid-column: 2;
   position: relative;
   background: var(--wd-canvas-bg);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 25px;
+  /* padding: 25px;   اگه خرابه این باز کنیم */
   overflow: hidden;
 }
 
 .wd-canvas-frame {
   width: 100%;
   height: 100%;
+  min-width: 0;
+  min-height: 0;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  transform: translateY(25px);
 }
 
 #wd-design-board {
@@ -952,7 +992,6 @@ button {
   max-width: 100%;
   max-height: 100%;
   background: #ffffff;
-  border: 1px solid #d1d5db;
   box-shadow:
     0 8px 30px rgba(0, 0, 0, 0.08); */
 }
@@ -970,7 +1009,7 @@ button {
 /* کنترل های بالای بوم */
 .wd-canvas-controls {
   position: absolute;
-  top: 4px;
+  top: 10px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 100;
@@ -1096,7 +1135,7 @@ button {
     USER HEADER
 */
 .wd-user-header {
-  padding: 10px 16px;
+  padding: 9px 15px;
   border-bottom: 1px solid #e5e7eb;
   flex-shrink: 0;
 }
@@ -1373,7 +1412,7 @@ button {
   width: 34px;
   height: 34px;
   border: 0;
-  border-radius: 6px;
+  border-radius: 10px;
   background: #ef4444;
   color: #ffffff;
   display: flex;
@@ -1382,7 +1421,6 @@ button {
   cursor: pointer;
   flex-shrink: 0;
 }
-
 
 .wd-selection-close:hover {
   background: #dc2626;
@@ -1448,7 +1486,6 @@ button {
   height: 24px;
   flex-shrink: 0;
   opacity: 1;
-
   /* هم‌رنگ متن دکمه */
   filter: brightness(0) saturate(100%) invert(24%) sepia(8%) saturate(1050%) hue-rotate(182deg) brightness(94%) contrast(91%);
 }
@@ -1502,12 +1539,10 @@ button {
   justify-content: space-between;
   gap: 4px;
   padding: 6px;
-  margin-bottom: 1px;
   overflow: hidden;
   direction: rtl;
   background: var(--wd-menu-bg);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   pointer-events: auto;
 }
@@ -1568,9 +1603,6 @@ button {
   margin-bottom: 5px;
   box-sizing: border-box;
   background: var(--wd-menu-bg);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   /* مهم */
   pointer-events: auto;
 }
@@ -1607,15 +1639,20 @@ button {
   gap: 5px;
   border: 1px solid #e5e7eb;
   border-radius: 8px;
-  background: #f8fafc;
+  background: #ffffff;
   color: #374151;
   font-size: 11px;
   font-weight: 600;
   cursor: pointer;
+
+  /* مهم */
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .wd-mobile-submenu-item:hover {
-  background: var(--wd-button-hover-bg);
+  background: var(--wd-button-bg);
   color: var(--wd-menu-bg);
 }
 
@@ -1637,9 +1674,9 @@ button {
 .wd-mobile-menu-bar {
   display: none;
   position: fixed;
-  top: 10px;
-  left: 10px;
-  right: 10px;
+  top: 0px;
+  left: 0px;
+  right: 0px;
   z-index: 900;
   pointer-events: none;
 }
@@ -1684,15 +1721,6 @@ button {
 /* Overlay کاملاً غیرفعال */
 .wd-mobile-overlay {
   display: none !important;
-}
-
-/* 
-   UNIT DETAILS
-*/
-.wd-unit-details {
-  margin-top: 16px;
-  padding-top: 14px;
-  border-top: 1px solid #e5e7eb;
 }
 
 .wd-unit-detail-row {
@@ -1777,31 +1805,42 @@ button {
   transform: translateX(100%) !important;
 }
 
-#ofcAddNew.offcanvas.show {
-  visibility: visible !important;
-  transform: translateX(0) !important;
-}
-
 /* ADD / EDIT UNIT MODAL */
-
 #ofcAddNew {
   direction: rtl;
 }
 
+/* Dialog */
 #ofcAddNew .modal-dialog {
   width: calc(100% - 30px);
   max-width: 850px;
   margin: 1.75rem auto;
+  transform: translateY(20px) scale(0.97);
+  opacity: 0;
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+
+/* ورود */
+#ofcAddNew.show .modal-dialog {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+/* خروج */
+#ofcAddNew.is-closing .modal-dialog {
+  transform: translateY(20px) scale(0.97);
+  opacity: 0;
 }
 
 #ofcAddNew .modal-content {
   width: 100%;
   max-height: 90vh;
   border: 0;
-  border-radius: 14px;
+  border-radius: 10px;
   overflow: hidden;
   background: #ffffff;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
 }
 
 #ofcAddNew .wd-right-brand {
@@ -1825,7 +1864,6 @@ button {
 }
 
 /* موبایل */
-
 @media (max-width: 576px) {
   #ofcAddNew .modal-dialog {
     width: calc(100% - 20px);
@@ -1843,9 +1881,7 @@ button {
   }
 }
 
-
 /* MULLION PANEL */
-
 #ofcMullian {
   position: fixed;
   top: 0;
@@ -1876,9 +1912,7 @@ button {
   }
 }
 
-
 /* WINDOW PANEL */
-
 #ofcWindow {
   position: fixed;
   top: 0;
@@ -1909,9 +1943,7 @@ button {
   }
 }
 
-
 /* DOOR PANEL */
-
 #ofcDoor {
   position: fixed;
   top: 0;
@@ -1942,9 +1974,7 @@ button {
   }
 }
 
-
 /* PANEL */
-
 #ofcPanel {
   position: fixed;
   top: 0;
@@ -1975,9 +2005,7 @@ button {
   }
 }
 
-
 /* COUPLING PANEL */
-
 #ofcCoupling {
   position: fixed;
   top: 0;
@@ -2009,7 +2037,6 @@ button {
 }
 
 /* گرید فرم */
-
 .wd-form-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2027,24 +2054,21 @@ button {
   min-width: 0;
 }
 
-
 /* لپتاپ کوچک */
-
 @media (max-width: 900px) {
   .wd-form-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-
 /* موبایل */
-
 @media (max-width: 576px) {
   .wd-form-grid {
     grid-template-columns: 1fr;
     gap: 10px;
   }
 }
+
 .wd-mobile-view-tools {
   flex: 1;
   display: flex;
@@ -2086,13 +2110,13 @@ button {
 }
 
 /* خط جداکننده بین دکمه‌ها */
-.wd-mobile-view-tool + .wd-mobile-view-tool {
+.wd-mobile-view-tool+.wd-mobile-view-tool {
   border-right: 1px solid #e5e7eb;
 }
 
 /* هاور */
 .wd-mobile-view-tool:hover {
-  background: #2563eb;
+  background: var(--wd-button-bg);
   color: #ffffff;
 }
 
@@ -2132,8 +2156,9 @@ button {
     justify-content: space-between;
     gap: 5px;
     direction: rtl;
+    width: calc(100% - 10px);
+    margin: 0 5px;
   }
-
   .wd-mobile-menu-button {
     width: 12%;
     flex-shrink: 0;
@@ -2164,7 +2189,7 @@ button {
   .wd-canvas-zone {
     width: 100%;
     height: 100vh;
-    padding: 65px 10px 10px;
+    /* padding: 65px 10px 10px; اگه خرابه این باز میکنم */
   }
 
   .wd-mobile-overlay {
@@ -2423,152 +2448,7 @@ button {
   }
 }
 
-.wd-unit-details {
-  display: none;
-  position: fixed;
-  width: 280px;
-  max-width: calc(100vw - 20px);
-  padding: 12px;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  box-shadow:
-    0 8px 24px rgba(0, 0, 0, 0.10),
-    0 2px 6px rgba(0, 0, 0, 0.06);
-  direction: rtl;
-  text-align: right;
-  z-index: 9999;
-  font-family: IRANSansWeb, sans-serif;
-}
-
-.wd-unit-details .wd-form-line {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 38px;
-  margin-bottom: 7px;
-}
-
-.wd-unit-details .wd-form-line:last-of-type {
-  margin-bottom: 0;
-}
-
-.wd-unit-details .wd-form-label {
-  flex: 0 0 65px;
-  margin: 0;
-  font-size: 12px;
-  font-weight: 500;
-  color: #374151;
-  white-space: nowrap;
-}
-
-.wd-unit-details .wd-select-box {
-  flex: 1;
-  width: 100%;
-  min-width: 0;
-  height: 34px;
-  padding: 0 10px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  background: #ffffff;
-  color: #374151;
-  font-family: inherit;
-  font-size: 12px;
-  outline: none;
-  cursor: pointer;
-  transition:
-    border-color .15s ease,
-    box-shadow .15s ease;
-}
-
-.wd-unit-details .wd-select-box:focus {
-  border-color: #3b82f6;
-  box-shadow:
-    0 0 0 2px rgba(59, 130, 246, 0.12);
-}
-
-.wd-unit-details .wd-select-box:hover {
-  border-color: #9ca3af;
-}
-
-.wd-unit-details .wd-select-box option:disabled {
-  color: #9ca3af;
-}
-
-.wd-unit-details .wd-unit-detail-note {
-  margin-top: 10px;
-  padding-top: 9px;
-  border-top: 1px solid #f0f0f0;
-  color: #9ca3af;
-  font-size: 10px;
-  line-height: 1.8;
-  text-align: right;
-}
-
-.wd-unit-details {
-  max-height: calc(100vh - 20px);
-  overflow-y: auto;
-}
-
-.wd-unit-details::-webkit-scrollbar {
-  width: 4px;
-}
-
-.wd-unit-details::-webkit-scrollbar-thumb {
-  background: #d1d5db;
-  border-radius: 10px;
-}
-
-.wd-form-grid .wd-counter-control {
-  width: 100%;
-  height: 40px;
-  min-height: 40px;
-}
-
-@media (max-width: 576px) {
-  .wd-form-line {
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .wd-form-label {
-    width: 65px;
-    flex-shrink: 0;
-    margin-bottom: 0;
-  }
-
-  .wd-form-input,
-  .wd-select-box {
-    flex: 1;
-    width: auto;
-  }
-}
-
-@media (max-width: 768px) {
-  .wd-unit-details {
-    width: 270px;
-    padding: 10px;
-  }
-
-  .wd-unit-details .wd-form-line {
-    min-height: 36px;
-  }
-
-  .wd-unit-details .wd-form-label {
-    flex-basis: 60px;
-    font-size: 11px;
-  }
-
-  .wd-unit-details .wd-select-box {
-    height: 32px;
-    font-size: 11px;
-  }
-}
-
-/* =========================================
-   پیش‌نمایش شکل
-========================================= */
-
+/* پیش‌نمایش شکل  */
 .shape-preview-box {
   position: relative;
   width: 100%;
@@ -2581,7 +2461,6 @@ button {
 }
 
 /* تصویر اصلی */
-
 .shape-preview-image {
   position: absolute;
   top: 50%;
@@ -2600,7 +2479,6 @@ button {
 /* =========================================
  خطوط اندازه گیری
 ========================================= */
-
 .shape-preview-box::before {
   content: "";
   position: absolute;
@@ -2623,7 +2501,6 @@ button {
 }
 
 /* سرهای خط ارتفاع */
-
 .shape-preview-box .height-line-top,
 .shape-preview-box .height-line-bottom,
 .shape-preview-box .width-line-left,
@@ -2632,10 +2509,6 @@ button {
   background: #9ca3af;
 }
 
-/* =========================================
- ورودی‌های ابعاد
-========================================= */
-
 .shape-dimension-input {
   position: absolute;
   z-index: 10;
@@ -2643,7 +2516,7 @@ button {
   height: 28px;
   box-sizing: border-box;
   padding: 2px 5px;
-  border: 1px solid #d1d5db;
+  border: 1px solid #e5e7eb;
   border-radius: 5px;
   background: #ffffff;
   color: #374151;
@@ -2655,7 +2528,6 @@ button {
 }
 
 /* ارتفاع - وسط خط سمت چپ */
-
 .shape-preview-box #itemHeight {
   top: 50%;
   left: calc(50% - 145px);
@@ -2663,7 +2535,6 @@ button {
 }
 
 /* عرض - وسط خط پایین */
-
 .shape-preview-box #itemWidth {
   top: auto;
   left: 50%;
@@ -2674,7 +2545,6 @@ button {
 /* =========================================
  خطوط کوتاه ابتدا و انتها
 ========================================= */
-
 /* دو خط کوتاه بالا و پایین ارتفاع */
 .height-line-top,
 .height-line-bottom {
@@ -2687,36 +2557,36 @@ button {
 
 .shape-preview-box .height-line-top,
 .shape-preview-box .height-line-bottom {
-    position: absolute;
-    width: 12px;
-    height: 1px;
-    left: calc(50% - 151px);
-    background: #9ca3af;
+  position: absolute;
+  width: 12px;
+  height: 1px;
+  left: calc(50% - 151px);
+  background: #9ca3af;
 }
 
 .shape-preview-box .height-line-top {
-    top: calc(50% - 120px);
+  top: calc(50% - 120px);
 }
 
 .shape-preview-box .height-line-bottom {
-    top: calc(50% + 120px);
+  top: calc(50% + 120px);
 }
 
 .shape-preview-box .width-line-left,
 .shape-preview-box .width-line-right {
-    position: absolute;
-    width: 1px;
-    height: 12px;
-    top: calc(50% + 139px);
-    background: #9ca3af;
+  position: absolute;
+  width: 1px;
+  height: 12px;
+  top: calc(50% + 139px);
+  background: #9ca3af;
 }
 
 .shape-preview-box .width-line-left {
-    left: calc(50% - 120px);
+  left: calc(50% - 120px);
 }
 
 .shape-preview-box .width-line-right {
-    left: calc(50% + 120px);
+  left: calc(50% + 120px);
 }
 
 .height-line-top {
@@ -2762,33 +2632,26 @@ button {
 }
 
 /* دو خط کوتاه چپ و راست عرض */
-
 .shape-preview-box .width-line-left,
 .shape-preview-box .width-line-right {
-    position: absolute;
-    width: 2px;
-    height: 12px;
-    top: calc(50% + 139px);
-    background: #9ca3af;
+  position: absolute;
+  width: 2px;
+  height: 12px;
+  top: calc(50% + 139px);
+  background: #9ca3af;
 }
 
 .shape-preview-box .width-line-left {
-    left: calc(50% - 120px);
+  left: calc(50% - 120px);
 }
 
 .shape-preview-box .width-line-right {
-    left: calc(50% + 120px);
+  left: calc(50% + 120px);
 }
-
-/* فوکوس */
 
 .shape-dimension-input:focus {
   border-color: #2563eb;
 }
-
-/* =========================================
- ورودی گوشه‌ها
-========================================= */
 
 .shape-corner-input {
   position: absolute;
@@ -2797,7 +2660,7 @@ button {
   height: 26px;
   box-sizing: border-box;
   padding: 2px 5px;
-  border: 1px solid #d1d5db;
+  border: 1px solid #e5e7eb;
   border-radius: 5px;
   background: #ffffff;
   color: #374151;
@@ -2818,7 +2681,6 @@ button {
 /* =========================================
  انتخاب شکل‌ها
 ========================================= */
-
 .shape-selector-list {
   width: 100%;
   display: flex;
@@ -2835,7 +2697,6 @@ button {
 }
 
 /* اسکرول */
-
 .shape-selector-list::-webkit-scrollbar {
   height: 5px;
 }
@@ -2852,7 +2713,6 @@ button {
 /* =========================================
  آیتم شکل
 ========================================= */
-
 .shape-selector-item {
   position: relative;
   flex: 0 0 68px;
@@ -2964,6 +2824,7 @@ button {
   border-radius: 12px;
   padding: 12px;
 }
+
 /* دسته‌بندی شکل‌ها */
 .shape-category {
   margin-bottom: 18px;
@@ -3029,6 +2890,7 @@ button {
     max-height: 40vh;
   }
 }
+
 /* وسط‌چین کردن پیش‌نمایش مستطیل */
 #ofcAddNew:not(.wd-non-rectangle-mode) .wd-nonrect-layout {
   display: flex;
@@ -3040,6 +2902,7 @@ button {
   max-width: 500px;
   margin: 0 auto;
 }
+
 /* دکمه حذف */
 .wd-confirm-delete-btn {
   width: 90px;
@@ -3124,4 +2987,1126 @@ button {
   .wd-mobile-close {
     margin-right: auto;
   }
+}
+
+/* ///////////////////////////////////////////////// */
+* {
+  box-sizing: border-box;
+}
+
+.invoice-page {
+  width: 100%;
+  margin: 0 auto;
+  /* padding: 42px 45px 38px; */
+  background: #ffffff;
+  /* border: 1px solid #dbe3ec; */
+}
+
+.invoice-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  padding-bottom: 28px;
+  border-bottom: 1px solid #dbe3ec;
+}
+
+.company {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.company-logo {
+  width: 58px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #3b82f6;
+  border-radius: 15px;
+  background: #3b82f6;
+  color: #ffffff;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.company-logo svg {
+  width: 28px;
+  height: 28px;
+}
+
+.company-logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.company-name {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.company-subtitle {
+  font-size: 12px;
+}
+
+.document-title {
+  text-align: center;
+}
+
+.document-title h1 {
+  margin: 0;
+  font-size: 25px;
+  font-weight: 500;
+}
+
+.document-title-line {
+  width: 34px;
+  height: 2px;
+  margin: 10px auto 0;
+  background: #3b82f6;
+}
+
+.project-info {
+  width: 220px;
+  margin-right: auto;
+}
+
+.project-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 28px;
+  border-bottom: 1px solid #dbe3ec;
+}
+
+.project-row:last-child {
+  border-bottom: none;
+}
+
+.project-label {
+  font-size: 10px;
+}
+
+.project-value {
+  min-width: 90px;
+  height: 17px;
+  font-size: 10px;
+  text-align: left;
+  font-weight: 600;
+}
+
+.table-section {
+  margin-top: 30px;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.section-title::before {
+  content: "";
+  width: 3px;
+  height: 15px;
+  background: #3b82f6;
+}
+
+.section-caption {
+  font-size: 12px;
+}
+
+.table-box {
+  border: 1px solid #dbe3ec;
+  overflow: hidden;
+}
+
+.invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.invoice-table thead {
+  background: #f8fafc;
+}
+
+.invoice-table th {
+  height: 45px;
+  padding: 9px 10px;
+  color: #000000;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+  vertical-align: middle;
+  border-left: 1px solid rgba(255, 255, 255, 0.25);
+  border-bottom: 1px solid #dbe3ec;
+}
+
+.invoice-table th:last-child {
+  border-left: none;
+}
+
+.invoice-table td {
+  height: 52px;
+  padding: 10px;
+  color: #365d91;
+  font-size: 12px;
+  text-align: center;
+  vertical-align: middle;
+  border-left: 1px solid #dbe3ec;
+  border-bottom: 1px solid #dbe3ec;
+}
+
+.invoice-table td:last-child {
+  border-left: none;
+}
+
+.invoice-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.invoice-table tbody tr:nth-child(even) td {
+  background: #dbe3ec38;
+}
+
+.bottom-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-top: 22px;
+}
+
+.note {
+  padding-top: 7px;
+  font-size: 12px;
+}
+
+.total-box {
+  width: 320px;
+  border: 1px solid #dbe3ec;
+}
+
+.total-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 40px;
+  border-bottom: 1px solid #dbe3ec;
+}
+
+.total-row:last-child {
+  border-bottom: none;
+}
+
+.total-label {
+  font-size: 12px;
+}
+
+.total-value {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.total-final {
+  background: #f8fafc;
+}
+
+.total-final .total-label,
+.total-final .total-value {
+  color: #000000;
+}
+
+.total-final .total-value {
+  font-size: 11px;
+}
+
+.invoice-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+  padding-top: 15px;
+  border-top: 1px solid #dbe3ec;
+}
+
+.footer-text {
+  font-size: 12px;
+}
+
+@media print {
+  body {
+    padding: 0;
+    background: #ffffff;
+  }
+
+  .invoice-page {
+    max-width: none;
+    border: none;
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 760px) {
+
+  /* body {
+    padding: 10px;
+  } */
+  .invoice-page {
+    padding: 25px 20px;
+  }
+
+  .invoice-header {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+
+  .company {
+    justify-content: center;
+  }
+
+  .document-title {
+    order: -1;
+  }
+
+  .project-info {
+    width: 100%;
+  }
+
+  .table-box {
+    overflow-x: auto;
+  }
+
+  .invoice-table {
+    min-width: 700px;
+  }
+
+  .bottom-section {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .total-box {
+    width: 100%;
+  }
+}
+
+.total-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  text-align: center;
+}
+
+.total-grid>span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+}
+
+.total-grid+.total-grid>span {
+  border-left: 1px solid #dbe3ec;
+}
+
+.total-grid+.total-grid>span:last-child {
+  border-left: none;
+}
+
+.total-grid .total-label {
+  text-align: center;
+}
+
+.total-grid .total-value {
+  text-align: center;
+}
+
+.invoice-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+  flex-direction: column;
+  padding: 8px 0;
+}
+
+.invoice-item-image {
+  width: 260px;
+  height: 260px;
+  display: block;
+  object-fit: contain;
+  object-position: center;
+  margin: 0 auto;
+}
+
+.invoice-item-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2px 4px;
+}
+
+.invoice-item-title {
+  width: 100%;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.7;
+  color: #111827;
+  margin: 0 0 2px;
+}
+
+.invoice-item-detail {
+  width: 100%;
+  font-size: 12px;
+  line-height: 1.7;
+  color: #374151;
+  margin: 0;
+}
+
+.invoice-item-material {
+  width: 100%;
+  font-size: 12px;
+  line-height: 1.8;
+  color: #374151;
+}
+
+/* جدول */
+.invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.invoice-table .col-number {
+  width: 35px;
+}
+
+.invoice-table .col-design {
+  width: 260px;
+}
+
+.invoice-table .col-title {
+  width: 175px;
+}
+
+.invoice-table .col-quantity {
+  width: 70px;
+}
+
+.invoice-table .col-unit {
+  width: 75px;
+}
+
+.invoice-table .col-unit-price {
+  width: 110px;
+}
+
+.invoice-table .col-total {
+  width: 110px;
+}
+
+/* شماره ردیف */
+.invoice-table tbody td:first-child {
+  padding-left: 0;
+  padding-right: 0;
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* ستون بوم */
+.invoice-table tbody td:nth-child(2) {
+  padding: 8px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* ستون عنوان */
+.invoice-table tbody td:nth-child(3) {
+  padding: 8px 6px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.invoice-table tbody tr {
+  height: 300px;
+}
+
+.invoice-table tbody td {
+  height: 300px;
+  vertical-align: middle;
+}
+
+.invoice-table tbody td:nth-child(2),
+.invoice-table tbody td:nth-child(3) {
+  height: 300px;
+  vertical-align: middle;
+}
+
+/* پیام سیستم */
+.wd-system-message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.92);
+  z-index: 999999;
+  opacity: 0;
+  visibility: hidden;
+  direction: rtl;
+  transition:
+    opacity 0.2s ease,
+    transform 0.25s cubic-bezier(.34, 1.56, .64, 1),
+    visibility 0.2s ease;
+}
+
+.wd-system-message.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.wd-system-message-box {
+  min-width: 320px;
+  max-width: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 14px 18px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 13px;
+  box-shadow:
+    0 12px 35px rgba(0, 0, 0, 0.12);
+  font-family: "IRANSansWeb", sans-serif;
+}
+
+.wd-system-message-text {
+  color: #374151;
+  font-size: 14px;
+  line-height: 1.8;
+  font-weight: 500;
+  text-align: center;
+}
+/* آیکون */
+
+.wd-system-message-icon {
+
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 19px;
+  font-weight: bold;
+  position: relative;
+  animation:
+    messageIconShow 0.4s cubic-bezier(.34, 1.56, .64, 1);
+}
+
+.wd-system-message-icon span {
+  display: block;
+  direction: ltr;
+  unicode-bidi: bidi-override;
+  animation: messageIconRotate 0.35s ease-out;
+}
+
+/* موفقیت */
+.wd-system-message-icon.success {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+/* خطا */
+.wd-system-message-icon.error {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+/* هشدار */
+.wd-system-message-icon.warning {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+/* اطلاعات */
+.wd-system-message-icon.info {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+/* انیمیشن ورود آیکون */
+@keyframes messageIconShow {
+  0% {
+    opacity: 0;
+    transform:
+      scale(0.3) rotate(-20deg);
+  }
+
+  70% {
+    opacity: 1;
+    transform:
+      scale(1.12) rotate(5deg);
+  }
+
+  100% {
+    opacity: 1;
+    transform:
+      scale(1) rotate(0);
+  }
+}
+
+/* حرکت خود علامت */
+@keyframes messageIconRotate {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* موبایل */
+@media (max-width: 600px) {
+
+  .wd-system-message-box {
+    min-width: 280px;
+    max-width: calc(100vw - 30px);
+    padding: 13px 15px;
+    gap: 12px;
+    justify-content: center;
+  }
+
+  .wd-system-message-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 18px;
+  }
+
+  .wd-system-message-text {
+    font-size: 13px;
+    text-align: center;
+  }
+
+}
+
+/* مدال ویرایش آیتم */
+.wd-edit-item-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  direction: rtl;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
+  font-family: "IRANSansWeb", sans-serif;
+}
+
+.wd-edit-item-modal.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* پس زمینه */
+.wd-edit-item-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* بدنه اصلی */
+.wd-edit-item-container {
+  position: relative;
+  width: 600px;
+  max-width: calc(100vw - 30px);
+  background: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.18);
+  transform: translateY(20px) scale(0.97);
+  transition:
+    transform 0.25s ease;
+  z-index: 1;
+}
+
+.wd-edit-item-modal.show .wd-edit-item-container {
+  transform:
+    translateY(0) scale(1);
+}
+
+/* Header */
+.wd-edit-item-container .wd-right-brand {
+  width: 100%;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.wd-edit-item-container .wd-right-brand-inner {
+  width: 100%;
+}
+
+.wd-edit-item-container .wd-right-site-info-addedit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* عنوان */
+.wd-edit-item-container .wd-right-site-title {
+  display: block;
+  color: #1f2937;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.wd-edit-item-container .wd-selection-close {
+  width: 34px;
+  height: 34px;
+  border: none;
+  background: #ef4444;
+  color: #ffffff;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.wd-edit-item-container .wd-selection-close:hover {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+.wd-edit-item-container .wd-selection-close i {
+  font-size: 20px;
+  color: #ffffff;
+}
+
+/* Body */
+.wd-edit-item-body {
+  padding: 24px;
+}
+
+/* فیلدها */
+/* فیلدهای ویرایش آیتم */
+.wd-edit-item-fields {
+  display: grid;
+  grid-template-columns:
+    1fr 1fr 1fr;
+  gap: 18px;
+  width: 100%;
+}
+
+/* هر فیلد */
+.wd-edit-item-field {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* شماره آیتم - سمت راست */
+.wd-edit-item-field:first-child {
+  grid-column: 1;
+}
+
+/* نام آیتم - وسط */
+.wd-edit-item-field:nth-child(2) {
+  grid-column: 2;
+}
+
+/* تعداد - سمت چپ */
+.wd-edit-item-quantity-field {
+  grid-column: 3;
+  width: 100%;
+}
+
+/* ورودی‌های ویرایش */
+.wd-edit-item-field .wd-input-box {
+  width: 100%;
+  height: 40px;
+  padding: 10px 10px;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #1f2937;
+  font-family: "IRANSansWeb", sans-serif;
+  font-size: 12px;
+  outline: none;
+}
+
+.wd-edit-item-quantity-field .wd-counter-control {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #ffffff;
+  padding: 20px 0px;
+}
+
+.wd-edit-item-quantity-field .wd-counter-button {
+  width: 48px;
+  height: 40px;
+  flex-shrink: 0;
+  border: none;
+  background: #ffffff;
+  color: #374151;
+  font-family: Arial, sans-serif;
+  font-size: 21px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.wd-edit-item-quantity-field .edit_quantity_plus {
+  border-left: 1px solid #d1d5db;
+}
+
+.wd-edit-item-quantity-field .edit_quantity_minus {
+  border-right: 1px solid #d1d5db;
+}
+
+.wd-edit-item-quantity-field .wd-counter-button:hover {
+  background: #f9fafb;
+  color: #2563eb;
+}
+
+.wd-edit-item-quantity-field .wd-counter-number {
+  flex: 1;
+  min-width: 0;
+  height: 40px;
+  border: none;
+  outline: none;
+  text-align: center;
+  background: #ffffff;
+  color: #1f2937;
+  font-family: "IRANSansWeb", sans-serif;
+  font-size: 14px;
+  -moz-appearance: textfield;
+}
+
+/* حذف فلش input number */
+.wd-edit-item-quantity-field .wd-counter-number::-webkit-inner-spin-button,
+.wd-edit-item-quantity-field .wd-counter-number::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* پیام خطا */
+.wd-edit-item-error {
+  min-height: 24px;
+  margin-top: 14px;
+  color: #dc2626;
+  font-size: 12px;
+  line-height: 1.8;
+  text-align: right;
+}
+
+/* دکمه‌ها */
+.wd-edit-item-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.wd-edit-item-actions .wd-edit-item-save {
+  width: 130px;
+  height: 42px;
+  padding: 0;
+  border: none;
+  border-radius: 9px;
+  background: var(--wd-button-bg);
+  color: #ffffff;
+  font-family: "IRANSansWeb", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.wd-edit-item-actions .wd-edit-item-save:hover {
+  background: var(--wd-button-hover-bg);
+  color: #ffffff;
+}
+
+.wd-edit-item-actions .wd-edit-item-cancel {
+  width: 130px;
+  height: 42px;
+  padding: 0;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #4b5563;
+  font-family: "IRANSansWeb", sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.wd-edit-item-actions .wd-edit-item-cancel:hover {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+/* موبایل */
+@media (max-width: 650px) {
+  .wd-edit-item-fields {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .wd-edit-item-field:first-child,
+  .wd-edit-item-field:nth-child(2),
+  .wd-edit-item-quantity-field {
+    grid-column: 1;
+    width: 100%;
+  }
+}
+
+/* مدال حذف آیتم */
+.wd-delete-item-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  direction: rtl;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
+  font-family: "IRANSansWeb", sans-serif;
+}
+
+.wd-delete-item-modal.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* پس زمینه */
+.wd-delete-item-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* بدنه اصلی */
+.wd-delete-item-container {
+  position: relative;
+  width: 600px;
+  max-width: calc(100vw - 30px);
+  background: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.18);
+  transform: translateY(20px) scale(0.97);
+  transition:
+    transform 0.25s ease;
+  z-index: 1;
+}
+
+.wd-delete-item-modal.show .wd-delete-item-container {
+  transform: translateY(0) scale(1);
+}
+
+/* Header */
+.wd-delete-item-container .wd-right-brand {
+  width: 100%;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.wd-delete-item-container .wd-right-brand-inner {
+  width: 100%;
+}
+
+.wd-delete-item-container .wd-right-site-info-addedit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* عنوان */
+.wd-delete-item-container .wd-right-site-title {
+  display: block;
+  color: #1f2937;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+/* دکمه بستن */
+.wd-delete-item-container .wd-selection-close {
+  width: 34px;
+  height: 34px;
+  border: none;
+  background: #ef4444;
+  color: #ffffff;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition:
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.wd-delete-item-container .wd-selection-close:hover {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+.wd-delete-item-container .wd-selection-close i {
+  font-size: 20px;
+  color: #ffffff;
+}
+
+/* Body */
+.wd-delete-item-body {
+  padding: 24px;
+}
+
+/* متن حذف */
+.wd-delete-item-message {
+  width: 100%;
+  color: #1f2937;
+  font-size: 14px;
+  line-height: 2;
+  text-align: center;
+}
+
+.wd-delete-item-message strong {
+  display: block;
+  color: #1f2937;
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+.wd-delete-item-message p {
+  margin: 0;
+  color: #4b5563;
+  font-size: 13px;
+  line-height: 1.9;
+  text-align: center;
+}
+
+/* دکمه‌ها */
+.wd-delete-item-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.wd-delete-item-actions .wd-delete-item-confirm {
+  width: 130px;
+  height: 42px;
+  padding: 0;
+  border: none;
+  border-radius: 9px;
+  background: #ef4444;
+  color: #ffffff;
+  font-family: "IRANSansWeb", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.wd-delete-item-actions .wd-delete-item-confirm:hover {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+.wd-delete-item-actions .wd-delete-item-cancel {
+  width: 130px;
+  height: 42px;
+  padding: 0;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #4b5563;
+  font-family: "IRANSansWeb", sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.wd-delete-item-actions .wd-delete-item-cancel:hover {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+/* موبایل */
+@media (max-width: 650px) {
+  .wd-delete-item-container {
+    width: calc(100vw - 30px);
+  }
+
+  .wd-delete-item-body {
+    padding: 20px;
+  }
+}
+
+/* اطلاعات آیتم حذف */
+.wd-delete-item-info {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  padding: 5px 10px;
+  border-radius: 7px;
+  background: #fff5f5;
+  color: #dc2626;
+  font-size: 13px;
+}
+
+.wd-delete-item-info span {
+  color: #dc2626;
+}
+
+.wd-delete-item-info span+span::before {
+  content: " - ";
+  color: #fca5a5;
+  margin-left: 8px;
 }

@@ -244,7 +244,7 @@ export function init3D(containerId = "3d") {
   );
   floorGrid.position.y = -1;
   floorGrid.material.transparent = true;
-  floorGrid.material.opacity = 0.25;
+  floorGrid.material.opacity = 0.45;
   scene.add(floorGrid);
   window.addEventListener(
     "resize",
@@ -382,12 +382,25 @@ function getOpeningInfo(path) {
       id === "window_simple_bottom" ||
       id === "window_dual_right" ||
       id === "window_dual_left" ||
+      id === "window_simple" ||
       id === "window_radial_right" ||
       id === "window_radial_left" ||
       id === "window_radial_top" ||
       id === "window_radial_bottom" ||
-      id === "window_simple_right_nohandle" ||
-      id === "window_simple_left_nohandle"
+      id === "window_volkswagen_right" ||
+      id === "window_volkswagen_left" ||
+      id === "window_french_simple_left" ||
+      id === "window_french_simple_right" ||
+      id === "window_french_dual_left" ||
+      id === "window_french_dual_right" ||
+      id === "door_simple_right" ||
+      id === "door_simple_left" ||
+      id === "door_dual_right" ||
+      id === "door_dual_left" ||
+      id === "door_french_simple_left" ||
+      id === "door_french_simple_right" ||
+      id === "door_french_dual_left" ||
+      id === "door_french_dual_right"
     ) {
       return {
         type: id,
@@ -432,11 +445,9 @@ function setupOpeningPivot(
     box.min.clone();
   const max =
     box.max.clone();
-  // محور لولا در مختصات جهانی
+  // محور اصلی لولا
   const pivotWorld =
     new THREE.Vector3();
-  // راست بازشو:
-  // لولا سمت چپ لنگه
   if (
     type.includes("right")
   ) {
@@ -446,8 +457,6 @@ function setupOpeningPivot(
       center.z
     );
   }
-  // چپ بازشو:
-  // لولا سمت راست لنگه
   else if (
     type.includes("left")
   ) {
@@ -457,8 +466,6 @@ function setupOpeningPivot(
       center.z
     );
   }
-  // بالا بازشو:
-  // لولا پایین لنگه
   else if (
     type.includes("top")
   ) {
@@ -468,8 +475,6 @@ function setupOpeningPivot(
       center.z
     );
   }
-  // پایین بازشو:
-  // لولا بالای لنگه
   else if (
     type.includes("bottom")
   ) {
@@ -482,20 +487,19 @@ function setupOpeningPivot(
   else {
     return null;
   }
-  // تبدیل محور جهانی به مختصات local فریم اصلی
+  // محور اصلی در مختصات فریم
   const pivotLocal =
     mainGroup.worldToLocal(
       pivotWorld.clone()
     );
-  // ساخت گروه محور
+  // Pivot اصلی
   const pivotGroup =
     new THREE.Group();
   pivotGroup.name =
     "previewPivot";
   pivotGroup.userData.openingType =
     type;
-  // لنگه اول از parent قبلی جدا می‌شود
-  // ولی world transform آن کاملاً حفظ می‌شود.
+  // ذخیره Transform جهانی لنگه
   const worldPosition =
     new THREE.Vector3();
   const worldQuaternion =
@@ -515,19 +519,18 @@ function setupOpeningPivot(
   sashGroup.getWorldScale(
     worldScale
   );
-  // pivot در mainGroup
+  // قرار دادن محور اصلی
   pivotGroup.position.copy(
     pivotLocal
   );
   mainGroup.add(
     pivotGroup
   );
-  // لنگه را داخل pivot قرار بده
+  // لنگه داخل محور اصلی
   pivotGroup.add(
     sashGroup
   );
-  // تبدیل world transform لنگه
-  // به local transform نسبت به pivot
+  // حفظ دقیق موقعیت قبلی لنگه
   const localPosition =
     pivotGroup.worldToLocal(
       worldPosition.clone()
@@ -542,10 +545,9 @@ function setupOpeningPivot(
       )
       .invert();
   sashGroup.quaternion.copy(
-    inverseParentQuaternion
-      .multiply(
-        worldQuaternion
-      )
+    inverseParentQuaternion.multiply(
+      worldQuaternion
+    )
   );
   const parentWorldScale =
     pivotGroup.getWorldScale(
@@ -559,7 +561,7 @@ function setupOpeningPivot(
     worldScale.z /
     (parentWorldScale.z || 1)
   );
-  // اطلاعات Preview
+  // اطلاعات محور اصلی
   pivotGroup.userData.axis =
     (
       type.includes("top") ||
@@ -581,6 +583,121 @@ function setupOpeningPivot(
     0;
   pivotGroup.userData.previewReady =
     true;
+  // فقط پنجره های دوحالته
+  if (
+    type === "window_dual_right" ||
+    type === "window_dual_left"
+  ) {
+    // محدوده لنگه بعد از قرار گرفتن در Pivot اصلی
+    sashGroup.updateWorldMatrix(
+      true,
+      false
+    );
+    const sashBox =
+      new THREE.Box3().setFromObject(
+        sashGroup
+      );
+    const sashCenter =
+      sashBox.getCenter(
+        new THREE.Vector3()
+      );
+    const sashMin =
+      sashBox.min.clone();
+    const sashMax =
+      sashBox.max.clone();
+    // محور بالایی لنگه
+    const secondPivotWorld =
+      new THREE.Vector3(
+        sashCenter.x,
+        sashMin.y,
+        sashCenter.z
+      );
+    // تبدیل به مختصات Pivot اصلی
+    const secondPivotLocal =
+      pivotGroup.worldToLocal(
+        secondPivotWorld.clone()
+      );
+    // Pivot دوم
+    const secondPivot =
+      new THREE.Group();
+    secondPivot.name =
+      "previewPivot";
+    secondPivot.userData.previewReady =
+      true;
+    secondPivot.userData.isSecondary =
+      true;
+    secondPivot.userData.axis =
+      "x";
+    secondPivot.userData.direction =
+      "top";
+    secondPivot.userData.closedRotation =
+      0;
+    // Pivot دوم را داخل Pivot اول قرار بده
+    secondPivot.position.copy(
+      secondPivotLocal
+    );
+    pivotGroup.add(
+      secondPivot
+    );
+    // Transform جهانی لنگه را دوباره حفظ کن
+    sashGroup.updateWorldMatrix(
+      true,
+      false
+    );
+    const sashWorldPosition =
+      new THREE.Vector3();
+    const sashWorldQuaternion =
+      new THREE.Quaternion();
+    const sashWorldScale =
+      new THREE.Vector3();
+    sashGroup.getWorldPosition(
+      sashWorldPosition
+    );
+    sashGroup.getWorldQuaternion(
+      sashWorldQuaternion
+    );
+    sashGroup.getWorldScale(
+      sashWorldScale
+    );
+    // لنگه داخل محور دوم
+    secondPivot.add(
+      sashGroup
+    );
+    // حفظ موقعیت جهانی
+    const secondLocalPosition =
+      secondPivot.worldToLocal(
+        sashWorldPosition.clone()
+      );
+    sashGroup.position.copy(
+      secondLocalPosition
+    );
+    const secondInverseQuaternion =
+      secondPivot
+        .getWorldQuaternion(
+          new THREE.Quaternion()
+        )
+        .invert();
+    sashGroup.quaternion.copy(
+      secondInverseQuaternion.multiply(
+        sashWorldQuaternion
+      )
+    );
+    const secondParentScale =
+      secondPivot.getWorldScale(
+        new THREE.Vector3()
+      );
+    sashGroup.scale.set(
+      sashWorldScale.x /
+      (secondParentScale.x || 1),
+      sashWorldScale.y /
+      (secondParentScale.y || 1),
+      sashWorldScale.z /
+      (secondParentScale.z || 1)
+    );
+    // نگه داشتن محور دوم
+    pivotGroup.userData.secondaryPivot =
+      secondPivot;
+  }
   return pivotGroup;
 }
 // ساخت مدل سه‌بعدی
@@ -664,7 +781,7 @@ async function build3DFromSVG(
       else if (type === "handle") {
         material = handleMat;
         depth = 45;
-        zOffset = 35;
+        zOffset = 25;
       }
       // لولا
       else if (type === "hinge") {
@@ -710,6 +827,13 @@ async function build3DFromSVG(
         mesh.receiveShadow = false;
         mesh.position.z =
           zOffset;
+        if (
+          type === "handle" &&
+          String(origId).toLowerCase() === "handlehand"
+        ) {
+          mesh.position.z += 25;
+          mesh.scale.z = 0.50;
+        }
         mesh.userData.svgId =
           origId;
         // خط‌های پنل
@@ -730,9 +854,7 @@ async function build3DFromSVG(
           panelEdgeLines.renderOrder = 20;
           mesh.add(panelEdgeLines);
         }
-        // ========================================================
         // مرز فریم‌ها
-        // ========================================================
         if (type === "frame") {
           const pathId =
             String(origId).toLowerCase();
@@ -748,11 +870,9 @@ async function build3DFromSVG(
           const positions =
             edgeGeometry.attributes.position.array;
           const filteredPositions = [];
-          // ====================================================
           // فریم اصلی:
           // فقط مرزهای داخلی
           // مرز بیرونی حذف می‌شود
-          // ====================================================
           if (isWindowFrame) {
             const geometryBox =
               new THREE.Box3().setFromBufferAttribute(
@@ -821,9 +941,7 @@ async function build3DFromSVG(
               );
             }
           }
-          // ====================================================
           // ساخت خط مرزی
-          // ====================================================
           if (filteredPositions.length > 0) {
             const filteredGeometry =
               new THREE.BufferGeometry();
@@ -894,10 +1012,12 @@ async function build3DFromSVG(
       const sashGroup
       of openingGroups.values()
     ) {
-      setupOpeningPivot(
-        group,
-        sashGroup
-      );
+      const pivotGroup = setupOpeningPivot(group, sashGroup);
+      if (pivotGroup) {
+        pivotGroup.position.z += 25;
+      } else if (sashGroup.userData.openingType === "window_simple") {
+        sashGroup.position.z += 25;
+      }
     }
     group.updateMatrixWorld(true);
     // Center
@@ -956,7 +1076,17 @@ async function build3DFromSVG(
         maxDim /
         (2 * Math.tan(fov / 2))
       );
-    distance *= 1.35;
+    // تنظیم اندازه مدل بر اساس صفحه نمایش
+    const isMobile =
+      window.matchMedia(
+        "(max-width: 768px)"
+      ).matches;
+    // در موبایل مدل کوچک‌تر نمایش داده شود
+    if (isMobile) {
+      distance *= 1.85;
+    } else {
+      distance *= 1.35;
+    }
     camera.position.set(
       distance * 0.75,
       distance * 0.45,
@@ -1000,22 +1130,17 @@ function preview3DWindow() {
     );
     preview3DAnimation = null;
   }
-  // پیدا کردن تمام محورهای لولا
   const pivotGroups = [];
   mainGroup.traverse(
     (child) => {
-      if (
-        !child.isGroup
-      ) {
+      if (!child.isGroup) {
         return;
       }
       if (
         child.name === "previewPivot" &&
         child.userData?.previewReady
       ) {
-        pivotGroups.push(
-          child
-        );
+        pivotGroups.push(child);
       }
     }
   );
@@ -1025,199 +1150,233 @@ function preview3DWindow() {
     );
     return;
   }
-  console.log(
-    "تعداد لنگه‌های قابل حرکت:",
-    pivotGroups.length
-  );
-  // ------------------------------------------------------
-  // اطلاعات هر لنگه
-  // ------------------------------------------------------
-  const animations =
-    pivotGroups.map(
-      (pivotGroup) => {
-        const axis =
-          pivotGroup.userData.axis;
-        const direction =
-          pivotGroup.userData.direction;
-        let targetRotation = 0;
-        // -----------------------------------------------
-        // راست بازشو
-        // -----------------------------------------------
-        if (
-          direction === "right"
-        ) {
-          targetRotation =
-            -THREE.MathUtils.degToRad(
-              70
-            );
-        }
-        // -----------------------------------------------
-        // چپ بازشو
-        // -----------------------------------------------
-        else if (
-          direction === "left"
-        ) {
-          targetRotation =
-            THREE.MathUtils.degToRad(
-              70
-            );
-        }
-        // -----------------------------------------------
-        // بالا بازشو
-        // -----------------------------------------------
-        else if (direction === "top") {
-          targetRotation = -THREE.MathUtils.degToRad(70);
-        }
-        // -----------------------------------------------
-        // پایین بازشو
-        // -----------------------------------------------
-        else if (direction === "bottom") {
-          targetRotation = THREE.MathUtils.degToRad(70);
-        }
-        return {
-          pivotGroup,
-          axis,
-          startRotation:
-            pivotGroup.rotation[axis],
-          targetRotation
-        };
-      }
+  // محور اصلی و محور دوم
+  const primaryPivots =
+    pivotGroups.filter(
+      (pivot) =>
+        !pivot.userData?.isSecondary
     );
-  const duration = 900;
-  const pause = 600;
-  const startTime =
-    performance.now();
-  // ------------------------------------------------------
-  // Ease
-  // ------------------------------------------------------
-  function easeInOut(t) {
-    return t < 0.5
-      ? 2 * t * t
-      : 1 -
-      Math.pow(
-        -2 * t + 2,
-        2
-      ) / 2;
-  }
-  // ======================================================
-  // باز شدن همه لنگه‌ها
-  // ======================================================
-  function animateOpen(now) {
-    const progress =
-      Math.min(
-        (
-          now -
-          startTime
-        ) /
-        duration,
-        1
-      );
-    const eased =
-      easeInOut(
-        progress
-      );
-    animations.forEach(
-      (item) => {
-        const {
-          pivotGroup,
-          axis,
-          startRotation,
-          targetRotation
-        } = item;
-        pivotGroup.rotation[axis] =
-          startRotation +
-          (
-            targetRotation -
-            startRotation
-          ) *
-          eased;
-      }
+  const secondaryPivots =
+    pivotGroups.filter(
+      (pivot) =>
+        pivot.userData?.isSecondary
     );
-    if (
-      progress < 1
-    ) {
-      preview3DAnimation =
-        requestAnimationFrame(
-          animateOpen
-        );
-      return;
+  // انیمیشن یک گروه
+  function animatePivot(
+    pivotGroup,
+    targetRotation,
+    duration,
+    onComplete
+  ) {
+    const axis =
+      pivotGroup.userData.axis;
+    const startRotation =
+      pivotGroup.rotation[axis];
+    const startTime =
+      performance.now();
+    function easeInOut(t) {
+      return t < 0.5
+        ? 2 * t * t
+        : 1 -
+        Math.pow(
+          -2 * t + 2,
+          2
+        ) / 2;
     }
-    // ====================================================
-    // مکث وقتی همه باز هستند
-    // ====================================================
-    setTimeout(
-      () => {
-        const closeStart =
-          performance.now();
-        // ================================================
-        // بسته شدن همه لنگه‌ها
-        // ================================================
-        function animateClose(now2) {
-          const closeProgress =
-            Math.min(
-              (
-                now2 -
-                closeStart
-              ) /
-              duration,
-              1
-            );
-          const closeEased =
-            easeInOut(
-              closeProgress
-            );
-          animations.forEach(
-            (item) => {
-              const {
-                pivotGroup,
-                axis,
-                startRotation,
-                targetRotation
-              } = item;
-              pivotGroup.rotation[axis] =
-                targetRotation +
-                (
-                  startRotation -
-                  targetRotation
-                ) *
-                closeEased;
-            }
-          );
-          if (
-            closeProgress < 1
-          ) {
-            preview3DAnimation =
-              requestAnimationFrame(
-                animateClose
-              );
-          } else {
-            // --------------------------------------------
-            // اطمینان از برگشت کامل همه لنگه‌ها
-            // --------------------------------------------
-            animations.forEach(
-              (item) => {
-                item.pivotGroup.rotation[
-                  item.axis
-                ] =
-                  item.startRotation;
-              }
-            );
-            preview3DAnimation =
-              null;
-          }
-        }
+    function animate(now) {
+      const progress =
+        Math.min(
+          (
+            now -
+            startTime
+          ) /
+          duration,
+          1
+        );
+      const eased =
+        easeInOut(progress);
+      pivotGroup.rotation[axis] =
+        startRotation +
+        (
+          targetRotation -
+          startRotation
+        ) *
+        eased;
+      if (
+        progress < 1
+      ) {
         preview3DAnimation =
           requestAnimationFrame(
-            animateClose
+            animate
           );
-      },
-      pause
+        return;
+      }
+      pivotGroup.rotation[axis] =
+        targetRotation;
+      if (onComplete) {
+        onComplete();
+      }
+    }
+    preview3DAnimation =
+      requestAnimationFrame(
+        animate
+      );
+  }
+  // باز کردن محور اصلی
+  function openPrimary(index) {
+    if (
+      index >= primaryPivots.length
+    ) {
+      openSecondary();
+      return;
+    }
+    const pivotGroup =
+      primaryPivots[index];
+    const direction =
+      pivotGroup.userData.direction;
+    let targetRotation = 0;
+    if (
+      direction === "right"
+    ) {
+      targetRotation =
+        -THREE.MathUtils.degToRad(
+          45
+        );
+    }
+    else if (
+      direction === "left"
+    ) {
+      targetRotation =
+        THREE.MathUtils.degToRad(
+          45
+        );
+    }
+    else if (
+      direction === "top"
+    ) {
+      targetRotation =
+        -THREE.MathUtils.degToRad(
+          45
+        );
+    }
+    else if (
+      direction === "bottom"
+    ) {
+      targetRotation =
+        THREE.MathUtils.degToRad(
+          45
+        );
+    }
+    animatePivot(
+      pivotGroup,
+      targetRotation,
+      900,
+      () => {
+        openPrimary(
+          index + 1
+        );
+      }
     );
   }
-  preview3DAnimation =
-    requestAnimationFrame(
-      animateOpen
+  // بعد از محور اصلی، محور بالا باز می‌شود
+  function openSecondary() {
+    if (
+      !secondaryPivots.length
+    ) {
+      startClosing();
+      return;
+    }
+    const secondary =
+      secondaryPivots[0];
+    animatePivot(
+      secondary,
+      -THREE.MathUtils.degToRad(
+        10
+      ),
+      700,
+      () => {
+        setTimeout(
+          startClosing,
+          600
+        );
+      }
     );
+  }
+  // بستن محور دوم
+  function closeSecondary(index) {
+    if (
+      index < 0
+    ) {
+      startClosingPrimary(
+        primaryPivots.length - 1
+      );
+      return;
+    }
+    const secondary =
+      secondaryPivots[index];
+    animatePivot(
+      secondary,
+      0,
+      700,
+      () => {
+        closeSecondary(
+          index - 1
+        );
+      }
+    );
+  }
+  // بستن محور اصلی
+  function startClosingPrimary(index) {
+    if (
+      index < 0
+    ) {
+      primaryPivots.forEach(
+        (pivotGroup) => {
+          pivotGroup.rotation[
+            pivotGroup.userData.axis
+          ] = 0;
+        }
+      );
+      secondaryPivots.forEach(
+        (pivotGroup) => {
+          pivotGroup.rotation[
+            pivotGroup.userData.axis
+          ] = 0;
+        }
+      );
+      preview3DAnimation =
+        null;
+      return;
+    }
+    const pivotGroup =
+      primaryPivots[index];
+    animatePivot(
+      pivotGroup,
+      0,
+      900,
+      () => {
+        startClosingPrimary(
+          index - 1
+        );
+      }
+    );
+  }
+  // شروع بسته شدن
+  function startClosing() {
+    if (
+      secondaryPivots.length
+    ) {
+      closeSecondary(
+        secondaryPivots.length - 1
+      );
+      return;
+    }
+    startClosingPrimary(
+      primaryPivots.length - 1
+    );
+  }
+  // شروع باز شدن
+  openPrimary(0);
 }
 // دریافت SVG و ساخت مدل
 export async function update3DModel(

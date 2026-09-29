@@ -59,6 +59,9 @@ export function addLace(selectedItem, laceID = 0) { // lace ID is components lac
             enableSave();
         }
     } else {
-        showMessage('لطفا فریم یک بازشو را برای اضافه کردن توری انتخاب کنید')
+        showMessage(
+            "لطفاً فریم یک بازشو را برای اضافه کردن توری انتخاب کنید.",
+            "error"
+        );
     }
 }

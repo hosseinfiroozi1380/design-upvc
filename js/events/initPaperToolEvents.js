@@ -25,6 +25,7 @@ import {
 } from "../drawing/reDrawMainFrame.js";
 import { changeMullianPositionByNumber } from "../items/changeMullianPositionByNumber.js";
 import { setItemProfileName } from "../utils/setItemProfileName.js";
+import { showMessage } from "../utils/showMessage.js";
 export function initPaperToolEvents() {
     console.log("INIT PAPER TOOL EVENTS");
     console.log({
@@ -35,7 +36,10 @@ export function initPaperToolEvents() {
     tool.onMouseDown = function (event) {
         $('[data-bs-toggle="tooltip"]').tooltip('hide');
         if (state.unitData.locked) {
-            showMessage('یونیت قفل است. لطفا ابتدا قفل را بردارید');
+            showMessage(
+                "یونیت قفل است. لطفاً ابتدا قفل را بردارید.",
+                "error"
+            );
             return;
         }
         layersLayout();
@@ -489,6 +493,12 @@ export function initPaperToolEvents() {
                     .add(state.paper.view.center);
         }
     };
+    if (!state.keyboard) {
+        state.keyboard = {
+            shift: false,
+            ctrl: false
+        };
+    }
     tool.onKeyDown = function (event) {
         let ofcAddNew = $('#ofcAddNew').css('visibility');
         if (ofcAddNew !== 'visible' && !$('input').is(':focus')) {
@@ -549,4 +559,290 @@ export function initPaperToolEvents() {
         state.keyboard.shift = false;
         state.keyboard.ctrl = false;
     };
+    // ویرایش نام و تعداد آیتم
+    $(document)
+        .off(
+            "click.tempLayerEdit",
+            ".wd-item-edit"
+        )
+        .on(
+            "click.tempLayerEdit",
+            ".wd-item-edit",
+            function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                const $card = $(this).closest(".wd-item-card");
+                if (!$card.length) {
+                    return;
+                }
+                const designID = $card
+                    .attr("id")
+                    .replace("layer_", "");
+                const design = state.tempDesigns?.find(
+                    item =>
+                        String(item.id) ===
+                        String(designID)
+                );
+                if (!design) {
+                    return;
+                }
+                const itemName =
+                    design.unitData?.itemName || "";
+                const quantity =
+                    design.unitData?.quantity || 1;
+                // Modal ویرایش آیتم
+                const oldModal = document.querySelector(".wd-edit-item-modal");
+                if (oldModal) {
+                    oldModal.remove();
+                }
+                const modal = document.createElement("div");
+                modal.className = "wd-edit-item-modal";
+                modal.innerHTML = `
+    <div class="wd-edit-item-overlay"></div>
+    <div class="wd-edit-item-container">
+        <!-- Header -->
+        <header class="wd-right-brand">
+            <div class="wd-right-brand-inner">
+                <div class="wd-right-site-info-addedit">
+                    <strong class="wd-right-site-title">
+                        ویرایش آیتم
+                    </strong>
+                    <button
+                        type="button"
+                        class="wd-selection-close wd-edit-item-close"
+                        aria-label="Close"
+                    >
+                        <i class="ti ti-x"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+        <!-- Body -->
+        <div class="wd-edit-item-body">
+            <!-- اطلاعات آیتم -->
+            <div class="wd-edit-item-fields">
+                <!-- شماره آیتم -->
+                <div class="wd-edit-item-field">
+                    <label
+                        class="wd-form-label"
+                        for="editItemNumber"
+                    >
+                        شماره آیتم
+                    </label>
+                    <input
+                        type="text"
+                        id="editItemNumber"
+                        class="wd-input-box"
+                        value="${design.unitData?.itemNumber || ""}"
+                        placeholder="شماره آیتم"
+                    >
+                </div>
+                <!-- نام آیتم -->
+                <div class="wd-edit-item-field">
+                    <label
+                        class="wd-form-label"
+                        for="editItemName"
+                    >
+                        نام آیتم
+                    </label>
+                    <input
+                        type="text"
+                        id="editItemName"
+                        class="wd-input-box"
+                        value="${itemName}"
+                        placeholder="نام آیتم"
+                    >
+                </div>
+                <!-- تعداد -->
+                <div class="wd-edit-item-field wd-edit-item-quantity-field">
+                    <label
+                        class="wd-form-label"
+                        for="editItemQuantity"
+                    >
+                        تعداد
+                    </label>
+                    <div class="wd-counter-control">
+                        <button
+                            type="button"
+                            class="wd-counter-button edit_quantity_plus"
+                        >
+                            +
+                        </button>
+                        <input
+                            type="number"
+                            id="editItemQuantity"
+                            class="wd-counter-number"
+                            value="${quantity}"
+                            min="1"
+                        >
+                        <button
+                            type="button"
+                            class="wd-counter-button edit_quantity_minus"
+                        >
+                            −
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- خطا -->
+            <div
+                class="wd-edit-item-error"
+                id="editItemError"
+            ></div>
+            <!-- عملیات -->
+            <div class="wd-edit-item-actions">
+                <button
+                    type="button"
+                    class="wd-right-confirm wd-edit-item-save"
+                >
+                    تغییر
+                </button>
+                <button
+                    type="button"
+                    class="wd-right-cancel wd-edit-item-cancel"
+                >
+                    لغو
+                </button>
+            </div>
+        </div>
+    </div>
+`;
+                document.body.appendChild(modal);
+
+                setTimeout(() => {
+                    modal.classList.add("show");
+                }, 10);
+                // ورودی‌ها
+                const numberInput =
+                    modal.querySelector("#editItemNumber");
+                const nameInput =
+                    modal.querySelector("#editItemName");
+                const quantityInput =
+                    modal.querySelector("#editItemQuantity");
+                const errorBox =
+                    modal.querySelector("#editItemError");
+                // بستن
+                function closeEditModal() {
+                    modal.classList.remove("show");
+                    setTimeout(() => {
+                        if (modal.parentNode) {
+                            modal.remove();
+                        }
+                    }, 200);
+                }
+                // تغییر
+                modal
+                    .querySelector(".wd-edit-item-save")
+                    .addEventListener("click", function () {
+                        const itemNumber =
+                            numberInput.value.trim();
+                        const name =
+                            nameInput.value.trim();
+                        const newQuantity =
+                            parseInt(quantityInput.value);
+                        if (!itemNumber) {
+                            errorBox.textContent =
+                                "لطفاً شماره آیتم را وارد کنید.";
+                            numberInput.focus();
+                            return;
+                        }
+                        if (!name) {
+                            errorBox.textContent =
+                                "لطفاً نام آیتم را وارد کنید.";
+                            nameInput.focus();
+                            return;
+                        }
+                        if (!newQuantity || newQuantity < 1) {
+                            errorBox.textContent =
+                                "تعداد باید حداقل ۱ باشد.";
+                            quantityInput.focus();
+                            return;
+                        }
+                        design.unitData = {
+                            ...design.unitData,
+                            itemNumber: itemNumber,
+                            itemName: name,
+                            quantity: newQuantity
+                        };
+                        design.name = name;
+                        // بروزرسانی کارت
+                        $card
+                            .find(".wd-item-title")
+                            .text(
+                                `${itemNumber} - ${name}`
+                            );
+                        $card
+                            .find(".wd-item-quantity")
+                            .text(
+                                ` | تعداد: ${newQuantity}`
+                            );
+                        // اگر طراحی فعال است
+                        if (
+                            state.currentDesignID &&
+                            String(state.currentDesignID) ===
+                            String(designID)
+                        ) {
+                            state.unitData = {
+                                ...state.unitData,
+                                itemNumber: itemNumber,
+                                itemName: name,
+                                quantity: newQuantity
+                            };
+                        }
+                        closeEditModal();
+                    });
+                // لغو
+                modal
+                    .querySelector(".wd-edit-item-cancel")
+                    .addEventListener("click", function () {
+                        closeEditModal();
+                    });
+                // ضربدر
+                modal
+                    .querySelector(".wd-edit-item-close")
+                    .addEventListener("click", function () {
+                        closeEditModal();
+                    });
+                // کلیک روی پس زمینه
+                modal
+                    .querySelector(".wd-edit-item-overlay")
+                    .addEventListener("click", function () {
+                        closeEditModal();
+                    });
+                // افزایش تعداد
+                modal
+                    .querySelector(".edit_quantity_plus")
+                    .addEventListener("click", function () {
+                        let value =
+                            parseInt(quantityInput.value) || 1;
+                        value++;
+                        quantityInput.value = value;
+                    });
+                // کاهش تعداد
+                modal
+                    .querySelector(".edit_quantity_minus")
+                    .addEventListener("click", function () {
+                        let value =
+                            parseInt(quantityInput.value) || 1;
+                        if (value > 1) {
+                            value--;
+                        }
+                        quantityInput.value = value;
+                    });
+                // پاک کردن خطا
+                numberInput.addEventListener("input", function () {
+                    errorBox.textContent = "";
+                });
+                nameInput.addEventListener("input", function () {
+                    errorBox.textContent = "";
+                });
+                quantityInput.addEventListener("input", function () {
+                    errorBox.textContent = "";
+                });
+                // فوکوس
+                setTimeout(() => {
+                    numberInput.focus();
+                }, 200);
+            }
+        );
 }

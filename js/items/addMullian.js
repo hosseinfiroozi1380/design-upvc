@@ -107,7 +107,10 @@ export function addMullian(addNewItemType, flatToAdd, toAddPoint = false, toAddG
         createDimensionBar();
     } else {
         mullian.remove();
-        showMessage('خطا در اضافه کردن مولین. لطفا موقعیت دیگری را امتحان کنید')
+        showMessage(
+            "خطا در اضافه کردن مولین. لطفاً موقعیت دیگری را امتحان کنید.",
+            "error"
+        );
     }
     tmpFlat.remove();
     updateTempDesignSnapshot();

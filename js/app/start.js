@@ -1,4 +1,4 @@
-// src/app/start.js
+// js/app/start.js
 console.log("START FILE:", import.meta.url);
 import { initApplication } from "../core/init.js";
 import { initClickEvents } from "../events/initClickEvents.js";

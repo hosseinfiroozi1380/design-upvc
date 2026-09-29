@@ -21,7 +21,7 @@ export function createTempLayerCard() {
      * اطلاعات فعلی طراحی
      */
     const name =
-        state.unitData?.name ||
+        state.unitData?.itemName ||
         `طراحی ${Date.now()}`;
     const width =
         state.unitData?.width ||
@@ -127,11 +127,18 @@ export function createTempLayerCard() {
         if ($card.length) {
             $card
                 .find(".wd-item-title")
-                .text(name);
+                .text(
+                    `${currentDesign.unitData?.itemNumber || ""} - ${currentDesign.unitData?.itemName || name}`
+                );
             $card
                 .find(".wd-item-size")
+                .contents()
+                .first()
+                .replaceWith(`${width} × ${height}`);
+            $card
+                .find(".wd-item-quantity")
                 .text(
-                    `${width}x${height}`
+                    ` | تعداد: ${currentDesign.unitData?.quantity || 1}`
                 );
             $card
                 .find(".wd-item-brand")
@@ -225,43 +232,46 @@ export function createTempLayerCard() {
         "SAVED SECTION ID:",
         currentSectionId
     );
-    /*
-     * ساخت کارت
-     */
-    const card = `  
-    <div   
-        class="wd-item-card is-active"   
-        id="layer_${designID}"  
-    >  
-        <div class="wd-item-symbol svgThumb"></div>  
-        <div class="wd-item-details">  
-            <span   
-                class="wd-item-title"  
-                data-id="${designID}"  
-            >  
-                ${name}  
-            </span>  
-            <span class="wd-item-size itemDimetions">  
-                ${width} × ${height}  
-            </span>  
-            <div class="wd-item-bottom">  
-                <button  
-                    type="button"  
-                    class="wd-item-select-btn"  
-                    data-id="${designID}"  
-                >  
-                    UPVC  
+    // ساخت کارت
+    const itemNumber = state.unitData?.itemNumber || "";
+    const itemName = state.unitData?.itemName || name;
+    const quantity = state.unitData?.quantity || 1;
+    const card = `
+    <div class="wd-item-card is-active" id="layer_${designID}">
+        <div class="wd-item-symbol svgThumb"></div>
+        <div class="wd-item-details">
+            <span class="wd-item-title">
+                ${itemNumber} - ${itemName}
+            </span>
+            <span class="wd-item-size itemDimetions">
+                ${width} × ${height}
+                <span class="wd-item-quantity"> | تعداد: ${quantity}</span>
+            </span>
+            <div class="wd-item-bottom">
+                <button
+                    type="button"
+                    class="wd-item-select-btn"
+                    data-id="${designID}"
+                >
+                    ${system}
                 </button>
-                <button  
-                    class="wd-item-delete layerDelete"  
-                    type="button"  
-                    title="حذف" 
-                > 
-                    <i class="ti ti-trash"></i> 
-                </button> 
+                <button
+                    type="button"
+                    class="wd-item-edit"
+                    title="ویرایش"
+                >
+                    <i class="ti ti-pencil"></i>
+                </button>
+                <button
+                    type="button"
+                    class="wd-item-delete layerDelete"
+                    title="حذف"
+                >
+                    <i class="ti ti-trash"></i>
+                </button>
             </div>
-        </div> 
-    </div>  
+        </div>
+    </div>
 `;
     /*
      * Layer list
@@ -301,6 +311,11 @@ export function createTempLayerCard() {
         "LAYER PREVIEW UPDATED"
     );
 }
+$(document)
+    .off(
+        "click.tempLayerDelete",
+        ".layerDelete"
+    );
 /*
  * حذف موقت کارت
  */
@@ -308,223 +323,370 @@ $(document)
     .off(
         "click.tempLayerDelete",
         ".layerDelete"
-    );
-$(document)
+    )
     .on(
         "click.tempLayerDelete",
         ".layerDelete",
         function (e) {
             e.preventDefault();
             e.stopPropagation();
-            const $card =
-                $(this).closest(
-                    ".wd-item-card"
-                );
+            const $card = $(this).closest(".wd-item-card");
             if (!$card.length) {
                 return;
             }
             /*
              * پیدا کردن ID طراحی
              */
-            const designID =
-                $card
-                    .attr("id")
-                    .replace(
-                        "layer_",
-                        ""
-                    );
+            const designID = $card
+                .attr("id")
+                .replace("layer_", "");
+            /*
+             * اگر مودال قبلی وجود دارد حذف شود
+             */
+            const oldModal = document.querySelector(
+                ".wd-delete-item-modal"
+            );
+            if (oldModal) {
+                oldModal.remove();
+            }
+            /*
+             * اطلاعات طراحی برای نمایش در مودال
+             */
+            let designToDelete = null;
+            if (Array.isArray(state.tempDesigns)) {
+                designToDelete = state.tempDesigns.find(
+                    item =>
+                        String(item.id) ===
+                        String(designID)
+                );
+            }
+            const itemNumber =
+                designToDelete?.unitData?.itemNumber || "";
+            const itemName =
+                designToDelete?.unitData?.itemName ||
+                designToDelete?.name ||
+                "";
+            /*
+             * ساخت مودال حذف
+             */
+            const modal = document.createElement("div");
+            modal.className = "wd-delete-item-modal";
+            modal.innerHTML = `
+                <div class="wd-delete-item-overlay"></div>
+                <div class="wd-delete-item-container">
+                    <!-- Header -->
+                    <header class="wd-right-brand">
+                        <div class="wd-right-brand-inner">
+                            <div class="wd-right-site-info-addedit">
+                                <strong class="wd-right-site-title">
+                                    حذف آیتم
+                                </strong>
+                                <button
+                                    type="button"
+                                    class="wd-selection-close wd-delete-item-close"
+                                    aria-label="Close"
+                                >
+                                    <i class="ti ti-x"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </header>
+                    <!-- Body -->
+                    <div class="wd-delete-item-body">
+                        <div class="wd-delete-item-message">
+                            <div class="wd-delete-item-content">
+                                <strong class="wd-delete-item-title">
+                                آیا از حذف این آیتم اطمینان دارید؟
+                                </strong>
+                                ${itemNumber || itemName
+                    ? `
+                                            <div class="wd-delete-item-info">
+                                                ${itemNumber
+                        ? `<span>${itemNumber}</span>`
+                        : ""
+                    }
+                                                ${itemName
+                        ? `<span>${itemName}</span>`
+                        : ""
+                    }
+                                            </div>
+                                        `
+                    : ""
+                }
+                                <p class="wd-delete-item-warning">
+                                    این عملیات قابل بازگشت نیست.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- عملیات -->
+                        <div class="wd-delete-item-actions">
+                            <button
+                                type="button"
+                                class="wd-right-confirm wd-delete-item-confirm"
+                            >
+                                حذف
+                            </button>
+                            <button
+                                type="button"
+                                class="wd-right-cancel wd-delete-item-cancel"
+                            >
+                                لغو
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            /*
+             * نمایش انیمیشنی مودال
+             */
+            setTimeout(() => {
+                modal.classList.add("show");
+            }, 10);
+            /*
+             * بستن مودال
+             */
+            function closeDeleteModal() {
+                modal.classList.remove("show");
+                setTimeout(() => {
+                    if (modal.parentNode) {
+                        modal.remove();
+                    }
+                }, 200);
+            }
+            /*
+             * لغو
+             */
+            modal
+                .querySelector(".wd-delete-item-cancel")
+                .addEventListener(
+                    "click",
+                    function () {
+                        closeDeleteModal();
+                    }
+                );
+            /*
+             * ضربدر
+             */
+            modal
+                .querySelector(".wd-delete-item-close")
+                .addEventListener(
+                    "click",
+                    function () {
+                        closeDeleteModal();
+                    }
+                );
+            /*
+             * کلیک روی پس زمینه
+             */
+            modal
+                .querySelector(".wd-delete-item-overlay")
+                .addEventListener(
+                    "click",
+                    function () {
+                        closeDeleteModal();
+                    }
+                );
             /*
              * تأیید حذف
              */
-            Swal.fire({
-                title:
-                    "آیا از حذف این طراحی اطمینان دارید؟",
-                text:
-                    "این عملیات قابل بازگشت نیست.",
-                showCancelButton:
-                    true,
-                confirmButtonText:
-                    "حذف",
-                cancelButtonText:
-                    "لغو"
-            }).then(function (result) {
-                /*
-         * اگر کاربر لغو کرد
-         */
-                if (!result.value) {
-                    return;
-                }
-                console.log(
-                    "DELETE TEMP LAYER:",
-                    designID
-                );
-                /*
-                 * پیدا کردن Snapshot مربوط به کارت
-                 */
-                let designToDelete =
-                    null;
-                if (
-                    Array.isArray(
-                        state.tempDesigns
-                    )
-                ) {
-                    designToDelete =
-                        state.tempDesigns.find(
-                            item =>
-                                String(item.id) ===
-                                String(designID)
-                        );
-                }
-                console.log(
-                    "DESIGN TO DELETE:",
-                    designToDelete
-                );
-                /*
-                 * شناسه section مربوط به این طراحی
-                 */
-                const sectionId =
-                    designToDelete?.sectionId;
-                console.log(
-                    "SECTION ID TO DELETE:",
-                    sectionId
-                );
-                /*
-                 * حذف section مربوط به طراحی از Canvas
-                 */
-                if (
-                    sectionId &&
-                    state.paper?.project?.activeLayer
-                ) {
-                    const activeLayer =
-                        state.paper.project.activeLayer;
-                    const sections =
-                        activeLayer.getItems({
-                            name: "section"
-                        });
-                    console.log(
-                        "ALL SECTIONS:",
-                        sections
-                    );
-                    const targetSection =
-                        sections.find(
-                            section =>
-                                String(section.id) ===
-                                String(sectionId)
-                        );
-                    if (targetSection) {
+            modal
+                .querySelector(".wd-delete-item-confirm")
+                .addEventListener(
+                    "click",
+                    function () {
                         console.log(
-                            "REMOVE TARGET SECTION:",
-                            targetSection
+                            "DELETE TEMP LAYER:",
+                            designID
                         );
                         /*
-                         * حذف کامل طراحی
+                         * پیدا کردن Snapshot مربوط به کارت
                          */
-                        targetSection.remove();
-                    } else {
-                        console.warn(
-                            "TARGET SECTION NOT FOUND:",
+                        let designToDelete = null;
+                        if (
+                            Array.isArray(
+                                state.tempDesigns
+                            )
+                        ) {
+                            designToDelete =
+                                state.tempDesigns.find(
+                                    item =>
+                                        String(item.id) ===
+                                        String(designID)
+                                );
+                        }
+                        console.log(
+                            "DESIGN TO DELETE:",
+                            designToDelete
+                        );
+                        /*
+                         * شناسه section مربوط به این طراحی
+                         */
+                        const sectionId =
+                            designToDelete?.sectionId;
+                        console.log(
+                            "SECTION ID TO DELETE:",
                             sectionId
                         );
-                    }
-                }
-                /*
-                 * Snapshot را حذف کن
-                 */
-                if (
-                    Array.isArray(
-                        state.tempDesigns
-                    )
-                ) {
-                    state.tempDesigns =
-                        state.tempDesigns.filter(
-                            item =>
-                                String(item.id) !==
-                                String(designID)
+                        /*
+                         * حذف section مربوط به طراحی از Canvas
+                         */
+                        if (
+                            sectionId &&
+                            state.paper?.project?.activeLayer
+                        ) {
+                            const activeLayer =
+                                state.paper.project.activeLayer;
+                            const sections =
+                                activeLayer.getItems({
+                                    name: "section"
+                                });
+                            console.log(
+                                "ALL SECTIONS:",
+                                sections
+                            );
+                            const targetSection =
+                                sections.find(
+                                    section =>
+                                        String(section.id) ===
+                                        String(sectionId)
+                                );
+                            if (targetSection) {
+                                console.log(
+                                    "REMOVE TARGET SECTION:",
+                                    targetSection
+                                );
+                                /*
+                                 * حذف کامل طراحی
+                                 */
+                                targetSection.remove();
+                            } else {
+                                console.warn(
+                                    "TARGET SECTION NOT FOUND:",
+                                    sectionId
+                                );
+                            }
+                        }
+                        /*
+                         * Snapshot را حذف کن
+                         */
+                        if (
+                            Array.isArray(
+                                state.tempDesigns
+                            )
+                        ) {
+                            state.tempDesigns =
+                                state.tempDesigns.filter(
+                                    item =>
+                                        String(item.id) !==
+                                        String(designID)
+                                );
+                            /*
+                             * اگر دیگر طراحی موقتی باقی نمانده،
+                             * تغییر ذخیره‌نشده هم وجود ندارد.
+                             */
+                            if (
+                                state.tempDesigns.length === 0
+                            ) {
+                                state.somethingChanged =
+                                    false;
+                            }
+                        }
+                        /*
+                         * پیدا کردن اولین طراحی باقی‌مانده
+                         */
+                        const remainingDesign =
+                            Array.isArray(
+                                state.tempDesigns
+                            )
+                                ? state.tempDesigns[0]
+                                : null;
+                        /*
+                         * اگر طراحی دیگری باقی مانده،
+                         * همان طراحی دوباره روی Canvas نمایش داده شود.
+                         */
+                        if (remainingDesign) {
+                            console.log(
+                                "LOAD REMAINING DESIGN:",
+                                remainingDesign.id
+                            );
+                            changeTempLayerById(
+                                remainingDesign.id
+                            );
+                        } else {
+                            /*
+                             * اگر هیچ طراحی دیگری باقی نمانده،
+                             * Canvas خالی شود.
+                             */
+                            state.currentDesignID = 0;
+                            state.mainSection = null;
+                            if (state.paper?.project) {
+                                state.paper.project.clear();
+                                state.paper.project.view.update();
+                            }
+                        }
+                        /*
+                         * اگر section اصلی حذف شده،
+                         * mainSection نباید به طراحی حذف‌شده
+                         * اشاره کند.
+                         */
+                        if (
+                            state.mainSection &&
+                            sectionId &&
+                            String(
+                                state.mainSection.id
+                            ) ===
+                            String(sectionId)
+                        ) {
+                            state.mainSection = null;
+                        }
+                        /*
+                         * بازسازی کامل Dimension Bar
+                         */
+                        if (
+                            state.paper?.project?.activeLayer
+                        ) {
+                            console.log(
+                                "REBUILD DIMENSION BARS"
+                            );
+                            createDimensionBar();
+                            console.log(
+                                "DIMENSION BARS REBUILT"
+                            );
+                        }
+                        /*
+                         * پیش‌نمایش لیست را دوباره آپدیت کن
+                         */
+                        updateLayerPreview();
+                        /*
+                         * حذف کارت
+                         */
+                        $card.remove();
+                        console.log(
+                            "TEMP DESIGN DELETED:",
+                            designID
                         );
-                    /*
-                     * اگر دیگر طراحی موقتی باقی نمانده،
-                     * تغییر ذخیره‌نشده هم وجود ندارد.
-                     */
-                    if (
-                        state.tempDesigns.length === 0
-                    ) {
-                        state.somethingChanged =
-                            false;
+                        /*
+                         * بستن مودال
+                         */
+                        closeDeleteModal();
                     }
-                }
-                /*
-  * پیدا کردن اولین طراحی باقی‌مانده
-  */
-                const remainingDesign =
-                    Array.isArray(state.tempDesigns)
-                        ? state.tempDesigns[0]
-                        : null;
-                /*
-                * اگر طراحی دیگری باقی مانده،
-                * همان طراحی دوباره روی Canvas نمایش داده شود.
-                */
-                if (remainingDesign) {
-                    console.log(
-                        "LOAD REMAINING DESIGN:",
-                        remainingDesign.id
-                    );
-                    changeTempLayerById(
-                        remainingDesign.id
-                    );
-                } else {
-                    /*
-                     * اگر هیچ طراحی دیگری باقی نمانده،
-                     * Canvas خالی شود.
-                     */
-                    state.currentDesignID = 0;
-                    state.mainSection = null;
-                    if (state.paper?.project) {
-                        state.paper.project.clear();
-                        state.paper.project.view.update();
-                    }
-                }
-                /*
-                 * اگر section اصلی حذف شده،
-                 * mainSection نباید به طراحی حذف‌شده
-                 * اشاره کند.
-                 */
-                if (
-                    state.mainSection &&
-                    sectionId &&
-                    String(
-                        state.mainSection.id
-                    ) ===
-                    String(sectionId)
-                ) {
-                    state.mainSection =
-                        null;
-                }
-                /*
-                 * بازسازی کامل Dimension Bar
-                 */
-                if (
-                    state.paper?.project?.activeLayer
-                ) {
-                    console.log(
-                        "REBUILD DIMENSION BARS"
-                    );
-                    createDimensionBar();
-                    console.log(
-                        "DIMENSION BARS REBUILT"
-                    );
-                }
-                /*
-                 * پیش‌نمایش لیست را دوباره آپدیت کن
-                 */
-                updateLayerPreview();
-                /*
-                 * حذف کارت
-                 */
-                $card.remove();
-                console.log(
-                    "TEMP DESIGN DELETED:",
-                    designID
                 );
-            });
+            /*
+             * ESC برای لغو
+             */
+            function handleDeleteModalKeydown(e) {
+                if (e.key === "Escape") {
+                    closeDeleteModal();
+                    document.removeEventListener(
+                        "keydown",
+                        handleDeleteModalKeydown
+                    );
+                }
+            }
+            document.addEventListener(
+                "keydown",
+                handleDeleteModalKeydown
+            );
         }
     );

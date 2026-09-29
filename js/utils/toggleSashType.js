@@ -3,8 +3,14 @@ import state from '../core/state.js';
 import { showMessage } from './showMessage.js';
 import { reDrawItem } from '../drawing/reDrawItem.js';
 export function toggleSashType() {
-    if (!state.selectedItem || !["windowFrame", "doorFrame"].includes(state.selectedItem.name)) {
-        showMessage('لطفا ابتدا فریم یک بازشو را انتخاب نمایید');
+    if (
+        !state.selectedItem ||
+        !["windowFrame", "doorFrame"].includes(state.selectedItem.name)
+    ) {
+        showMessage(
+            "لطفاً ابتدا فریم یک بازشو را انتخاب نمایید.",
+            "error"
+        );
         return;
     }
     if (state.selectedItem.parent.name.indexOf('left') !== -1) {

@@ -32,79 +32,214 @@ import { changeTempLayerById } from "../utils/changeTempLayerById.js";
 import { updateTempDesignSnapshot } from "../utils/updateTempDesignSnapshot.js";
 import { exportDesignPDF } from "../utils/exportDesignPDF.js";
 export function initClickEvents() {
+    // محاسبات
+    $(document).off("click", ".wd-main-tool");
+    $(document).on("click", ".wd-main-tool", function (e) {
+        const buttonText = $(this).find("span").text().trim();
+        if (
+            buttonText === "محاسبات" ||
+            buttonText === "تنظیمات"
+        ) {
+            e.preventDefault();
+            showMessage(
+                "این بخش به‌زودی در دسترس خواهد بود.",
+                "info"
+            );
+            return false;
+        }
+    });
     // ذخیره PDF
+    $(document).off("click", "#saveProject");
+    $(document).on("click", "#saveProject", async function (e) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        const project = state.paper?.project;
+        const activeLayer = project?.activeLayer;
+        if (!project || !activeLayer) {
+            showMessage(
+                "لطفاً ابتدا یک طراحی ایجاد کنید، سپس روی ذخیره بزنید.",
+                "error"
+            );
+            return false;
+        }
+        const mainFrame = activeLayer.getItems({
+            name: "mainFrame"
+        });
+        const sections = activeLayer.getItems({
+            name: "section"
+        });
+        if (
+            mainFrame.length === 0 &&
+            sections.length === 0
+        ) {
+            showMessage(
+                "لطفاً ابتدا یک طراحی ایجاد کنید، سپس روی ذخیره بزنید.",
+                "error"
+            );
+            return false;
+        }
+        try {
+            console.log("شروع ساخت PDF");
+            // فعلاً ذخیره دیتابیس نداریم
+            // await saveDesign(state.currentDesignID);
+            await exportDesignPDF();
+            console.log("PDF با موفقیت ساخته شد");
+            showMessage(
+                "طراحی با موفقیت ذخیره شد.",
+                "success"
+            );
+        } catch (error) {
+            console.error(
+                "خطا در ساخت PDF:",
+                error
+            );
+            showMessage(
+                "در ساخت فایل PDF خطایی رخ داده است.",
+                "error"
+            );
+        }
+        return false;
+    });
+    // مدال سه بعدی
+    $(document).off(
+        "click",
+        "#view3DButton"
+    );
     $(document).on(
         "click",
-        "#saveProject",
-        async function (e) {
-            e.preventDefault();
-            await exportDesignPDF();
+        "#view3DButton",
+        async function (event) {
+            event.preventDefault();
+            const targetItem =
+                state.paper?.project?.activeLayer?.getItem({
+                    name: "section"
+                });
+            console.log(
+                "========== 3D CHECK =========="
+            );
+            console.log(
+                "SECTION:",
+                targetItem
+            );
+            console.log(
+                "SECTION CHILDREN:",
+                targetItem?.children
+            );
+            console.log(
+                "SECTION BOUNDS:",
+                targetItem?.bounds
+            );
+            console.log(
+                "MAIN SECTION:",
+                state.mainSection
+            );
+            console.log(
+                "MAIN FRAME:",
+                state.mainFrame
+            );
+            console.log(
+                "ACTIVE LAYER:",
+                state.paper?.project?.activeLayer
+            );
+            console.log(
+                "================================"
+            );
+            if (!targetItem) {
+                console.warn(
+                    "SECTION برای نمایش سه بعدی پیدا نشد"
+                );
+                showMessage(
+                    "برای نمایش سه‌بعدی، ابتدا یک آیتم طراحی و به لیست اضافه کنید.",
+                    "error"
+                );
+                return;
+            }
+            // مدال سه بعدی
+            const modalElement =
+                document.getElementById("myModal");
+            if (!modalElement) {
+                console.error(
+                    "#myModal پیدا نشد"
+                );
+                return;
+            }
+            // کانتینر سه بعدی
+            const container =
+                document.getElementById("3d");
+            if (!container) {
+                console.error(
+                    "#3d پیدا نشد"
+                );
+                return;
+            }
+            console.log(
+                "OPEN 3D MODAL"
+            );
+            // باز کردن مدال
+            modalElement.style.display =
+                "block";
+            requestAnimationFrame(
+                async () => {
+                    try {
+                        await set3D(
+                            targetItem,
+                            state.currentDesignID
+                        );
+                        requestAnimationFrame(() => {
+                            if (
+                                window.resize3D
+                            ) {
+                                window.resize3D();
+                            }
+                        });
+                    }
+                    catch (error) {
+                        console.error(
+                            "خطا در نمایش سه بعدی:",
+                            error
+                        );
+                    }
+                }
+            );
         }
     );
-    // نمایش سه بعدی
-    $(document).on("click", "#view3DButton", async function (event) {
-        event.preventDefault();
-        // طراحی فعلی
-        const targetItem =
-            state.paper?.project?.activeLayer?.getItem({
-                name: "section"
-            });
-        console.log("========== 3D CHECK ==========");
-        console.log("SECTION:", targetItem);
-        console.log("SECTION CHILDREN:", targetItem?.children);
-        console.log("SECTION BOUNDS:", targetItem?.bounds);
-        console.log("MAIN SECTION:", state.mainSection);
-        console.log("MAIN FRAME:", state.mainFrame);
-        console.log(
-            "ACTIVE LAYER:",
-            state.paper?.project?.activeLayer
-        );
-        console.log("================================");
-        if (!targetItem) {
-            console.warn(
-                "SECTION برای نمایش سه بعدی پیدا نشد"
-            );
-            return;
-        }
-        // مدال سه بعدی
-        const modalElement =
-            document.getElementById("myModal");
-        if (!modalElement) {
-            console.error("#myModal پیدا نشد");
-            return;
-        }
-        // کانتینر سه بعدی
-        const container =
-            document.getElementById("3d");
-        if (!container) {
-            console.error("#3d پیدا نشد");
-            return;
-        }
-        console.log("OPEN 3D MODAL");
-        // باز کردن مدال
-        modalElement.style.display = "block";
-        // صبر می‌کنیم تا مدال واقعاً اندازه بگیرد
-        requestAnimationFrame(async () => {
-            try {
-                // ساخت مدل سه بعدی از طراحی فعلی
-                await set3D(
-                    targetItem,
-                    state.currentDesignID
-                );
-                // اصلاح اندازه بعد از ساخت مدل
-                requestAnimationFrame(() => {
-                    if (window.resize3D) {
-                        window.resize3D();
-                    }
-                });
-            } catch (error) {
-                console.error(
-                    "خطا در نمایش سه بعدی:",
-                    error
-                );
+    // بستن مدال سه بعدی
+    $(document).off(
+        "click",
+        "#myModal .wd-3d-close-btn"
+    );
+    $(document).on(
+        "click",
+        "#myModal .wd-3d-close-btn",
+        function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            const modal =
+                document.getElementById("myModal");
+            if (!modal) {
+                return;
             }
-        });
-    });
+            modal.style.display =
+                "none";
+        }
+    );
+    // بستن با کلیک روی فضای بیرون
+    $(document).off(
+        "click",
+        "#myModal"
+    );
+    $(document).on(
+        "click",
+        "#myModal",
+        function (event) {
+            if (
+                event.target === this
+            ) {
+                this.style.display =
+                    "none";
+            }
+        }
+    );
     // addNewItemButtonClick
     $(document).on('click', '#addNewItemButton, .layerClone, .configMenuDropDown, .saveProject, .addNewItem, .vMullianEualling, .hMullianEualling', function () {
         cancelAll();
@@ -152,8 +287,17 @@ export function initClickEvents() {
                         let lastSection = sections[sections.length - 1] || false;
                         //when there are more than one mainframe, user should select a frame to add
                         if (sections.length > 1) {
-                            if (!state.selectedItem || (state.selectedItem && state.selectedItem.name != "mainFrame")) {
-                                showMessage('بیش از یک فریم وجود دارد. لطفا ابتدا فریمی که مایلی به آن افزونه اضافه شود را انتخاب نمایید');
+                            if (
+                                !state.selectedItem ||
+                                (
+                                    state.selectedItem &&
+                                    state.selectedItem.name != "mainFrame"
+                                )
+                            ) {
+                                showMessage(
+                                    "بیش از یک فریم وجود دارد. لطفاً ابتدا فریمی را که می‌خواهید افزونه به آن اضافه شود انتخاب کنید.",
+                                    "error"
+                                );
                                 return;
                             }
                             lastSection = state.selectedItem;
@@ -164,7 +308,10 @@ export function initClickEvents() {
                                 });
                                 for (let n = 0; n < vCouplings.length; n++) {
                                     if (vCouplings[n].hitTest(lastSection.bounds.topRight)) {
-                                        showMessage('فریمی در کنار این قسمت وجود دارد. امکان اضافه کردن چند فریم روی هم وجود ندارد');
+                                        showMessage(
+                                            "در کنار این قسمت یک فریم وجود دارد. امکان اضافه کردن چند فریم روی یکدیگر وجود ندارد.",
+                                            "error"
+                                        );
                                         return;
                                     }
                                 }
@@ -174,7 +321,10 @@ export function initClickEvents() {
                                 });
                                 for (let n = 0; n < hCouplings.length; n++) {
                                     if (hCouplings[n].hitTest(lastSection.bounds.bottomLeft)) {
-                                        showMessage('فریمی در زیر این قسمت وجود دارد. امکان اضافه کردن چند فریم روی هم وجود ندارد');
+                                        showMessage(
+                                            "در زیر این قسمت یک فریم وجود دارد. امکان اضافه کردن چند فریم روی یکدیگر وجود ندارد.",
+                                            "error"
+                                        );
                                         return;
                                     }
                                 }
@@ -182,7 +332,10 @@ export function initClickEvents() {
                         }
                         if (lastSection) {
                             if (!state.firstCoupling_width) {
-                                showMessage('بنظر می رسد این پروفیل شامل کوپلینگ نمی باشد. اگر این مورد اشتباه است به مدیریت جهت اصلاح اطلاع دهید.');
+                                showMessage(
+                                    "به نظر می‌رسد این پروفیل شامل کوپلینگ نمی‌باشد. اگر این مورد اشتباه است، لطفاً جهت اصلاح به مدیریت اطلاع دهید.",
+                                    "error"
+                                );
                                 return;
                             }
                             //draw coupling
@@ -223,12 +376,18 @@ export function initClickEvents() {
                             }
                         }
                     } else {
-                        showMessage('لطفا ابعاد معتبری وارد نمایید')
+                        showMessage(
+                            "لطفاً ابعاد معتبر وارد نمایید.",
+                            "error"
+                        );
                     }
                 }
             });
         } else {
-            showMessage('در اشکال غیر مستطیل امکان افزودن وجود ندارد');
+            showMessage(
+                "در اشکال غیرمستطیل امکان افزودن وجود ندارد.",
+                "error"
+            );
         }
     });
     $(document).on('click', '.addNewItem', function () {
@@ -484,7 +643,10 @@ export function initClickEvents() {
             }).get();
         }
         if (toDeleteIds.length < 1) {
-            showMessage('چیزی برای حذف نیست!');
+            showMessage(
+                "موردی برای حذف وجود ندارد.",
+                "error"
+            );
             return;
         }
         $.ajax({
@@ -554,13 +716,7 @@ export function initClickEvents() {
                 showMessage(message);
             }
         }).catch(function (error) {
-            let errorMessage = "خطایی در ارتباط با سرور رخ داده است.";
-            if (error.status === 0) {
-                errorMessage = "اتصال اینترنت خود را بررسی کنید!";
-            } else if (error.responseJSON && error.responseJSON.message) {
-                errorMessage = error.responseJSON.message;
-            }
-            showMessage('ذخیره با خطا مواجه شد: ' + errorMessage);
+            console.error("خطا در ذخیره:", error);
         });
         $('.updateDiv').hide();
         $('.select_windows_type_bar').show();
@@ -629,7 +785,7 @@ export function initClickEvents() {
             setDefaultData(null, "resetAllGlasses");
         }
         updateLayerDetailsMenuOptions();
-        $('#ofcAddNew').offcanvas('hide');
+        $('#ofcAddNew').modal('hide');
         $('#leftCanvas').offcanvas('hide');
         enableSave();
     });
@@ -669,13 +825,7 @@ export function initClickEvents() {
                 showMessage(message);
             }
         }).catch(function (error) {
-            let errorMessage = "خطایی در ارتباط با سرور رخ داده است.";
-            if (error.status === 0) {
-                errorMessage = "اتصال اینترنت خود را بررسی کنید!";
-            } else if (error.responseJSON && error.responseJSON.message) {
-                errorMessage = error.responseJSON.message;
-            }
-            showMessage('ذخیره با خطا مواجه شد: ' + errorMessage);
+            console.error("خطا در ذخیره:", error);
         });
         enableSave();
         state.unitData['name'] = parseInt($('#countDesign').text()) + 1;
@@ -684,13 +834,7 @@ export function initClickEvents() {
                 showMessage(message);
             }
         }).catch(function (error) {
-            let errorMessage = "خطایی در ارتباط با سرور رخ داده است.";
-            if (error.status === 0) {
-                errorMessage = "اتصال اینترنت خود را بررسی کنید!";
-            } else if (error.responseJSON && error.responseJSON.message) {
-                errorMessage = error.responseJSON.message;
-            }
-            showMessage('ذخیره با خطا مواجه شد: ' + errorMessage);
+            console.error("خطا در ذخیره:", error);
         });
         showMessage(state.unitData['name'] + ' ایجاد شد');
     });
@@ -875,7 +1019,10 @@ export function initClickEvents() {
             if (bottomdoorValue > 0) {
                 addRemoveBottomdoor('add', bottomdoorValue);
             } else {
-                showMessage('ارتفاع پاخور صحیح نمی باشد')
+                showMessage(
+                    "ارتفاع پاخور صحیح نمی‌باشد.",
+                    "error"
+                );
             }
         }
         $('#leftCanvas').offcanvas('hide');
@@ -918,26 +1065,13 @@ export function initClickEvents() {
         });
         createDimensionBar();
     });
-    //SAVE BTN
-    $(document).on('click', '#saveProject', function () {
-        saveDesign(state.currentDesignID).then(function (message) {
-            if (typeof message !== "undefined") {
-                showMessage(message);
-            }
-        }).catch(function (error) {
-            let errorMessage = "خطایی در ارتباط با سرور رخ داده است.";
-            if (error.status === 0) {
-                errorMessage = "اتصال اینترنت خود را بررسی کنید!";
-            } else if (error.responseJSON && error.responseJSON.message) {
-                errorMessage = error.responseJSON.message;
-            }
-            showMessage('ذخیره با خطا مواجه شد: ' + errorMessage);
-        });
-    });
     //automateCreation
     $(document).on('click', '.automateCreation', function () {
         if (state.unitData.locked) {
-            showMessage('یونیت قفل است. لطفا ابتدا قفل را بردارید');
+            showMessage(
+                "یونیت قفل است. لطفاً ابتدا قفل را بردارید.",
+                "error"
+            );
             return;
         }
         let baseGroups = state.paper.project.activeLayer.getItems({ name: "baseGroup" });
@@ -1080,7 +1214,7 @@ export function initClickEvents() {
         createDimensionBar();
     });
     $(document).on('click', function (e) {
-        const myDiv = $('.wd-unit-details');
+        const myDiv = $(".wd-unit-details");
         if (!$(e.target).closest('.unitOptions').length) {
             myDiv.css({
                 'display': '',

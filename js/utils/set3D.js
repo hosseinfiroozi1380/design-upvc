@@ -6,7 +6,6 @@ export async function set3D(item = null, designID = null) {
             console.warn("Paper.js project پیدا نشد");
             return false;
         }
-        // اگر آیتم مشخص نشده، کل طراحی فعلی را بگیر
         if (!item) {
             item = state.paper.project.activeLayer.getItem({
                 name: "section"
@@ -22,9 +21,6 @@ export async function set3D(item = null, designID = null) {
             console.warn("ابعاد آیتم برای 3D معتبر نیست");
             return false;
         }
-        // ----------------------------------------------------
-        // گرفتن SVG فقط از همین آیتم
-        // ----------------------------------------------------
         const svgElement = item.exportSVG({
             asString: false,
             bounds: "content"
@@ -64,9 +60,6 @@ export async function set3D(item = null, designID = null) {
             "height",
             bounds.height
         );
-        // ----------------------------------------------------
-        // حذف attributeهای Paper.js
-        // ----------------------------------------------------
         svgRoot
             .querySelectorAll(
                 "[xmlns\\:paper], [paper-id]"
@@ -75,9 +68,6 @@ export async function set3D(item = null, designID = null) {
                 element.removeAttribute("xmlns:paper");
                 element.removeAttribute("paper-id");
             });
-        // ----------------------------------------------------
-        // SVG → String
-        // ----------------------------------------------------
         const serializer =
             new XMLSerializer();
         const svgString =
@@ -86,9 +76,7 @@ export async function set3D(item = null, designID = null) {
             console.warn("SVG String خالی است");
             return false;
         }
-        // ----------------------------------------------------
         // Three.js باید قبلاً توسط js/lib/3d.js لود شده باشد
-        // ----------------------------------------------------
         if (!window.update3DModel) {
             console.error(
                 "update3DModel پیدا نشد. js/lib/3d.js را بررسی کن."
@@ -104,9 +92,6 @@ export async function set3D(item = null, designID = null) {
             );
             return false;
         }
-        // ----------------------------------------------------
-        // ساخت مدل
-        // ----------------------------------------------------
         if (window.init3D) {
             window.init3D("3d");
         }

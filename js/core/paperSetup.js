@@ -1,3 +1,5 @@
+// js/core/paperSetup.js
+
 import state from "./state.js";
 export function setupPaper() {
     const canvas =

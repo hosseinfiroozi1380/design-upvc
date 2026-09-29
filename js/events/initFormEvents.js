@@ -13,31 +13,91 @@ export function initFormEvents() {
                 formData[field.name] = field.value;
             }
         );
-        /*
-         * اعتبارسنجی فرم
-         */
+        // پاک کردن خطاهای قبلی
+        $("#itemNumberError")
+            .text("")
+            .hide();
+        $("#itemNameError")
+            .text("")
+            .hide();
+        $("#installationCodeError")
+            .text("")
+            .hide();
+        // اطلاعات آیتم
+        const itemNumber = String(
+            formData.itemNumber || ""
+        ).trim();
+        const itemName = String(
+            formData.itemName || ""
+        ).trim();
+        const installationCode = String(
+            formData.installationCode || ""
+        ).trim();
+        // اعتبارسنجی اطلاعات آیتم
+        let hasItemInfoError = false;
+        // شماره آیتم
+        if (!itemNumber) {
+            $("#itemNumberError")
+                .text("شماره آیتم الزامی است")
+                .show();
+            hasItemInfoError = true;
+        }
+        // نام آیتم
+        if (!itemName) {
+            $("#itemNameError")
+                .text("نام آیتم الزامی است")
+                .show();
+            hasItemInfoError = true;
+        }
+        // کد نصب
+        if (!installationCode) {
+            $("#installationCodeError")
+                .text("کد نصب الزامی است")
+                .show();
+            hasItemInfoError = true;
+        }
+        // اگر یکی از اطلاعات آیتم خالی بود
+        // فرم ادامه پیدا نکند
+        if (hasItemInfoError) {
+            return;
+        }
+        // اعتبارسنجی سایر فیلدها
+        const profileId = String(
+            formData.profile_id || ""
+        ).trim();
+        const profileColor = String(
+            formData.profile_color || ""
+        ).trim();
+        const accessoryId = String(
+            formData.accessory_id || ""
+        ).trim();
+        const glassId = String(
+            formData.glass_id || ""
+        ).trim();
+        const system = String(
+            formData.system || ""
+        ).trim();
+        const quantity = parseInt(
+            formData.quantity,
+            10
+        );
+        // اگر یکی از فیلدهای اصلی فرم خالی باشد
         if (
-            formData.profile_id == undefined ||
-            formData.profile_color == undefined ||
-            formData.accessory_id == undefined ||
-            formData.glass_id == undefined ||
-            formData.system == undefined ||
-            formData.quantity == undefined ||
-            formData.profile_id == "" ||
-            formData.profile_color == "" ||
-            formData.accessory_id == "" ||
-            formData.glass_id == "" ||
-            formData.system == "" ||
-            formData.quantity < 1
+            !profileId ||
+            !profileColor ||
+            !accessoryId ||
+            !glassId ||
+            !system ||
+            isNaN(quantity) ||
+            quantity < 1
         ) {
             showMessage(
-                "لطفا همه فیلدها را کامل کنید"
+                "لطفاً همه فیلدها را کامل کنید.",
+                "error"
             );
             return;
         }
-        /*
-         * ابعاد
-         */
+        // ابعاد
         let itemWidth =
             parseInt(formData.itemWidth) -
             parseInt(formData.widthSpace);
@@ -55,27 +115,25 @@ export function initFormEvents() {
             );
             return;
         }
-        /*
-         * اطلاعات نهایی فرم
-         */
+        // اطلاعات نهایی فرم
         formData.dimension = [
             itemWidth,
             itemHeight
         ];
+        // اطلاعات آیتم
+        formData.itemInfo = {
+            itemNumber: itemNumber,
+            itemName: itemName,
+            installationCode: installationCode
+        };
+        // ABCD
         formData.abcd = {
             a: parseInt($("#a").val()),
             b: parseInt($("#b").val()),
             c: parseInt($("#c").val()),
             d: parseInt($("#d").val())
         };
-        /*
-         * ==========================================
-         * طراحی قبلی
-         * ==========================================
-         *
-         * اگر طراحی فعلی سرور باشد،
-         * ذخیره قبلی انجام شود.
-         */
+        // ذخیره طراحی قبلی
         console.log(
             "========== SAVE CHECK =========="
         );
@@ -131,11 +189,9 @@ export function initFormEvents() {
                     );
                 });
         }
-        /* فرم جدید = طراحی جدید */
+        // فرم جدید = طراحی جدید
         state.currentDesignID = 0;
-        /*
-         * پاک کردن Canvas
-         */
+        // پاک کردن Canvas
         state.paper.project.clear();
         console.log(
             "NEW DESIGN FROM FORM"
@@ -149,8 +205,55 @@ export function initFormEvents() {
             formData.shape
         );
         if (!formData.shape) {
-            formData.shape = 'simple_rectangle';
+            formData.shape =
+                "simple_rectangle";
         }
+        // ذخیره اطلاعات یونیت
+        state.unitData = {
+            ...state.unitData,
+            itemNumber: itemNumber,
+            itemName: itemName,
+            installationCode: installationCode,
+            quantity: formData.quantity
+        };
+        // پاک کردن فرم برای طراحی بعدی
+        $("#itemNumber").val("");
+        $("#itemName").val("");
+        $("#installationCode").val("");
+        // پاک کردن پیام‌های خطا
+        $("#itemNumberError")
+            .text("")
+            .hide();
+        $("#itemNameError")
+            .text("")
+            .hide();
+        $("#installationCodeError")
+            .text("")
+            .hide();
+        // رسم اولین شکل
         drawFirstShape(formData);
+        $(".wd-unit-summary").show();
+        $(".wd-unit-details").hide();
+        // بستن فرم بعد از افزودن موفق
+        $("#ofcAddNew").modal("hide");
     });
+    // پاک کردن خطاها هنگام بستن فرم
+    $("#ofcAddNew").on(
+        "hidden.bs.modal",
+        function () {
+
+            $("#itemNumberError")
+                .text("")
+                .hide();
+
+            $("#itemNameError")
+                .text("")
+                .hide();
+
+            $("#installationCodeError")
+                .text("")
+                .hide();
+        }
+    );
+
 }

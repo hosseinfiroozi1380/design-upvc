@@ -450,7 +450,7 @@ body.swal2-toast-column .swal2-toast .swal2-validation-message {
 }
 
 .wd-size-field .wd-input-box {
- width: 90px;
+ width: 100%;
  height: 38px;
  text-align: center;
 }

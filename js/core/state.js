@@ -1,5 +1,12 @@
+// js/core/state.js
+
 console.log("STATE FILE:", import.meta.url);
 const state = {
+     // وضعیت کلیدهای کیبورد
+     keyboard: {
+        shift: false,
+        ctrl: false
+    },
     tempDesigns: [],
     window_glass_space: 0,
     door_glass_space: 0,

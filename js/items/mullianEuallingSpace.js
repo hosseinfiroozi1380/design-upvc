@@ -11,7 +11,10 @@ export function mullianEuallingSpace(
     step = 1
 ) {
     if (state.unitData.locked) {
-        showMessage('یونیت قفل است. لطفا ابتدا قفل را بردارید');
+        showMessage(
+            "یونیت قفل است. لطفاً ابتدا قفل را بردارید.",
+            "error"
+        );
         return;
     }
     let list = [];

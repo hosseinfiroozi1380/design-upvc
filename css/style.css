@@ -139,7 +139,7 @@ button {
 }
 
 .wd-right-brand {
-  padding: 6px 15px;
+  padding: 15px 15px;
   border-bottom: 1px solid #e5e7eb;
   flex-shrink: 0;
 }
@@ -3708,12 +3708,117 @@ button {
   background: #dc2626;
   color: #ffffff;
 }
+/* =========================================
+   فیلدهای فرم ویرایش آیتم
+   ========================================= */
 
+   .wd-edit-item-container .wd-edit-item-fields {
+    display: grid;
+    width: 100%;
+    gap: 16px;
+}
+
+
+/* =========================================
+   هر فیلد
+   ========================================= */
+
+.wd-edit-item-container .wd-edit-item-field {
+    width: 100%;
+    min-width: 0;
+}
+
+
+/* =========================================
+   ورودی‌ها
+   ========================================= */
+
+.wd-edit-item-container .wd-edit-item-field .wd-input-box {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+
+/* =========================================
+   1 فیلد
+   ========================================= */
+
+.wd-edit-item-container .wd-edit-item-fields:has(
+    > .wd-edit-item-field:nth-child(1):last-child
+) {
+    grid-template-columns: 1fr;
+}
+
+
+/* =========================================
+   2 فیلد
+   راست و چپ
+   ========================================= */
+
+.wd-edit-item-container .wd-edit-item-fields:has(
+    > .wd-edit-item-field:nth-child(2):last-child
+) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+
+/* =========================================
+   3 فیلد
+   راست - وسط - چپ
+   ========================================= */
+
+.wd-edit-item-container .wd-edit-item-fields:has(
+    > .wd-edit-item-field:nth-child(3):last-child
+) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+
+/* =========================================
+   4 فیلد
+   دو تا در هر سطر
+   ========================================= */
+
+.wd-edit-item-container .wd-edit-item-fields:has(
+    > .wd-edit-item-field:nth-child(4):last-child
+) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+
+/* =========================================
+   5 و 6 فیلد
+   سه تا در هر سطر
+   ========================================= */
+
+.wd-edit-item-container .wd-edit-item-fields:has(
+    > .wd-edit-item-field:nth-child(5):last-child
+),
+.wd-edit-item-container .wd-edit-item-fields:has(
+    > .wd-edit-item-field:nth-child(6):last-child
+) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+@media (max-width: 576px) {
+
+    .wd-edit-item-container .wd-edit-item-fields {
+        grid-template-columns: 1fr !important;
+    }
+
+}
 .wd-edit-item-container .wd-selection-close i {
   font-size: 20px;
   color: #ffffff;
 }
+/* مودال‌هایی که فقط یک ورودی دارند */
 
+.wd-edit-item-modal.wd-single-field-modal
+.wd-edit-item-container {
+    width: 300px;
+    max-width: calc(100vw - 30px);
+}
 /* Body */
 .wd-edit-item-body {
   padding: 24px;
@@ -3831,7 +3936,8 @@ button {
 /* پیام خطا */
 .wd-edit-item-error {
   min-height: 24px;
-  margin-top: 14px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   color: #dc2626;
   font-size: 12px;
   line-height: 1.8;

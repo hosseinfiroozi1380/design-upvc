@@ -9,9 +9,7 @@ export function itemDetailsBar(selectedItem) {
     const data = selectedItem.data || {};
     const name = selectedItem.name;
     $details.find('.wd-form-line').hide();
-    // --------------------------------
     // فریم اصلی
-    // --------------------------------
     if (name === 'mainFrame') {
         $('.frameInput')
             .closest('.wd-form-line')
@@ -22,9 +20,7 @@ export function itemDetailsBar(selectedItem) {
         $('.frameInput').val(data.profile);
         $('.glazingInput').val(data.glazing);
     }
-    // --------------------------------
     // فریم پنجره
-    // --------------------------------
     else if (name === 'windowFrame') {
         $('.windowSashInput')
             .closest('.wd-form-line')
@@ -49,9 +45,7 @@ export function itemDetailsBar(selectedItem) {
                 .val(data.lockType);
         }
     }
-    // --------------------------------
     // فریم در
-    // --------------------------------
     else if (name === 'doorFrame') {
         $('.doorSashInput')
             .closest('.wd-form-line')
@@ -76,9 +70,7 @@ export function itemDetailsBar(selectedItem) {
                 .val(data.lockType);
         }
     }
-    // --------------------------------
     // شیشه
-    // --------------------------------
     else if (name === 'flat') {
         $('.glassInput')
             .closest('.wd-form-line')
@@ -93,9 +85,7 @@ export function itemDetailsBar(selectedItem) {
         $('.glazingInput').val(data.glazing);
         $('.laceInput').val(data.lace);
     }
-    // --------------------------------
     // مولین
-    // --------------------------------
     else if (
         name === 'vMullian' ||
         name === 'hMullian'
@@ -105,9 +95,7 @@ export function itemDetailsBar(selectedItem) {
             .show();
         $('.mullianInput').val(data.profile);
     }
-    // --------------------------------
     // پانل
-    // --------------------------------
     else if (
         name === 'vPanel' ||
         name === 'hPanel'
@@ -117,9 +105,7 @@ export function itemDetailsBar(selectedItem) {
             .show();
         $('.panelInput').val(data.profile);
     }
-    // --------------------------------
     // اتصال
-    // --------------------------------
     else if (
         name === 'vCoupling' ||
         name === 'hCoupling'

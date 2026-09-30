@@ -166,252 +166,900 @@ export function initPaperToolEvents() {
                 }
                 let mXBarT_Text = parseInt(mXBarT.content.match(/\d+/)[0]);
                 let mYBarT_Text = parseInt(mYBarT.content.match(/\d+/)[0]);
-                Swal.fire({
-                    confirmButtonText: "تغییر",
-                    html:
-                        '<div class="wd-size-fields">' +
-                        '<div class="wd-size-field">' +
-                        '<label class="wd-form-label" for="mXBarT-input">عرض</label>' +
-                        '<input id="mXBarT-input" class="wd-input-box" type="number" value="' + mXBarT_Text + '">' +
-                        '</div>' +
-                        '<div class="wd-size-field">' +
-                        '<label class="wd-form-label" for="mYBarT-input">ارتفاع</label>' +
-                        '<input id="mYBarT-input" class="wd-input-box" type="number" value="' + mYBarT_Text + '">' +
-                        '</div>' +
-                        '</div>',
-                    preConfirm: function () {
-                        return new Promise(function (resolve) {
-                            resolve([
-                                $('#mXBarT-input').val(),
-                                $('#mYBarT-input').val()
-                            ])
-                        })
-                    },
-                    onOpen: function () {
-                        $('#mXBarT-input').focus();
-                        $('#mYBarT-input, #mXBarT-input').on('keypress', function (e) {
-                            if (e.which === 13) {
-                                e.preventDefault();
-                                Swal.clickConfirm();
-                            }
-                        });
-                    },
-                }).then((result) => {
-                    if (result.value) {
-                        reDrawMainFrame(section, result.value)
+                // حذف مودال قبلی
+                const oldModal = document.querySelector(".wd-edit-item-modal");
+                if (oldModal) {
+                    oldModal.remove();
+                }
+                // ایجاد مودال
+                const modal = document.createElement("div");
+                modal.className = "wd-edit-item-modal wd-single-field-modal";
+                modal.innerHTML = `
+    <div class="wd-edit-item-overlay"></div>
+    <div class="wd-edit-item-container">
+        <!-- Header -->
+        <header class="wd-right-brand">
+            <div class="wd-right-brand-inner">
+                <div class="wd-right-site-info-addedit">
+                    <strong class="wd-right-site-title">
+                        ویرایش ابعاد
+                    </strong>
+                    <button
+                        type="button"
+                        class="wd-selection-close wd-edit-item-close"
+                        aria-label="Close"
+                    >
+                        <i class="ti ti-x"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+        <!-- Body -->
+        <div class="wd-edit-item-body">
+            <!-- اطلاعات ابعاد -->
+            <div class="wd-edit-item-fields">
+                <!-- عرض -->
+                <div class="wd-edit-item-field">
+                    <label
+                        class="wd-form-label"
+                        for="editItemWidth"
+                    >
+                        عرض
+                    </label>
+                    <input
+                        type="number"
+                        id="editItemWidth"
+                        class="wd-input-box"
+                        value="${mXBarT_Text}"
+                        min="1"
+                    >
+                </div>
+                <!-- ارتفاع -->
+                <div class="wd-edit-item-field">
+                    <label
+                        class="wd-form-label"
+                        for="editItemHeight"
+                    >
+                        ارتفاع
+                    </label>
+                    <input
+                        type="number"
+                        id="editItemHeight"
+                        class="wd-input-box"
+                        value="${mYBarT_Text}"
+                        min="1"
+                    >
+                </div>
+            </div>
+            <!-- خطا -->
+            <div
+                class="wd-edit-item-error"
+                id="editItemError"
+            ></div>
+            <!-- عملیات -->
+            <div class="wd-edit-item-actions">
+                <button
+                    type="button"
+                    class="wd-right-confirm wd-edit-item-save"
+                >
+                    تغییر
+                </button>
+                <button
+                    type="button"
+                    class="wd-right-cancel wd-edit-item-cancel"
+                >
+                    لغو
+                </button>
+            </div>
+        </div>
+    </div>
+`;
+                document.body.appendChild(modal);
+                setTimeout(() => {
+                    modal.classList.add("show");
+                }, 10);
+                // ورودی‌ها
+                const widthInput =
+                    modal.querySelector("#editItemWidth");
+                const heightInput =
+                    modal.querySelector("#editItemHeight");
+                const errorBox =
+                    modal.querySelector("#editItemError");
+                // بستن مودال
+                function closeEditModal() {
+                    modal.classList.remove("show");
+                    setTimeout(() => {
+                        if (modal.parentNode) {
+                            modal.remove();
+                        }
+                    }, 200);
+                }
+                // تغییر
+                modal
+                    .querySelector(".wd-edit-item-save")
+                    .addEventListener("click", function () {
+                        const width =
+                            parseInt(widthInput.value);
+                        const height =
+                            parseInt(heightInput.value);
+                        if (!width || width < 1) {
+                            errorBox.textContent =
+                                "لطفاً عرض را وارد کنید.";
+                            widthInput.focus();
+                            return;
+                        }
+                        if (!height || height < 1) {
+                            errorBox.textContent =
+                                "لطفاً ارتفاع را وارد کنید.";
+                            heightInput.focus();
+                            return;
+                        }
+                        reDrawMainFrame(section, [
+                            width,
+                            height
+                        ]);
+                        closeEditModal();
+                    });
+                // لغو
+                modal
+                    .querySelector(".wd-edit-item-cancel")
+                    .addEventListener("click", function () {
+                        closeEditModal();
+                    });
+                // ضربدر
+                modal
+                    .querySelector(".wd-edit-item-close")
+                    .addEventListener("click", function () {
+                        closeEditModal();
+                    });
+                // کلیک روی پس‌زمینه
+                modal
+                    .querySelector(".wd-edit-item-overlay")
+                    .addEventListener("click", function () {
+                        closeEditModal();
+                    });
+                // پاک کردن خطا
+                widthInput.addEventListener("input", function () {
+                    errorBox.textContent = "";
+                });
+                heightInput.addEventListener("input", function () {
+                    errorBox.textContent = "";
+                });
+                // Enter برای ثبت
+                widthInput.addEventListener("keypress", function (e) {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        modal
+                            .querySelector(".wd-edit-item-save")
+                            .click();
                     }
                 });
+                heightInput.addEventListener("keypress", function (e) {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        modal
+                            .querySelector(".wd-edit-item-save")
+                            .click();
+                    }
+                });
+                // فوکوس
+                setTimeout(() => {
+                    widthInput.focus();
+                }, 200);
             } else if (state.selectedItem.name == "vMGLT") {
-                Swal.fire({
-                    confirmButtonText: "تغییر",
-                    html:
-                        '<div class="wd-size-fields">' +
-                        '<div class="wd-size-field">' +
-                        '<label class="wd-form-label" for="vMGLT-input">اندازه</label>' +
-                        '<input id="vMGLT-input" class="wd-input-box" type="number" value="' + vMGLT.content + '">' +
-                        '</div>' +
-                        '</div>',
-                    preConfirm: function () {
-                        return new Promise(function (resolve) {
-                            resolve(
-                                $('#vMGLT-input').val()
-                            )
-                        })
-                    },
-                    onOpen: function () {
-                        $('#vMGLT-input').focus();
-                        $('#vMGLT-input').on('keypress', function (e) {
-                            if (e.which === 13) {
-                                e.preventDefault();
-                                Swal.clickConfirm();
-                            }
-                        });
-                    },
-                }).then((result) => {
-                    if (result.value) {
+                const modal = document.createElement("div");
+                modal.className = "wd-edit-item-modal wd-single-field-modal";
+                modal.innerHTML = `
+                    <div class="wd-edit-item-overlay"></div>
+                    <div class="wd-edit-item-container">
+                        <header class="wd-right-brand">
+                            <div class="wd-right-brand-inner">
+                                <div class="wd-right-site-info-addedit">
+                                    <strong class="wd-right-site-title">
+                                        ویرایش اندازه
+                                    </strong>
+                                    <button
+                                        type="button"
+                                        class="wd-selection-close wd-edit-item-close"
+                                        aria-label="Close"
+                                    >
+                                        <i class="ti ti-x"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </header>
+                        <div class="wd-edit-item-body">
+                            <div class="wd-edit-item-fields">
+                                <div class="wd-edit-item-field">
+                                    <label
+                                        class="wd-form-label"
+                                        for="editItemSize"
+                                    >
+                                        اندازه
+                                    </label>
+                                    <input
+                                        type="number"
+                                        id="editItemSize"
+                                        class="wd-input-box"
+                                        value="${vMGLT.content}"
+                                        min="1"
+                                    >
+                                </div>
+                            </div>
+                            <div
+                                class="wd-edit-item-error"
+                                id="editItemError"
+                            ></div>
+                            <div class="wd-edit-item-actions">
+                                <button
+                                    type="button"
+                                    class="wd-right-confirm wd-edit-item-save"
+                                >
+                                    تغییر
+                                </button>
+                                <button
+                                    type="button"
+                                    class="wd-right-cancel wd-edit-item-cancel"
+                                >
+                                    لغو
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+                requestAnimationFrame(() => {
+                    modal.classList.add("show");
+                });
+                const sizeInput = modal.querySelector("#editItemSize");
+                const errorBox = modal.querySelector("#editItemError");
+                function closeEditModal() {
+                    modal.classList.remove("show");
+                    setTimeout(() => {
+                        if (modal.parentNode) {
+                            modal.remove();
+                        }
+                    }, 200);
+                }
+                modal
+                    .querySelector(".wd-edit-item-save")
+                    .addEventListener("click", function () {
+                        const value = Number(sizeInput.value);
+                        if (!value || value < 1) {
+                            errorBox.textContent =
+                                "لطفاً اندازه را وارد کنید.";
+                            sizeInput.focus();
+                            return;
+                        }
                         state.selectedItem = previousSelectedItem;
                         changeMullianPosition(
                             new state.paper.Point(
-                                Number(result.value),
+                                value,
                                 state.selectedItem.bounds.centerY
                             )
                         );
                         hideGLs();
+                        closeEditModal();
+                    });
+                modal
+                    .querySelector(".wd-edit-item-cancel")
+                    .addEventListener("click", closeEditModal);
+                modal
+                    .querySelector(".wd-edit-item-close")
+                    .addEventListener("click", closeEditModal);
+                modal
+                    .querySelector(".wd-edit-item-overlay")
+                    .addEventListener("click", closeEditModal);
+                sizeInput.addEventListener("input", function () {
+                    errorBox.textContent = "";
+                });
+                sizeInput.addEventListener("keydown", function (e) {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        modal
+                            .querySelector(".wd-edit-item-save")
+                            .click();
                     }
                 });
+                setTimeout(() => {
+                    sizeInput.focus();
+                }, 200);
             } else if (state.selectedItem.name == "vMGRT") {
-                Swal.fire({
-                    confirmButtonText: "تغییر",
-                    html:
-                        '<div class="wd-size-fields">' +
-                        '<div class="wd-size-field">' +
-                        '<label class="wd-form-label" for="vMGRT-input">اندازه</label>' +
-                        '<input id="vMGRT-input" class="wd-input-box" type="number" value="' + vMGRT.content + '">' +
-                        '</div>' +
-                        '</div>',
-                    preConfirm: function () {
-                        return new Promise(function (resolve) {
-                            resolve(
-                                $('#vMGRT-input').val()
-                            )
-                        })
-                    },
-                    onOpen: function () {
-                        $('#vMGRT-input').focus();
-                        $('#vMGRT-input').on('keypress', function (e) {
-                            if (e.which === 13) {
-                                e.preventDefault();
-                                Swal.clickConfirm();
-                            }
-                        });
-                    },
-                }).then((result) => {
-                    if (result.value) {
+                const modal = document.createElement("div");
+                modal.className = "wd-edit-item-modal wd-single-field-modal";
+                modal.innerHTML = `
+                    <div class="wd-edit-item-overlay"></div>
+                    <div class="wd-edit-item-container">
+                        <header class="wd-right-brand">
+                            <div class="wd-right-brand-inner">
+                                <div class="wd-right-site-info-addedit">
+                                    <strong class="wd-right-site-title">
+                                        ویرایش اندازه
+                                    </strong>
+                                    <button
+                                        type="button"
+                                        class="wd-selection-close wd-edit-item-close"
+                                        aria-label="Close"
+                                    >
+                                        <i class="ti ti-x"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </header>
+                        <div class="wd-edit-item-body">
+                            <div class="wd-edit-item-fields">
+                                <div class="wd-edit-item-field">
+                                    <label
+                                        class="wd-form-label"
+                                        for="editItemSize"
+                                    >
+                                        اندازه
+                                    </label>
+                                    <input
+                                        type="number"
+                                        id="editItemSize"
+                                        class="wd-input-box"
+                                        value="${vMGRT.content}"
+                                        min="1"
+                                    >
+                                </div>
+                            </div>
+                            <div
+                                class="wd-edit-item-error"
+                                id="editItemError"
+                            ></div>
+                            <div class="wd-edit-item-actions">
+                                <button
+                                    type="button"
+                                    class="wd-right-confirm wd-edit-item-save"
+                                >
+                                    تغییر
+                                </button>
+                                <button
+                                    type="button"
+                                    class="wd-right-cancel wd-edit-item-cancel"
+                                >
+                                    لغو
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+                requestAnimationFrame(() => {
+                    modal.classList.add("show");
+                });
+                const sizeInput = modal.querySelector("#editItemSize");
+                const errorBox = modal.querySelector("#editItemError");
+                function closeEditModal() {
+                    modal.classList.remove("show");
+                    setTimeout(() => {
+                        if (modal.parentNode) {
+                            modal.remove();
+                        }
+                    }, 200);
+                }
+                modal
+                    .querySelector(".wd-edit-item-save")
+                    .addEventListener("click", function () {
+                        const value = Number(sizeInput.value);
+                        if (!value || value < 1) {
+                            errorBox.textContent =
+                                "لطفاً اندازه را وارد کنید.";
+                            sizeInput.focus();
+                            return;
+                        }
                         state.selectedItem = previousSelectedItem;
-                        changeMullianPosition(new state.paper.Point((mainFrame.bounds.x + mainFrame.bounds.width - result.value), state.selectedItem.bounds.centerY));
+                        changeMullianPosition(
+                            new state.paper.Point(
+                                mainFrame.bounds.x +
+                                mainFrame.bounds.width -
+                                value,
+                                state.selectedItem.bounds.centerY
+                            )
+                        );
                         hideGLs();
+                        closeEditModal();
+                    });
+                modal
+                    .querySelector(".wd-edit-item-cancel")
+                    .addEventListener("click", closeEditModal);
+                modal
+                    .querySelector(".wd-edit-item-close")
+                    .addEventListener("click", closeEditModal);
+                modal
+                    .querySelector(".wd-edit-item-overlay")
+                    .addEventListener("click", closeEditModal);
+                sizeInput.addEventListener("input", function () {
+                    errorBox.textContent = "";
+                });
+                sizeInput.addEventListener("keydown", function (e) {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        modal
+                            .querySelector(".wd-edit-item-save")
+                            .click();
                     }
                 });
+                setTimeout(() => {
+                    sizeInput.focus();
+                }, 200);
             } else if (state.selectedItem.name == "hMGTT") {
-                Swal.fire({
-                    confirmButtonText: "تغییر",
-                    html:
-                        '<div class="wd-size-fields">' +
-                        '<div class="wd-size-field">' +
-                        '<label class="wd-form-label" for="hMGTT-input">اندازه</label>' +
-                        '<input id="hMGTT-input" class="wd-input-box" type="number" value="' + hMGTT.content + '">' +
-                        '</div>' +
-                        '</div>',
-                    preConfirm: function () {
-                        return new Promise(function (resolve) {
-                            resolve(
-                                $('#hMGTT-input').val()
-                            )
-                        })
-                    },
-                    onOpen: function () {
-                        $('#hMGTT-input').focus();
-                        $('#hMGTT-input').on('keypress', function (e) {
-                            if (e.which === 13) {
-                                e.preventDefault();
-                                Swal.clickConfirm();
-                            }
-                        });
-                    },
-                }).then((result) => {
-                    if (result.value) {
+                const modal = document.createElement("div");
+                modal.className = "wd-edit-item-modal wd-single-field-modal";
+                modal.innerHTML = `
+                    <div class="wd-edit-item-overlay"></div>
+                    <div class="wd-edit-item-container">
+                        <header class="wd-right-brand">
+                            <div class="wd-right-brand-inner">
+                                <div class="wd-right-site-info-addedit">
+                                    <strong class="wd-right-site-title">
+                                        ویرایش اندازه
+                                    </strong>
+                                    <button
+                                        type="button"
+                                        class="wd-selection-close wd-edit-item-close"
+                                        aria-label="Close"
+                                    >
+                                        <i class="ti ti-x"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </header>
+                        <div class="wd-edit-item-body">
+                            <div class="wd-edit-item-fields">
+                                <div class="wd-edit-item-field">
+                                    <label
+                                        class="wd-form-label"
+                                        for="editItemSize"
+                                    >
+                                        اندازه
+                                    </label>
+                                    <input
+                                        type="number"
+                                        id="editItemSize"
+                                        class="wd-input-box"
+                                        value="${hMGTT.content}"
+                                        min="1"
+                                    >
+                                </div>
+                            </div>
+                            <div
+                                class="wd-edit-item-error"
+                                id="editItemError"
+                            ></div>
+                            <div class="wd-edit-item-actions">
+                                <button
+                                    type="button"
+                                    class="wd-right-confirm wd-edit-item-save"
+                                >
+                                    تغییر
+                                </button>
+                                <button
+                                    type="button"
+                                    class="wd-right-cancel wd-edit-item-cancel"
+                                >
+                                    لغو
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+                requestAnimationFrame(() => {
+                    modal.classList.add("show");
+                });
+                const sizeInput = modal.querySelector("#editItemSize");
+                const errorBox = modal.querySelector("#editItemError");
+                function closeEditModal() {
+                    modal.classList.remove("show");
+                    setTimeout(() => {
+                        if (modal.parentNode) {
+                            modal.remove();
+                        }
+                    }, 200);
+                }
+                modal
+                    .querySelector(".wd-edit-item-save")
+                    .addEventListener("click", function () {
+                        const value = Number(sizeInput.value);
+                        if (!value || value < 1) {
+                            errorBox.textContent =
+                                "لطفاً اندازه را وارد کنید.";
+                            sizeInput.focus();
+                            return;
+                        }
                         state.selectedItem = previousSelectedItem;
-                        changeMullianPosition(new state.paper.Point(state.selectedItem.bounds.centerX, Number(result.value)));
+                        changeMullianPosition(
+                            new state.paper.Point(
+                                state.selectedItem.bounds.centerX,
+                                value
+                            )
+                        );
                         hideGLs();
+                        closeEditModal();
+                    });
+                modal
+                    .querySelector(".wd-edit-item-cancel")
+                    .addEventListener("click", closeEditModal);
+                modal
+                    .querySelector(".wd-edit-item-close")
+                    .addEventListener("click", closeEditModal);
+                modal
+                    .querySelector(".wd-edit-item-overlay")
+                    .addEventListener("click", closeEditModal);
+                sizeInput.addEventListener("input", function () {
+                    errorBox.textContent = "";
+                });
+                sizeInput.addEventListener("keydown", function (e) {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        modal
+                            .querySelector(".wd-edit-item-save")
+                            .click();
                     }
                 });
+                setTimeout(() => {
+                    sizeInput.focus();
+                }, 200);
             } else if (state.selectedItem.name == "hMGBT") {
-                Swal.fire({
-                    confirmButtonText: "تغییر",
-                    html:
-                        '<div class="wd-size-fields">' +
-                        '<div class="wd-size-field">' +
-                        '<label class="wd-form-label" for="hMGBT-input">اندازه</label>' +
-                        '<input id="hMGBT-input" class="wd-input-box" type="number" value="' + hMGBT.content + '">' +
-                        '</div>' +
-                        '</div>',
-                    preConfirm: function () {
-                        return new Promise(function (resolve) {
-                            resolve(
-                                $('#hMGBT-input').val()
-                            )
-                        })
-                    },
-                    onOpen: function () {
-                        $('#hMGBT-input').focus();
-                        $('#hMGBT-input').on('keypress', function (e) {
-                            if (e.which === 13) {
-                                e.preventDefault();
-                                Swal.clickConfirm();
-                            }
-                        });
-                    },
-                }).then((result) => {
-                    if (result.value) {
+                const modal = document.createElement("div");
+                modal.className = "wd-edit-item-modal wd-single-field-modal";
+                modal.innerHTML = `
+                    <div class="wd-edit-item-overlay"></div>
+                    <div class="wd-edit-item-container">
+                        <header class="wd-right-brand">
+                            <div class="wd-right-brand-inner">
+                                <div class="wd-right-site-info-addedit">
+                                    <strong class="wd-right-site-title">
+                                        ویرایش اندازه
+                                    </strong>
+                                    <button
+                                        type="button"
+                                        class="wd-selection-close wd-edit-item-close"
+                                        aria-label="Close"
+                                    >
+                                        <i class="ti ti-x"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </header>
+                        <div class="wd-edit-item-body">
+                            <div class="wd-edit-item-fields">
+                                <div class="wd-edit-item-field">
+                                    <label
+                                        class="wd-form-label"
+                                        for="editItemSize"
+                                    >
+                                        اندازه
+                                    </label>
+                                    <input
+                                        type="number"
+                                        id="editItemSize"
+                                        class="wd-input-box"
+                                        value="${hMGBT.content}"
+                                        min="1"
+                                    >
+                                </div>
+                            </div>
+                            <div
+                                class="wd-edit-item-error"
+                                id="editItemError"
+                            ></div>
+                            <div class="wd-edit-item-actions">
+                                <button
+                                    type="button"
+                                    class="wd-right-confirm wd-edit-item-save"
+                                >
+                                    تغییر
+                                </button>
+                                <button
+                                    type="button"
+                                    class="wd-right-cancel wd-edit-item-cancel"
+                                >
+                                    لغو
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+                requestAnimationFrame(() => {
+                    modal.classList.add("show");
+                });
+                const sizeInput = modal.querySelector("#editItemSize");
+                const errorBox = modal.querySelector("#editItemError");
+                function closeEditModal() {
+                    modal.classList.remove("show");
+                    setTimeout(() => {
+                        if (modal.parentNode) {
+                            modal.remove();
+                        }
+                    }, 200);
+                }
+                modal
+                    .querySelector(".wd-edit-item-save")
+                    .addEventListener("click", function () {
+                        const value = Number(sizeInput.value);
+                        if (!value || value < 1) {
+                            errorBox.textContent =
+                                "لطفاً اندازه را وارد کنید.";
+                            sizeInput.focus();
+                            return;
+                        }
                         state.selectedItem = previousSelectedItem;
-                        changeMullianPosition(new state.paper.Point((state.selectedItem.bounds.centerX, mainFrame.bounds.y + mainFrame.bounds.height - result.value)));
+                        changeMullianPosition(
+                            new state.paper.Point(
+                                state.selectedItem.bounds.centerX,
+                                mainFrame.bounds.y +
+                                mainFrame.bounds.height -
+                                value
+                            )
+                        );
                         hideGLs();
+                        closeEditModal();
+                    });
+                modal
+                    .querySelector(".wd-edit-item-cancel")
+                    .addEventListener("click", closeEditModal);
+                modal
+                    .querySelector(".wd-edit-item-close")
+                    .addEventListener("click", closeEditModal);
+                modal
+                    .querySelector(".wd-edit-item-overlay")
+                    .addEventListener("click", closeEditModal);
+                sizeInput.addEventListener("input", function () {
+                    errorBox.textContent = "";
+                });
+                sizeInput.addEventListener("keydown", function (e) {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        modal
+                            .querySelector(".wd-edit-item-save")
+                            .click();
                     }
                 });
+                setTimeout(() => {
+                    sizeInput.focus();
+                }, 200);
             } else if (state.selectedItem.name == "xBarT") {
-                Swal.fire({
-                    confirmButtonText: "تغییر",
-                    html:
-                        '<div class="wd-size-fields">' +
-                        '<div class="wd-size-field">' +
-                        '<label class="wd-form-label" for="xBarT-input">اندازه</label>' +
-                        '<input id="xBarT-input" class="wd-input-box" type="number" value="' + state.selectedItem.content + '">' +
-                        '</div>' +
-                        '</div>',
-                    preConfirm: function () {
-                        return new Promise(function (resolve) {
-                            resolve(
-                                $('#xBarT-input').val()
-                            )
-                        })
-                    },
-                    onOpen: function () {
-                        $('#xBarT-input').focus();
-                        $('#xBarT-input').on('keypress', function (e) {
-                            if (e.which === 13) {
-                                e.preventDefault();
-                                Swal.clickConfirm();
-                            }
-                        });
-                    },
-                }).then((result) => {
-                    if (result.value) {
+                const modal = document.createElement("div");
+                modal.className = "wd-edit-item-modal wd-single-field-modal";
+                modal.innerHTML = `
+                    <div class="wd-edit-item-overlay"></div>
+                    <div class="wd-edit-item-container">
+                        <header class="wd-right-brand">
+                            <div class="wd-right-brand-inner">
+                                <div class="wd-right-site-info-addedit">
+                                    <strong class="wd-right-site-title">
+                                        ویرایش اندازه
+                                    </strong>
+                                    <button
+                                        type="button"
+                                        class="wd-selection-close wd-edit-item-close"
+                                        aria-label="Close"
+                                    >
+                                        <i class="ti ti-x"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </header>
+                        <div class="wd-edit-item-body">
+                            <div class="wd-edit-item-fields">
+                                <div class="wd-edit-item-field">
+                                    <label
+                                        class="wd-form-label"
+                                        for="editItemSize"
+                                    >
+                                        اندازه
+                                    </label>
+                                    <input
+                                        type="number"
+                                        id="editItemSize"
+                                        class="wd-input-box"
+                                        value="${state.selectedItem.content}"
+                                        min="1"
+                                    >
+                                </div>
+                            </div>
+                            <div
+                                class="wd-edit-item-error"
+                                id="editItemError"
+                            ></div>
+                            <div class="wd-edit-item-actions">
+                                <button
+                                    type="button"
+                                    class="wd-right-confirm wd-edit-item-save"
+                                >
+                                    تغییر
+                                </button>
+                                <button
+                                    type="button"
+                                    class="wd-right-cancel wd-edit-item-cancel"
+                                >
+                                    لغو
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+                requestAnimationFrame(() => {
+                    modal.classList.add("show");
+                });
+                const sizeInput = modal.querySelector("#editItemSize");
+                const errorBox = modal.querySelector("#editItemError");
+                function closeEditModal() {
+                    modal.classList.remove("show");
+                    setTimeout(() => {
+                        if (modal.parentNode) {
+                            modal.remove();
+                        }
+                    }, 200);
+                }
+                modal
+                    .querySelector(".wd-edit-item-save")
+                    .addEventListener("click", function () {
+                        const value = Number(sizeInput.value);
+                        if (!value || value < 1) {
+                            errorBox.textContent =
+                                "لطفاً اندازه را وارد کنید.";
+                            sizeInput.focus();
+                            return;
+                        }
                         changeMullianPositionByNumber({
                             from: state.selectedItem.data.position,
-                            to: state.selectedItem.data.position + (result.value - state.selectedItem.content),
+                            to:
+                                state.selectedItem.data.position +
+                                (value - state.selectedItem.content),
                             label: state.selectedItem.content,
                             mullianType: "vMullian",
                             sectionID: state.selectedItem.data.section
                         });
+                        closeEditModal();
+                    });
+                modal
+                    .querySelector(".wd-edit-item-cancel")
+                    .addEventListener("click", closeEditModal);
+                modal
+                    .querySelector(".wd-edit-item-close")
+                    .addEventListener("click", closeEditModal);
+                modal
+                    .querySelector(".wd-edit-item-overlay")
+                    .addEventListener("click", closeEditModal);
+                sizeInput.addEventListener("input", function () {
+                    errorBox.textContent = "";
+                });
+                sizeInput.addEventListener("keydown", function (e) {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        modal
+                            .querySelector(".wd-edit-item-save")
+                            .click();
                     }
                 });
+                setTimeout(() => {
+                    sizeInput.focus();
+                }, 200);
             } else if (state.selectedItem.name == "yBarT") {
-                Swal.fire({
-                    confirmButtonText: "تغییر",
-                    html:
-                        '<div class="wd-size-fields">' +
-                        '<div class="wd-size-field">' +
-                        '<label class="wd-form-label" for="yBarT-input">اندازه</label>' +
-                        '<input id="yBarT-input" class="wd-input-box" type="number" value="' + state.selectedItem.content + '">' +
-                        '</div>' +
-                        '</div>',
-                    preConfirm: function () {
-                        return new Promise(function (resolve) {
-                            resolve(
-                                $('#yBarT-input').val()
-                            )
-                        })
-                    },
-                    onOpen: function () {
-                        $('#yBarT-input').focus();
-                        $('#yBarT-input').on('keypress', function (e) {
-                            if (e.which === 13) {
-                                e.preventDefault();
-                                Swal.clickConfirm();
-                            }
-                        });
-                    },
-                }).then((result) => {
-                    if (result.value) {
+                const modal = document.createElement("div");
+                modal.className = "wd-edit-item-modal wd-single-field-modal";
+                modal.innerHTML = `
+                    <div class="wd-edit-item-overlay"></div>
+                    <div class="wd-edit-item-container">
+                        <header class="wd-right-brand">
+                            <div class="wd-right-brand-inner">
+                                <div class="wd-right-site-info-addedit">
+                                    <strong class="wd-right-site-title">
+                                        ویرایش اندازه
+                                    </strong>
+                                    <button
+                                        type="button"
+                                        class="wd-selection-close wd-edit-item-close"
+                                        aria-label="Close"
+                                    >
+                                        <i class="ti ti-x"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </header>
+                        <div class="wd-edit-item-body">
+                            <div class="wd-edit-item-fields">
+                                <div class="wd-edit-item-field">
+                                    <label
+                                        class="wd-form-label"
+                                        for="editItemSize"
+                                    >
+                                        اندازه
+                                    </label>
+                                    <input
+                                        type="number"
+                                        id="editItemSize"
+                                        class="wd-input-box"
+                                        value="${state.selectedItem.content}"
+                                        min="1"
+                                    >
+                                </div>
+                            </div>
+                            <div
+                                class="wd-edit-item-error"
+                                id="editItemError"
+                            ></div>
+                            <div class="wd-edit-item-actions">
+                                <button
+                                    type="button"
+                                    class="wd-right-confirm wd-edit-item-save"
+                                >
+                                    تغییر
+                                </button>
+                                <button
+                                    type="button"
+                                    class="wd-right-cancel wd-edit-item-cancel"
+                                >
+                                    لغو
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+                requestAnimationFrame(() => {
+                    modal.classList.add("show");
+                });
+                const sizeInput = modal.querySelector("#editItemSize");
+                const errorBox = modal.querySelector("#editItemError");
+                function closeEditModal() {
+                    modal.classList.remove("show");
+                    setTimeout(() => {
+                        if (modal.parentNode) {
+                            modal.remove();
+                        }
+                    }, 200);
+                }
+                modal
+                    .querySelector(".wd-edit-item-save")
+                    .addEventListener("click", function () {
+                        const value = Number(sizeInput.value);
+                        if (!value || value < 1) {
+                            errorBox.textContent =
+                                "لطفاً اندازه را وارد کنید.";
+                            sizeInput.focus();
+                            return;
+                        }
                         changeMullianPositionByNumber({
                             from: state.selectedItem.data.position,
-                            to: state.selectedItem.data.position + (result.value - state.selectedItem.content),
+                            to:
+                                state.selectedItem.data.position +
+                                (value - state.selectedItem.content),
                             label: state.selectedItem.content,
                             mullianType: "hMullian",
                             sectionID: state.selectedItem.data.section
                         });
+                        closeEditModal();
+                    });
+                modal
+                    .querySelector(".wd-edit-item-cancel")
+                    .addEventListener("click", closeEditModal);
+                modal
+                    .querySelector(".wd-edit-item-close")
+                    .addEventListener("click", closeEditModal);
+                modal
+                    .querySelector(".wd-edit-item-overlay")
+                    .addEventListener("click", closeEditModal);
+                sizeInput.addEventListener("input", function () {
+                    errorBox.textContent = "";
+                });
+                sizeInput.addEventListener("keydown", function (e) {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        modal
+                            .querySelector(".wd-edit-item-save")
+                            .click();
                     }
                 });
+                setTimeout(() => {
+                    sizeInput.focus();
+                }, 200);
             }
             //show details on itemDetails
             itemDetailsBar(state.selectedItem);
@@ -599,7 +1247,7 @@ export function initPaperToolEvents() {
                 modal.className = "wd-edit-item-modal";
                 modal.innerHTML = `
     <div class="wd-edit-item-overlay"></div>
-    <div class="wd-edit-item-container">
+    <div class="wd-edit-item-container" >
         <!-- Header -->
         <header class="wd-right-brand">
             <div class="wd-right-brand-inner">
@@ -708,7 +1356,6 @@ export function initPaperToolEvents() {
     </div>
 `;
                 document.body.appendChild(modal);
-
                 setTimeout(() => {
                     modal.classList.add("show");
                 }, 10);

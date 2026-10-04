@@ -159,19 +159,12 @@ async function paperJSONToPNGDataURL(paperJSON) {
             tempScope.project.clear();
             return null;
         }
-        /*
-         * محدوده واقعی تمام آیتم‌های طراحی
-         */
         const bounds =
             activeLayer.bounds;
         console.log(
             "PDF DESIGN BOUNDS:",
             bounds
         );
-        /*
-         * فضای اضافه برای خطوط
-         * عرض و ارتفاع و اعداد
-         */
         const padding = 120;
         const offsetX =
             -bounds.x +
@@ -179,11 +172,6 @@ async function paperJSONToPNGDataURL(paperJSON) {
         const offsetY =
             -bounds.y +
             padding;
-        /*
-         * کل طراحی را جابه‌جا می‌کنیم
-         * تا هیچ قسمت از dimensionها
-         * از canvas بیرون نباشد
-         */
         activeLayer.translate(
             new tempScope.Point(
                 offsetX,
@@ -191,9 +179,6 @@ async function paperJSONToPNGDataURL(paperJSON) {
             )
         );
         tempScope.view.update();
-        /*
-         * بعد از جابه‌جایی، محدوده جدید
-         */
         const finalBounds =
             activeLayer.bounds;
         const contentWidth =
@@ -206,10 +191,6 @@ async function paperJSONToPNGDataURL(paperJSON) {
                 finalBounds.height +
                 padding
             );
-        /*
-         * اندازه canvas بر اساس
-         * کل محتوا
-         */
         tempCanvas.width =
             Math.max(
                 1000,
@@ -220,11 +201,6 @@ async function paperJSONToPNGDataURL(paperJSON) {
                 1000,
                 contentHeight
             );
-        /*
-         * تغییر اندازه Canvas باعث
-         * reset شدن Paper View می‌شود،
-         * بنابراین دوباره setup می‌کنیم.
-         */
         tempScope.view.viewSize =
             new tempScope.Size(
                 tempCanvas.width,

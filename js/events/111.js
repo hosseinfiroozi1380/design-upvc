@@ -5,12 +5,6 @@ import { showGLs } from "../utils/showGLs.js";
 import { hideGLs } from "../utils/hideGLs.js";
 import { recuringSelectItem } from "../utils/recuringSelectItem.js";
 import { cancelAll } from "../utils/cancelAll.js";
-import { itemDetailsBar } from "../utils/itemDetailsBar.js";
-import { round2decimal } from "../utils/round2decimal.js";
-import { rebuildAccessoryMenu } from "../drawing/rebuildAccessoryMenu.js";
-import { reDrawMainFrame } from "../drawing/reDrawMainFrame.js";
-import { changeMullianPositionByNumber } from "../items/changeMullianPositionByNumber.js";
-import { setItemProfileName } from "../utils/setItemProfileName.js";
 import {
  changeMullianPosition
 } from "../items/changeMullianPosition.js";
@@ -22,6 +16,7 @@ import {
  addNewItem
 } from "../items/addNewItem.js";
 import { showMessage } from "../utils/showMessage.js";
+
 export function initPaperToolEvents() {
  console.log("INIT PAPER TOOL EVENTS");
  console.log({
@@ -51,6 +46,7 @@ export function initPaperToolEvents() {
   if (!state.paper) {
    return;
   }
+
   state.paper.project.getItems({
    match: function (item) {
     return (
@@ -63,6 +59,7 @@ export function initPaperToolEvents() {
    item.fillColor = item.data.originalFillColor;
    delete item.data.originalFillColor;
   });
+
   if (
    state.selectedItem &&
    state.selectedItem.data &&
@@ -70,13 +67,16 @@ export function initPaperToolEvents() {
   ) {
    state.selectedItem.fillColor =
     state.selectedItem.data.originalFillColor;
+
    delete state.selectedItem.data.originalFillColor;
   }
  }
+
  function applySelectedItemAppearance() {
   if (!state.selectedItem) {
    return;
   }
+
   if (
    [
     "mainFrame",
@@ -90,6 +90,7 @@ export function initPaperToolEvents() {
   ) {
    state.selectedItem.data.originalFillColor =
     state.selectedItem.fillColor;
+
    state.selectedItem.fillColor =
     new state.paper.Color("#eeeeee");
   }
@@ -1136,7 +1137,9 @@ export function initPaperToolEvents() {
    itemDetailsBar(state.selectedItem);
    setItemProfileName();
   }
+
   // اگر روی قسمت خالی Canvas کلیک شده باشد
+
   else {
    state.paper.project.deselectAll();
    state.paper.project.activeLayer.selected = false;
@@ -1153,7 +1156,9 @@ export function initPaperToolEvents() {
    'left': 'auto',
    'top': 'auto'
   });
+
   // تغییر موقعیت Mullian
+
   if (state.changeMullianPositionFlag) {
    state.changeMullianPositionFlag = false;
    changeMullianPosition(
@@ -1170,7 +1175,9 @@ export function initPaperToolEvents() {
    );
    hideGLs();
   }
+
   // تغییر موقعیت Window / Door / Panel
+
   else if (
    state.changeWindowDoorPanelPositionFlag
   ) {
@@ -1189,7 +1196,9 @@ export function initPaperToolEvents() {
    );
    hideGLs();
   }
+
   // اضافه کردن آیتم جدید
+
   else if (
    state.waitingToAddItemFlag
   ) {
@@ -1212,7 +1221,9 @@ export function initPaperToolEvents() {
    hideItemConfigOptions();
    state.selectedItem = false;
   }
+
   // پایان Drag
+
   else if (state.tryingToDrag) {
    state.tryingToDrag = false;
    hideGLs();
@@ -1244,7 +1255,9 @@ export function initPaperToolEvents() {
    event.downPoint.getDistance(
     event.point
    );
+
   // Drag کردن Mullian
+
   if (
    state.selectedItem &&
    !state.deleteMode &&
@@ -1263,7 +1276,9 @@ export function initPaperToolEvents() {
     state.tryingToDrag = false;
    }
   }
+
   // Drag کردن Window / Door / Panel
+
   else if (
    state.selectedItem &&
    !state.deleteMode &&
@@ -1286,7 +1301,9 @@ export function initPaperToolEvents() {
     state.tryingToDrag = false;
    }
   }
+
   // حرکت Canvas
+
   else {
    state.paper.view.center =
     event.downPoint

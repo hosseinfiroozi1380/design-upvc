@@ -30,6 +30,38 @@ export function drawFirstShape(formData, redraw = false, mainFrameData = false, 
         $('#profile_color option[value="' + formData.profile_color + '"]').data('hex');
     state.unitData.accessory_id = formData.accessory_id;
     state.unitData.glass_id = formData.glass_id;
+    state.unitData.frame_id =
+        $(".frameInput").val();
+
+    state.unitData.door_sash_id =
+        $(".doorSashInput").val();
+
+    state.unitData.window_sash_id =
+        $(".windowSashInput").val();
+
+    state.unitData.panel_id =
+        $(".panelInput").val();
+
+    state.unitData.mullian_id =
+        $(".mullianInput").val();
+
+    state.unitData.accessory_type_id =
+        $(".accessoryTypeInput").val();
+
+    state.unitData.lace_id =
+        $(".laceInput").val();
+
+    state.unitData.glazing_id =
+        $(".glazingInput").val();
+
+    state.unitData.coupling_id =
+        $(".couplingInput").val();
+
+    state.unitData.enterlock_id =
+        $(".enterlockInput").val();
+
+    state.unitData.lock_type =
+        $(".lockTypeInput").val();
     state.unitData.system =
         formData.system ??
         $('#profile_id option[value="' + formData.profile_id + '"]').data('system');
@@ -337,9 +369,7 @@ export function drawFirstShape(formData, redraw = false, mainFrameData = false, 
     }
     if (itemType == "half_circle_reverse") {
         const radius = itemWidth / 2;
-    
         tmpShape = new state.paper.Path();
-    
         // بالا راست
         tmpShape.moveTo(
             new state.paper.Point(
@@ -347,7 +377,6 @@ export function drawFirstShape(formData, redraw = false, mainFrameData = false, 
                 startY + radius
             )
         );
-    
         // بالا چپ
         tmpShape.lineTo(
             new state.paper.Point(
@@ -355,7 +384,6 @@ export function drawFirstShape(formData, redraw = false, mainFrameData = false, 
                 startY + radius
             )
         );
-    
         // قوس نیم‌دایره به سمت پایین
         tmpShape.arcTo(
             new state.paper.Point(
@@ -367,7 +395,6 @@ export function drawFirstShape(formData, redraw = false, mainFrameData = false, 
                 startY + radius
             )
         );
-    
         tmpShape.closed = true;
     }
     if (itemType == "quarter_circle_left") {
@@ -573,19 +600,31 @@ export function drawFirstShape(formData, redraw = false, mainFrameData = false, 
     console.log("itemWidth:", itemWidth);
     console.log("itemHeight:", itemHeight);
     console.log("========================================");
+    if (state.mainFrame && state.mainFrame.parent) {
+        state.mainFrame.remove();
+    }
     buildFrame(
         tmpShape,
         false,
         mainFrameData
     );
+    if (state.mainSection) {
+        const mainFrames =
+            state.mainSection.getItems({
+                name: "mainFrame"
+            });
+        if (mainFrames.length > 1) {
+            for (let i = 0; i < mainFrames.length - 1; i++) {
+                mainFrames[i].remove();
+            }
+            state.mainFrame =
+                mainFrames[mainFrames.length - 1];
+        }
+    }
     loadLayerList();
-    console.log(
-        "AFTER BUILD FRAME",
-        state.paper.project.activeLayer.children.length,
-        state.mainFrame
-    );
     $('.closeModal').trigger('click');
     if (!redraw) {
+        showMessage("فرم جدید با موفقیت ایجاد شد.");
         filterAutomateCreationBtns();
     } else {
         enableSave();

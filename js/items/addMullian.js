@@ -63,14 +63,6 @@ export function addMullian(addNewItemType, flatToAdd, toAddPoint = false, toAddG
     let mullian = flatToAdd.intersect(tempMullian);
     mullian.strokeColor = state.strokeColor;
     mullian.fillColor = state.frameColor;
-    let tween = mullian.tweenTo({
-        fillColor: state.tweenFillColor
-    }, 250);
-    tween.then(function () {
-        mullian.tweenTo({
-            fillColor: state.frameColor
-        }, 250);
-    });
     // mullian.name = mullianType;
     mullian.name = addNewItemType;
     setDefaultData(mullian, 'mullian');

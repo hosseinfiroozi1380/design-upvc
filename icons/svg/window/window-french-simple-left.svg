@@ -1,10 +1,17 @@
-<svg class="icon-3d" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
-  <g>
-    <path d="M30,30H0V0h30V30z M1,29H29V1H1V29z"/>
-    <path d="M4,4H14V26H4V4z M4.9,4.9V25.1H13.1V4.9H4.9z"/>
-    <path d="M16,4H26V26H16V4z M16.9,4.9V25.1H25.1V4.9H16.9z"/>
-    <path d="M14.2,15L1,1" fill="none" stroke="black" stroke-width="0.9"/>
-    <path d="M14.2,15L1,29" fill="none" stroke="black" stroke-width="0.9"/>
-    <rect x="13.8" y="10.95" width="2.4" height="8.1" rx="0.5"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="60" height="60" aria-label="Preview double mullion left">
+  <rect x="10" y="10" width="180" height="180" fill="white" stroke="#000" stroke-width="0.8"/>
+  <rect x="20" y="20" width="160" height="160" fill="#8acde8" stroke="#000" stroke-width="0.8"/>
+  <rect x="88" y="10" width="12" height="180" fill="white" stroke="#000" stroke-width="0.8"/>
+  <rect x="100" y="10" width="12" height="180" fill="white" stroke="#000" stroke-width="0.8"/>
+  <rect x="91" y="82" width="6" height="36" rx="2" fill="#555"/>
+  <rect x="180" y="25" width="8" height="20" rx="2" fill="#555"/>
+  <rect x="180" y="155" width="8" height="20" rx="2" fill="#555"/>
+  <rect x="12" y="25" width="8" height="20" rx="2" fill="#555"/>
+  <rect x="12" y="155" width="8" height="20" rx="2" fill="#555"/>
+  <path d="M10 10 L20 20
+           M190 10 L180 20
+           M10 190 L20 180
+           M190 190 L180 180" fill="none" stroke="#000" stroke-width="0.8"/>
+  <path d="M20 20 L88 100
+           M20 180 L88 100" fill="none" stroke="#0611dd" stroke-width="1.2"/>
 </svg>

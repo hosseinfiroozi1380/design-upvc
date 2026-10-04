@@ -1,11 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
-  <g transform="scale(-1,1) translate(-30,0)">
-    <rect x="25.6" y="11" width="3.6" height="8.1" />
-    <path d="M30,30H0V0h30V30z M1,29H29V1H1V29z" />
-    <path d="M26.5,25.9H4V3.7h22.5V25.9z M4.9,25h20.8V4.6H4.9V25z" />
-    <path d="M15,5 L25.5,15 L15,25.5 L4.5,15 Z"
-          fill="none"
-          stroke="black"
-          stroke-width="1" />
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="60" height="60" aria-label="Preview diamond left">
+  <rect x="10" y="10" width="180" height="180" fill="white" stroke="#000" stroke-width="0.8"/>
+  <rect x="20" y="20" width="160" height="160" fill="#8acde8" stroke="#000" stroke-width="0.8"/>
+  <rect x="10" y="80" width="14" height="40" fill="#555"/>
+  <path d="M10 10 L20 20
+           M190 10 L180 20
+           M10 190 L20 180
+           M190 190 L180 180" fill="none" stroke="#000" stroke-width="0.8"/>
+  <polygon points="100,35 165,100 100,165 35,100" fill="none" stroke="#0611dd" stroke-width="1"/>
 </svg>

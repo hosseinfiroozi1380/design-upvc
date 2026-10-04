@@ -150,17 +150,6 @@ function buildWindowGeometry(flat, overlap, frameSize, data) {
         frame
     };
 }
-// افکت ساخت فریم
-function animateWindowFrame(frame) {
-    const animation = frame.tweenTo({
-        fillColor: state.tweenFillColor
-    }, 250);
-    animation.then(() => {
-        frame.tweenTo({
-            fillColor: state.frameColor
-        }, 250);
-    });
-}
 // خطوط برش فریم
 function createFrameCutLines(frame) {
     const children = frame.children;
@@ -336,7 +325,6 @@ function createNormalWindow(
         showMessage("ساخت پنجره امکان پذیر نبود");
         return false;
     }
-    animateWindowFrame(geometry.frame);
     createFrameCutLines(geometry.frame);
     const group = createWindowGroup(
         type,

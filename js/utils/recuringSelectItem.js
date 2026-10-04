@@ -6,7 +6,6 @@ export function recuringSelectItem(group, point) {
         ["mainFrame", "vPanel", "hPanel"]
             .includes(group.name)
     ) {
-        group.selected = true;
         state.selectedItem = group;
     } else {
         for (
@@ -27,30 +26,22 @@ export function recuringSelectItem(group, point) {
                         "hPanel"
                     ].includes(item.name)
                 ) {
-                    item.selected = true;
                     state.selectedItem = item;
                     break;
                 } else {
                     if (item.hasChildren()) {
-                        recuringSelectItem(item, point);
+                        recuringSelectItem(
+                            item,
+                            point
+                        );
+                        if (state.selectedItem) {
+                            break;
+                        }
                     } else {
-                        // item.selected = true;
-                        // state.selectedItem = item;
-                        // if (
-                        //     [
-                        //         "vMullian",
-                        //         "hMullian"
-                        //     ].includes(state.selectedItem.name)
-                        // ) {
-                        //     state.previousSelectedItem =
-                        //         state.selectedItem;
-                        // }
-                        // break;
-
-                        item.selected = true;
                         state.selectedItem = item;
                         if (
-                            ["vMullian", "hMullian"].includes(item.name)
+                            ["vMullian", "hMullian"]
+                                .includes(item.name)
                         ) {
                             state.previousSelectedItem = item;
                         }

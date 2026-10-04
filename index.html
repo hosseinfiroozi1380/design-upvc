@@ -1,42 +1,32 @@
 <!doctype html>
 <html lang="fa-IR" dir="rtl">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
   <title>عایق فیروز | طراحی درب و پنجره</title>
-
   <!-- لوگوی سایت در تب مرورگر -->
   <link rel="icon" type="image/svg+xml" href="./icons/favicon.svg" />
-
+  <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.44.0/tabler-icons.min.css" />
   <link rel="stylesheet" href="./css/style.css" />
   <link rel="stylesheet" href="./css/sweetalert2.css" />
   <script src="./js/script.js" defer></script>
   <!-- Libraries -->
-  <script src="./js/lib/jquery.min.js"></script>
-  <script src="./js/lib/jquery-ui.js"></script>
-  <script src="./js/lib/jquery-migrate.min.js"></script>
-  <script src="./js/lib/demo-theme.min.js"></script>
-  <script src="./js/lib/jquery.ui.touch-punch.min.js"></script>
-  <script src="./js/lib/jquery.mousewheel.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"></script>
   <!-- Paper -->
-  <script src="./js/lib/paper-full.min.js"></script>
-  <script src="./js/lib/paperjs-offset.min.js"></script>
-  <script src="./js/lib/hammer.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.15/paper-full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/paperjs-offset@2/dist/index.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.7/hammer.min.js"></script>
   <!-- UI Libraries -->
-  <script src="./js/lib/sweetalert2.all.min.js"></script>
-  <script src="./js/lib/select_all.js"></script>
-  <script src="./js/lib/tabler.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta19/dist/js/tabler.min.js"></script>
   <!-- Application -->
   <script type="module" src="./js/lib/3d.js"></script>
   <script src="./js/lib/jspdf.umd.min.js"></script>
   <script src="./js/lib/jspdf.plugin.autotable.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script type="module" src="./js/app/start.js"></script>
+  <script type="module" src="./js/app.js"></script>
 </head>
-
 <body>
   <!-- موبایل -->
   <div class="wd-mobile-menu-bar">
@@ -391,17 +381,11 @@
         <section class="wd-section-block">
           <div class="wd-create-unit-row">
             <button class="wd-create-unit-main addNewLayer" data-type="rectangle">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2.5" y="5" width="19" height="14" />
-              </svg>
+              <img class="wd-section-block-image" src="./icons/Rectangle.svg" alt="" />
               مستطیل
             </button>
             <button class="wd-create-unit-main addNewLayer" data-type="non-rectangle">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3.5 5h17l2 14H1.5l2-14z" />
-              </svg>
+              <img class="wd-section-block-image" src="./icons/Non_rectangular.svg" alt="" />
               غیر مستطیل
             </button>
             <!-- <button class="wd-create-unit-options" title="گزینه‌ها">
@@ -547,14 +531,15 @@
             <span class="wd-unit-detail-value accessoryName"></span>
           </div>
           <div class="wd-left-bottom-actions">
-            <button type="button" class="wd-left-bottom-button layerConfig" title="تنظیمات">
-              <i class="ti ti-settings"></i>
+            <button type="button" class="wd-left-bottom-button layerConfig" title="ویرایش">
+              <i class="lni lni-pencil"></i>
             </button>
+        
             <button type="button" class="wd-left-bottom-button wd-left-delete-all clearDesign" title="حذف همه"
-              data-bs-dismiss="offcanvas">
-              <i class="ti ti-trash-x"></i>
+                data-bs-dismiss="offcanvas">
+                <i class="ti ti-trash-x"></i>
             </button>
-          </div>
+        </div>
           <div class="wd-unit-detail-note">
             برای جزئیات هر آیتم بر روی آن کلیک کنید.
           </div>
@@ -882,30 +867,14 @@
                 <label class="wd-form-label" for="profile_color">رنگ</label>
                 <div class="wd-color-select-wrapper">
                   <select class="wd-select-box" autocomplete="off" name="profile_color" id="profile_color">
-                    <option value="1" data-system="UPVC" data-hex="#ffffff">
-                      سفید
-                    </option>
-                    <option value="2" data-system="UPVC" data-hex="#fffcd6">
-                      داخل رنگ
-                    </option>
-                    <option value="4" data-system="UPVC" data-hex="#b3ff00">
-                      بیرون رنگ
-                    </option>
-                    <option value="5" data-system="UPVC" data-hex="#9c590d">
-                      داخل لمینت
-                    </option>
-                    <option value="6" data-system="UPVC" data-hex="#ffbb00">
-                      بیرون لمینت
-                    </option>
-                    <option value="7" data-system="UPVC" data-hex="#fbdbff">
-                      تمام رنگ
-                    </option>
-                    <option value="8" data-system="Al" data-hex="#ffffff" style="display: none">
-                      پودری
-                    </option>
-                    <option value="9" data-system="UPVC" data-hex="#b0a100">
-                      دو طرف لمینت
-                    </option>
+                    <option value="1" data-system="UPVC" data-hex="#ffffff">سفید</option>
+                    <option value="2" data-system="UPVC" data-hex="#fffcd6">داخل رنگ</option>
+                    <option value="4" data-system="UPVC" data-hex="#b3ff00">بیرون رنگ</option>
+                    <option value="5" data-system="UPVC" data-hex="#9c590d">داخل لمینت</option>
+                    <option value="6" data-system="UPVC" data-hex="#ffbb00">بیرون لمینت</option>
+                    <option value="7" data-system="UPVC" data-hex="#fbdbff">تمام رنگ</option>
+                    <option value="8" data-system="Al" data-hex="#ffffff" style="display:none">پودری</option>
+                    <option value="9" data-system="UPVC" data-hex="#b0a100">دو طرف لمینت</option>
                   </select>
                   <span class="wd-color-preview" id="profile_color_preview"></span>
                 </div>
@@ -928,13 +897,13 @@
                 <label class="wd-form-label" for="glass_id">شیشه</label>
                 <div class="wd-color-select-wrapper">
                   <select class="wd-select-box" name="glass_id" autocomplete="off" id="glass_id">
-                    <option value="1" data-color="#e0f3ff">شیشه 4+12+4 ساده ساده</option>
-                    <option value="9" data-color="#f5f5f5">شیشه 4+12+4 ساده سیلور</option>
-                    <option value="10" data-color="#ffffff">شیشه 4+12+4 آیینه مشجر</option>
+                    <option value="1" data-color="#8acde8">شیشه 4+12+4 ساده ساده</option>
+                    <option value="9" data-color="#c9c9c9">شیشه 4+12+4 ساده سیلور</option>
+                    <option value="10" data-color="#f1f1f1">شیشه 4+12+4 آیینه مشجر</option>
                     <option value="11" data-color="#fdffeb">شیشه 4+12+4 مشجر مشجر</option>
                     <option value="13" data-color="#fffdcc">شیشه 4+12+4 ساده طلایی</option>
-                    <option value="14" data-color="#dedede">شیشه 4+12+4 رفلکس دودی</option>
-                    <option value="15" data-color="#ffe6db">شیشه 4+12+4 ساده برنز لایت</option>
+                    <option value="14" data-color="#777777">شیشه 4+12+4 رفلکس دودی</option>
+                    <option value="15" data-color="#c98f72">شیشه 4+12+4 ساده برنز لایت</option>
                     <option value="16" data-color="#e5ffff">شیشه 6+8+6 ساده ساده</option>
                     <option value="17" data-color="#c2f7ff">شیشه 4+10+6 ساده ساده</option>
                     <option value="18" data-color="#feffad">شیشه 6+10+4 ساده طلایی</option>
@@ -1200,6 +1169,180 @@
               </button>
             </div>
           </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- مدال تنظیمات آیتم -->
+  <div class="wd-config-item-modal" id="wdConfigItemModal">
+    <div class="wd-config-item-overlay"></div>
+    <div class="wd-config-item-container">
+      <!-- Header -->
+      <header class="wd-right-brand">
+        <div class="wd-right-brand-inner">
+          <div class="wd-right-site-info-addedit">
+            <strong class="wd-right-site-title">
+              تنظیمات آیتم
+            </strong>
+            <button type="button" class="wd-selection-close wd-config-item-close" aria-label="Close">
+              <i class="ti ti-x"></i>
+            </button>
+          </div>
+        </div>
+      </header>
+      <!-- Body -->
+      <div class="wd-config-item-body">
+        <div class="wd-form-grid">
+          <!-- سیستم -->
+          <div class="wd-form-line">
+            <label class="wd-form-label" for="config_system">
+              سیستم
+            </label>
+            <select class="wd-select-box" id="config_system">
+              <option value="UPVC">UPVC</option>
+              <option value="Al">AL</option>
+            </select>
+          </div>
+          <!-- پروفیل -->
+          <div class="wd-form-line">
+            <label class="wd-form-label" for="config_profile_id">
+              پروفیل
+            </label>
+            <select class="wd-select-box" id="config_profile_id">
+              <option value="4" data-system="UPVC" data-type="Turn" data-profile_id="4" data-width="60">
+                وینتک سری 640 /لولایی
+              </option>
+              <option value="112" data-system="UPVC" data-type="Turn" data-profile_id="112" data-width="60">
+                بوتیا لولایی 2500 /لولایی
+              </option>
+            </select>
+          </div>
+          <!-- رنگ -->
+          <div class="wd-form-line">
+            <label class="wd-form-label" for="config_profile_color">
+              رنگ
+            </label>
+            <div class="wd-color-select-wrapper">
+              <select class="wd-select-box" id="config_profile_color">
+                <option value="1" data-system="UPVC" data-hex="#ffffff">
+                  سفید
+                </option>
+                <option value="2" data-system="UPVC" data-hex="#fffcd6">
+                  داخل رنگ
+                </option>
+                <option value="4" data-system="UPVC" data-hex="#b3ff00">
+                  بیرون رنگ
+                </option>
+                <option value="5" data-system="UPVC" data-hex="#9c590d">
+                  داخل لمینت
+                </option>
+                <option value="6" data-system="UPVC" data-hex="#ffbb00">
+                  بیرون لمینت
+                </option>
+                <option value="7" data-system="UPVC" data-hex="#fbdbff">
+                  تمام رنگ
+                </option>
+                <option value="8" data-system="Al" data-hex="#ffffff">
+                  پودری
+                </option>
+                <option value="9" data-system="UPVC" data-hex="#b0a100">
+                  دو طرف لمینت
+                </option>
+              </select>
+              <span class="wd-color-preview" id="config_profile_color_preview"></span>
+            </div>
+          </div>
+          <!-- یراق -->
+          <div class="wd-form-line">
+            <label class="wd-form-label" for="config_accessory_id">
+              یراق
+            </label>
+            <select class="wd-select-box" id="config_accessory_id">
+              <option value="11" data-system="UPVC">
+                آکادو Accado
+              </option>
+              <option value="112" data-system="UPVC">
+                GU
+              </option>
+              <option value="114" data-system="Al">
+                یراق آلومینیوم
+              </option>
+              <option value="120" data-system="UPVC">
+                اندو Endow
+              </option>
+              <option value="121" data-system="UPVC">
+                ویناک Winac
+              </option>
+            </select>
+          </div>
+          <!-- شیشه -->
+          <div class="wd-form-line">
+            <label class="wd-form-label" for="config_glass_id">
+              شیشه
+            </label>
+            <div class="wd-color-select-wrapper">
+              <select class="wd-select-box" id="config_glass_id">
+                <option value="1" data-color="#8acde8">
+                  شیشه 4+12+4 ساده ساده
+                </option>
+                <option value="9" data-color="#c9c9c9">
+                  شیشه 4+12+4 ساده سیلور
+                </option>
+                <option value="10" data-color="#f1f1f1">
+                  شیشه 4+12+4 آیینه مشجر
+                </option>
+                <option value="11" data-color="#fdffeb">
+                  شیشه 4+12+4 مشجر مشجر
+                </option>
+                <option value="13" data-color="#fffdcc">
+                  شیشه 4+12+4 ساده طلایی
+                </option>
+                <option value="14" data-color="#777777">
+                  شیشه 4+12+4 رفلکس دودی
+                </option>
+                <option value="15" data-color="#c98f72">
+                  شیشه 4+12+4 ساده برنز لایت
+                </option>
+                <option value="16" data-color="#e5ffff">
+                  شیشه 6+8+6 ساده ساده
+                </option>
+                <option value="17" data-color="#c2f7ff">
+                  شیشه 4+10+6 ساده ساده
+                </option>
+                <option value="18" data-color="#feffad">
+                  شیشه 6+10+4 ساده طلایی
+                </option>
+                <option value="19" data-color="#ededed">
+                  شیشه 6+10+4 ساده سیلور
+                </option>
+              </select>
+              <span class="wd-color-preview" id="config_glass_color_preview"></span>
+            </div>
+          </div>
+          <!-- تعداد -->
+          <div class="wd-form-line">
+            <label class="wd-form-label" for="config_quantity">
+              تعداد
+            </label>
+            <div class="wd-counter-control">
+              <button type="button" class="wd-counter-button" id="config_quantity_plus">
+                +
+              </button>
+              <input type="number" id="config_quantity" class="wd-counter-number" value="1" min="1" />
+              <button type="button" class="wd-counter-button" id="config_quantity_minus">
+                −
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- عملیات -->
+        <div class="wd-right-form-actions">
+          <button type="button" class="wd-right-confirm" id="configItemSave">
+            تغییر
+          </button>
+          <button type="button" class="wd-right-cancel wd-config-item-cancel">
+            لغو
+          </button>
         </div>
       </div>
     </div>
@@ -1668,5 +1811,4 @@
     </div>
   </aside>
 </body>
-
 </html>

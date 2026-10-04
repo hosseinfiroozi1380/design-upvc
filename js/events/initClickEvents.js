@@ -246,143 +246,363 @@ export function initClickEvents() {
     });
     $(document).on('click', '.addExtension', function () {
         if (state.unitData.shape == "simple_rectangle") {
-            Swal.fire({
-                title: "ابعاد فریم:",
-                html: '<div class="wd-form-line">' +
-                    '<label class="wd-form-label" for="wFrame-input">طول</label>' +
-                    '<input id="wFrame-input" class="wd-input-box" type="number" value="1000">' +
-                    '</div>' +
-                    '<div class="wd-form-line">' +
-                    '<label class="wd-form-label" for="hFrame-input">ارتفاع</label>' +
-                    '<input id="hFrame-input" class="wd-input-box" type="number" value="1000">' +
-                    '</div>' +
-                    '<div class="wd-form-line">' +
-                    '<label class="wd-form-label" for="position-input">جهت</label>' +
-                    '<select id="position-input" class="wd-select-box">' +
-                    '<option value="right">راست</option>' +
-                    '<option value="down">پایین</option>' +
-                    '</select>' +
-                    '</div>',
-                preConfirm: function () {
-                    return new Promise(function (resolve) {
-                        resolve([
-                            $('#wFrame-input').val(),
-                            $('#hFrame-input').val(),
-                            $('#position-input').val()
-                        ])
-                    })
-                },
-                onOpen: function () {
-                    $('#wFrame-input').focus()
-                },
-            }).then((result) => {
-                if (result.value) {
-                    let w = Number(result.value[0]);
-                    let h = Number(result.value[1]);
-                    let position = result.value[2];
-                    if (w > 50 && h > 50) {
-                        let sections = state.paper.project.activeLayer.getItems({
+            const oldModal = document.querySelector(".wd-edit-item-modal");
+            if (oldModal) {
+                oldModal.remove();
+            }
+            const modal = document.createElement("div");
+            modal.className = "wd-edit-item-modal";
+            modal.innerHTML = `
+                <div class="wd-edit-item-overlay"></div>
+                <div class="wd-edit-item-container">
+                    <header class="wd-right-brand">
+                        <div class="wd-right-brand-inner">
+                            <div class="wd-right-site-info-addedit">
+                                <strong class="wd-right-site-title">
+                                    ابعاد فریم
+                                </strong>
+                                <button
+                                    type="button"
+                                    class="wd-selection-close wd-edit-item-close"
+                                    aria-label="بستن"
+                                >
+                                    <i class="ti ti-x"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </header>
+                    <div class="wd-edit-item-body">
+                        <div class="wd-edit-item-fields">
+                            <div class="wd-edit-item-field">
+                                <label class="wd-form-label" for="wFrame-input">
+                                    طول
+                                </label>
+                                <input
+                                    id="wFrame-input"
+                                    class="wd-input-box"
+                                    type="number"
+                                    value="1000"
+                                    min="1"
+                                >
+                            </div>
+                            <div class="wd-edit-item-field">
+                                <label class="wd-form-label" for="hFrame-input">
+                                    ارتفاع
+                                </label>
+                                <input
+                                    id="hFrame-input"
+                                    class="wd-input-box"
+                                    type="number"
+                                    value="1000"
+                                    min="1"
+                                >
+                            </div>
+                            <div class="wd-edit-item-field">
+                                <label class="wd-form-label" for="position-input">
+                                    جهت
+                                </label>
+                                <select
+                                    id="position-input"
+                                    class="wd-select-box"
+                                >
+                                    <option value="right">راست</option>
+                                    <option value="down">پایین</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div
+                            class="wd-edit-item-error"
+                            id="extensionError"
+                        ></div>
+                        <div class="wd-edit-item-actions">
+                            <button
+                                type="button"
+                                class="wd-right-confirm wd-edit-item-save"
+                            >
+                                تغییر
+                            </button>
+                            <button
+                                type="button"
+                                class="wd-right-cancel wd-edit-item-cancel"
+                            >
+                                لغو
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(modal);
+            requestAnimationFrame(() => {
+                modal.classList.add("show");
+            });
+            const widthInput = modal.querySelector("#wFrame-input");
+            const heightInput = modal.querySelector("#hFrame-input");
+            const positionInput = modal.querySelector("#position-input");
+            const errorBox = modal.querySelector("#extensionError");
+            function closeExtensionModal() {
+                modal.classList.remove("show");
+                setTimeout(() => {
+                    if (modal.parentNode) {
+                        modal.remove();
+                    }
+                }, 200);
+            }
+            // بستن با ضربدر
+            modal
+                .querySelector(".wd-edit-item-close")
+                .addEventListener("click", function () {
+                    closeExtensionModal();
+                });
+            // لغو
+            modal
+                .querySelector(".wd-edit-item-cancel")
+                .addEventListener("click", function () {
+                    closeExtensionModal();
+                });
+            // کلیک روی پس زمینه
+            modal
+                .querySelector(".wd-edit-item-overlay")
+                .addEventListener("click", function () {
+                    closeExtensionModal();
+                });
+            // تغییر
+            modal
+                .querySelector(".wd-edit-item-save")
+                .addEventListener("click", function () {
+                    let w = Number(widthInput.value);
+                    let h = Number(heightInput.value);
+                    let position = positionInput.value;
+                    // اعتبارسنجی
+                    if (w <= 50 || h <= 50) {
+                        errorBox.textContent =
+                            "لطفاً ابعاد معتبر وارد نمایید.";
+                        return;
+                    }
+                    errorBox.textContent = "";
+                    let sections =
+                        state.paper.project.activeLayer.getItems({
                             name: "section"
                         });
-                        let lastSection = sections[sections.length - 1] || false;
-                        //when there are more than one mainframe, user should select a frame to add
-                        if (sections.length > 1) {
-                            if (
-                                !state.selectedItem ||
-                                (
-                                    state.selectedItem &&
-                                    state.selectedItem.name != "mainFrame"
-                                )
-                            ) {
-                                showMessage(
-                                    "بیش از یک فریم وجود دارد. لطفاً ابتدا فریمی را که می‌خواهید افزونه به آن اضافه شود انتخاب کنید.",
-                                    "error"
-                                );
-                                return;
-                            }
-                            lastSection = state.selectedItem;
-                            //check this frame has not this side frame
-                            if (position == "right") {
-                                let vCouplings = state.paper.project.activeLayer.getItems({
+                    let lastSection =
+                        sections[sections.length - 1] || false;
+                    // وقتی بیشتر از یک فریم داریم
+                    if (sections.length > 1) {
+                        // باید فریم انتخاب شده باشد
+                        if (
+                            !state.selectedItem ||
+                            (
+                                state.selectedItem &&
+                                state.selectedItem.name != "mainFrame"
+                            )
+                        ) {
+                            showMessage(
+                                "بیش از یک فریم وجود دارد. لطفاً ابتدا فریمی را که می‌خواهید افزونه به آن اضافه شود انتخاب کنید.",
+                                "error"
+                            );
+                            return;
+                        }
+                        lastSection = state.selectedItem;
+                        // سمت راست
+                        if (position == "right") {
+                            let vCouplings =
+                                state.paper.project.activeLayer.getItems({
                                     name: "vCoupling"
                                 });
-                                for (let n = 0; n < vCouplings.length; n++) {
-                                    if (vCouplings[n].hitTest(lastSection.bounds.topRight)) {
-                                        showMessage(
-                                            "در کنار این قسمت یک فریم وجود دارد. امکان اضافه کردن چند فریم روی یکدیگر وجود ندارد.",
-                                            "error"
-                                        );
-                                        return;
-                                    }
+                            for (let n = 0; n < vCouplings.length; n++) {
+                                if (
+                                    vCouplings[n].hitTest(
+                                        lastSection.bounds.topRight
+                                    )
+                                ) {
+                                    showMessage(
+                                        "در کنار این قسمت یک فریم وجود دارد. امکان اضافه کردن چند فریم روی یکدیگر وجود ندارد.",
+                                        "error"
+                                    );
+                                    return;
                                 }
-                            } else {
-                                let hCouplings = state.paper.project.activeLayer.getItems({
+                            }
+                        }
+                        // پایین
+                        else {
+                            let hCouplings =
+                                state.paper.project.activeLayer.getItems({
                                     name: "hCoupling"
                                 });
-                                for (let n = 0; n < hCouplings.length; n++) {
-                                    if (hCouplings[n].hitTest(lastSection.bounds.bottomLeft)) {
-                                        showMessage(
-                                            "در زیر این قسمت یک فریم وجود دارد. امکان اضافه کردن چند فریم روی یکدیگر وجود ندارد.",
-                                            "error"
-                                        );
-                                        return;
-                                    }
+                            for (let n = 0; n < hCouplings.length; n++) {
+                                if (
+                                    hCouplings[n].hitTest(
+                                        lastSection.bounds.bottomLeft
+                                    )
+                                ) {
+                                    showMessage(
+                                        "در زیر این قسمت یک فریم وجود دارد. امکان اضافه کردن چند فریم روی یکدیگر وجود ندارد.",
+                                        "error"
+                                    );
+                                    return;
                                 }
                             }
                         }
-                        if (lastSection) {
-                            if (!state.firstCoupling_width) {
-                                showMessage(
-                                    "به نظر می‌رسد این پروفیل شامل کوپلینگ نمی‌باشد. اگر این مورد اشتباه است، لطفاً جهت اصلاح به مدیریت اطلاع دهید.",
-                                    "error"
-                                );
-                                return;
-                            }
-                            //draw coupling
-                            state.frameColor = state.unitData['profile_color_hex'];
-                            let coupling;
-                            if (position == "right") { //right
-                                let couplingHeight = (h > lastSection.bounds.height) ? lastSection.bounds.height : h;
-                                coupling = new state.paper.Path.Rectangle(lastSection.bounds.topRight, [state.firstCoupling_width, couplingHeight]); //point,size
-                                coupling.strokeColor = state.strokeColor;
-                                coupling.fillColor = state.frameColor;
-                                coupling.name = 'vCoupling';
-                                setDefaultData(coupling, 'coupling');
-                                //draw new frame
-                                let tmpShape = new state.paper.Path();
-                                tmpShape.moveTo(coupling.bounds.topRight);
-                                tmpShape.lineTo(new state.paper.Point(coupling.bounds.topRight.x + w, coupling.bounds.topRight.y));
-                                tmpShape.lineTo(new state.paper.Point(coupling.bounds.topRight.x + w, coupling.bounds.topRight.y + h));
-                                tmpShape.lineTo(new state.paper.Point(coupling.bounds.topRight.x, coupling.bounds.topRight.y + h));
-                                tmpShape.closed = true;
-                                buildFrame(tmpShape, false, false, true);
-                                setZoom();
-                            } else { //down
-                                let couplingWidth = (w > lastSection.bounds.width) ? lastSection.bounds.width : w;
-                                coupling = new state.paper.Path.Rectangle(lastSection.bounds.bottomLeft, [couplingWidth, state.firstCoupling_width]); //point,size
-                                coupling.strokeColor = state.strokeColor;
-                                coupling.fillColor = state.frameColor;
-                                coupling.name = 'hCoupling';
-                                setDefaultData(coupling, 'coupling');
-                                //draw new frame
-                                let tmpShape = new state.paper.Path();
-                                tmpShape.moveTo(coupling.bounds.bottomLeft);
-                                tmpShape.lineTo(new state.paper.Point(coupling.bounds.bottomLeft.x + w, coupling.bounds.bottomLeft.y));
-                                tmpShape.lineTo(new state.paper.Point(coupling.bounds.bottomLeft.x + w, coupling.bounds.bottomLeft.y + h));
-                                tmpShape.lineTo(new state.paper.Point(coupling.bounds.bottomLeft.x, coupling.bounds.bottomLeft.y + h));
-                                tmpShape.closed = true;
-                                buildFrame(tmpShape, false, false, true);
-                                setZoom();
-                            }
-                        }
-                    } else {
-                        showMessage(
-                            "لطفاً ابعاد معتبر وارد نمایید.",
-                            "error"
-                        );
                     }
+                    if (lastSection) {
+                        if (!state.firstCoupling_width) {
+                            showMessage(
+                                "به نظر می‌رسد این پروفیل شامل کوپلینگ نمی‌باشد. اگر این مورد اشتباه است، لطفاً جهت اصلاح به مدیریت اطلاع دهید.",
+                                "error"
+                            );
+                            return;
+                        }
+                        // رنگ فریم
+                        state.frameColor =
+                            state.unitData['profile_color_hex'];
+                        let coupling;
+                        // =========================
+                        // سمت راست
+                        // =========================
+                        if (position == "right") {
+                            let couplingHeight =
+                                (h > lastSection.bounds.height)
+                                    ? lastSection.bounds.height
+                                    : h;
+                            coupling =
+                                new state.paper.Path.Rectangle(
+                                    lastSection.bounds.topRight,
+                                    [
+                                        state.firstCoupling_width,
+                                        couplingHeight
+                                    ]
+                                );
+                            coupling.strokeColor =
+                                state.strokeColor;
+                            coupling.fillColor =
+                                state.frameColor;
+                            coupling.name = 'vCoupling';
+                            setDefaultData(
+                                coupling,
+                                'coupling'
+                            );
+                            // ساخت فریم جدید
+                            let tmpShape =
+                                new state.paper.Path();
+                            tmpShape.moveTo(
+                                coupling.bounds.topRight
+                            );
+                            tmpShape.lineTo(
+                                new state.paper.Point(
+                                    coupling.bounds.topRight.x + w,
+                                    coupling.bounds.topRight.y
+                                )
+                            );
+                            tmpShape.lineTo(
+                                new state.paper.Point(
+                                    coupling.bounds.topRight.x + w,
+                                    coupling.bounds.topRight.y + h
+                                )
+                            );
+                            tmpShape.lineTo(
+                                new state.paper.Point(
+                                    coupling.bounds.topRight.x,
+                                    coupling.bounds.topRight.y + h
+                                )
+                            );
+                            tmpShape.closed = true;
+                            buildFrame(
+                                tmpShape,
+                                false,
+                                false,
+                                true
+                            );
+                            setZoom();
+                        }
+                        // =========================
+                        // پایین
+                        // =========================
+                        else {
+                            let couplingWidth =
+                                (w > lastSection.bounds.width)
+                                    ? lastSection.bounds.width
+                                    : w;
+                            coupling =
+                                new state.paper.Path.Rectangle(
+                                    lastSection.bounds.bottomLeft,
+                                    [
+                                        couplingWidth,
+                                        state.firstCoupling_width
+                                    ]
+                                );
+                            coupling.strokeColor =
+                                state.strokeColor;
+                            coupling.fillColor =
+                                state.frameColor;
+                            coupling.name = 'hCoupling';
+                            setDefaultData(
+                                coupling,
+                                'coupling'
+                            );
+                            // ساخت فریم جدید
+                            let tmpShape =
+                                new state.paper.Path();
+                            tmpShape.moveTo(
+                                coupling.bounds.bottomLeft
+                            );
+                            tmpShape.lineTo(
+                                new state.paper.Point(
+                                    coupling.bounds.bottomLeft.x + w,
+                                    coupling.bounds.bottomLeft.y
+                                )
+                            );
+                            tmpShape.lineTo(
+                                new state.paper.Point(
+                                    coupling.bounds.bottomLeft.x + w,
+                                    coupling.bounds.bottomLeft.y + h
+                                )
+                            );
+                            tmpShape.lineTo(
+                                new state.paper.Point(
+                                    coupling.bounds.bottomLeft.x,
+                                    coupling.bounds.bottomLeft.y + h
+                                )
+                            );
+                            tmpShape.closed = true;
+                            buildFrame(
+                                tmpShape,
+                                false,
+                                false,
+                                true
+                            );
+                            setZoom();
+                        }
+                    }
+                    // فقط بعد از موفقیت مدال بسته شود
+                    closeExtensionModal();
+                });
+            // پاک کردن خطا
+            widthInput.addEventListener("input", function () {
+                errorBox.textContent = "";
+            });
+            heightInput.addEventListener("input", function () {
+                errorBox.textContent = "";
+            });
+            // Enter
+            widthInput.addEventListener("keydown", function (e) {
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    modal
+                        .querySelector(".wd-edit-item-save")
+                        .click();
                 }
             });
+            heightInput.addEventListener("keydown", function (e) {
+                if (e.key === "Enter") {
+                    e.preventDefault();
+                    modal
+                        .querySelector(".wd-edit-item-save")
+                        .click();
+                }
+            });
+            // فوکوس
+            setTimeout(() => {
+                widthInput.focus();
+            }, 200);
         } else {
             showMessage(
                 "در اشکال غیرمستطیل امکان افزودن وجود ندارد.",
@@ -771,18 +991,26 @@ export function initClickEvents() {
             state.unitData.profile_color_hex = $('#profile_color option[value="' + newProfile_color + '"]').data('hex');
             state.frameColor = state.unitData['profile_color_hex'];
             setDefaultData(null, "resetAllProfilesColors");
+            updateLayerDetailsMenuOptions();
+            createTempLayerCard();
         }
         if (state.unitData.profile_id !== newProfile_id) {
             state.unitData.profile_id = newProfile_id;
             setDefaultData(null, "resetAllProfiles");
+            updateLayerDetailsMenuOptions();
+            createTempLayerCard();
         }
         if (state.unitData.accessory_id !== newAccessory_id) {
             state.unitData.accessory_id = newAccessory_id;
             setDefaultData(null, "resetAllAccessories");
+            updateLayerDetailsMenuOptions();
+            createTempLayerCard();
         }
         if (state.unitData.glass_id !== newGlass_id) {
             state.unitData.glass_id = newGlass_id;
             setDefaultData(null, "resetAllGlasses");
+            updateLayerDetailsMenuOptions();
+            createTempLayerCard();
         }
         updateLayerDetailsMenuOptions();
         $('#ofcAddNew').modal('hide');
@@ -1212,18 +1440,5 @@ export function initClickEvents() {
         $('#glassBox').addClass('closed');
         $('#toggleIcon').html('<i class="ti ti-chevron-left"></i>');
         createDimensionBar();
-    });
-    $(document).on('click', function (e) {
-        const myDiv = $(".wd-unit-details");
-        if (!$(e.target).closest('.unitOptions').length) {
-            myDiv.css({
-                'display': '',
-                'position': '',
-                'left': '',
-                'top': '',
-                'max-width': '',
-                'z-index': ''
-            });
-        }
     });
 }

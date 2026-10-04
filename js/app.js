@@ -1,15 +1,15 @@
-// js/app/start.js
+// js/app.js
 
-import { initApplication } from "../core/init.js";
-import { initClickEvents } from "../events/initClickEvents.js";
-import { initFormEvents } from "../events/initFormEvents.js";
-import { initLayerEvents } from "../events/initLayerEvents.js";
-import { initPaperToolEvents } from "../events/initPaperToolEvents.js";
-import { initBeforeUnload } from "../events/initBeforeUnload.js";
-import { initHistory } from "../events/initHistory.js";
-import { initContextMenu } from "../events/initContextMenu.js";
-import { initPinchZoom } from "../events/initPinchZoom.js";
-import { initConfigItemEvents } from "../events/initConfigItemEvents.js";
+import { initApplication } from "./core/init.js";
+import { initClickEvents } from "./events/initClickEvents.js";
+import { initFormEvents } from "./events/initFormEvents.js";
+import { initLayerEvents } from "./events/initLayerEvents.js";
+import { initPaperToolEvents } from "./events/initPaperToolEvents.js";
+import { initBeforeUnload } from "./events/initBeforeUnload.js";
+import { initHistory } from "./events/initHistory.js";
+import { initContextMenu } from "./events/initContextMenu.js";
+import { initPinchZoom } from "./events/initPinchZoom.js";
+import { initConfigItemEvents } from "./events/initConfigItemEvents.js";
 
 $(function () {
   try {

@@ -16,6 +16,117 @@ import {
     setDefaultData
 } from "../utils/setDefaultData.js";
 import PaperOffset from "../utils/PaperOffset.js";
+function createGlassBorders(glassShape, section) {
+    const blackWidth = 1.5;
+    const whiteWidth = 12;
+    const innerBlackWidth = 1.5;
+    // گروه ثابت مرز شیشه
+    const glassBorders = new state.paper.Group();
+    glassBorders.name = "glassBorders";
+    // مرز مشکی بیرونی
+    const outerBlackInner = PaperOffset.offset(
+        glassShape,
+        -blackWidth
+    );
+    const outerBlack = glassShape.subtract(
+        outerBlackInner
+    );
+    outerBlack.fillColor = "#222222";
+    outerBlack.strokeColor = null;
+    outerBlack.name = "glassOuterBlack";
+    glassBorders.addChild(outerBlack);
+    // مرز سفید
+    const whiteInner = PaperOffset.offset(
+        outerBlackInner,
+        -whiteWidth
+    );
+    const whiteBorder = outerBlackInner.subtract(
+        whiteInner
+    );
+    whiteBorder.fillColor = "#ffffff";
+    whiteBorder.strokeColor = null;
+    whiteBorder.name = "glassWhiteBorder";
+    glassBorders.addChild(whiteBorder);
+    // چهار نیم‌ساز 45 درجه
+    const outerBounds = outerBlackInner.bounds;
+    const innerBounds = whiteInner.bounds;
+    const cornerGroup = new state.paper.Group();
+    cornerGroup.name = "glassCornerBisectors";
+    const topLeft = new state.paper.Path.Line({
+        from: [
+            outerBounds.left,
+            outerBounds.top
+        ],
+        to: [
+            innerBounds.left,
+            innerBounds.top
+        ]
+    });
+    const topRight = new state.paper.Path.Line({
+        from: [
+            outerBounds.right,
+            outerBounds.top
+        ],
+        to: [
+            innerBounds.right,
+            innerBounds.top
+        ]
+    });
+    const bottomLeft = new state.paper.Path.Line({
+        from: [
+            outerBounds.left,
+            outerBounds.bottom
+        ],
+        to: [
+            innerBounds.left,
+            innerBounds.bottom
+        ]
+    });
+    const bottomRight = new state.paper.Path.Line({
+        from: [
+            outerBounds.right,
+            outerBounds.bottom
+        ],
+        to: [
+            innerBounds.right,
+            innerBounds.bottom
+        ]
+    });
+    [
+        topLeft,
+        topRight,
+        bottomLeft,
+        bottomRight
+    ].forEach(line => {
+        line.strokeColor = "#222222";
+        line.strokeWidth = 1.5;
+        line.strokeCap = "butt";
+        line.name = "glassCornerBisector";
+        cornerGroup.addChild(line);
+    });
+    glassBorders.addChild(cornerGroup);
+    // مرز مشکی داخلی
+    const innerBlackInner = PaperOffset.offset(
+        whiteInner,
+        -innerBlackWidth
+    );
+    const innerBlack = whiteInner.subtract(
+        innerBlackInner
+    );
+    innerBlack.fillColor = "#222222";
+    innerBlack.strokeColor = null;
+    innerBlack.name = "glassInnerBlack";
+    glassBorders.addChild(innerBlack);
+    // اضافه کردن گروه مرز
+    section.addChild(
+        glassBorders
+    );
+    // حذف شکل‌های کمکی
+    outerBlackInner.remove();
+    whiteInner.remove();
+    innerBlackInner.remove();
+    return glassBorders;
+}
 export function buildFrame(
     tmpShape,
     newFrameSize = false,
@@ -36,7 +147,6 @@ export function buildFrame(
     if (!isExtension) {
         state.mainSection = new state.paper.Group();
         state.mainSection.name = "section";
-
         state.mainSection.data.designID =
             state.currentDesignID || null;
     }
@@ -63,8 +173,6 @@ export function buildFrame(
         // CREATE FIRST FLAT
         const firstFlat = state.mainFlat.clone();
         firstFlat.fillColor = "#8acde8";
-        firstFlat.strokeColor = state.strokeColor;
-        firstFlat.strokeWidth = 1;
         firstFlat.name = "flat";
         setDefaultData(firstFlat, "flat");
         extensionSection.addChild(firstFlat);
@@ -110,6 +218,7 @@ export function buildFrame(
             );
         }
         extensionSection.addChild(state.mainFrame);
+        createGlassBorders(firstFlat, extensionSection);
         state.mainFlat.remove();
         tmpShape.remove();
         // اضافه کردن Section جدید به طراحی موجود
@@ -157,9 +266,8 @@ export function buildFrame(
     let firstFlat =
         state.mainFlat.clone();
     firstFlat.fillColor = "#8acde8";
-    firstFlat.strokeColor = state.strokeColor;
-    firstFlat.strokeWidth = 1;
-    firstFlat.name = "flat";
+    firstFlat.name =
+        "flat";
     setDefaultData(
         firstFlat,
         "flat"
@@ -248,7 +356,7 @@ export function buildFrame(
     state.mainSection.addChild(
         state.mainFrame
     );
-
+    createGlassBorders(firstFlat, state.mainSection);
     state.mainFlat.remove();
     tmpShape.remove();
     // AFTER BUILD

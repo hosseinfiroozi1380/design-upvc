@@ -127,20 +127,6 @@ export function addDoor(
             windowsFrame.data = data.profile;
         }
         windowsFrame.data.profile_width = state.frameSizeDoor;
-        let tween = windowsFrame.tweenTo(
-            {
-                fillColor: state.tweenFillColor
-            },
-            250
-        );
-        tween.then(function () {
-            windowsFrame.tweenTo(
-                {
-                    fillColor: state.frameColor
-                },
-                250
-            );
-        });
         for (
             let index = 0;
             index < windowsFrame.children.length;

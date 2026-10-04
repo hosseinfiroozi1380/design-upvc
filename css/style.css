@@ -22,6 +22,7 @@
   --wd-border-soft: #e5e7eb;
 }
 
+
 /* canvas[resize] {
   width: 100%;
   height: 100%;
@@ -213,6 +214,14 @@ button {
 */
 .wd-section-block {
   margin-bottom: 16px;
+}
+
+.wd-section-block-image {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  opacity: 1;
+  filter: none;
 }
 
 .wd-section-heading {
@@ -1034,7 +1043,7 @@ button {
   flex-direction: row;
   gap: 0;
   border: 1px solid #e5e7eb;
-  border-radius: 10px;
+  border-radius: 5px;
   background: #ffffff;
 }
 
@@ -1080,13 +1089,13 @@ button {
 /* دکمه اول - گوشه های سمت چپ */
 .wd-canvas-controls .wd-view-tool:first-child,
 .wd-canvas-controls .wd-view-tool:first-child:hover {
-  border-radius: 7px 0 0 7px;
+  border-radius: 5px 0 0 5px;
 }
 
 /* دکمه آخر - سه بعدی - گوشه های سمت راست */
 .wd-canvas-controls .wd-view-tool:last-child,
 .wd-canvas-controls .wd-view-tool:last-child:hover {
-  border-radius: 0 7px 7px 0;
+  border-radius: 0 5px 5px 0;
 }
 
 /* دکمه های وسط */
@@ -1369,17 +1378,6 @@ button {
   border-color: var(--wd-button-bg);
 }
 
-.wd-component-button:hover .wd-component-icon {
-  filter: brightness(0) invert(1);
-}
-
-.wd-component-icon {
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
-  opacity: 1;
-  filter: none;
-}
 
 .wd-component-name {
   font-size: 11px;
@@ -1482,12 +1480,11 @@ button {
 }
 
 .wd-component-icon {
-  width: 24px;
-  height: 24px;
+  width: 35px;
+  height: 35px;
   flex-shrink: 0;
   opacity: 1;
-  /* هم‌رنگ متن دکمه */
-  filter: brightness(0) saturate(100%) invert(24%) sepia(8%) saturate(1050%) hue-rotate(182deg) brightness(94%) contrast(91%);
+  filter: none;
 }
 
 /* 
@@ -1501,12 +1498,12 @@ button {
   justify-content: center;
 }
 
-.wd-profile-item-image img {
+/* .wd-profile-item-image img {
   width: 50px;
   height: 50px;
   object-fit: contain;
   /* رنگ عادی آیکون */
-  filter: brightness(0);
+filter: brightness(0);
 }
 
 /* 
@@ -1516,6 +1513,8 @@ button {
   /* سفید شدن آیکون */
   filter: brightness(0) invert(1);
 }
+
+*/
 
 /* 
    PROFILE ITEM NAME
@@ -1567,20 +1566,15 @@ button {
 }
 
 .wd-mobile-category-bar button img {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   object-fit: contain;
   flex-shrink: 0;
-  filter: brightness(0) saturate(100%) invert(31%) sepia(9%) saturate(1042%) hue-rotate(176deg) brightness(91%) contrast(88%);
 }
 
 .wd-mobile-category-bar button:hover {
   background: var(--wd-button-hover-bg);
   color: var(--wd-menu-bg);
-}
-
-.wd-mobile-category-bar button:hover img {
-  filter: brightness(0) invert(1);
 }
 
 .wd-mobile-category-bar button.active {
@@ -1589,13 +1583,6 @@ button {
   border-color: var(--wd-button-bg);
 }
 
-.wd-mobile-category-bar button.active img {
-  filter: brightness(0) invert(1);
-}
-
-/* 
- MOBILE SUBMENU
-*/
 .wd-mobile-submenu-bar {
   display: none;
   width: 100%;
@@ -1660,17 +1647,6 @@ button {
   font-size: 16px;
 }
 
-.wd-mobile-submenu-item img {
-  filter: brightness(0) saturate(100%) invert(24%) sepia(10%) saturate(1050%) hue-rotate(180deg) brightness(95%) contrast(90%);
-}
-
-.wd-mobile-submenu-item:hover img {
-  filter: brightness(0) invert(1);
-}
-
-/* 
-    MOBILE MENU BUTTONS
-*/
 .wd-mobile-menu-bar {
   display: none;
   position: fixed;
@@ -1748,6 +1724,7 @@ button {
 
 .wd-unit-detail-note {
   margin-top: 12px;
+  margin-bottom: 12px;
   padding-top: 10px;
   border-top: 1px solid #f1f5f9;
   color: #6b7280;
@@ -2077,7 +2054,7 @@ button {
   gap: 0;
   background: #ffffff;
   border: 1px solid #e5e7eb;
-  border-radius: 9px;
+  border-radius: 5px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   pointer-events: auto;
   overflow-x: auto;
@@ -2127,7 +2104,7 @@ button {
 
 /* دکمه آخر = سمت چپ */
 .wd-mobile-view-tool:last-child {
-  border-radius: 8px 0 0 8px;
+  border-radius: 5px 0 0 5px;
 }
 
 /* هاور دکمه سمت راست */
@@ -2137,7 +2114,7 @@ button {
 
 /* هاور دکمه سمت چپ */
 .wd-mobile-view-tool:last-child:hover {
-  border-radius: 8px 0 0 8px;
+  border-radius: 5px 0 0 5px;
 }
 
 /* MOBILE */
@@ -2159,6 +2136,7 @@ button {
     width: calc(100% - 10px);
     margin: 0 5px;
   }
+
   .wd-mobile-menu-button {
     width: 12%;
     flex-shrink: 0;
@@ -2291,8 +2269,8 @@ button {
 }
 
 .icon-3d {
-  width: 20px;
-  height: 20px;
+  width: 50px;
+  height: 50px;
   flex: 0 0 20px;
   fill: none;
   stroke: currentColor;
@@ -2303,8 +2281,8 @@ button {
 
 /* آیکون مولین عمودی 3 */
 .icon-mullian-v3 {
-  width: 20px;
-  height: 20px;
+  width: 50px;
+  height: 50px;
   flex: 0 0 18px;
   fill: none;
   stroke: currentColor;
@@ -3500,6 +3478,7 @@ button {
   font-weight: 500;
   text-align: center;
 }
+
 /* آیکون */
 
 .wd-system-message-icon {
@@ -3519,10 +3498,115 @@ button {
 }
 
 .wd-system-message-icon span {
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
   direction: ltr;
   unicode-bidi: bidi-override;
   animation: messageIconRotate 0.35s ease-out;
+}
+
+.wd-system-message-icon span i {
+  display: block;
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+}
+
+.wd-info-icon {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 700;
+  font-style: normal;
+  line-height: 1;
+  font-family: Arial, sans-serif;
+}
+
+/* مدال تنظیمات آیتم */
+
+.wd-config-item-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  direction: rtl;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s ease;
+
+  font-family: "IRANSansWeb", sans-serif;
+}
+
+.wd-config-item-modal.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* پس زمینه */
+
+.wd-config-item-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* بدنه */
+
+.wd-config-item-container {
+  position: relative;
+  width: min(730px, calc(100vw - 30px));
+  max-height: calc(100vh - 40px);
+
+  background: #fff;
+  border-radius: 12px;
+
+  overflow: hidden;
+
+  transform: translateY(20px) scale(0.97);
+
+  transition:
+    transform 0.25s cubic-bezier(.34, 1.56, .64, 1);
+}
+
+.wd-config-item-modal.show .wd-config-item-container {
+  transform: translateY(0) scale(1);
+}
+
+/* محتوا */
+
+.wd-config-item-body {
+  padding: 20px;
+  max-height: calc(100vh - 130px);
+  overflow-y: auto;
+}
+
+/* موبایل */
+
+@media (max-width: 600px) {
+
+  .wd-config-item-container {
+    width: calc(100vw - 20px);
+    max-height: calc(100vh - 20px);
+  }
+
+  .wd-config-item-body {
+    padding: 15px;
+  }
+
 }
 
 /* موفقیت */
@@ -3708,14 +3792,15 @@ button {
   background: #dc2626;
   color: #ffffff;
 }
+
 /* =========================================
    فیلدهای فرم ویرایش آیتم
    ========================================= */
 
-   .wd-edit-item-container .wd-edit-item-fields {
-    display: grid;
-    width: 100%;
-    gap: 16px;
+.wd-edit-item-container .wd-edit-item-fields {
+  display: grid;
+  width: 100%;
+  gap: 16px;
 }
 
 
@@ -3724,8 +3809,8 @@ button {
    ========================================= */
 
 .wd-edit-item-container .wd-edit-item-field {
-    width: 100%;
-    min-width: 0;
+  width: 100%;
+  min-width: 0;
 }
 
 
@@ -3734,9 +3819,9 @@ button {
    ========================================= */
 
 .wd-edit-item-container .wd-edit-item-field .wd-input-box {
-    width: 100%;
-    min-width: 0;
-    box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 
@@ -3744,10 +3829,8 @@ button {
    1 فیلد
    ========================================= */
 
-.wd-edit-item-container .wd-edit-item-fields:has(
-    > .wd-edit-item-field:nth-child(1):last-child
-) {
-    grid-template-columns: 1fr;
+.wd-edit-item-container .wd-edit-item-fields:has(> .wd-edit-item-field:nth-child(1):last-child) {
+  grid-template-columns: 1fr;
 }
 
 
@@ -3756,10 +3839,8 @@ button {
    راست و چپ
    ========================================= */
 
-.wd-edit-item-container .wd-edit-item-fields:has(
-    > .wd-edit-item-field:nth-child(2):last-child
-) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+.wd-edit-item-container .wd-edit-item-fields:has(> .wd-edit-item-field:nth-child(2):last-child) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 
@@ -3768,10 +3849,8 @@ button {
    راست - وسط - چپ
    ========================================= */
 
-.wd-edit-item-container .wd-edit-item-fields:has(
-    > .wd-edit-item-field:nth-child(3):last-child
-) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+.wd-edit-item-container .wd-edit-item-fields:has(> .wd-edit-item-field:nth-child(3):last-child) {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 
@@ -3780,10 +3859,8 @@ button {
    دو تا در هر سطر
    ========================================= */
 
-.wd-edit-item-container .wd-edit-item-fields:has(
-    > .wd-edit-item-field:nth-child(4):last-child
-) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+.wd-edit-item-container .wd-edit-item-fields:has(> .wd-edit-item-field:nth-child(4):last-child) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 
@@ -3792,33 +3869,31 @@ button {
    سه تا در هر سطر
    ========================================= */
 
-.wd-edit-item-container .wd-edit-item-fields:has(
-    > .wd-edit-item-field:nth-child(5):last-child
-),
-.wd-edit-item-container .wd-edit-item-fields:has(
-    > .wd-edit-item-field:nth-child(6):last-child
-) {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+.wd-edit-item-container .wd-edit-item-fields:has(> .wd-edit-item-field:nth-child(5):last-child),
+.wd-edit-item-container .wd-edit-item-fields:has(> .wd-edit-item-field:nth-child(6):last-child) {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 @media (max-width: 576px) {
 
-    .wd-edit-item-container .wd-edit-item-fields {
-        grid-template-columns: 1fr !important;
-    }
+  .wd-edit-item-container .wd-edit-item-fields {
+    grid-template-columns: 1fr !important;
+  }
 
 }
+
 .wd-edit-item-container .wd-selection-close i {
   font-size: 20px;
   color: #ffffff;
 }
+
 /* مودال‌هایی که فقط یک ورودی دارند */
 
-.wd-edit-item-modal.wd-single-field-modal
-.wd-edit-item-container {
-    width: 300px;
-    max-width: calc(100vw - 30px);
+.wd-edit-item-modal.wd-single-field-modal .wd-edit-item-container {
+  width: 300px;
+  max-width: calc(100vw - 30px);
 }
+
 /* Body */
 .wd-edit-item-body {
   padding: 24px;
@@ -4108,7 +4183,7 @@ button {
 
 /* Body */
 .wd-delete-item-body {
-  padding: 24px;
+  padding: 5px 0px 20px 0px;
 }
 
 /* متن حذف */
@@ -4143,7 +4218,7 @@ button {
   align-items: center;
   justify-content: center;
   gap: 12px;
-  margin-top: 24px;
+  margin-top: 15px;
 }
 
 .wd-delete-item-actions .wd-delete-item-confirm {
@@ -4215,4 +4290,160 @@ button {
   content: " - ";
   color: #fca5a5;
   margin-left: 8px;
+}
+
+/* فرم جزئیات Canvas */
+.wd-unit-details {
+  /* position: fixed; */
+  width: 270px;
+  max-width: calc(100vw - 30px);
+  max-height: calc(100vh - 30px);
+  background: #ffffff;
+  border-radius: 14px;
+  overflow: hidden;
+  direction: rtl;
+  z-index: 999999;
+  box-sizing: border-box;
+  border: 1px solid #e5e7eb;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  padding: 15px;
+}
+
+/* هدر فرم */
+.wd-unit-details>.wd-right-brand {
+  width: 100%;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 14px 16px;
+  box-sizing: border-box;
+}
+
+.wd-unit-details .wd-right-brand-inner {
+  width: 100%;
+}
+
+.wd-unit-details .wd-right-site-info-addedit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.wd-unit-details .wd-right-site-title {
+  display: block;
+  color: #1f2937;
+  font-size: 17px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.wd-unit-details .wd-selection-close {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: none;
+  background: #ef4444;
+  color: #ffffff;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.wd-unit-details .wd-selection-close:hover {
+  background: #dc2626;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+}
+
+.wd-unit-details .wd-selection-close i {
+  font-size: 20px;
+  color: #ffffff;
+}
+
+
+/* فیلدها */
+.wd-unit-details .wd-form-line {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.wd-unit-details .wd-form-line:last-child {
+  margin-bottom: 0;
+}
+
+.wd-unit-details .wd-form-label {
+  display: block;
+  margin-bottom: 7px;
+  color: #1f2937;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+/* Select */
+.wd-unit-details .wd-select-box {
+  width: 100%;
+  min-width: 0;
+  height: 40px;
+  padding: 8px 10px;
+  box-sizing: border-box;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #1f2937;
+  font-family: "IRANSansWeb", sans-serif;
+  font-size: 12px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.wd-unit-details .wd-select-box:hover {
+  border-color: #d1d5db;
+}
+
+.wd-unit-details .wd-select-box:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.08);
+}
+
+
+.wd-unit-details::-webkit-scrollbar {
+  width: 6px;
+}
+
+.wd-unit-details::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+
+.wd-unit-details::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 10px;
+}
+
+.wd-unit-details::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+/* موبایل */
+@media (max-width: 576px) {
+  .wd-unit-details {
+    width: calc(100vw - 30px);
+    max-width: calc(100vw - 30px);
+  }
+
+  .icon-3d {
+    width: 30px;
+    height: 30px;
+  }
+
+  .icon-mullian-v3 {
+    width: 30px;
+    height: 30px;
+  }
 }

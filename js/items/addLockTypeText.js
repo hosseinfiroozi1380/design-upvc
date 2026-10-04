@@ -8,21 +8,26 @@ export function addLockTypeText(item) {
     }
     let textToAdd = '';
     if (item.data.lockType == "service") {
-        textToAdd = 'Service';
+        textToAdd = 'سرویس';
     } else if (item.data.lockType == "serviceWithToope") {
-        textToAdd = 'Service with Plug';
+        textToAdd = 'سرویس با توپی';
     } else if (item.data.lockType == "winDoorType") {
-        textToAdd = 'Two Side Lock';
+        textToAdd = 'قفل دوطرفه';
     } else if (item.data.lockType == "doorWinlock") {
-        textToAdd = 'Win Lock on Door outwards';
+        textToAdd = 'قفل وین درب بیرون‌بازشو';
     } else if (item.data.lockType == "doorWinlock2") {
-        textToAdd = 'Win Lock on Door inwards';
+        textToAdd = 'قفل وین درب داخل‌بازشو';
     }
-    let text = new paper.PointText(new state.paper.Point(item.bounds.centerX, item.bounds.centerY + 50));
+    let text = new state.paper.PointText(
+        item.bounds.center
+    );
+    
     text.content = textToAdd;
-    text.fillColor = "red";
+    text.fillColor = state.glColor;
     text.justification = "center";
+    text.fontFamily = "IRANSansWeb";
     text.fontSize = 35;
-    text.name = 'lock';
+    text.name = "lock";
+    
     item.parent.addChild(text);
 }

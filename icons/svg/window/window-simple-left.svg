@@ -1,9 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30">
-  <g>
-    <rect x="2.2" y="7" transform="matrix(0.8812 -0.4728 0.4728 0.8812 -1.5944 8.6907)" width="28.5" height="1" />
-    <rect x="15.8" y="7.1" transform="matrix(0.4997 -0.8662 0.8662 0.4997 -10.3801 24.8027)" width="1" height="28.5" />
-    <rect x="0.8" y="11" width="3.6" height="8.1" />
-    <path d="M30,30H0V0h30V30z M1,29H29V1H1V29z" />
-    <path d="M26,25.9H3.5V3.7H26V25.9z M4.4,25h20.8V4.6H4.4V25z" />
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="60" height="60" aria-label="Preview rectangle diagonal left">
+  <rect x="10" y="10" width="180" height="180" fill="white" stroke="#000" stroke-width="0.8"/>
+  <rect x="20" y="20" width="160" height="160" fill="#8acde8" stroke="#000" stroke-width="0.8"/>
+  <rect x="10" y="80" width="14" height="40" fill="#555"/>
+  <rect x="180" y="25" width="8" height="20" rx="2" fill="#555"/>
+  <rect x="180" y="155" width="8" height="20" rx="2" fill="#555"/>
+  <path d="M10 10 L20 20
+             M190 10 L180 20
+             M10 190 L20 180
+             M190 190 L180 180" fill="none" stroke="#000" stroke-width="0.8"/>
+  <path d="M180 20 L24 100
+             M180 180 L24 100" fill="none" stroke="#0611dd" stroke-width="1.2"/>
 </svg>

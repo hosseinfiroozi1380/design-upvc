@@ -2,10 +2,14 @@
   <path d="M 7 193
     Q 18 70 100 20
     Q 182 70 193 193
-    Z" fill="white" stroke="black" stroke-width="0.5"/>
+    Z" fill="white" stroke="#888" stroke-width="0.5"/>
 
-  <path d="M 20 180
-    Q 32 82 100 35
-    Q 168 82 180 180
-    Z" fill="#4FC3F7" stroke="black" stroke-width="0.5"/>
+  <path d="M 25 180
+    Q 36 88 100 42
+    Q 164 88 175 180
+    Z" fill="#8acde8" stroke="#888" stroke-width="0.5"/>
+
+  <path d="M 7 193 L 25 180
+    M 193 193 L 175 180
+    M 100 20 L 100 42" fill="none" stroke="#888" stroke-width="0.5"/>
 </svg>

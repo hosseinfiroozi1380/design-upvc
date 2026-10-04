@@ -205,10 +205,10 @@ export function init3D(containerId = "3d") {
     alpha: false,
     powerPreference: "high-performance",
     logarithmicDepthBuffer: true,
-});
-renderer.setPixelRatio(
-  Math.min(window.devicePixelRatio, 1.25)
-);
+  });
+  renderer.setPixelRatio(
+    Math.min(window.devicePixelRatio, 1.25)
+  );
   renderer.setSize(
     width,
     height
@@ -757,7 +757,7 @@ async function build3DFromSVG(
       // شیشه
       if (type === "glass") {
         material = new THREE.MeshStandardMaterial({
-          color: 0x2196f3,
+          color: svgColor || currentGlassColor,
           roughness: 0.12,
           metalness: 0.02,
           transparent: true,
@@ -846,25 +846,25 @@ async function build3DFromSVG(
             1
           );
           const panelEdgeMaterial =
-    new THREE.LineBasicMaterial({
-        color: 0x9ca3af,
-        transparent: true,
-        opacity: 0.30,
-        depthTest: true,
-        depthWrite: false
-    });
+            new THREE.LineBasicMaterial({
+              color: 0x9ca3af,
+              transparent: true,
+              opacity: 0.30,
+              depthTest: true,
+              depthWrite: false
+            });
           const panelEdgeLines =
-          new THREE.LineSegments(
+            new THREE.LineSegments(
               panelEdgeGeometry,
               panelEdgeMaterial
-          );
-      
-      panelEdgeLines.renderOrder = 20;
-      
-      // جلوگیری از تداخل خط با سطح پنل
-      panelEdgeLines.position.z = 0.5;
-      
-      mesh.add(panelEdgeLines);
+            );
+
+          panelEdgeLines.renderOrder = 20;
+
+          // جلوگیری از تداخل خط با سطح پنل
+          panelEdgeLines.position.z = 0.5;
+
+          mesh.add(panelEdgeLines);
         }
         // مرز فریم‌ها
         if (type === "frame") {
@@ -965,25 +965,25 @@ async function build3DFromSVG(
               )
             );
             const edgeMaterial =
-    new THREE.LineBasicMaterial({
-        color: 0x9ca3af,
-        transparent: true,
-        opacity: 0.32,
-        depthTest: true,
-        depthWrite: false
-    });
-              const edgeLines =
+              new THREE.LineBasicMaterial({
+                color: 0x9ca3af,
+                transparent: true,
+                opacity: 0.32,
+                depthTest: true,
+                depthWrite: false
+              });
+            const edgeLines =
               new THREE.LineSegments(
-                  filteredGeometry,
-                  edgeMaterial
+                filteredGeometry,
+                edgeMaterial
               );
-          
-          edgeLines.renderOrder = 10;
-          
-          // کمی جلوتر از سطح قرار می‌گیرد
-          edgeLines.position.z = 0.5;
-          
-          mesh.add(edgeLines);
+
+            edgeLines.renderOrder = 10;
+
+            // کمی جلوتر از سطح قرار می‌گیرد
+            edgeLines.position.z = 0.5;
+
+            mesh.add(edgeLines);
           }
         }
         // قرار دادن قطعات بازشو در گروه مخصوص خودشان

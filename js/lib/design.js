@@ -1221,7 +1221,7 @@ window.onload = function () {
                     //first Draw a test Line for find future flats
                     let from = new paper.Point(paper.project.activeLayer.bounds.left, toAddCenterPosition);
                     let to = new paper.Point(paper.project.activeLayer.bounds.right, toAddCenterPosition);
-                    let tempLine = new state.paper.Path.Line(from, to);
+                    let tempLine = new state.paper.instance.Path.Line(from, to);
                     tempLine.name = "temp";
                     // tempLine.strokeColor = 'black';
 
@@ -1243,7 +1243,7 @@ window.onload = function () {
                     //first Draw a test Line for find future flats
                     let from = new paper.Point(toAddCenterPosition, paper.project.activeLayer.bounds.top);
                     let to = new paper.Point(toAddCenterPosition, paper.project.activeLayer.bounds.bottom);
-                    let tempLine = new state.paper.Path.Line(from, to);
+                    let tempLine = new state.paper.instance.Path.Line(from, to);
                     tempLine.name = "temp";
                     //tempLine.strokeColor = 'black';
 
@@ -2330,19 +2330,19 @@ window.onload = function () {
             //add Opening Line
             let from = [frameToAdd.bounds.rightCenter.x - frameToAdd.bounds.width / 5, frameToAdd.bounds.rightCenter.y + frameToAdd.bounds.height / 3];
             let to = [frameToAdd.bounds.leftCenter.x + frameToAdd.bounds.width / 5, frameToAdd.bounds.leftCenter.y + frameToAdd.bounds.height / 3];
-            let olPath = new state.paper.Path.Line(from, to);
+            let olPath = new state.paper.instance.Path.Line(from, to);
             olPath.strokeColor = olColor;
             olPath.strokeWidth = 2;
             olPath.name = 'ol';
             frameToAdd.addChild(olPath);
             from = [to[0] + 100, to[1] - 100];
-            olPath = new state.paper.Path.Line(from, to);
+            olPath = new state.paper.instance.Path.Line(from, to);
             olPath.strokeColor = olColor;
             olPath.strokeWidth = 2;
             olPath.name = 'ol';
             frameToAdd.addChild(olPath);
             from = [to[0] + 100, to[1] + 100];
-            olPath = new state.paper.Path.Line(from, to);
+            olPath = new state.paper.instance.Path.Line(from, to);
             olPath.strokeColor = olColor;
             olPath.strokeWidth = 2;
             olPath.name = 'ol';
@@ -2358,19 +2358,19 @@ window.onload = function () {
             //add Opening Line
             let from = [frameToAdd.bounds.leftCenter.x + frameToAdd.bounds.width / 5, frameToAdd.bounds.leftCenter.y + frameToAdd.bounds.height / 3];
             let to = [frameToAdd.bounds.rightCenter.x - frameToAdd.bounds.width / 5, frameToAdd.bounds.rightCenter.y + frameToAdd.bounds.height / 3];
-            let olPath = new state.paper.Path.Line(from, to);
+            let olPath = new state.paper.instance.Path.Line(from, to);
             olPath.strokeColor = olColor;
             olPath.strokeWidth = 2;
             olPath.name = 'ol';
             frameToAdd.addChild(olPath);
             from = [to[0] - 100, to[1] - 100];
-            olPath = new state.paper.Path.Line(from, to);
+            olPath = new state.paper.instance.Path.Line(from, to);
             olPath.strokeColor = olColor;
             olPath.strokeWidth = 2;
             olPath.name = 'ol';
             frameToAdd.addChild(olPath);
             from = [to[0] - 100, to[1] + 100];
-            olPath = new state.paper.Path.Line(from, to);
+            olPath = new state.paper.instance.Path.Line(from, to);
             olPath.strokeColor = olColor;
             olPath.strokeWidth = 2;
             olPath.name = 'ol';

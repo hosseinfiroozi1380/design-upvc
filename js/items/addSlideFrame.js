@@ -36,14 +36,6 @@ export function addSlideFrame(flatToAdd, frameSize, overlaps, data = false) { //
     }
     windowsFrame.data.profile_width = frameSize;
     windowsFrame.data.profile_width = frameSize;
-    let tween = windowsFrame.tweenTo({
-        fillColor: state.tweenFillColor
-    }, 250);
-    tween.then(function () {
-        windowsFrame.tweenTo({
-            fillColor: state.frameColor
-        }, 250);
-    });
     $.each(windowsFrame.children[0].segments, function (key, value) {
         windowsFrame.moveTo(value.point);
         var nearestPoint = windowsFrame.children[1].getNearestPoint(value.point);

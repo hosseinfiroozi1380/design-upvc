@@ -3,6 +3,8 @@ import state from "../core/state.js";
 import { calculate } from "../utils/calculate.js";
 import { loadLayerList } from "./loadLayerList.js";
 import { set3D } from "../utils/set3D.js";
+
+const saveProjectRoute = "#";
 export function saveDesign(designID = false, silence = false) {
     $('#rightCanvas').offcanvas('hide');
     return new Promise((resolve, reject) => {

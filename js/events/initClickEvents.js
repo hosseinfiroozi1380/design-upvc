@@ -32,6 +32,65 @@ import { changeTempLayerById } from "../utils/changeTempLayerById.js";
 import { updateTempDesignSnapshot } from "../utils/updateTempDesignSnapshot.js";
 import { exportDesignPDF } from "../utils/exportDesignPDF.js";
 export function initClickEvents() {
+    // دکمه‌های جدید - فعلاً غیرفعال
+    $(document).off(
+        "click",
+        "#copyButton, #viewButton, #lockButton, #mirrorButton, #widthRulerButton, #heightRulerButton, #deleteButton"
+    );
+    $(document).on(
+        "click",
+        "#copyButton, #viewButton, #lockButton, #mirrorButton, #widthRulerButton, #heightRulerButton, #deleteButton",
+        function (e) {
+            e.preventDefault();
+            showMessage(
+                "این بخش به‌زودی در دسترس خواهد بود.",
+                "info"
+            );
+            return false;
+        }
+    );
+    // کنترل دکمه‌های زوم، بازنشانی، Undo و Redo
+    $(document).off(
+        "click",
+        "#zoomOutButton, #zoomInButton, #resetButton, #undoButton, #redoButton"
+    );
+
+    $(document).on(
+        "click",
+        "#zoomOutButton, #zoomInButton, #resetButton, #undoButton, #redoButton",
+        function (e) {
+            const project = state.paper?.project;
+            const activeLayer = project?.activeLayer;
+
+            const mainFrame = activeLayer?.getItems({
+                name: "mainFrame"
+            }) || [];
+
+            const sections = activeLayer?.getItems({
+                name: "section"
+            }) || [];
+
+            // هنوز هیچ طراحی در Canvas ایجاد نشده
+            if (
+                !project ||
+                !activeLayer ||
+                (
+                    mainFrame.length === 0 &&
+                    sections.length === 0
+                )
+            ) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+
+                showMessage(
+                    "برای استفاده از این بخش، ابتدا یک آیتم طراحی و به لیست اضافه کنید.",
+                    "error"
+                );
+
+                return false;
+            }
+        }
+    );
     // محاسبات
     $(document).off("click", ".wd-main-tool");
     $(document).on("click", ".wd-main-tool", function (e) {

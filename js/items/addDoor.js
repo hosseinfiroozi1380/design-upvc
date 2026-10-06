@@ -11,7 +11,140 @@ import { enableSave } from "../services/enableSave.js";
 import { drawDoorOpeningLines } from "../drawing/drawDoorOpeningLines.js";
 import { updateTempDesignSnapshot } from "../utils/updateTempDesignSnapshot.js";
 import { updateLayerPreview } from "../utils/updateLayerPreview.js";
-
+// ساخت قسمت وسط و چهار نیم‌ساز شیشه
+function createGlassBorders(glassShape, group) {
+    const blackWidth = 1.5;
+    const whiteWidth = 12;
+    const innerBlackWidth = 1.5;
+    const glassBorders =
+        new state.paper.Group();
+    glassBorders.name =
+        "glassBorders";
+    glassBorders.data.glassId =
+        glassShape.id;
+    // لایه مشکی بیرونی
+    const outerBlackInner =
+        PaperOffset.offset(
+            glassShape,
+            -blackWidth
+        );
+    if (!outerBlackInner) {
+        return null;
+    }
+    const outerBlack =
+        glassShape.subtract(
+            outerBlackInner
+        );
+    outerBlack.fillColor =
+        "#222222";
+    outerBlack.strokeColor =
+        null;
+    outerBlack.name =
+        "glassOuterBlack";
+    glassBorders.addChild(
+        outerBlack
+    );
+    // قسمت سفید / وسط
+    const whiteInner =
+        PaperOffset.offset(
+            outerBlackInner,
+            -whiteWidth
+        );
+    if (!whiteInner) {
+        outerBlackInner.remove();
+        return glassBorders;
+    }
+    const whiteBorder =
+        outerBlackInner.subtract(
+            whiteInner
+        );
+    whiteBorder.fillColor =
+        "#ffffff";
+    whiteBorder.strokeColor =
+        null;
+    whiteBorder.name =
+        "glassWhiteBorder";
+    glassBorders.addChild(
+        whiteBorder
+    );
+    // چهار نیم‌ساز گوشه
+    const outerBounds =
+        outerBlackInner.bounds;
+    const innerBounds =
+        whiteInner.bounds;
+    const cornerGroup =
+        new state.paper.Group();
+    cornerGroup.name =
+        "glassCornerBisectors";
+    const corners = [
+        [
+            [outerBounds.left, outerBounds.top],
+            [innerBounds.left, innerBounds.top]
+        ],
+        [
+            [outerBounds.right, outerBounds.top],
+            [innerBounds.right, innerBounds.top]
+        ],
+        [
+            [outerBounds.left, outerBounds.bottom],
+            [innerBounds.left, innerBounds.bottom]
+        ],
+        [
+            [outerBounds.right, outerBounds.bottom],
+            [innerBounds.right, innerBounds.bottom]
+        ]
+    ];
+    corners.forEach(points => {
+        const line =
+            new state.paper.Path.Line({
+                from: points[0],
+                to: points[1]
+            });
+        line.strokeColor =
+            "#222222";
+        line.strokeWidth =
+            1.5;
+        line.strokeCap =
+            "butt";
+        line.name =
+            "glassCornerBisector";
+        cornerGroup.addChild(
+            line
+        );
+    });
+    glassBorders.addChild(
+        cornerGroup
+    );
+    // خط مشکی داخلی
+    const innerBlackInner =
+        PaperOffset.offset(
+            whiteInner,
+            -innerBlackWidth
+        );
+    if (innerBlackInner) {
+        const innerBlack =
+            whiteInner.subtract(
+                innerBlackInner
+            );
+        innerBlack.fillColor =
+            "#222222";
+        innerBlack.strokeColor =
+            null;
+        innerBlack.name =
+            "glassInnerBlack";
+        glassBorders.addChild(
+            innerBlack
+        );
+        innerBlackInner.remove();
+    }
+    // اضافه کردن به گروه درب
+    group.addChild(
+        glassBorders
+    );
+    outerBlackInner.remove();
+    whiteInner.remove();
+    return glassBorders;
+}
 //add Door function
 export function addDoor(
     addNewItemType,
@@ -26,8 +159,8 @@ export function addDoor(
     }
     rebuildAccessoryMenu(addNewItemType);
     let testframeSizeDoor = (data && data.profile)
-    ? data.profile.profile_width
-    : state.firstDoorSash_width;
+        ? data.profile.profile_width
+        : state.firstDoorSash_width;
     if (!testframeSizeDoor) {
         showMessage(
             'بنظر می رسد این پروفیل شامل سش درب نمی باشد. اگر این مورد اشتباه است به مدیریت جهت اصلاح اطلاع دهید.'
@@ -113,12 +246,38 @@ export function addDoor(
         if (data && data.flatFillColor) {
             windowsFlat.fillColor = data.flatFillColor;
         }
-        let windowsFrame = flatToAddNew.subtract(windowsFlat);
-        windowsFrame.strokeColor = state.strokeColor;
-        windowsFrame.fillColor = state.frameColor;
-        windowsFrame.name = "doorFrame";
-        windowsFrame.shadowColor = state.shadowColor;
-        windowsFrame.shadowBlur = state.shadowBlur;
+        let windowsFrame =
+            flatToAddNew.subtract(
+                windowsFlat
+            );
+        windowsFrame.strokeColor =
+            state.strokeColor;
+        windowsFrame.strokeWidth = 2;
+        windowsFrame.fillColor =
+            state.frameColor;
+        windowsFrame.name =
+            "doorFrame";
+        // سایه فریم در
+        // windowsFrame.shadowColor = state.shadowColor;
+        // windowsFrame.shadowBlur = state.shadowBlur;
+        // پررنگ کردن مرزهای خود فریم درب
+        if (
+            windowsFrame.children &&
+            windowsFrame.children.length >= 2
+        ) {
+            windowsFrame.children[0].strokeColor =
+                state.strokeColor;
+            windowsFrame.children[0].strokeWidth =
+                3;
+            windowsFrame.children[1].strokeColor =
+                state.strokeColor;
+            windowsFrame.children[1].strokeWidth =
+                3;
+        }
+        setDefaultData(
+            windowsFrame,
+            windowsFrame.name
+        );
         setDefaultData(
             windowsFrame,
             windowsFrame.name
@@ -134,32 +293,71 @@ export function addDoor(
         ) {
             windowsFrame.children[index].name = 'dframeInOut';
         }
-        $.each(
-            windowsFrame.children[0].segments,
-            function (key, value) {
-                if (
-                    value.handleIn.angle == 0 &&
-                    value.handleOut.angle == 0
-                ) {
-                    let nearestPoint =
-                        windowsFrame.children[1]
-                        .getNearestPoint(value.point);
-                    if (nearestPoint) {
-                        let frameCutLine =
-                            new state.paper.Path.Line({
-                                from: value.point,
-                                to: nearestPoint,
-                                name: 'frameCutLine'
-                            });
-                        windowsFrame.addChild(frameCutLine);
+        // چهار نیم‌ساز گوشه فریم درب
+        if (
+            windowsFrame.children &&
+            windowsFrame.children.length >= 2
+        ) {
+            windowsFrame.children.forEach(child => {
+                child.name =
+                    "dframeInOut";
+                child.strokeColor =
+                    state.strokeColor;
+                child.strokeWidth =
+                    3;
+            });
+            windowsFrame.children[0].segments.forEach(
+                segment => {
+                    const isStraight =
+                        segment.handleIn.angle === 0 &&
+                        segment.handleOut.angle === 0;
+                    if (!isStraight) {
+                        return;
                     }
+                    const nearestPoint =
+                        windowsFrame.children[1]
+                            .getNearestPoint(
+                                segment.point
+                            );
+                    if (!nearestPoint) {
+                        return;
+                    }
+                    const frameCutLine =
+                        new state.paper.Path.Line({
+                            from: segment.point,
+                            to: nearestPoint
+                        });
+                    frameCutLine.name =
+                        "frameCutLine";
+                    frameCutLine.strokeColor =
+                        state.strokeColor;
+                    frameCutLine.strokeWidth =
+                        3;
+                    frameCutLine.strokeCap =
+                        "butt";
+                    windowsFrame.addChild(
+                        frameCutLine
+                    );
                 }
-            }
-        );
+            );
+        }
         DoorsGroup.name = addNewItemType;
-        DoorsGroup.addChild(windowsFrame);
-        DoorsGroup.addChild(windowsFlat);
-        addLockTypeText(windowsFrame);
+        // فریم درب
+        DoorsGroup.addChild(
+            windowsFrame
+        );
+        // شیشه
+        DoorsGroup.addChild(
+            windowsFlat
+        );
+        // قسمت وسط + چهار نیم‌ساز
+        createGlassBorders(
+            windowsFlat,
+            DoorsGroup
+        );
+        addLockTypeText(
+            windowsFrame
+        );
         let HingePosition = false;
         let HandlePosition = false;
         let olType = false;
@@ -196,11 +394,12 @@ export function addDoor(
             HandlePosition,
             false
         );
-        
         if (HandlePosition !== "invisible") {
             drawDoorOpeningLines(
                 HandlePosition,
-                DoorsGroup
+                DoorsGroup,
+                addNewItemType === "door_dual_right" ||
+                addNewItemType === "door_dual_left"
             );
         }
         flatToAdd.name = "base";

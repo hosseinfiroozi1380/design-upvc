@@ -1,4 +1,4 @@
-// js/utils/
+// js/utils/updateTempDesignSnapshot.js
 import state from "../core/state.js";
 export function updateTempDesignSnapshot() {
  if (!state.currentDesignID) return;

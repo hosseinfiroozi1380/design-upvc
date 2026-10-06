@@ -4,28 +4,37 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>عایق فیروز | طراحی درب و پنجره</title>
+  <script>
+    if (
+      sessionStorage.getItem("projectInfoAccess") !== "true"
+    ) {
+      window.location.replace("./project-info.html");
+    }
+    // مصرف اجازه ورود
+    sessionStorage.removeItem("projectInfoAccess");
+  </script>
   <!-- لوگوی سایت در تب مرورگر -->
   <link rel="icon" type="image/svg+xml" href="./icons/favicon.svg" />
   <link rel="stylesheet" href="https://cdn.lineicons.com/4.0/lineicons.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabler-icons/3.44.0/tabler-icons.min.css" />
   <link rel="stylesheet" href="./css/style.css" />
   <link rel="stylesheet" href="./css/sweetalert2.css" />
-  <script src="./js/script.js" defer></script>
+  <script type="module" src="./js/script.js" defer></script>
   <!-- Libraries -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-mousewheel/3.1.13/jquery.mousewheel.min.js"></script>
-  <!-- Paper -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.15/paper-full.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/paperjs-offset@2/dist/index.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.7/hammer.min.js"></script>
-  <!-- UI Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta19/dist/js/tabler.min.js"></script>
-  <!-- Application -->
-  <script type="module" src="./js/lib/3d.js"></script>
+  
   <script src="./js/lib/jspdf.umd.min.js"></script>
   <script src="./js/lib/jspdf.plugin.autotable.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  
+  <script type="module" src="./js/lib/3d.js"></script>
   <script type="module" src="./js/app.js"></script>
+  <script type="module" src="./js/script.js"></script>
 </head>
 <body>
   <!-- موبایل -->
@@ -347,7 +356,7 @@
             </svg>
           </div>
           <div class="wd-right-site-info">
-            <strong class="wd-right-site-title">عایق فیروز</strong>
+            <strong class="wd-right-site-name">عایق فیروز</strong>
             <span class="wd-right-site-subtitle">طراحی درب و پنجره</span>
           </div>
           <!-- دکمه بستن مخصوص موبایل -->
@@ -472,7 +481,9 @@
             <i class="ti ti-user"></i>
           </div>
           <div class="wd-user-info">
-            <strong class="wd-user-name">حسین فیروزی</strong>
+            <strong class="wd-user-name" id="projectDisplayName">
+              نارشناس
+            </strong>
             <span class="wd-user-role">کاربر</span>
           </div>
           <!-- دکمه بستن مخصوص موبایل -->
@@ -534,12 +545,11 @@
             <button type="button" class="wd-left-bottom-button layerConfig" title="ویرایش">
               <i class="lni lni-pencil"></i>
             </button>
-        
             <button type="button" class="wd-left-bottom-button wd-left-delete-all clearDesign" title="حذف همه"
-                data-bs-dismiss="offcanvas">
-                <i class="ti ti-trash-x"></i>
+              data-bs-dismiss="offcanvas">
+              <i class="ti ti-trash-x"></i>
             </button>
-        </div>
+          </div>
           <div class="wd-unit-detail-note">
             برای جزئیات هر آیتم بر روی آن کلیک کنید.
           </div>
@@ -1810,5 +1820,24 @@
       </section>
     </div>
   </aside>
+  <script>
+    const projectInfo =
+      sessionStorage.getItem("projectInfo");
+    if (projectInfo) {
+      const projectData =
+        JSON.parse(projectInfo);
+      const projectDisplayName =
+        document.getElementById(
+          "projectDisplayName"
+        );
+      if (
+        projectDisplayName &&
+        projectData.projectName
+      ) {
+        projectDisplayName.textContent =
+          projectData.projectName;
+      }
+    }
+  </script>
 </body>
 </html>

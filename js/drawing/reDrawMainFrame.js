@@ -19,7 +19,8 @@ export function reDrawMainFrame(section, changeSize = false) {
             Number(changeSize[1]) > 6000
         ) {
             showMessage(
-                'لطفا ابعاد معتبری وارد نمایید. حداقل 200 حداکثر 6000 میلیمتر'
+                "لطفا ابعاد معتبری وارد نمایید. حداقل 200 حداکثر 6000 میلیمتر",
+                "error"
             );
             return false;
         }

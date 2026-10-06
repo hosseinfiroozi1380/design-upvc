@@ -52,18 +52,70 @@ export function deleteItem(toDeleteItem) {
         } else {
             showMessage('پنل حذف پیدا نشد!');
         }
-    } else if (toDeleteItem.name.indexOf('Panel') !== -1 || toDeleteItem.name.indexOf('window_') !== -1 || toDeleteItem.name.indexOf('door_') !== -1) {
-        let findedBase = toDeleteItem.parent.getItem({
-            name: "base"
-        });
-        if (findedBase) {
-            //remeber depencies
-            $.each(toDeleteItem.children, function (key, item) {
-                state.removedDependenceMemory.push(item);
+    } else if (
+        toDeleteItem.name.indexOf('Panel') !== -1 ||
+        toDeleteItem.name === 'panelItem' ||
+        toDeleteItem.name.indexOf('window_') !== -1 ||
+        toDeleteItem.name.indexOf('door_') !== -1
+    ) {
+        let baseGroup = toDeleteItem.parent;
+        if (
+            toDeleteItem.name === 'panelItem' &&
+            baseGroup &&
+            (
+                baseGroup.name === 'vPanel' ||
+                baseGroup.name === 'hPanel'
+            )
+        ) {
+            baseGroup = baseGroup.parent;
+        }
+        let findedBase = null;
+        if (baseGroup) {
+            findedBase = baseGroup.getItem({
+                name: "base"
             });
+            if (!findedBase && baseGroup.parent) {
+                baseGroup = baseGroup.parent;
+                findedBase = baseGroup.getItem({
+                    name: "base"
+                });
+            }
+        }
+        if (findedBase) {
+            // remember dependencies
+            $.each(
+                toDeleteItem.children || [],
+                function (key, item) {
+                    state.removedDependenceMemory.push(item);
+                }
+            );
+            // clone original glass
             let baseToFlat = findedBase.clone();
-            baseToFlat.moveAbove(findedBase.parent);
+            baseToFlat.moveAbove(
+                findedBase.parent
+            );
             baseToFlat.name = "flat";
+            // glass borders belong to the restored glass
+            if (state.mainSection) {
+                const glassBorders =
+                    state.mainSection.getItems({
+                        name: "glassBorders"
+                    });
+                glassBorders.forEach(border => {
+                    if (
+                        border.data &&
+                        border.data.glassId === findedBase.id
+                    ) {
+                        border.data.glassId =
+                            baseToFlat.id;
+                        // keep border with restored glass
+                        border.moveAbove(
+                            baseToFlat
+                        );
+                    }
+                });
+            }
+            // remove panel/window/door group
             findedBase.parent.remove();
             return state.removedDependenceMemory;
         }

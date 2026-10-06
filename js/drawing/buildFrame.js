@@ -36,7 +36,6 @@ export function buildFrame(
     if (!isExtension) {
         state.mainSection = new state.paper.Group();
         state.mainSection.name = "section";
-
         state.mainSection.data.designID =
             state.currentDesignID || null;
     }
@@ -77,8 +76,22 @@ export function buildFrame(
             state.mainFrame.children[0].name = "mainFlat";
             state.mainFrame.children[1].name = "mainFlat";
         }
-        state.mainFrame.strokeColor = state.strokeColor;
-        state.mainFrame.fillColor = state.frameColor;
+        state.mainFrame.strokeColor =
+            state.strokeColor;
+        state.mainFrame.strokeWidth = 2;
+        state.mainFrame.fillColor =
+            state.frameColor;
+        if (
+            state.mainFrame.children &&
+            state.mainFrame.children.length >= 2
+        ) {
+            state.mainFrame.children[0].strokeColor =
+                state.strokeColor;
+            state.mainFrame.children[0].strokeWidth = 3;
+            state.mainFrame.children[1].strokeColor =
+                state.strokeColor;
+            state.mainFrame.children[1].strokeWidth = 3;
+        }
         state.mainFrame.name = "mainFrame";
         setDefaultData(
             state.mainFrame,
@@ -102,6 +115,10 @@ export function buildFrame(
                                 to: nearestPoint,
                                 name: "frameCutLine"
                             });
+                        frameCutLine.strokeColor =
+                            state.strokeColor;
+                        frameCutLine.strokeWidth = 3;
+                        frameCutLine.strokeCap = "butt";
                         state.mainFrame.addChild(
                             frameCutLine
                         );
@@ -167,6 +184,10 @@ export function buildFrame(
     state.mainSection.addChild(
         firstFlat
     );
+    createGlassBorders(
+        firstFlat,
+        state.mainSection
+    );
     // CREATE FRAME
     state.mainFrame =
         tmpShape.subtract(
@@ -183,8 +204,20 @@ export function buildFrame(
     }
     state.mainFrame.strokeColor =
         state.strokeColor;
+    state.mainFrame.strokeWidth = 2;
     state.mainFrame.fillColor =
         state.frameColor;
+    if (
+        state.mainFrame.children &&
+        state.mainFrame.children.length >= 2
+    ) {
+        state.mainFrame.children[0].strokeColor =
+            state.strokeColor;
+        state.mainFrame.children[0].strokeWidth = 3;
+        state.mainFrame.children[1].strokeColor =
+            state.strokeColor;
+        state.mainFrame.children[1].strokeWidth = 3;
+    }
     state.mainFrame.name =
         "mainFrame";
     setDefaultData(
@@ -237,6 +270,10 @@ export function buildFrame(
                             name:
                                 "frameCutLine"
                         });
+                    frameCutLine.strokeColor =
+                        state.strokeColor;
+                    frameCutLine.strokeWidth = 3;
+                    frameCutLine.strokeCap = "butt";
                     state.mainFrame.addChild(
                         frameCutLine
                     );
@@ -248,12 +285,92 @@ export function buildFrame(
     state.mainSection.addChild(
         state.mainFrame
     );
-
     state.mainFlat.remove();
     tmpShape.remove();
     // AFTER BUILD
     createGLs();
     createDimensionBar();
     setZoom();
+    // CREATE GLASS BORDER
+    function createGlassBorders(glassShape, section) {
+        const blackWidth = 1.5;
+        const whiteWidth = 12;
+        const innerBlackWidth = 1.5;
+        const glassBorders = new state.paper.Group();
+        glassBorders.name = "glassBorders";
+        glassBorders.data.glassId = glassShape.id;
+        const outerBlackInner = PaperOffset.offset(
+            glassShape,
+            -blackWidth
+        );
+        const outerBlack = glassShape.subtract(
+            outerBlackInner
+        );
+        outerBlack.fillColor = "#222222";
+        outerBlack.strokeColor = null;
+        outerBlack.name = "glassOuterBlack";
+        glassBorders.addChild(outerBlack);
+        const whiteInner = PaperOffset.offset(
+            outerBlackInner,
+            -whiteWidth
+        );
+        const whiteBorder = outerBlackInner.subtract(
+            whiteInner
+        );
+        whiteBorder.fillColor = "#ffffff";
+        whiteBorder.strokeColor = null;
+        whiteBorder.name = "glassWhiteBorder";
+        glassBorders.addChild(whiteBorder);
+        const outerBounds = outerBlackInner.bounds;
+        const innerBounds = whiteInner.bounds;
+        const cornerGroup = new state.paper.Group();
+        cornerGroup.name = "glassCornerBisectors";
+        const corners = [
+            [
+                [outerBounds.left, outerBounds.top],
+                [innerBounds.left, innerBounds.top]
+            ],
+            [
+                [outerBounds.right, outerBounds.top],
+                [innerBounds.right, innerBounds.top]
+            ],
+            [
+                [outerBounds.left, outerBounds.bottom],
+                [innerBounds.left, innerBounds.bottom]
+            ],
+            [
+                [outerBounds.right, outerBounds.bottom],
+                [innerBounds.right, innerBounds.bottom]
+            ]
+        ];
+        corners.forEach(points => {
+            const line = new state.paper.Path.Line({
+                from: points[0],
+                to: points[1]
+            });
+            line.strokeColor = "#222222";
+            line.strokeWidth = 1.5;
+            line.strokeCap = "butt";
+            line.name = "glassCornerBisector";
+            cornerGroup.addChild(line);
+        });
+        glassBorders.addChild(cornerGroup);
+        const innerBlackInner = PaperOffset.offset(
+            whiteInner,
+            -innerBlackWidth
+        );
+        const innerBlack = whiteInner.subtract(
+            innerBlackInner
+        );
+        innerBlack.fillColor = "#222222";
+        innerBlack.strokeColor = null;
+        innerBlack.name = "glassInnerBlack";
+        glassBorders.addChild(innerBlack);
+        section.addChild(glassBorders);
+        outerBlackInner.remove();
+        whiteInner.remove();
+        innerBlackInner.remove();
+        return glassBorders;
+    }
     return state.mainSection;
 }

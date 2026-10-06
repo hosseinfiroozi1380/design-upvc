@@ -74,19 +74,36 @@ export function setZoom() {
     } else {
         padding = 0.45;
     }
-    const usableWidth =
-        cssWidth * padding;
-    const usableHeight =
-        cssHeight * padding;
-    const scaleX =
-        usableWidth / designWidth;
-    const scaleY =
-        usableHeight / designHeight;
-    const scale =
+    // نسبت Canvas
+    const canvasRatio =
+        cssWidth / cssHeight;
+
+    // نسبت طراحی
+    const designRatio =
+        designWidth / designHeight;
+
+    // فضای اصلی برای نمایش
+    const baseSize =
         Math.min(
-            scaleX,
-            scaleY
-        );
+            cssWidth,
+            cssHeight
+        ) * padding;
+
+    // محاسبه زوم بر اساس ضلع کوتاه طراحی
+    let scale;
+
+    if (designRatio >= 1) {
+
+        // طراحی افقی
+        scale =
+            baseSize / designHeight;
+
+    } else {
+
+        // طراحی عمودی
+        scale =
+            baseSize / designWidth;
+    }
     state.paper.view.zoom = scale;
     state.paper.view.center =
         bounds.center;

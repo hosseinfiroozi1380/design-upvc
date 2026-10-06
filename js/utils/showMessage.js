@@ -1,11 +1,15 @@
 // js/utils/showMessage.js
 let messageTimer = null;
+function convertNumbersToPersian(text) {
+    return String(text).replace(/\d/g, function (digit) {
+        return "۰۱۲۳۴۵۶۷۸۹"[digit];
+    });
+}
 export function showMessage(
     textMsg,
     type = "success",
     timer = 2200
 ) {
-    // اگر پیام قبلی وجود دارد حذف شود
     const oldMessage =
         document.querySelector(
             ".wd-system-message"
@@ -16,7 +20,7 @@ export function showMessage(
     if (messageTimer) {
         clearTimeout(messageTimer);
     }
-    // رنگ و آیکون پیام
+    textMsg = convertNumbersToPersian(textMsg);
     let icon = "<i class='lni lni-checkmark-circle'></i>";
     let iconClass = "success";
     if (type === "error") {
@@ -31,7 +35,6 @@ export function showMessage(
         icon = "<i class='wd-info-icon'>i</i>";
         iconClass = "info";
     }
-    // ساخت پیام
     const message =
         document.createElement("div");
     message.className =
@@ -47,11 +50,9 @@ export function showMessage(
         </div>
     `;
     document.body.appendChild(message);
-    // نمایش پیام
     requestAnimationFrame(() => {
         message.classList.add("show");
     });
-    // حذف بعد از زمان مشخص
     messageTimer = setTimeout(() => {
         message.classList.remove("show");
         setTimeout(() => {

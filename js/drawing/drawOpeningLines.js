@@ -66,82 +66,68 @@ export function drawOpeningLines(
         itemGroup.addChild(olPath);
     }
     else if (["dual"].includes(olType)) {
-
         const handleOffset = 25;
-    
         const leftTip = new state.paper.Point(
             itemGroup.bounds.leftCenter.x + handleOffset,
             itemGroup.bounds.leftCenter.y
         );
-    
         const rightTip = new state.paper.Point(
             itemGroup.bounds.rightCenter.x - handleOffset,
             itemGroup.bounds.rightCenter.y
         );
-    
         const topTip = new state.paper.Point(
             itemGroup.bounds.topCenter.x,
             itemGroup.bounds.topCenter.y + handleOffset
         );
-    
+        // خط بازشوی راست / چپ
         if (handlePosition === "left") {
-    
             olPath = new state.paper.Path();
-    
             olPath.moveTo(
                 hingePositions["right"][0] ?? itemGroup.bounds.topRight
             );
-    
             olPath.lineTo(leftTip);
-    
             olPath.lineTo(
-                hingePositions["right"][hingePositions["right"].length - 1]
-                ?? itemGroup.bounds.bottomRight
+                hingePositions["right"][
+                    hingePositions["right"].length - 1
+                ] ?? itemGroup.bounds.bottomRight
             );
-    
             olPath.strokeColor = state.olColor;
             olPath.strokeWidth = 2;
             olPath.name = "ol";
             itemGroup.addChild(olPath);
-    
         } else {
-    
             olPath = new state.paper.Path();
-    
             olPath.moveTo(
                 hingePositions["left"][0] ?? itemGroup.bounds.topLeft
             );
-    
             olPath.lineTo(rightTip);
-    
             olPath.lineTo(
-                hingePositions["left"][hingePositions["left"].length - 1]
-                ?? itemGroup.bounds.bottomLeft
+                hingePositions["left"][
+                    hingePositions["left"].length - 1
+                ] ?? itemGroup.bounds.bottomLeft
             );
-    
             olPath.strokeColor = state.olColor;
             olPath.strokeWidth = 2;
             olPath.name = "ol";
             itemGroup.addChild(olPath);
         }
-    
+        // فقط خط بازشوی رو به بالا
         olPath = new state.paper.Path();
-    
         olPath.moveTo(
-            hingePositions["bottom"][0] ?? itemGroup.bounds.bottomLeft
+            hingePositions["bottom"][0] ??
+            itemGroup.bounds.bottomLeft
         );
-    
         olPath.lineTo(topTip);
-    
         olPath.lineTo(
-            hingePositions["bottom"][hingePositions["bottom"].length - 1]
-            ?? itemGroup.bounds.bottomRight
+            hingePositions["bottom"][
+                hingePositions["bottom"].length - 1
+            ] ?? itemGroup.bounds.bottomRight
         );
-    
         olPath.strokeColor = state.olColor;
         olPath.strokeWidth = 2;
+        // فقط همین خط خط‌چین باشد
+        olPath.style.dashArray = [60, 25];
         olPath.name = "ol";
-    
         itemGroup.addChild(olPath);
     }
     else if (["radial"].includes(olType)) {
@@ -175,36 +161,33 @@ export function drawOpeningLines(
     }
     else if (["volkswagen"].includes(olType)) {
         const offset = 25;
+        const tipLength = 180;
         if (handlePosition === "left") {
             const left = handlePositions["left"] ?? itemGroup.bounds.center;
             const top = handlePositions["top"] ?? itemGroup.bounds.center;
             const right = handlePositions["right"] ?? itemGroup.bounds.center;
             olPath = new state.paper.Path();
             olPath.moveTo(
-                new state.paper.Point(
-                    left.x + offset,
-                    left.y
-                )
+                new state.paper.Point(left.x + offset, left.y)
             );
             olPath.lineTo(top);
             olPath.lineTo(
-                new state.paper.Point(
-                    top.x,
-                    left.y
-                )
+                new state.paper.Point(top.x, left.y)
+            );
+            olPath.lineTo(
+                new state.paper.Point(right.x - offset, right.y)
             );
             olPath.lineTo(
                 new state.paper.Point(
                     right.x - offset,
-                    right.y
+                    right.y - tipLength
                 )
             );
-            olPath.lineTo([
-                right.x - 100,
-                right.y - 100
-            ]);
-            olPath.strokeColor = state.olColor;
-            olPath.strokeWidth = 2;
+            olPath.style = {
+                strokeColor: state.olColor,
+                strokeWidth: 2,
+                dashArray: [10, 10]
+            };
             olPath.name = "ol";
             itemGroup.addChild(olPath);
         } else if (handlePosition === "right") {
@@ -213,28 +196,26 @@ export function drawOpeningLines(
             const left = handlePositions["left"] ?? itemGroup.bounds.center;
             olPath = new state.paper.Path();
             olPath.moveTo(
-                new state.paper.Point(
-                    right.x - offset,
-                    right.y
-                )
+                new state.paper.Point(right.x - offset, right.y)
             );
             olPath.lineTo(top);
-            olPath.lineTo([
-                top.x,
-                right.y
-            ]);
+            olPath.lineTo(
+                new state.paper.Point(top.x, right.y)
+            );
+            olPath.lineTo(
+                new state.paper.Point(left.x + offset, left.y)
+            );
             olPath.lineTo(
                 new state.paper.Point(
                     left.x + offset,
-                    left.y
+                    left.y - tipLength
                 )
             );
-            olPath.lineTo([
-                left.x + 100,
-                left.y - 100
-            ]);
-            olPath.strokeColor = state.olColor;
-            olPath.strokeWidth = 2;
+            olPath.style = {
+                strokeColor: state.olColor,
+                strokeWidth: 2,
+                dashArray: [10, 10]
+            };
             olPath.name = "ol";
             itemGroup.addChild(olPath);
         }

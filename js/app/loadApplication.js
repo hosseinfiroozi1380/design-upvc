@@ -2,6 +2,7 @@
 import state from "../core/state.js";
 import { importToProject } from "../services/importToProject.js";
 import { loadLayerList } from "../services/loadLayerList.js";
+
 export function loadApplication(savedImport) {
  if (savedImport !== null) {
   state.currentDesignID = savedImport.id;

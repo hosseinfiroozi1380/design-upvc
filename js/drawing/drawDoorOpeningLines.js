@@ -2,7 +2,8 @@
 import state from "../core/state.js";
 export function drawDoorOpeningLines(
  handlePosition,
- itemGroup
+ itemGroup,
+ isDual = false
 ) {
  let olPath = new state.paper.Path();
  if (handlePosition === "right") {
@@ -46,4 +47,32 @@ export function drawDoorOpeningLines(
  olPath.strokeWidth = 2;
  olPath.name = "ol";
  itemGroup.addChild(olPath);
+ // فقط برای درب دوحالته:
+ // همان نوک رو به بالا و خط چین پنجره دوحالته
+ if (isDual) {
+  const handleOffset = 25;
+  const topTip = new state.paper.Point(
+   itemGroup.bounds.topCenter.x,
+   itemGroup.bounds.topCenter.y + handleOffset
+  );
+  olPath = new state.paper.Path();
+  const bottomOffset = 125;
+  const bottomLeft = new state.paper.Point(
+   itemGroup.bounds.bottomLeft.x + bottomOffset,
+   itemGroup.bounds.bottomLeft.y
+  );
+  const bottomRight = new state.paper.Point(
+   itemGroup.bounds.bottomRight.x - bottomOffset,
+   itemGroup.bounds.bottomRight.y
+  );
+  olPath.moveTo(bottomLeft);
+  olPath.lineTo(topTip);
+  olPath.lineTo(bottomRight);
+  olPath.strokeColor = state.olColor;
+  olPath.strokeWidth = 2;
+  // دقیقاً مثل پنجره دوحالته
+  olPath.style.dashArray = [60, 25];
+  olPath.name = "ol";
+  itemGroup.addChild(olPath);
+ }
 }

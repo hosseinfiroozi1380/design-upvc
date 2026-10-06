@@ -7,10 +7,7 @@ import { drawHinge } from "../drawing/drawHinge.js";
 import { drawHandle } from "../drawing/drawHandle.js";
 import { drawOpeningLines } from "../drawing/drawOpeningLines.js";
 import { showMessage } from "../utils/showMessage.js";
-
-// add hinge and handle
 export function addHingeAndHandle(winOrDoor, flatToAdd, itemGroup, HingePosition, HandlePosition, olType) {
-
     let hingePositions = [];
     hingePositions['right'] = [];
     hingePositions['left'] = [];
@@ -18,14 +15,12 @@ export function addHingeAndHandle(winOrDoor, flatToAdd, itemGroup, HingePosition
     hingePositions['bottom'] = [];
     let handlePositions = [];
     let minSpace = 120;
-
     for (let index = 0; index < flatToAdd.curves.length; index++) {
         let curve = flatToAdd.curves[index];
         if (curve.isStraight() && curve.length > 30) { //some tiny straight curve is in start and end of arcs
             let hingeCount = foundHingeCount(curve.length);
             let angle = angleTwoPoint(curve.bounds.center, flatToAdd.bounds.center);
             let side = findSidePositionByAngle(angle);
-
             if (side) { //side = bottom, left, top, right
                 if (hingeCount == 2) {
                     hingePositions[side][0] = curve.getLocationAt(minSpace).point;
@@ -56,8 +51,6 @@ export function addHingeAndHandle(winOrDoor, flatToAdd, itemGroup, HingePosition
             }
         }
     }
-
-    //draw hinges
     $.each(["left", "right", "top", "bottom"], function (key, pos) {
         if ([pos].includes(HingePosition)) {
             $.each(hingePositions[pos], function (key, hingeCenterPoint) {
@@ -72,8 +65,6 @@ export function addHingeAndHandle(winOrDoor, flatToAdd, itemGroup, HingePosition
             });
         }
     });
-
-    //draw hanlde
     $.each(["left", "right", "top", "bottom"], function (key, pos) {
         if ([pos].includes(HandlePosition)) {
             let handlePos = handlePositions[pos];
@@ -100,10 +91,7 @@ export function addHingeAndHandle(winOrDoor, flatToAdd, itemGroup, HingePosition
             }
         }
     });
-
-    //draw opening lines
     if (olType) {
         drawOpeningLines(olType, HandlePosition, handlePositions, HingePosition, hingePositions, itemGroup);
     }
-
-}//
+}

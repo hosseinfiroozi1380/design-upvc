@@ -140,7 +140,7 @@ button {
 }
 
 .wd-right-brand {
-  padding: 15px 15px;
+  padding: 8px 15px;
   border-bottom: 1px solid #e5e7eb;
   flex-shrink: 0;
 }
@@ -166,7 +166,7 @@ button {
 .wd-right-site-info {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  /* gap: 3px; */
 }
 
 .wd-right-site-info-addedit {
@@ -176,6 +176,12 @@ button {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
+}
+
+.wd-right-site-name {
+  color: var(--wd-button-bg);
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .wd-right-site-title {
@@ -217,8 +223,8 @@ button {
 }
 
 .wd-section-block-image {
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   flex-shrink: 0;
   opacity: 1;
   filter: none;
@@ -1144,7 +1150,7 @@ button {
     USER HEADER
 */
 .wd-user-header {
-  padding: 9px 15px;
+  padding: 10px 15px;
   border-bottom: 1px solid #e5e7eb;
   flex-shrink: 0;
 }
@@ -1498,24 +1504,6 @@ button {
   justify-content: center;
 }
 
-/* .wd-profile-item-image img {
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
-  /* رنگ عادی آیکون */
-filter: brightness(0);
-}
-
-/* 
-   هاور آیکون
-*/
-.wd-profile-item:hover .wd-profile-item-image img {
-  /* سفید شدن آیکون */
-  filter: brightness(0) invert(1);
-}
-
-*/
-
 /* 
    PROFILE ITEM NAME
 */
@@ -1759,7 +1747,7 @@ filter: brightness(0);
 }
 
 .wd-left-bottom-button:hover {
-  background: var(--wd-button-hover-bg);
+  background: var(--wd-button-bg);
   color: #ffffff;
 }
 
@@ -3456,7 +3444,7 @@ filter: brightness(0);
 }
 
 .wd-system-message-box {
-  min-width: 320px;
+  /* min-width: 320px; */
   max-width: 520px;
   display: flex;
   align-items: center;
@@ -3465,7 +3453,7 @@ filter: brightness(0);
   padding: 14px 18px;
   background: #ffffff;
   border: 1px solid #e5e7eb;
-  border-radius: 13px;
+  border-radius: 20px;
   box-shadow:
     0 12px 35px rgba(0, 0, 0, 0.12);
   font-family: "IRANSansWeb", sans-serif;

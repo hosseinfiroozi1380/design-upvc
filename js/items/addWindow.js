@@ -39,12 +39,13 @@ const OPENINGS = {
         type: "normal"
     },
     window_dual_right: {
-        hinge: false,
+        hinge: "left",
         handle: "right",
         type: "dual"
     },
+
     window_dual_left: {
-        hinge: false,
+        hinge: "right",
         handle: "left",
         type: "dual"
     },
@@ -107,6 +108,140 @@ function getFrameSize(data) {
     }
     return 0;
 }
+// ساخت قسمت وسط و چهار نیم‌ساز شیشه
+function createGlassBorders(glassShape, group) {
+    const blackWidth = 1.5;
+    const whiteWidth = 12;
+    const innerBlackWidth = 1.5;
+    const glassBorders =
+        new state.paper.Group();
+    glassBorders.name =
+        "glassBorders";
+    glassBorders.data.glassId =
+        glassShape.id;
+    // لایه مشکی بیرونی
+    const outerBlackInner =
+        PaperOffset.offset(
+            glassShape,
+            -blackWidth
+        );
+    if (!outerBlackInner) {
+        return null;
+    }
+    const outerBlack =
+        glassShape.subtract(
+            outerBlackInner
+        );
+    outerBlack.fillColor =
+        "#222222";
+    outerBlack.strokeColor =
+        null;
+    outerBlack.name =
+        "glassOuterBlack";
+    glassBorders.addChild(
+        outerBlack
+    );
+    // قسمت سفید / وسط
+    const whiteInner =
+        PaperOffset.offset(
+            outerBlackInner,
+            -whiteWidth
+        );
+    if (!whiteInner) {
+        outerBlackInner.remove();
+        return glassBorders;
+    }
+    const whiteBorder =
+        outerBlackInner.subtract(
+            whiteInner
+        );
+    whiteBorder.fillColor =
+        "#ffffff";
+    whiteBorder.strokeColor =
+        null;
+    whiteBorder.name =
+        "glassWhiteBorder";
+    glassBorders.addChild(
+        whiteBorder
+    );
+    // چهار نیم‌ساز گوشه
+    const outerBounds =
+        outerBlackInner.bounds;
+    const innerBounds =
+        whiteInner.bounds;
+    const cornerGroup =
+        new state.paper.Group();
+    cornerGroup.name =
+        "glassCornerBisectors";
+    const corners = [
+        [
+            [outerBounds.left, outerBounds.top],
+            [innerBounds.left, innerBounds.top]
+        ],
+        [
+            [outerBounds.right, outerBounds.top],
+            [innerBounds.right, innerBounds.top]
+        ],
+        [
+            [outerBounds.left, outerBounds.bottom],
+            [innerBounds.left, innerBounds.bottom]
+        ],
+        [
+            [outerBounds.right, outerBounds.bottom],
+            [innerBounds.right, innerBounds.bottom]
+        ]
+    ];
+    corners.forEach(points => {
+        const line =
+            new state.paper.Path.Line({
+                from: points[0],
+                to: points[1]
+            });
+        line.strokeColor =
+            "#222222";
+        line.strokeWidth =
+            1.5;
+        line.strokeCap =
+            "butt";
+        line.name =
+            "glassCornerBisector";
+        cornerGroup.addChild(
+            line
+        );
+    });
+    glassBorders.addChild(
+        cornerGroup
+    );
+    // خط مشکی داخلی
+    const innerBlackInner =
+        PaperOffset.offset(
+            whiteInner,
+            -innerBlackWidth
+        );
+    if (innerBlackInner) {
+        const innerBlack =
+            whiteInner.subtract(
+                innerBlackInner
+            );
+        innerBlack.fillColor =
+            "#222222";
+        innerBlack.strokeColor =
+            null;
+        innerBlack.name =
+            "glassInnerBlack";
+        glassBorders.addChild(
+            innerBlack
+        );
+        innerBlackInner.remove();
+    }
+    // حاشیه‌ها را داخل گروه پنجره قرار بده
+    group.addChild(
+        glassBorders
+    );
+    outerBlackInner.remove();
+    whiteInner.remove();
+    return glassBorders;
+}
 // ساخت هندسه پنجره
 function buildWindowGeometry(flat, overlap, frameSize, data) {
     const outer = PaperOffset.offset(flat, overlap);
@@ -135,10 +270,23 @@ function buildWindowGeometry(flat, overlap, frameSize, data) {
         return null;
     }
     frame.strokeColor = state.strokeColor;
+    frame.strokeWidth = 2;
     frame.fillColor = state.frameColor;
     frame.name = "windowFrame";
-    frame.shadowColor = state.shadowColor;
-    frame.shadowBlur = state.shadowBlur;
+    if (
+        frame.children &&
+        frame.children.length >= 2
+    ) {
+        frame.children[0].strokeColor =
+            state.strokeColor;
+        frame.children[0].strokeWidth = 3;
+        frame.children[1].strokeColor =
+            state.strokeColor;
+        frame.children[1].strokeWidth = 3;
+    }
+    // سایه فریم پنجره
+    // frame.shadowColor = state.shadowColor;
+    // frame.shadowBlur = state.shadowBlur;
     setDefaultData(frame, "windowFrame");
     if (data?.profile) {
         frame.data = data.profile;
@@ -158,6 +306,9 @@ function createFrameCutLines(frame) {
     }
     children.forEach(child => {
         child.name = "wframeInOut";
+        child.strokeColor =
+            state.strokeColor;
+        child.strokeWidth = 3;
     });
     children[0].segments.forEach(segment => {
         const isStraight =
@@ -167,27 +318,37 @@ function createFrameCutLines(frame) {
             return;
         }
         const nearestPoint =
-            children[1].getNearestPoint(segment.point);
+            children[1].getNearestPoint(
+                segment.point
+            );
         if (!nearestPoint) {
             return;
         }
-        const line = new state.paper.Path.Line({
-            from: segment.point,
-            to: nearestPoint
-        });
+        const line =
+            new state.paper.Path.Line({
+                from: segment.point,
+                to: nearestPoint
+            });
         line.name = "frameCutLine";
+        line.strokeColor =
+            state.strokeColor;
+        line.strokeWidth = 3;
+        line.strokeCap = "butt";
         frame.addChild(line);
     });
 }
-// ساخت گروه پنجره
 function createWindowGroup(type, geometry) {
-    const group = new state.paper.Group();
+    const group =
+        new state.paper.Group();
     group.name = type;
-    group.addChild(geometry.frame);
-    group.addChild(geometry.inner);
+    group.addChild(
+        geometry.inner
+    );
+    group.addChild(
+        geometry.frame
+    );
     return group;
 }
-// افزودن یراق پنجره
 function addWindowHardware(type, geometry, group) {
     const opening = getOpeningConfig(type);
     addHingeAndHandle(
@@ -199,7 +360,6 @@ function addWindowHardware(type, geometry, group) {
         opening.type
     );
 }
-// قرار دادن پنجره داخل صفحه
 function attachWindow(flat, group, parentGroup) {
     flat.name = "base";
     const baseGroup = new state.paper.Group();
@@ -315,22 +475,35 @@ function createNormalWindow(
     overlap,
     frameSize
 ) {
-    const geometry = buildWindowGeometry(
-        flat,
-        overlap,
-        frameSize,
-        data
-    );
+    const geometry =
+        buildWindowGeometry(
+            flat,
+            overlap,
+            frameSize,
+            data
+        );
     if (!geometry) {
-        showMessage("ساخت پنجره امکان پذیر نبود");
+        showMessage(
+            "ساخت پنجره امکان پذیر نبود"
+        );
         return false;
     }
-    createFrameCutLines(geometry.frame);
-    const group = createWindowGroup(
-        type,
-        geometry
+    createFrameCutLines(
+        geometry.frame
     );
-    addLockTypeText(geometry.frame);
+    const group =
+        createWindowGroup(
+            type,
+            geometry
+        );
+    // ساخت قسمت وسط و چهار نیم‌ساز
+    createGlassBorders(
+        geometry.inner,
+        group
+    );
+    addLockTypeText(
+        geometry.frame
+    );
     addWindowHardware(
         type,
         geometry,

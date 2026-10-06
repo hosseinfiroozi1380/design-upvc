@@ -1,106 +1,108 @@
+// js/script.js
+import state from "./core/state.js";
 const wdRightPanel =
- document.getElementById("wdRightPanel");
+  document.getElementById("wdRightPanel");
 const wdLeftPanel =
- document.getElementById("wdLeftPanel");
+  document.getElementById("wdLeftPanel");
 const wdOpenRightMenu =
- document.getElementById("wdOpenRightMenu");
+  document.getElementById("wdOpenRightMenu");
 const wdOpenLeftMenu =
- document.getElementById("wdOpenLeftMenu");
+  document.getElementById("wdOpenLeftMenu");
 function wdCloseMobileMenus() {
- wdRightPanel.classList.remove(
-  "wd-mobile-open"
- );
- wdLeftPanel.classList.remove(
-  "wd-mobile-open"
- );
+  wdRightPanel.classList.remove(
+    "wd-mobile-open"
+  );
+  wdLeftPanel.classList.remove(
+    "wd-mobile-open"
+  );
 }
 function wdShowRightMenu() {
- if (
-  wdRightPanel.classList.contains(
-   "wd-mobile-open"
-  )
- ) {
-  wdCloseMobileMenus();
-  return;
- }
- wdLeftPanel.classList.remove(
-  "wd-mobile-open"
- );
- wdRightPanel.classList.add(
-  "wd-mobile-open"
- );
+  if (
+    wdRightPanel.classList.contains(
+      "wd-mobile-open"
+    )
+  ) {
+    wdCloseMobileMenus();
+    return;
+  }
+  wdLeftPanel.classList.remove(
+    "wd-mobile-open"
+  );
+  wdRightPanel.classList.add(
+    "wd-mobile-open"
+  );
 }
 function wdShowLeftMenu() {
- if (
-  wdLeftPanel.classList.contains(
-   "wd-mobile-open"
-  )
- ) {
-  wdCloseMobileMenus();
-  return;
- }
- wdRightPanel.classList.remove(
-  "wd-mobile-open"
- );
- wdLeftPanel.classList.add(
-  "wd-mobile-open"
- );
+  if (
+    wdLeftPanel.classList.contains(
+      "wd-mobile-open"
+    )
+  ) {
+    wdCloseMobileMenus();
+    return;
+  }
+  wdRightPanel.classList.remove(
+    "wd-mobile-open"
+  );
+  wdLeftPanel.classList.add(
+    "wd-mobile-open"
+  );
 }
 wdOpenRightMenu.addEventListener(
- "click",
- wdShowRightMenu
+  "click",
+  wdShowRightMenu
 );
 wdOpenLeftMenu.addEventListener(
- "click",
- wdShowLeftMenu
+  "click",
+  wdShowLeftMenu
 );
 document.addEventListener(
- "click",
- (event) => {
-  const clickedInsideRightPanel =
-   wdRightPanel.contains(event.target);
-  const clickedInsideLeftPanel =
-   wdLeftPanel.contains(event.target);
-  const clickedRightButton =
-   wdOpenRightMenu.contains(event.target);
-  const clickedLeftButton =
-   wdOpenLeftMenu.contains(event.target);
-  if (
-   !clickedInsideRightPanel &&
-   !clickedInsideLeftPanel &&
-   !clickedRightButton &&
-   !clickedLeftButton
-  ) {
-   wdCloseMobileMenus();
+  "click",
+  (event) => {
+    const clickedInsideRightPanel =
+      wdRightPanel.contains(event.target);
+    const clickedInsideLeftPanel =
+      wdLeftPanel.contains(event.target);
+    const clickedRightButton =
+      wdOpenRightMenu.contains(event.target);
+    const clickedLeftButton =
+      wdOpenLeftMenu.contains(event.target);
+    if (
+      !clickedInsideRightPanel &&
+      !clickedInsideLeftPanel &&
+      !clickedRightButton &&
+      !clickedLeftButton
+    ) {
+      wdCloseMobileMenus();
+    }
   }
- }
 );
 window.addEventListener(
- "resize",
- () => {
-  if (window.innerWidth > 768) {
-   wdCloseMobileMenus();
+  "resize",
+  () => {
+    if (window.innerWidth > 768) {
+      wdCloseMobileMenus();
+    }
   }
- }
 );
 const profileOptions =
- document.querySelectorAll(
-  ".wd-profile-option"
- );
+  document.querySelectorAll(
+    ".wd-profile-option"
+  );
 profileOptions.forEach(option => {
- option.addEventListener(
-  "click",
-  () => {
-   profileOptions.forEach(item => {
-    item.classList.remove(
-     "is-active"
-    );
-   });
-   option.classList.add(
-    "is-active"
-   );
-  }
- );
+  option.addEventListener(
+    "click",
+    () => {
+      profileOptions.forEach(item => {
+        item.classList.remove(
+          "is-active"
+        );
+      });
+      option.classList.add(
+        "is-active"
+      );
+    }
+  );
 });
 var projectID = 1334;
 var saveProjectRoute = "#";
@@ -109,41 +111,41 @@ var loadDesignRoute = "";
 var destroyDesignRoute = "";
 var savedImport = null;
 var firstLoad = true;
-var frame_glass_space = 10;
-var window_glass_space = 10;
-var door_glass_space = 10;
+state.frame_glass_space = 10;
+state.window_glass_space = 10;
+state.door_glass_space = 10;
 function adjustHeight() {
- var screenHeight = $(window).height();
- var screenWidth = $(window).width();
- var headerHeight = $('header').outerHeight(true);
- var footerHeight = $('footer').outerHeight(true);
- var rightDiv = $('.rightDiv').outerHeight(true);
- var availableHeight;
- var isLandscape = $(window).width() >= 768;
- if (isLandscape) {
-  availableHeight = screenHeight - headerHeight - footerHeight;
-  $('.rightDiv, .leftDiv').addClass('col-sm-3');
-  $('.rightDiv, .leftDiv').removeClass('col-12');
-  $('.mobileBtns').addClass('d-none');
-  $('#rightCanvas, #leftCanvas').removeClass('offcanvas offcanvas-start offcanvas-end');
-  $('.toolsBtns').removeAttr('data-bs-dismiss');
-  $('.closeOffCanvas').addClass('d-none');
-  $('#layerlist').css('max-height', '28rem');
-  $('.toolsDiv').css('max-height', '12rem');
- } else {
-  availableHeight = screenHeight - headerHeight - footerHeight - rightDiv;
-  $('.rightDiv, .leftDiv').addClass('col-12');
-  $('.rightDiv, .leftDiv').removeClass('col-sm-3');
-  $('.mobileBtns').removeClass('d-none');
-  $('#rightCanvas').addClass('offcanvas offcanvas-start');
-  $('#leftCanvas').addClass('offcanvas offcanvas-end');
-  $('.toolsBtns').attr('data-bs-dismiss', 'offcanvas');
-  $('.closeOffCanvas').removeClass('d-none');
-  $('#layerlist').css('max-height', 'inherit');
-  $('.toolsDiv').css('max-height', 'inherit');
- }
- $('.designCardParent').css('height', Math.max(100, availableHeight) + 'px');
- $('.leftDiv').css('height', Math.max(100, availableHeight) + 'px');
+  var screenHeight = $(window).height();
+  var screenWidth = $(window).width();
+  var headerHeight = $('header').outerHeight(true);
+  var footerHeight = $('footer').outerHeight(true);
+  var rightDiv = $('.rightDiv').outerHeight(true);
+  var availableHeight;
+  var isLandscape = $(window).width() >= 768;
+  if (isLandscape) {
+    availableHeight = screenHeight - headerHeight - footerHeight;
+    $('.rightDiv, .leftDiv').addClass('col-sm-3');
+    $('.rightDiv, .leftDiv').removeClass('col-12');
+    $('.mobileBtns').addClass('d-none');
+    $('#rightCanvas, #leftCanvas').removeClass('offcanvas offcanvas-start offcanvas-end');
+    $('.toolsBtns').removeAttr('data-bs-dismiss');
+    $('.closeOffCanvas').addClass('d-none');
+    $('#layerlist').css('max-height', '28rem');
+    $('.toolsDiv').css('max-height', '12rem');
+  } else {
+    availableHeight = screenHeight - headerHeight - footerHeight - rightDiv;
+    $('.rightDiv, .leftDiv').addClass('col-12');
+    $('.rightDiv, .leftDiv').removeClass('col-sm-3');
+    $('.mobileBtns').removeClass('d-none');
+    $('#rightCanvas').addClass('offcanvas offcanvas-start');
+    $('#leftCanvas').addClass('offcanvas offcanvas-end');
+    $('.toolsBtns').attr('data-bs-dismiss', 'offcanvas');
+    $('.closeOffCanvas').removeClass('d-none');
+    $('#layerlist').css('max-height', 'inherit');
+    $('.toolsDiv').css('max-height', 'inherit');
+  }
+  $('.designCardParent').css('height', Math.max(100, availableHeight) + 'px');
+  $('.leftDiv').css('height', Math.max(100, availableHeight) + 'px');
 }
 adjustHeight();
 $(window).resize(adjustHeight);
@@ -172,12 +174,12 @@ document.addEventListener("pointerdown", function (event) {
   const clickedRightButton = wdOpenRightMenu.contains(target);
   const clickedLeftButton = wdOpenLeftMenu.contains(target);
   if (
-      !clickedInsideRightPanel &&
-      !clickedInsideLeftPanel &&
-      !clickedRightButton &&
-      !clickedLeftButton
+    !clickedInsideRightPanel &&
+    !clickedInsideLeftPanel &&
+    !clickedRightButton &&
+    !clickedLeftButton
   ) {
-      wdCloseMobileMenus();
+    wdCloseMobileMenus();
   }
 });
 document.getElementById("wdRightClose").addEventListener("click", function () {

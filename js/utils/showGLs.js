@@ -83,14 +83,52 @@ export function showGLs(event) {
                     )
                         ? state.selectedItem.clone()
                         : state.selectedItem.parent.clone();
-                state.mouseHelperClone.scale(0.5);
+                state.mouseHelperClone.scale(1);
                 state.mouseHelperClone.parent =
                     state.paper.project.activeLayer;
-                state.mouseHelperClone.position =
-                    new state.paper.Point(
+                state.mouseHelperClone.opacity = 0.75;
+                state.mouseHelperClone.getItems({
+                    recursive: true
+                }).forEach(child => {
+                    if (child.fillColor) {
+                        child.fillColor =
+                            new state.paper.Color("#eeeeee");
+                    }
+                    if (child.strokeColor) {
+                        child.strokeColor =
+                            new state.paper.Color("#b5b5b5");
+                    }
+                });
+                if (state.mouseHelperClone.fillColor) {
+                    state.mouseHelperClone.fillColor =
+                        new state.paper.Color("#eeeeee");
+                }
+                if (state.mouseHelperClone.strokeColor) {
+                    state.mouseHelperClone.strokeColor =
+                        new state.paper.Color("#b5b5b5");
+                }
+                if (
+                    state.selectedItem &&
+                    state.selectedItem.name === "vMullian"
+                ) {
+                    state.mouseHelperClone.position = new state.paper.Point(
+                        event.point.x,
+                        selectedSection.bounds.centerY
+                    );
+                } else if (
+                    state.selectedItem &&
+                    state.selectedItem.name === "hMullian"
+                ) {
+                    state.mouseHelperClone.position = new state.paper.Point(
+                        selectedSection.bounds.centerX,
+                        event.point.y
+                    );
+                } else {
+                    state.mouseHelperClone.position = new state.paper.Point(
                         event.point.x,
                         event.point.y
                     );
+                }
             }
             document.body.style.cursor = "grabbing";
         } else {

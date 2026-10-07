@@ -19,7 +19,6 @@ export function createDimensionBar() {
             name: "section"
         }).length
     );
-    
     console.log(
         "SECTION ITEMS:",
         state.paper.project.activeLayer.getItems({
@@ -28,12 +27,11 @@ export function createDimensionBar() {
     );
     // حذف تمام اندازه‌گذاری‌های قبلی
     const allDimensions =
-    state.paper.project.activeLayer.getItems({
-        name: "dbG"
-    });
-
+        state.paper.project.activeLayer.getItems({
+            name: "dbG"
+        });
     allDimensions.forEach(item => {
-    item.remove();
+        item.remove();
     });
     state.dbG = new state.paper.Group();
     state.dbG.name = "dbG";
@@ -207,9 +205,8 @@ export function createDimensionBar() {
         let mainFrameProfile = allSections[i].children.mainFrame.data.profile || 0;
         let frameType = $('.frameInput option[value="' + mainFrameProfile + '"]').data('type') || 0;
         if (state.extra_frame_lenght == 0 && frameType !== "Frame") {
-            state.extra_frame_lenght = 20;//sash for frame
+            state.extra_frame_lenght = 20;
         }
-        //draw mainXbar
         xBarPosition += 75;
         let mainxBar = new state.paper.Group();
         let leftBar = new state.paper.Path.Line(
@@ -309,38 +306,142 @@ export function createDimensionBar() {
         mainxBar.addChild(mainMiddleBarRight);
         state.dbG.addChild(text);
         if (state.extra_frame_lenght > 0) {
-            let mainxBar_extra = new state.paper.Path()
-            mainxBar_extra.moveTo(new state.paper.Point(allSections[i].bounds.x, xBarPosition + 30))
-            mainxBar_extra.lineTo(new state.paper.Point(allSections[i].bounds.x + state.extra_frame_lenght, xBarPosition + 30));
-            mainxBar_extra.strokeColor = 'purple';
-            mainxBar_extra.strokeWidth = 2;
-            mainxBar_extra.name = 'mXBar_extra';
-            state.dbG.addChild(mainxBar_extra);
-            text = new state.paper.PointText(new state.paper.Point(state.extra_frame_lenght / 4, xBarPosition + 75));
-            text.content = round2decimal(state.extra_frame_lenght);
-            text.fillColor = 'purple';
+            // extra frame سمت چپ
+            let extraLeft = new state.paper.Group();
+            let extraLeftStart = allSections[i].bounds.x;
+            let extraLeftEnd =
+                allSections[i].bounds.x +
+                state.extra_frame_lenght;
+            // خط آبی سمت چپ
+            let extraLeftLine = new state.paper.Path.Line(
+                new state.paper.Point(
+                    extraLeftStart,
+                    xBarPosition + 15
+                ),
+                new state.paper.Point(
+                    extraLeftEnd,
+                    xBarPosition + 15
+                )
+            );
+            let extraLeftTick1 = new state.paper.Path.Line(
+                new state.paper.Point(
+                    extraLeftStart,
+                    xBarPosition
+                ),
+                new state.paper.Point(
+                    extraLeftStart,
+                    xBarPosition + 30
+                )
+            );
+            let extraLeftTick2 = new state.paper.Path.Line(
+                new state.paper.Point(
+                    extraLeftEnd,
+                    xBarPosition
+                ),
+                new state.paper.Point(
+                    extraLeftEnd,
+                    xBarPosition + 30
+                )
+            );
+            extraLeftLine.strokeColor = '#3b82f6';
+            extraLeftTick1.strokeColor = '#3b82f6';
+            extraLeftTick2.strokeColor = '#3b82f6';
+            extraLeftLine.strokeWidth = 3;
+            extraLeftTick1.strokeWidth = 3;
+            extraLeftTick2.strokeWidth = 3;
+            extraLeft.addChildren([
+                extraLeftLine,
+                extraLeftTick1,
+                extraLeftTick2
+            ]);
+            extraLeft.name = 'mXBar_extra';
+            state.dbG.addChild(extraLeft);
+            // عدد extra سمت چپ
+            text = new state.paper.PointText(
+                new state.paper.Point(
+                    extraLeftStart +
+                    (state.extra_frame_lenght / 2),
+                    xBarPosition + 75
+                )
+            );
+            text.content =
+                round2decimal(state.extra_frame_lenght);
+            text.fillColor = '#3b82f6';
             text.fontSize = 30;
             text.rotation = 0;
             text.name = 'mXBarT_extra';
             text.data.section = allSections[i].id;
             state.dbG.addChild(text);
-            let mainxBar_extra2 = new state.paper.Path()
-            mainxBar_extra2.moveTo(new state.paper.Point(allSections[i].bounds.x - state.extra_frame_lenght + allSections[i].bounds.width, xBarPosition + 30))
-            mainxBar_extra2.lineTo(new state.paper.Point(allSections[i].bounds.x + allSections[i].bounds.width, xBarPosition + 30));
-            mainxBar_extra2.strokeColor = 'purple';
-            mainxBar_extra2.strokeWidth = 2;
-            mainxBar_extra2.name = 'mXBar_extra';
-            state.dbG.addChild(mainxBar_extra2);
-            text = new state.paper.PointText(new state.paper.Point(allSections[i].bounds.x - state.extra_frame_lenght + allSections[i].bounds.width, xBarPosition + 75));
-            text.content = round2decimal(state.extra_frame_lenght);
-            text.fillColor = 'purple';
+            // extra frame سمت راست
+            let extraRight = new state.paper.Group();
+            let extraRightStart =
+                allSections[i].bounds.x -
+                state.extra_frame_lenght +
+                allSections[i].bounds.width;
+            let extraRightEnd =
+                allSections[i].bounds.x +
+                allSections[i].bounds.width;
+            // خط آبی سمت راست
+            let extraRightLine = new state.paper.Path.Line(
+                new state.paper.Point(
+                    extraRightStart,
+                    xBarPosition + 15
+                ),
+                new state.paper.Point(
+                    extraRightEnd,
+                    xBarPosition + 15
+                )
+            );
+            let extraRightTick1 = new state.paper.Path.Line(
+                new state.paper.Point(
+                    extraRightStart,
+                    xBarPosition
+                ),
+                new state.paper.Point(
+                    extraRightStart,
+                    xBarPosition + 30
+                )
+            );
+            let extraRightTick2 = new state.paper.Path.Line(
+                new state.paper.Point(
+                    extraRightEnd,
+                    xBarPosition
+                ),
+                new state.paper.Point(
+                    extraRightEnd,
+                    xBarPosition + 30
+                )
+            );
+            extraRightLine.strokeColor = '#3b82f6';
+            extraRightTick1.strokeColor = '#3b82f6';
+            extraRightTick2.strokeColor = '#3b82f6';
+            extraRightLine.strokeWidth = 3;
+            extraRightTick1.strokeWidth = 3;
+            extraRightTick2.strokeWidth = 3;
+            extraRight.addChildren([
+                extraRightLine,
+                extraRightTick1,
+                extraRightTick2
+            ]);
+            extraRight.name = 'mXBar_extra';
+            state.dbG.addChild(extraRight);
+            // عدد extra سمت راست
+            text = new state.paper.PointText(
+                new state.paper.Point(
+                    extraRightStart +
+                    (state.extra_frame_lenght / 2),
+                    xBarPosition + 75
+                )
+            );
+            text.content =
+                round2decimal(state.extra_frame_lenght);
+            text.fillColor = '#3b82f6';
             text.fontSize = 30;
             text.rotation = 0;
             text.name = 'mXBarT_extra';
             text.data.section = allSections[i].id;
             state.dbG.addChild(text);
         }
-        //draw hMullian bars
         for (let index = 0; index < hMulliansPositions.length; index++) {
             let previousY = allSections[i].bounds.y;
             if (index > 0) {
@@ -544,32 +645,145 @@ export function createDimensionBar() {
         mainyBar.addChild(mainMiddleBarBottom);
         state.dbG.addChild(text);
         if (state.extra_frame_lenght > 0) {
-            let mainyBar_extra = new state.paper.Path()
-            mainyBar_extra.moveTo(new state.paper.Point(yBarPosition - 30, allSections[i].bounds.y))
-            mainyBar_extra.lineTo(new state.paper.Point(yBarPosition - 30, allSections[i].bounds.y + state.extra_frame_lenght))
-            mainyBar_extra.strokeColor = 'purple';
-            mainyBar_extra.strokeWidth = 2;
-            mainyBar_extra.name = 'mYBar_extra';
-            state.dbG.addChild(mainyBar_extra);
-            text = new state.paper.PointText(new state.paper.Point(yBarPosition - 90, allSections[i].bounds.y + (state.extra_frame_lenght / 2)));
-            text.content = state.extra_frame_lenght;
-            text.fillColor = 'purple';
+            // extra frame ارتفاع - بالا
+            let extraTop = new state.paper.Group();
+            let extraTopStart =
+                allSections[i].bounds.y;
+            let extraTopEnd =
+                allSections[i].bounds.y +
+                state.extra_frame_lenght;
+            // خط عمودی آبی
+            let extraTopLine =
+                new state.paper.Path.Line(
+                    new state.paper.Point(
+                        yBarPosition - 15,
+                        extraTopStart
+                    ),
+                    new state.paper.Point(
+                        yBarPosition - 15,
+                        extraTopEnd
+                    )
+                );
+            let extraTopTick1 =
+                new state.paper.Path.Line(
+                    new state.paper.Point(
+                        yBarPosition,
+                        extraTopStart
+                    ),
+                    new state.paper.Point(
+                        yBarPosition - 30,
+                        extraTopStart
+                    )
+                );
+            let extraTopTick2 =
+                new state.paper.Path.Line(
+                    new state.paper.Point(
+                        yBarPosition,
+                        extraTopEnd
+                    ),
+                    new state.paper.Point(
+                        yBarPosition - 30,
+                        extraTopEnd
+                    )
+                );
+            extraTopLine.strokeColor = '#3b82f6';
+            extraTopTick1.strokeColor = '#3b82f6';
+            extraTopTick2.strokeColor = '#3b82f6';
+            extraTopLine.strokeWidth = 3;
+            extraTopTick1.strokeWidth = 3;
+            extraTopTick2.strokeWidth = 3;
+            extraTop.addChildren([
+                extraTopLine,
+                extraTopTick1,
+                extraTopTick2
+            ]);
+            extraTop.name = 'mYBar_extra';
+            state.dbG.addChild(extraTop);
+            // عدد extra ارتفاع بالا
+            text = new state.paper.PointText(
+                new state.paper.Point(
+                    yBarPosition - 90,
+                    extraTopStart +
+                    (state.extra_frame_lenght / 2)
+                )
+            );
+            text.content =
+                round2decimal(state.extra_frame_lenght);
+            text.fillColor = '#3b82f6';
             text.fontSize = 30;
             text.rotation = -90;
             text.name = 'mYBarT_extra';
             text.data.section = allSections[i].id;
             state.dbG.addChild(text);
+            // extra frame ارتفاع - پایین
             if (extra_frame_lenght_yBottom > 0) {
-                let mainyBar_extra2 = new state.paper.Path()
-                mainyBar_extra2.moveTo(new state.paper.Point(yBarPosition - 30, allSections[i].bounds.y + allSections[i].bounds.height - extra_frame_lenght_yBottom))
-                mainyBar_extra2.lineTo(new state.paper.Point(yBarPosition - 30, allSections[i].bounds.y + allSections[i].bounds.height))
-                mainyBar_extra2.strokeColor = 'purple';
-                mainyBar_extra2.strokeWidth = 2;
-                mainyBar_extra2.name = 'mYBar_extra';
-                state.dbG.addChild(mainyBar_extra2);
-                text = new state.paper.PointText(new state.paper.Point(yBarPosition - 90, allSections[i].bounds.y + allSections[i].bounds.height - (state.extra_frame_lenght / 2)));
-                text.content = state.extra_frame_lenght;
-                text.fillColor = 'purple';
+                let extraBottom =
+                    new state.paper.Group();
+                let extraBottomStart =
+                    allSections[i].bounds.y +
+                    allSections[i].bounds.height -
+                    extra_frame_lenght_yBottom;
+                let extraBottomEnd =
+                    allSections[i].bounds.y +
+                    allSections[i].bounds.height;
+                // خط عمودی آبی
+                let extraBottomLine =
+                    new state.paper.Path.Line(
+                        new state.paper.Point(
+                            yBarPosition - 15,
+                            extraBottomStart
+                        ),
+                        new state.paper.Point(
+                            yBarPosition - 15,
+                            extraBottomEnd
+                        )
+                    );
+                let extraBottomTick1 =
+                    new state.paper.Path.Line(
+                        new state.paper.Point(
+                            yBarPosition,
+                            extraBottomStart
+                        ),
+                        new state.paper.Point(
+                            yBarPosition - 30,
+                            extraBottomStart
+                        )
+                    );
+                let extraBottomTick2 =
+                    new state.paper.Path.Line(
+                        new state.paper.Point(
+                            yBarPosition,
+                            extraBottomEnd
+                        ),
+                        new state.paper.Point(
+                            yBarPosition - 30,
+                            extraBottomEnd
+                        )
+                    );
+                extraBottomLine.strokeColor = '#3b82f6';
+                extraBottomTick1.strokeColor = '#3b82f6';
+                extraBottomTick2.strokeColor = '#3b82f6';
+                extraBottomLine.strokeWidth = 3;
+                extraBottomTick1.strokeWidth = 3;
+                extraBottomTick2.strokeWidth = 3;
+                extraBottom.addChildren([
+                    extraBottomLine,
+                    extraBottomTick1,
+                    extraBottomTick2
+                ]);
+                extraBottom.name = 'mYBar_extra';
+                state.dbG.addChild(extraBottom);
+                // عدد extra ارتفاع پایین
+                text = new state.paper.PointText(
+                    new state.paper.Point(
+                        yBarPosition - 90,
+                        extraBottomStart +
+                        (extra_frame_lenght_yBottom / 2)
+                    )
+                );
+                text.content =
+                    round2decimal(extra_frame_lenght_yBottom);
+                text.fillColor = '#3b82f6';
                 text.fontSize = 30;
                 text.rotation = -90;
                 text.name = 'mYBarT_extra';

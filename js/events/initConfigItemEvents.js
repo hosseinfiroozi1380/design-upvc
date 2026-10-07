@@ -316,13 +316,9 @@ export function initConfigItemEvents() {
           "resetAllGlasses"
         );
       }
-      // منوی جزئیات را هم آپدیت کن
       updateLayerDetailsMenuOptions();
-      // به‌روزرسانی کارت و اطلاعات tempDesign
       createTempLayerCard();
-      // فعال کردن ذخیره
       enableSave();
-      // بستن فرم
       $("#wdConfigItemModal")
         .removeClass("show");
       showMessage(
@@ -330,7 +326,6 @@ export function initConfigItemEvents() {
         "success"
       );
     });
-  // کلیک روی پس‌زمینه
   $(document)
     .off("click.configItemOverlay", "#wdConfigItemModal")
     .on("click.configItemOverlay", "#wdConfigItemModal", function (e) {

@@ -7,6 +7,8 @@ export function setZoom() {
     }
     const cssWidth = canvas.clientWidth;
     const cssHeight = canvas.clientHeight;
+    const actualWidth = canvas.width;
+    const actualHeight = canvas.height;
     const project = state.paper.project;
     const activeLayer = project?.activeLayer;
     if (!activeLayer) {
@@ -53,60 +55,56 @@ export function setZoom() {
             design = mainFrames[0];
         }
     }
-    if (!design) {
-        return;
-    }
-    const bounds = design.bounds.clone();
     const hasBounds =
-        bounds &&
-        bounds.width > 0 &&
-        bounds.height > 0;
-    if (!hasBounds) {
-        return;
-    }
-    const designWidth = bounds.width;
-    const designHeight = bounds.height;
+        design &&
+        design.bounds &&
+        design.bounds.width > 0 &&
+        design.bounds.height > 0;
+    const designWidth =
+        hasBounds
+            ? design.bounds.width
+            : 2000;
+    const designHeight =
+        hasBounds
+            ? design.bounds.height
+            : 2000;
     const isMobile =
         window.matchMedia("(max-width: 768px)").matches;
-    let padding;
-    if (isMobile) {
-        padding = 0.65;
-    } else {
-        padding = 0.45;
-    }
-    // نسبت Canvas
-    const canvasRatio =
-        cssWidth / cssHeight;
-
-    // نسبت طراحی
-    const designRatio =
-        designWidth / designHeight;
-
-    // فضای اصلی برای نمایش
-    const baseSize =
+        const isSmallDesktop =
+        !isMobile &&
+        window.innerWidth <= 1050 &&
+        window.innerWidth >= 950;
+    
+    const usableWidth =
+        isSmallDesktop
+            ? cssWidth * 0.30
+            : isMobile
+                ? cssWidth * 0.72
+                : cssWidth * 0.4;
+    
+    const usableHeight =
+        isSmallDesktop
+            ? cssHeight * 0.58
+            : isMobile
+                ? cssHeight * 0.78
+                : cssHeight * 0.7;
+    const scaleX =
+        usableWidth / designWidth;
+    const scaleY =
+        usableHeight / designHeight;
+    const scale =
         Math.min(
-            cssWidth,
-            cssHeight
-        ) * padding;
-
-    // محاسبه زوم بر اساس ضلع کوتاه طراحی
-    let scale;
-
-    if (designRatio >= 1) {
-
-        // طراحی افقی
-        scale =
-            baseSize / designHeight;
-
-    } else {
-
-        // طراحی عمودی
-        scale =
-            baseSize / designWidth;
-    }
+            scaleX,
+            scaleY
+        );
     state.paper.view.zoom = scale;
     state.paper.view.center =
-        bounds.center;
+        hasBounds
+            ? design.bounds.center
+            : new state.paper.Point(
+                actualWidth / 2,
+                actualHeight / 2
+            );
     state.paper.view.update();
     $("#rangeInput").val(scale);
     $("#myCanvas")

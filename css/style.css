@@ -546,14 +546,8 @@ button {
   transition: background 0.2s ease, transform 0.15s ease;
 }
 
-/* هاور دکمه انتخاب */
 .wd-item-select-btn:hover {
   background: #1d4ed8;
-}
-
-/* کلیک دکمه انتخاب */
-.wd-item-select-btn:active {
-  transform: scale(0.97);
 }
 
 .wd-item-bottom {
@@ -2027,11 +2021,17 @@ button {
 }
 
 /* موبایل */
+
 @media (max-width: 576px) {
+
   .wd-form-grid {
-    grid-template-columns: 1fr;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
     gap: 10px;
+
   }
+
 }
 
 .wd-mobile-view-tools {

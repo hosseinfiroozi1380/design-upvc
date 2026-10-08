@@ -14,73 +14,52 @@ export function setZoom() {
     if (!activeLayer) {
         return;
     }
-    let design = null;
-    if (
-        state.mainSection &&
-        state.mainSection.isInserted
-    ) {
-        design = state.mainSection;
-    }
-    if (!design && state.currentDesignID) {
-        const sections = activeLayer.getItems({
-            name: "section"
-        });
-        const targetSection = sections.find(
-            section => {
-                const designID =
-                    section?.data?.designID;
-                return (
-                    String(designID) ===
-                    String(state.currentDesignID)
-                );
-            }
-        );
-        if (targetSection) {
-            design = targetSection;
+    const designItems = activeLayer.getItems({
+        name: "mainFrame"
+    });
+    let designBounds = null;
+    designItems.forEach(item => {
+        if (!item.bounds || item.bounds.width <= 0 || item.bounds.height <= 0) {
+            return;
         }
-    }
-    if (!design) {
-        const sections = activeLayer.getItems({
-            name: "section"
-        });
-        if (sections.length === 1) {
-            design = sections[0];
+        if (!designBounds) {
+            designBounds = item.bounds.clone();
+        } else {
+            designBounds = designBounds.unite(item.bounds);
         }
-    }
-    if (!design) {
+    });
+    if (!designBounds) {
         const mainFrames = activeLayer.getItems({
             name: "mainFrame"
         });
-        if (mainFrames.length === 1) {
-            design = mainFrames[0];
+        if (mainFrames.length === 1 && mainFrames[0].bounds) {
+            designBounds = mainFrames[0].bounds.clone();
         }
     }
     const hasBounds =
-        design &&
-        design.bounds &&
-        design.bounds.width > 0 &&
-        design.bounds.height > 0;
+        designBounds &&
+        designBounds.width > 0 &&
+        designBounds.height > 0;
     const designWidth =
         hasBounds
-            ? design.bounds.width
+            ? designBounds.width
             : 2000;
     const designHeight =
         hasBounds
-            ? design.bounds.height
+            ? designBounds.height
             : 2000;
     const isMobile =
         window.matchMedia("(max-width: 768px)").matches;
-        const isSmallDesktop =
+    const isSmallDesktop =
         !isMobile &&
         window.innerWidth <= 1050 &&
         window.innerWidth >= 950;
-    
-    const usableWidth =
+        const usableWidth =
         isSmallDesktop
             ? cssWidth * 0.30
             : isMobile
                 ? cssWidth * 0.72
-                : cssWidth * 0.4;
+                : cssWidth * 0.7;
     
     const usableHeight =
         isSmallDesktop
@@ -92,15 +71,20 @@ export function setZoom() {
         usableWidth / designWidth;
     const scaleY =
         usableHeight / designHeight;
-    const scale =
-        Math.min(
-            scaleX,
-            scaleY
-        );
+        const scale = 
+        designWidth === 1000 && designHeight === 1000
+            ? Math.min(
+                cssWidth * (isMobile ? 0.70 : 0.4) / designWidth,
+                cssHeight * 0.7 / designHeight
+            )
+            : Math.min(
+                scaleX,
+                scaleY
+            );
     state.paper.view.zoom = scale;
     state.paper.view.center =
         hasBounds
-            ? design.bounds.center
+            ? designBounds.center
             : new state.paper.Point(
                 actualWidth / 2,
                 actualHeight / 2
@@ -119,8 +103,7 @@ export function setZoom() {
                     event.deltaY > 0
                         ? oldZoom * 1.1
                         : oldZoom / 1.1;
-                state.paper.view.zoom =
-                    newZoom;
+                state.paper.view.zoom = newZoom;
                 $("#rangeInput").val(newZoom);
             }
         );

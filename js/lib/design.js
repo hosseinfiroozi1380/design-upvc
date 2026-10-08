@@ -4805,7 +4805,7 @@ window.onload = function () {
         } else {
             showMessage('در اشکال غیر مستطیل امکان افزودن وجود ندارد');
         }
-    })//
+    })
 
     $(document).on('click', '.addNewItem', function () {
         addNewItemType = $(this).attr('data-type');

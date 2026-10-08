@@ -1678,6 +1678,10 @@ export function initPaperToolEvents() {
                             };
                         }
                         closeEditModal();
+                        showMessage(
+                            "آیتم با موفقیت ویرایش شد.",
+                            "success"
+                        );
                     });
                 // لغو
                 modal

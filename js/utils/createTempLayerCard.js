@@ -3,20 +3,8 @@ import state from "../core/state.js";
 import { updateLayerPreview } from "./updateLayerPreview.js";
 import { createDimensionBar } from "../drawing/createDimensionBar.js";
 import { changeTempLayerById } from "./changeTempLayerById.js";
+import { showMessage } from "./showMessage.js";
 export function createTempLayerCard() {
-    console.log("========== CREATE / UPDATE TEMP LAYER ==========");
-    console.log(
-        "CURRENT DESIGN ID:",
-        state.currentDesignID
-    );
-    console.log(
-        "UNIT DATA:",
-        state.unitData
-    );
-    console.log(
-        "PAPER CHILDREN:",
-        state.paper?.project?.activeLayer?.children?.length
-    );
     const name =
         state.unitData?.itemName ||
         `طراحی ${Date.now()}`;
@@ -37,14 +25,6 @@ export function createTempLayerCard() {
         state.mainSection || null;
     const currentSectionId =
         currentSection?.id || null;
-    console.log(
-        "CURRENT MAIN SECTION:",
-        currentSection
-    );
-    console.log(
-        "CURRENT MAIN SECTION ID:",
-        currentSectionId
-    );
     let currentDesign = null;
     if (
         state.currentDesignID &&
@@ -58,10 +38,6 @@ export function createTempLayerCard() {
             );
     }
     if (currentDesign) {
-        console.log(
-            "UPDATE EXISTING TEMP DESIGN:",
-            state.currentDesignID
-        );
         currentDesign.paperJSON =
             state.paper.project.exportJSON({
                 asString: true
@@ -116,9 +92,9 @@ export function createTempLayerCard() {
                 .addClass("is-active");
         }
         updateLayerPreview();
-        console.log(
-            "TEMP DESIGN UPDATED:",
-            state.currentDesignID
+        showMessage(
+            "آیتم با موفقیت ویرایش شد.",
+            "success"
         );
         return;
     }
@@ -126,10 +102,6 @@ export function createTempLayerCard() {
         Date.now();
     state.currentDesignID =
         designID;
-    console.log(
-        "CREATE NEW TEMP DESIGN:",
-        designID
-    );
     if (
         !Array.isArray(
             state.tempDesigns
@@ -170,14 +142,6 @@ export function createTempLayerCard() {
         system:
             system
     });
-    console.log(
-        "TEMP DESIGN SAVED:",
-        designID
-    );
-    console.log(
-        "SAVED SECTION ID:",
-        currentSectionId
-    );
     // ساخت کارت
     const itemNumber = state.unitData?.itemNumber || "";
     const itemName = state.unitData?.itemName || name;
@@ -221,10 +185,6 @@ export function createTempLayerCard() {
 `;
     const $layerList =
         $("#layerlist");
-    console.log(
-        "LAYERLIST:",
-        $layerList.length
-    );
     if (!$layerList.length) {
         console.error(
             "عنصر #layerlist پیدا نشد."
@@ -236,14 +196,7 @@ export function createTempLayerCard() {
         .removeClass("is-active");
     $layerList
         .prepend(card);
-    console.log(
-        "CARD CREATED:",
-        designID
-    );
     updateLayerPreview();
-    console.log(
-        "LAYER PREVIEW UPDATED"
-    );
 }
 $(document)
     .off(
@@ -396,10 +349,6 @@ $(document)
                 .addEventListener(
                     "click",
                     function () {
-                        console.log(
-                            "DELETE TEMP LAYER:",
-                            designID
-                        );
                         let designToDelete = null;
                         if (
                             Array.isArray(
@@ -413,16 +362,8 @@ $(document)
                                         String(designID)
                                 );
                         }
-                        console.log(
-                            "DESIGN TO DELETE:",
-                            designToDelete
-                        );
                         const sectionId =
                             designToDelete?.sectionId;
-                        console.log(
-                            "SECTION ID TO DELETE:",
-                            sectionId
-                        );
                         if (
                             sectionId &&
                             state.paper?.project?.activeLayer
@@ -433,10 +374,6 @@ $(document)
                                 activeLayer.getItems({
                                     name: "section"
                                 });
-                            console.log(
-                                "ALL SECTIONS:",
-                                sections
-                            );
                             const targetSection =
                                 sections.find(
                                     section =>
@@ -444,10 +381,6 @@ $(document)
                                         String(sectionId)
                                 );
                             if (targetSection) {
-                                console.log(
-                                    "REMOVE TARGET SECTION:",
-                                    targetSection
-                                );
                                 targetSection.remove();
                             } else {
                                 console.warn(
@@ -481,10 +414,6 @@ $(document)
                                 ? state.tempDesigns[0]
                                 : null;
                         if (remainingDesign) {
-                            console.log(
-                                "LOAD REMAINING DESIGN:",
-                                remainingDesign.id
-                            );
                             changeTempLayerById(
                                 remainingDesign.id
                             );
@@ -509,21 +438,15 @@ $(document)
                         if (
                             state.paper?.project?.activeLayer
                         ) {
-                            console.log(
-                                "REBUILD DIMENSION BARS"
-                            );
                             createDimensionBar();
-                            console.log(
-                                "DIMENSION BARS REBUILT"
-                            );
                         }
                         updateLayerPreview();
                         $card.remove();
-                        console.log(
-                            "TEMP DESIGN DELETED:",
-                            designID
-                        );
                         closeDeleteModal();
+                        showMessage(
+                            "آیتم با موفقیت حذف شد.",
+                            "success"
+                        );
                     }
                 );
             function handleDeleteModalKeydown(e) {

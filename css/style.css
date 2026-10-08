@@ -1,27 +1,15 @@
-/* css/style.css */
 :root {
-  /* 1. پس‌زمینه کانواس */
   --wd-canvas-bg: #ffffff;
-  /* 2. پس‌زمینه منوهای راست و چپ */
   --wd-menu-bg: #ffffff;
-  /* 3. پس‌زمینه دکمه‌ها */
   --wd-button-bg: #3b82f6;
-  /* 4. هاور پس‌زمینه دکمه‌ها */
   --wd-button-hover-bg: #2563eb;
-  /* 5. پررنگ متن‌ها و آیکون‌ها */
   --wd-text-strong: #1f2937;
-  /* 6. کم‌رنگ متن‌ها و آیکون‌ها */
   --wd-text-muted: #9ca3af;
-  /* 7. سایز فونت‌ها */
   --wd-font-size: 13px;
-  /* 8. پس‌زمینه کم‌رنگ آبی */
   --wd-soft-bg: #dbeafe;
-  /* 9. مرز پررنگ */
   --wd-border-strong: #9ca3af;
-  /* 10. مرز کم‌رنگ */
   --wd-border-soft: #e5e7eb;
 }
-
 
 /* canvas[resize] {
   width: 100%;
@@ -40,6 +28,23 @@
     20px 20px;
   direction: ltr;
 } */
+canvas[resize] {
+  width: 100%;
+  height: 100%;
+  background-color: #f5f7fa;
+  background-image:
+    linear-gradient(rgba(71, 85, 105, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(71, 85, 105, 0.12) 1px, transparent 1px),
+    linear-gradient(rgba(71, 85, 105, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(71, 85, 105, 0.045) 1px, transparent 1px);
+  background-size:
+    100px 100px,
+    100px 100px,
+    20px 20px,
+    20px 20px;
+  direction: ltr;
+}
+
 .designer-canvas-area {
   min-width: 0;
   min-height: 0;
@@ -62,20 +67,10 @@
   direction: ltr;
 }
 
-canvas[resize] {
+.wd-canvas-frame canvas[resize] {
+  display: block;
   width: 100%;
   height: 100%;
-  background-color: #f5f7fa;
-  background-image:
-    linear-gradient(rgba(71, 85, 105, 0.12) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(71, 85, 105, 0.12) 1px, transparent 1px),
-    linear-gradient(rgba(71, 85, 105, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(71, 85, 105, 0.045) 1px, transparent 1px);
-  background-size:
-    100px 100px,
-    100px 100px,
-    20px 20px,
-    20px 20px;
   direction: ltr;
 }
 
@@ -118,10 +113,22 @@ button {
 .wd-app-shell {
   width: 100%;
   height: 100vh;
-  /* display: grid;
-  grid-template-columns:
-    300px minmax(0, 1fr) 320px; */
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr) 300px;
   direction: ltr;
+}
+
+.wd-panel-right {
+  position: relative;
+  width: 300px;
+  height: 100vh;
+}
+
+.wd-panel-left {
+  position: relative;
+  width: 300px;
+  height: 100vh;
 }
 
 .wd-panel-right {
@@ -140,7 +147,7 @@ button {
 }
 
 .wd-right-brand {
-  padding: 8px 15px;
+  padding: 9px 15px;
   border-bottom: 1px solid #e5e7eb;
   flex-shrink: 0;
 }
@@ -166,7 +173,6 @@ button {
 .wd-right-site-info {
   display: flex;
   flex-direction: column;
-  /* gap: 3px; */
 }
 
 .wd-right-site-info-addedit {
@@ -202,7 +208,6 @@ button {
 
 .wd-right-scroll-none {
   flex: 1;
-  /* overflow-y: auto; */
   padding: 14px;
 }
 
@@ -239,10 +244,8 @@ button {
 
 .wd-main-tools-box {
   width: 100%;
-  /* padding: 6px; */
   border: 1px solid #e5e7eb;
   border-radius: 10px;
-  /* background: var(--wd-soft-bg); */
   display: flex;
   flex-direction: row;
   gap: 0;
@@ -267,7 +270,6 @@ button {
   cursor: pointer;
 }
 
-/* آخرین دکمه خط نداشته باشد */
 .wd-main-tool:last-child {
   border-left: 0;
 }
@@ -287,12 +289,10 @@ button {
   color: var(--wd-menu-bg);
 }
 
-/* گوشه هاور دکمه اول */
 .wd-main-tool:first-child:hover {
   border-radius: 0 9px 9px 0;
 }
 
-/* گوشه هاور دکمه آخر */
 .wd-main-tool:last-child:hover {
   border-radius: 9px 0 0 9px;
 }
@@ -336,12 +336,10 @@ button {
   color: var(--wd-menu-bg);
 }
 
-/* گوشه هاور دکمه اول */
 .wd-view-tool:first-child:hover {
   border-radius: 0 9px 9px 0;
 }
 
-/* گوشه هاور دکمه آخر */
 .wd-view-tool:last-child:hover {
   border-radius: 9px 0 0 9px;
 }
@@ -355,7 +353,6 @@ button {
   gap: 0;
 }
 
-/* آخرین دکمه خط نداشته باشد */
 .wd-view-tool:last-child {
   border-left: 0;
 }
@@ -426,7 +423,6 @@ button {
   overflow-x: hidden;
 }
 
-/* اسکرول بار لیست آیتم‌ها */
 .wd-items-stack::-webkit-scrollbar {
   width: 6px;
 }
@@ -445,7 +441,6 @@ button {
   background: #94a3b8;
 }
 
-/* کارت */
 .wd-item-card {
   width: 100%;
   min-height: 100px;
@@ -461,21 +456,18 @@ button {
   transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
 }
 
-/* کارت انتخاب شده */
 .wd-item-card.is-active {
   background: #eff6ff;
   border-color: #3b82f6;
   box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.08);
 }
 
-/* کارت انتخاب نشده */
 .wd-item-card:not(.is-active) {
   background: #ffffff;
   border-color: #e5e7eb;
   box-shadow: none;
 }
 
-/* تصویر / SVG طرح */
 .wd-item-symbol {
   width: 75px;
   height: 70px;
@@ -487,14 +479,12 @@ button {
   border-radius: 6px;
 }
 
-/* خود SVG */
 .wd-item-symbol svg {
   width: 100%;
   height: 100%;
   display: block;
 }
 
-/* بخش اطلاعات */
 .wd-item-details {
   min-width: 0;
   flex: 1;
@@ -504,7 +494,6 @@ button {
   gap: 5px;
 }
 
-/* عنوان */
 .wd-item-title {
   width: 100%;
   font-size: 13px;
@@ -517,7 +506,6 @@ button {
   text-overflow: ellipsis;
 }
 
-/* ابعاد */
 .wd-item-size {
   width: 100%;
   font-size: 11px;
@@ -526,7 +514,6 @@ button {
   text-align: right;
 }
 
-/* دکمه انتخاب */
 .wd-item-select-btn {
   width: 55px;
   height: 30px;
@@ -561,7 +548,6 @@ button {
   direction: rtl;
 }
 
-/* حذف */
 .wd-item-delete {
   flex-shrink: 0;
   width: 40px;
@@ -582,17 +568,14 @@ button {
   gap: 4px;
 }
 
-/* آیکن حذف */
 .wd-item-delete i {
   font-size: 15px;
 }
 
-/* هاور حذف */
 .wd-item-delete:hover {
   background: #dc2626;
 }
 
-/* دکمه ویرایش */
 .wd-item-edit {
   width: 40px;
   height: 30px;
@@ -608,19 +591,16 @@ button {
   transition: all 0.2s ease;
 }
 
-/* آیکون ویرایش */
 .wd-item-edit i {
   color: #ffffff;
   font-size: 16px;
 }
 
-/* هاور دکمه ویرایش */
 .wd-item-edit:hover {
   background: #16a34a;
   color: #ffffff;
 }
 
-/* آیکون در هاور */
 .wd-item-edit:hover i {
   color: #ffffff;
 }
@@ -657,7 +637,6 @@ button {
   font-weight: 600;
 }
 
-/* FORM  */
 .wd-form-line {
   display: flex;
   flex-direction: column;
@@ -665,7 +644,6 @@ button {
   margin-bottom: 10px;
 }
 
-/* بادخور */
 .wd-gap-fields {
   width: 100%;
   display: flex;
@@ -762,7 +740,6 @@ button {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: left 10px center;
-  /* padding-left: 42px; */
 }
 
 .wd-select-box:hover {
@@ -789,7 +766,6 @@ button {
   overflow: hidden;
 }
 
-/* دکمه های شمارنده */
 .wd-counter-button {
   width: 42px;
   height: 100%;
@@ -806,23 +782,19 @@ button {
   cursor: pointer;
 }
 
-/* خط کنار + سمت چپ */
 .wd-counter-button:first-child {
   border-left: 1px solid #e5e7eb;
 }
 
-/* خط کنار − سمت راست */
 .wd-counter-button:last-child {
   border-right: 1px solid #e5e7eb;
 }
 
-/* هاور */
 .wd-counter-button:hover {
   background: #f3f4f6;
   color: #6b7280;
 }
 
-/* عدد وسط */
 .wd-counter-number {
   flex: 1;
   min-width: 0;
@@ -840,14 +812,12 @@ button {
   -moz-appearance: textfield;
 }
 
-/* حذف فلش input number */
 .wd-counter-number::-webkit-outer-spin-button,
 .wd-counter-number::-webkit-inner-spin-button {
   margin: 0;
   -webkit-appearance: none;
 }
 
-/* فوکوس */
 .wd-counter-number:focus {
   outline: none;
 }
@@ -885,7 +855,6 @@ button {
   border-radius: 10px;
 }
 
-/* SHAPE ITEMS */
 .wd-preview-strip .form-imagecheck {
   flex: 0 0 68px;
   height: 55px;
@@ -917,17 +886,14 @@ button {
   object-fit: contain;
 }
 
-/* SELECTED SHAPE */
 .wd-preview-strip .form-imagecheck-input:checked+.form-imagecheck-figure {
   border-color: #2563eb;
 }
 
-/* FORM LINES */
 .wd-form-line {
   width: 100%;
 }
 
-/* RIGHT ACTIONS */
 .wd-right-form-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -944,7 +910,6 @@ button {
   cursor: pointer;
 }
 
-/* CONFIRM */
 .wd-right-confirm {
   border: 0;
   background: var(--wd-button-bg);
@@ -956,7 +921,6 @@ button {
   color: #ffffff;
 }
 
-/* CANCEL */
 .wd-right-cancel {
   border: 1px solid #e5e7eb;
   background: #ffffff;
@@ -967,13 +931,12 @@ button {
   background: #f9fafb;
 }
 
-/* 
-    CANVAS
-*/
 .wd-canvas-zone {
+  width: auto;
   direction: ltr;
   width: 100%;
   height: 100%;
+  min-width: 0;
   min-height: 0;
   grid-column: 2;
   position: relative;
@@ -981,7 +944,6 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* padding: 25px;   اگه خرابه این باز کنیم */
   overflow: hidden;
 }
 
@@ -1015,7 +977,6 @@ button {
   font-size: 13px;
 }
 
-/* کنترل های بالای بوم */
 .wd-canvas-controls {
   position: absolute;
   top: 10px;
@@ -1028,16 +989,13 @@ button {
   height: auto;
 }
 
-/* جعبه کنترل */
 .wd-canvas-controls .wd-view-tools-box {
   min-width: 0;
   margin: 0;
 }
 
-/* جعبه کنترل */
 .wd-canvas-controls .wd-view-tools-box {
   width: auto;
-  /* min-width: auto; */
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -1064,14 +1022,12 @@ button {
   transition: background 0.15s ease, color 0.15s ease;
 }
 
-/* آیکون */
 .wd-canvas-controls .wd-view-tool i {
   font-size: 18px;
   line-height: 1;
   color: #374151;
 }
 
-/* هاور */
 .wd-canvas-controls .wd-view-tool:hover {
   background: var(--wd-button-bg);
   color: var(--wd-menu-bg);
@@ -1081,30 +1037,25 @@ button {
   color: var(--wd-menu-bg);
 }
 
-/* خط بین دکمه ها */
 .wd-canvas-controls .wd-view-tool+.wd-view-tool {
   border-left: 1px solid #e5e7eb;
 }
 
-/* دکمه اول - گوشه های سمت چپ */
 .wd-canvas-controls .wd-view-tool:first-child,
 .wd-canvas-controls .wd-view-tool:first-child:hover {
   border-radius: 5px 0 0 5px;
 }
 
-/* دکمه آخر - سه بعدی - گوشه های سمت راست */
 .wd-canvas-controls .wd-view-tool:last-child,
 .wd-canvas-controls .wd-view-tool:last-child:hover {
   border-radius: 0 5px 5px 0;
 }
 
-/* دکمه های وسط */
 .wd-canvas-controls .wd-view-tool:not(:first-child):not(:last-child),
 .wd-canvas-controls .wd-view-tool:not(:first-child):not(:last-child):hover {
   border-radius: 0;
 }
 
-/* غیرفعال */
 .wd-canvas-controls .wd-view-tool:disabled {
   opacity: 0.4;
   cursor: not-allowed;
@@ -1115,7 +1066,6 @@ button {
   color: #9ca3af;
 }
 
-/* مخفی کردن کنترل ها در موبایل */
 @media (max-width: 767.98px) {
   .wd-canvas-controls {
     display: none;
@@ -1144,7 +1094,7 @@ button {
     USER HEADER
 */
 .wd-user-header {
-  padding: 10px 15px;
+  padding: 9px 15px;
   border-bottom: 1px solid #e5e7eb;
   flex-shrink: 0;
 }
@@ -1215,7 +1165,6 @@ button {
   gap: 10px;
 }
 
-/* دکمه نام یونیت */
 .wd-left-label {
   width: auto;
   flex-shrink: 0;
@@ -1237,11 +1186,9 @@ button {
 }
 
 .wd-left-label button:hover {
-  /* background: var(--wd-button-hover-bg); */
   color: #ffffff;
 }
 
-/* ورودی نام یونیت */
 .wd-input-box {
   flex: 1;
   min-width: 0;
@@ -1345,7 +1292,6 @@ button {
   gap: 8px;
 }
 
-/* سطر اول: هر دکمه 2 ستون */
 .wd-component-button {
   grid-column: span 2;
   height: 68px;
@@ -1366,7 +1312,6 @@ button {
     color 0.18s ease;
 }
 
-/* سطر دوم: پنل و سایر عرض یکسان */
 .wd-component-button:nth-child(4),
 .wd-component-button:nth-child(5) {
   grid-column: span 3;
@@ -1377,7 +1322,6 @@ button {
   color: var(--wd-menu-bg);
   border-color: var(--wd-button-bg);
 }
-
 
 .wd-component-name {
   font-size: 11px;
@@ -1566,18 +1510,13 @@ button {
 }
 
 .wd-mobile-submenu-bar {
-  display: none;
+  display: block;
   width: 100%;
   padding: 6px;
   margin-bottom: 5px;
   box-sizing: border-box;
   background: var(--wd-menu-bg);
-  /* مهم */
   pointer-events: auto;
-}
-
-.wd-mobile-submenu-bar.show {
-  display: block;
 }
 
 .wd-mobile-submenu-items {
@@ -1613,8 +1552,6 @@ button {
   font-size: 11px;
   font-weight: 600;
   cursor: pointer;
-
-  /* مهم */
   user-select: none;
   -webkit-user-select: none;
   -webkit-tap-highlight-color: transparent;
@@ -1659,7 +1596,6 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* gap: 6px; */
   font-size: 18px;
   pointer-events: auto;
 }
@@ -1676,7 +1612,6 @@ button {
   z-index: 2000;
 }
 
-/* Overlay کاملاً غیرفعال */
 .wd-mobile-overlay {
   display: none !important;
 }
@@ -1754,7 +1689,6 @@ button {
   color: #ffffff;
 }
 
-/* فقط Offcanvas افزودن/ویرایش یونیت */
 #ofcAddNew.offcanvas {
   display: flex;
 }
@@ -1764,12 +1698,10 @@ button {
   transform: translateX(100%) !important;
 }
 
-/* ADD / EDIT UNIT MODAL */
 #ofcAddNew {
   direction: rtl;
 }
 
-/* Dialog */
 #ofcAddNew .modal-dialog {
   width: calc(100% - 30px);
   max-width: 850px;
@@ -1781,13 +1713,11 @@ button {
     opacity 0.25s ease;
 }
 
-/* ورود */
 #ofcAddNew.show .modal-dialog {
   transform: translateY(0) scale(1);
   opacity: 1;
 }
 
-/* خروج */
 #ofcAddNew.is-closing .modal-dialog {
   transform: translateY(20px) scale(0.97);
   opacity: 0;
@@ -1822,7 +1752,6 @@ button {
   border-radius: 10px;
 }
 
-/* موبایل */
 @media (max-width: 576px) {
   #ofcAddNew .modal-dialog {
     width: calc(100% - 20px);
@@ -1840,7 +1769,6 @@ button {
   }
 }
 
-/* MULLION PANEL */
 #ofcMullian {
   position: fixed;
   top: 0;
@@ -1871,7 +1799,6 @@ button {
   }
 }
 
-/* WINDOW PANEL */
 #ofcWindow {
   position: fixed;
   top: 0;
@@ -1902,7 +1829,6 @@ button {
   }
 }
 
-/* DOOR PANEL */
 #ofcDoor {
   position: fixed;
   top: 0;
@@ -1933,7 +1859,6 @@ button {
   }
 }
 
-/* PANEL */
 #ofcPanel {
   position: fixed;
   top: 0;
@@ -1964,7 +1889,6 @@ button {
   }
 }
 
-/* COUPLING PANEL */
 #ofcCoupling {
   position: fixed;
   top: 0;
@@ -1995,7 +1919,6 @@ button {
   }
 }
 
-/* گرید فرم */
 .wd-form-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2013,25 +1936,17 @@ button {
   min-width: 0;
 }
 
-/* لپتاپ کوچک */
 @media (max-width: 900px) {
   .wd-form-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-/* موبایل */
-
 @media (max-width: 576px) {
-
   .wd-form-grid {
-
     grid-template-columns: repeat(2, minmax(0, 1fr));
-
     gap: 10px;
-
   }
-
 }
 
 .wd-mobile-view-tools {
@@ -2074,38 +1989,31 @@ button {
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* خط جداکننده بین دکمه‌ها */
 .wd-mobile-view-tool+.wd-mobile-view-tool {
   border-right: 1px solid #e5e7eb;
 }
 
-/* هاور */
 .wd-mobile-view-tool:hover {
   background: var(--wd-button-bg);
   color: #ffffff;
 }
 
-/* دکمه اول = سمت راست */
 .wd-mobile-view-tool:first-child {
   border-radius: 0 8px 8px 0;
 }
 
-/* دکمه آخر = سمت چپ */
 .wd-mobile-view-tool:last-child {
   border-radius: 5px 0 0 5px;
 }
 
-/* هاور دکمه سمت راست */
 .wd-mobile-view-tool:first-child:hover {
   border-radius: 0 8px 8px 0;
 }
 
-/* هاور دکمه سمت چپ */
 .wd-mobile-view-tool:last-child:hover {
   border-radius: 5px 0 0 5px;
 }
 
-/* MOBILE */
 @media (max-width: 768px) {
   body {
     overflow: hidden;
@@ -2155,7 +2063,6 @@ button {
   .wd-canvas-zone {
     width: 100%;
     height: 100vh;
-    /* padding: 65px 10px 10px; اگه خرابه این باز میکنم */
   }
 
   .wd-mobile-overlay {
@@ -2221,7 +2128,6 @@ button {
   }
 }
 
-/* SMALL MOBILE */
 @media (max-width: 430px) {
 
   .wd-panel-right,
@@ -2267,7 +2173,6 @@ button {
   stroke-linejoin: round;
 }
 
-/* آیکون مولین عمودی 3 */
 .icon-mullian-v3 {
   width: 50px;
   height: 50px;
@@ -2291,7 +2196,6 @@ button {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-/* پنجره سفید اصلی */
 .wd-3d-modal-content {
   position: relative;
   width: min(1100px, calc(100% - 40px));
@@ -2304,7 +2208,6 @@ button {
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
 }
 
-/* دکمه‌های بالا سمت راست */
 .wd-3d-modal-actions {
   position: absolute;
   top: 14px;
@@ -2316,7 +2219,6 @@ button {
   direction: rtl;
 }
 
-/* دکمه پیش نمایش */
 .wd-3d-preview-btn {
   width: 40px;
   height: 40px;
@@ -2341,7 +2243,6 @@ button {
   line-height: 1;
 }
 
-/* دکمه بستن */
 .wd-3d-close-btn {
   width: 40px;
   height: 40px;
@@ -2367,7 +2268,6 @@ button {
   line-height: 1;
 }
 
-/* فضای سه بعدی */
 .wd-3d-modal-body {
   width: 100%;
   height: 100%;
@@ -2375,7 +2275,6 @@ button {
   background: #ffffff;
 }
 
-/* کانتینر Three.js */
 .wd-3d-view {
   position: relative;
   width: 100%;
@@ -2384,14 +2283,12 @@ button {
   background: #ffffff;
 }
 
-/* خود canvas سه بعدی */
 .wd-3d-view canvas {
   display: block;
   width: 100%;
   height: 100%;
 }
 
-/* موبایل */
 @media (max-width: 768px) {
   .wd-3d-modal-body {
     display: flex;
@@ -2412,9 +2309,48 @@ button {
     width: 100% !important;
     height: 100% !important;
   }
+
+  /* =========================================
+     دکمه‌های کنترل سه بعدی در موبایل
+  ========================================= */
+  .wd-3d-modal-actions {
+    top: 8px;
+    right: 8px;
+    gap: 5px;
+    flex-wrap: wrap;
+    max-width: calc(100% - 16px);
+    justify-content: flex-start;
+  }
+
+  /* دکمه‌های سه بعدی */
+  .wd-3d-preview-btn,
+  .wd-3d-close-btn {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px;
+    border-radius: 6px;
+  }
+
+  /* آیکن‌ها */
+  .wd-3d-preview-btn i,
+  .wd-3d-close-btn i {
+    font-size: 17px;
+  }
 }
 
-/* پیش‌نمایش شکل  */
+@media (max-width: 768px) {
+
+  .wd-3d-modal-actions,
+  .wd-3d-preview-btn,
+  .wd-3d-close-btn {
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+}
+
 .shape-preview-box {
   position: relative;
   width: 100%;
@@ -2426,7 +2362,6 @@ button {
   overflow: visible;
 }
 
-/* تصویر اصلی */
 .shape-preview-image {
   position: absolute;
   top: 50%;
@@ -2455,7 +2390,6 @@ button {
   background: #9ca3af;
 }
 
-/* خط اصلی عرض */
 .shape-preview-box::after {
   content: "";
   position: absolute;
@@ -2466,7 +2400,6 @@ button {
   background: #9ca3af;
 }
 
-/* سرهای خط ارتفاع */
 .shape-preview-box .height-line-top,
 .shape-preview-box .height-line-bottom,
 .shape-preview-box .width-line-left,
@@ -2493,14 +2426,12 @@ button {
   margin: 0;
 }
 
-/* ارتفاع - وسط خط سمت چپ */
 .shape-preview-box #itemHeight {
   top: 50%;
   left: calc(50% - 145px);
   transform: translate(-50%, -50%) rotate(-90deg);
 }
 
-/* عرض - وسط خط پایین */
 .shape-preview-box #itemWidth {
   top: auto;
   left: 50%;
@@ -2511,7 +2442,6 @@ button {
 /* =========================================
  خطوط کوتاه ابتدا و انتها
 ========================================= */
-/* دو خط کوتاه بالا و پایین ارتفاع */
 .height-line-top,
 .height-line-bottom {
   position: absolute;
@@ -2564,7 +2494,6 @@ button {
   background: #9ca3af;
 }
 
-/* خط کوچک پایین ارتفاع */
 .height-line-bottom {
   position: absolute;
   width: 12px;
@@ -2583,7 +2512,6 @@ button {
   background: #9ca3af;
 }
 
-/* خط کوچک راست عرض */
 .width-line-right {
   position: absolute;
   width: 2px;
@@ -2597,7 +2525,6 @@ button {
   bottom: 25px;
 }
 
-/* دو خط کوتاه چپ و راست عرض */
 .shape-preview-box .width-line-left,
 .shape-preview-box .width-line-right {
   position: absolute;
@@ -2662,7 +2589,6 @@ button {
   scrollbar-width: thin;
 }
 
-/* اسکرول */
 .shape-selector-list::-webkit-scrollbar {
   height: 5px;
 }
@@ -2692,7 +2618,6 @@ button {
   box-sizing: border-box;
 }
 
-/* رادیو */
 .shape-selector-radio {
   position: absolute;
   width: 2px;
@@ -2718,7 +2643,6 @@ button {
   transition: border-color 0.15s ease;
 }
 
-/* تصویر کوچک */
 .shape-selector-image {
   display: block;
   width: 100%;
@@ -2732,32 +2656,27 @@ button {
   box-sizing: border-box;
 }
 
-/* انتخاب شده */
 .shape-selector-radio:checked+.shape-selector-box {
   border-color: #2563eb;
 }
 
-/* باکس تایید حذف */
 .wd-confirm-delete-box {
   width: 320px;
   border-radius: 12px;
   padding: 20px;
 }
 
-/* عنوان */
 .wd-confirm-delete-title {
   font-size: 16px !important;
   font-weight: 600;
   color: #111827;
 }
 
-/* متن */
 .wd-confirm-delete-text {
   font-size: 13px !important;
   color: #6b7280;
 }
 
-/* چیدمان فرم غیرمستطیل */
 .wd-nonrect-layout {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 300px;
@@ -2768,14 +2687,12 @@ button {
   margin-bottom: 40px;
 }
 
-/* پیش‌نمایش سمت راست */
 .wd-nonrect-layout .shape-preview-box {
   grid-column: 1;
   width: 100%;
   min-width: 0;
 }
 
-/* فهرست شکل‌ها سمت چپ */
 .wd-nonrect-layout .shape-selector-list {
   grid-column: 2;
   display: block;
@@ -2791,7 +2708,6 @@ button {
   padding: 12px;
 }
 
-/* دسته‌بندی شکل‌ها */
 .shape-category {
   margin-bottom: 18px;
 }
@@ -2816,7 +2732,6 @@ button {
   background: #ddd;
 }
 
-/* دکمه‌های هر دسته */
 .shape-category-options {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2829,7 +2744,6 @@ button {
   height: 55px;
 }
 
-/* اسکرول عمودی */
 .wd-nonrect-layout .shape-selector-list::-webkit-scrollbar {
   width: 6px;
 }
@@ -2839,7 +2753,6 @@ button {
   border-radius: 10px;
 }
 
-/* موبایل */
 @media (max-width: 700px) {
   .wd-nonrect-layout {
     grid-template-columns: minmax(0, 1fr);
@@ -2857,7 +2770,6 @@ button {
   }
 }
 
-/* وسط‌چین کردن پیش‌نمایش مستطیل */
 #ofcAddNew:not(.wd-non-rectangle-mode) .wd-nonrect-layout {
   display: flex;
   justify-content: center;
@@ -2869,7 +2781,6 @@ button {
   margin: 0 auto;
 }
 
-/* دکمه حذف */
 .wd-confirm-delete-btn {
   width: 90px;
   height: 36px;
@@ -2886,7 +2797,6 @@ button {
   box-shadow: 0 4px 12px rgba(220, 38, 38, .35);
 }
 
-/* دکمه لغو */
 .wd-confirm-cancel-btn {
   width: 90px;
   height: 36px;
@@ -2927,7 +2837,6 @@ button {
   box-sizing: border-box;
 }
 
-/* دکمه بستن منوی موبایل */
 .wd-mobile-close {
   display: none;
   align-items: center;
@@ -2955,7 +2864,6 @@ button {
   }
 }
 
-/* ///////////////////////////////////////////////// */
 * {
   box-sizing: border-box;
 }
@@ -2963,9 +2871,7 @@ button {
 .invoice-page {
   width: 100%;
   margin: 0 auto;
-  /* padding: 42px 45px 38px; */
   background: #ffffff;
-  /* border: 1px solid #dbe3ec; */
 }
 
 .invoice-header {
@@ -3349,7 +3255,6 @@ button {
   color: #374151;
 }
 
-/* جدول */
 .invoice-table {
   width: 100%;
   border-collapse: collapse;
@@ -3384,7 +3289,6 @@ button {
   width: 110px;
 }
 
-/* شماره ردیف */
 .invoice-table tbody td:first-child {
   padding-left: 0;
   padding-right: 0;
@@ -3392,14 +3296,12 @@ button {
   vertical-align: middle;
 }
 
-/* ستون بوم */
 .invoice-table tbody td:nth-child(2) {
   padding: 8px;
   text-align: center;
   vertical-align: middle;
 }
 
-/* ستون عنوان */
 .invoice-table tbody td:nth-child(3) {
   padding: 8px 6px;
   text-align: center;
@@ -3421,7 +3323,6 @@ button {
   vertical-align: middle;
 }
 
-/* پیام سیستم */
 .wd-system-message {
   position: fixed;
   top: 50%;
@@ -3444,7 +3345,6 @@ button {
 }
 
 .wd-system-message-box {
-  /* min-width: 320px; */
   max-width: 520px;
   display: flex;
   align-items: center;
@@ -3467,10 +3367,7 @@ button {
   text-align: center;
 }
 
-/* آیکون */
-
 .wd-system-message-icon {
-
   width: 36px;
   height: 36px;
   flex-shrink: 0;
@@ -3518,8 +3415,6 @@ button {
   font-family: Arial, sans-serif;
 }
 
-/* مدال تنظیمات آیتم */
-
 .wd-config-item-modal {
   position: fixed;
   inset: 0;
@@ -3528,14 +3423,11 @@ button {
   align-items: center;
   justify-content: center;
   direction: rtl;
-
   opacity: 0;
   visibility: hidden;
-
   transition:
     opacity 0.2s ease,
     visibility 0.2s ease;
-
   font-family: "IRANSansWeb", sans-serif;
 }
 
@@ -3544,28 +3436,20 @@ button {
   visibility: visible;
 }
 
-/* پس زمینه */
-
 .wd-config-item-overlay {
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.4);
 }
 
-/* بدنه */
-
 .wd-config-item-container {
   position: relative;
   width: min(730px, calc(100vw - 30px));
   max-height: calc(100vh - 40px);
-
   background: #fff;
   border-radius: 12px;
-
   overflow: hidden;
-
   transform: translateY(20px) scale(0.97);
-
   transition:
     transform 0.25s cubic-bezier(.34, 1.56, .64, 1);
 }
@@ -3574,18 +3458,13 @@ button {
   transform: translateY(0) scale(1);
 }
 
-/* محتوا */
-
 .wd-config-item-body {
   padding: 20px;
   max-height: calc(100vh - 130px);
   overflow-y: auto;
 }
 
-/* موبایل */
-
 @media (max-width: 600px) {
-
   .wd-config-item-container {
     width: calc(100vw - 20px);
     max-height: calc(100vh - 20px);
@@ -3594,34 +3473,28 @@ button {
   .wd-config-item-body {
     padding: 15px;
   }
-
 }
 
-/* موفقیت */
 .wd-system-message-icon.success {
   background: #dcfce7;
   color: #16a34a;
 }
 
-/* خطا */
 .wd-system-message-icon.error {
   background: #fee2e2;
   color: #dc2626;
 }
 
-/* هشدار */
 .wd-system-message-icon.warning {
   background: #fef3c7;
   color: #d97706;
 }
 
-/* اطلاعات */
 .wd-system-message-icon.info {
   background: #dbeafe;
   color: #2563eb;
 }
 
-/* انیمیشن ورود آیکون */
 @keyframes messageIconShow {
   0% {
     opacity: 0;
@@ -3642,7 +3515,6 @@ button {
   }
 }
 
-/* حرکت خود علامت */
 @keyframes messageIconRotate {
   0% {
     opacity: 0;
@@ -3659,9 +3531,7 @@ button {
   }
 }
 
-/* موبایل */
 @media (max-width: 600px) {
-
   .wd-system-message-box {
     min-width: 280px;
     max-width: calc(100vw - 30px);
@@ -3680,10 +3550,8 @@ button {
     font-size: 13px;
     text-align: center;
   }
-
 }
 
-/* مدال ویرایش آیتم */
 .wd-edit-item-modal {
   position: fixed;
   inset: 0;
@@ -3705,14 +3573,12 @@ button {
   visibility: visible;
 }
 
-/* پس زمینه */
 .wd-edit-item-overlay {
   position: absolute;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-/* بدنه اصلی */
 .wd-edit-item-container {
   position: relative;
   width: 600px;
@@ -3733,7 +3599,6 @@ button {
     translateY(0) scale(1);
 }
 
-/* Header */
 .wd-edit-item-container .wd-right-brand {
   width: 100%;
   background: #ffffff;
@@ -3751,7 +3616,6 @@ button {
   width: 100%;
 }
 
-/* عنوان */
 .wd-edit-item-container .wd-right-site-title {
   display: block;
   color: #1f2937;
@@ -3784,90 +3648,73 @@ button {
 /* =========================================
    فیلدهای فرم ویرایش آیتم
    ========================================= */
-
 .wd-edit-item-container .wd-edit-item-fields {
   display: grid;
   width: 100%;
   gap: 16px;
 }
 
-
 /* =========================================
    هر فیلد
    ========================================= */
-
 .wd-edit-item-container .wd-edit-item-field {
   width: 100%;
   min-width: 0;
 }
 
-
 /* =========================================
    ورودی‌ها
    ========================================= */
-
 .wd-edit-item-container .wd-edit-item-field .wd-input-box {
   width: 100%;
   min-width: 0;
   box-sizing: border-box;
 }
 
-
 /* =========================================
    1 فیلد
    ========================================= */
-
 .wd-edit-item-container .wd-edit-item-fields:has(> .wd-edit-item-field:nth-child(1):last-child) {
   grid-template-columns: 1fr;
 }
-
 
 /* =========================================
    2 فیلد
    راست و چپ
    ========================================= */
-
 .wd-edit-item-container .wd-edit-item-fields:has(> .wd-edit-item-field:nth-child(2):last-child) {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
-
 
 /* =========================================
    3 فیلد
    راست - وسط - چپ
    ========================================= */
-
 .wd-edit-item-container .wd-edit-item-fields:has(> .wd-edit-item-field:nth-child(3):last-child) {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
-
 
 /* =========================================
    4 فیلد
    دو تا در هر سطر
    ========================================= */
-
 .wd-edit-item-container .wd-edit-item-fields:has(> .wd-edit-item-field:nth-child(4):last-child) {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
-
 
 /* =========================================
    5 و 6 فیلد
    سه تا در هر سطر
    ========================================= */
-
 .wd-edit-item-container .wd-edit-item-fields:has(> .wd-edit-item-field:nth-child(5):last-child),
 .wd-edit-item-container .wd-edit-item-fields:has(> .wd-edit-item-field:nth-child(6):last-child) {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 @media (max-width: 576px) {
-
   .wd-edit-item-container .wd-edit-item-fields {
     grid-template-columns: 1fr !important;
   }
-
 }
 
 .wd-edit-item-container .wd-selection-close i {
@@ -3875,20 +3722,15 @@ button {
   color: #ffffff;
 }
 
-/* مودال‌هایی که فقط یک ورودی دارند */
-
 .wd-edit-item-modal.wd-single-field-modal .wd-edit-item-container {
   width: 300px;
   max-width: calc(100vw - 30px);
 }
 
-/* Body */
 .wd-edit-item-body {
   padding: 24px;
 }
 
-/* فیلدها */
-/* فیلدهای ویرایش آیتم */
 .wd-edit-item-fields {
   display: grid;
   grid-template-columns:
@@ -3897,30 +3739,25 @@ button {
   width: 100%;
 }
 
-/* هر فیلد */
 .wd-edit-item-field {
   display: flex;
   flex-direction: column;
   min-width: 0;
 }
 
-/* شماره آیتم - سمت راست */
 .wd-edit-item-field:first-child {
   grid-column: 1;
 }
 
-/* نام آیتم - وسط */
 .wd-edit-item-field:nth-child(2) {
   grid-column: 2;
 }
 
-/* تعداد - سمت چپ */
 .wd-edit-item-quantity-field {
   grid-column: 3;
   width: 100%;
 }
 
-/* ورودی‌های ویرایش */
 .wd-edit-item-field .wd-input-box {
   width: 100%;
   height: 40px;
@@ -3989,14 +3826,12 @@ button {
   -moz-appearance: textfield;
 }
 
-/* حذف فلش input number */
 .wd-edit-item-quantity-field .wd-counter-number::-webkit-inner-spin-button,
 .wd-edit-item-quantity-field .wd-counter-number::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-/* پیام خطا */
 .wd-edit-item-error {
   min-height: 24px;
   margin-top: 5px;
@@ -4007,7 +3842,6 @@ button {
   text-align: right;
 }
 
-/* دکمه‌ها */
 .wd-edit-item-actions {
   display: flex;
   align-items: center;
@@ -4051,7 +3885,6 @@ button {
   color: #111827;
 }
 
-/* موبایل */
 @media (max-width: 650px) {
   .wd-edit-item-fields {
     grid-template-columns: 1fr;
@@ -4066,7 +3899,6 @@ button {
   }
 }
 
-/* مدال حذف آیتم */
 .wd-delete-item-modal {
   position: fixed;
   inset: 0;
@@ -4088,14 +3920,12 @@ button {
   visibility: visible;
 }
 
-/* پس زمینه */
 .wd-delete-item-overlay {
   position: absolute;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.4);
 }
 
-/* بدنه اصلی */
 .wd-delete-item-container {
   position: relative;
   width: 600px;
@@ -4115,7 +3945,6 @@ button {
   transform: translateY(0) scale(1);
 }
 
-/* Header */
 .wd-delete-item-container .wd-right-brand {
   width: 100%;
   background: #ffffff;
@@ -4133,7 +3962,6 @@ button {
   width: 100%;
 }
 
-/* عنوان */
 .wd-delete-item-container .wd-right-site-title {
   display: block;
   color: #1f2937;
@@ -4142,7 +3970,6 @@ button {
   line-height: 1.6;
 }
 
-/* دکمه بستن */
 .wd-delete-item-container .wd-selection-close {
   width: 34px;
   height: 34px;
@@ -4169,12 +3996,10 @@ button {
   color: #ffffff;
 }
 
-/* Body */
 .wd-delete-item-body {
   padding: 5px 0px 20px 0px;
 }
 
-/* متن حذف */
 .wd-delete-item-message {
   width: 100%;
   color: #1f2937;
@@ -4200,7 +4025,6 @@ button {
   text-align: center;
 }
 
-/* دکمه‌ها */
 .wd-delete-item-actions {
   display: flex;
   align-items: center;
@@ -4245,7 +4069,6 @@ button {
   color: #111827;
 }
 
-/* موبایل */
 @media (max-width: 650px) {
   .wd-delete-item-container {
     width: calc(100vw - 30px);
@@ -4256,7 +4079,6 @@ button {
   }
 }
 
-/* اطلاعات آیتم حذف */
 .wd-delete-item-info {
   display: inline-flex;
   align-items: center;
@@ -4280,9 +4102,7 @@ button {
   margin-left: 8px;
 }
 
-/* فرم جزئیات Canvas */
 .wd-unit-details {
-  /* position: fixed; */
   width: 270px;
   max-width: calc(100vw - 30px);
   max-height: calc(100vh - 30px);
@@ -4298,7 +4118,6 @@ button {
   padding: 15px;
 }
 
-/* هدر فرم */
 .wd-unit-details>.wd-right-brand {
   width: 100%;
   background: #ffffff;
@@ -4351,8 +4170,6 @@ button {
   color: #ffffff;
 }
 
-
-/* فیلدها */
 .wd-unit-details .wd-form-line {
   display: flex;
   flex-direction: column;
@@ -4373,7 +4190,6 @@ button {
   line-height: 1.6;
 }
 
-/* Select */
 .wd-unit-details .wd-select-box {
   width: 100%;
   min-width: 0;
@@ -4400,7 +4216,6 @@ button {
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.08);
 }
 
-
 .wd-unit-details::-webkit-scrollbar {
   width: 6px;
 }
@@ -4418,7 +4233,6 @@ button {
   background: #9ca3af;
 }
 
-/* موبایل */
 @media (max-width: 576px) {
   .wd-unit-details {
     width: calc(100vw - 30px);
@@ -4433,5 +4247,761 @@ button {
   .icon-mullian-v3 {
     width: 30px;
     height: 30px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1199px) {
+  .wd-app-shell {
+    grid-template-columns: 260px minmax(0, 1fr) 260px;
+  }
+
+  .wd-panel-right,
+  .wd-panel-left {
+    width: 260px;
+  }
+
+  .wd-right-scroll,
+  .wd-left-scroll {
+    padding: 12px;
+  }
+
+  .wd-right-brand {
+    padding: 7px 12px;
+  }
+
+  .wd-right-logo {
+    width: 40px;
+    height: 40px;
+    font-size: 21px;
+  }
+
+  .wd-right-site-name,
+  .wd-right-site-title {
+    font-size: 12px;
+  }
+
+  .wd-right-site-subtitle {
+    font-size: 10px;
+  }
+
+  .wd-section-block {
+    margin-bottom: 12px;
+  }
+
+  .wd-main-tool,
+  .wd-view-tool {
+    height: 36px;
+    padding: 0 5px;
+    font-size: 11px;
+  }
+
+  .wd-create-unit-main,
+  .wd-create-unit-options {
+    height: 40px;
+  }
+
+  .wd-canvas-zone,
+  .wd-canvas-frame {
+    min-width: 0;
+    min-height: 0;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 768px) and (orientation: portrait) {
+  .wd-canvas-zone {
+    width: 100%;
+    height: calc(100dvh - 48px);
+    min-height: 0;
+    margin-top: 48px;
+  }
+
+  .wd-canvas-frame {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+  }
+
+  .wd-mobile-menu-bar {
+    height: 48px;
+    background: #ffffff;
+  }
+
+  .wd-mobile-menu-bar-inner {
+    height: 48px;
+    width: calc(100% - 12px);
+    margin: 0 6px;
+    gap: 8px;
+  }
+
+  .wd-mobile-menu-button {
+    width: 52px;
+    min-width: 52px;
+    height: 40px;
+  }
+
+  .wd-mobile-view-tools {
+    min-width: 0;
+    height: 40px;
+  }
+
+  .wd-panel-right,
+  .wd-panel-left {
+    width: min(380px, 78vw);
+    height: 100dvh;
+  }
+
+  .wd-right-scroll,
+  .wd-left-scroll {
+    min-height: 0;
+    overflow-y: auto;
+  }
+}
+
+@media (max-width: 599px) and (orientation: portrait) {
+  .wd-canvas-zone {
+    width: 100%;
+    height: calc(100dvh - 48px);
+    min-height: 0;
+    margin-top: 48px;
+  }
+
+  .wd-canvas-frame {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+  }
+
+  .wd-mobile-menu-bar {
+    height: 48px;
+    background: #ffffff;
+  }
+
+  .wd-mobile-menu-bar-inner {
+    height: 48px;
+    width: calc(100% - 10px);
+    margin: 0 5px;
+    gap: 5px;
+  }
+
+  .wd-mobile-menu-button {
+    width: 48px;
+    min-width: 48px;
+    height: 40px;
+  }
+
+  .wd-mobile-view-tools {
+    min-width: 0;
+    height: 40px;
+  }
+
+  .wd-panel-right,
+  .wd-panel-left {
+    width: min(320px, 84vw);
+    height: 100dvh;
+  }
+
+  .wd-right-scroll,
+  .wd-left-scroll {
+    min-height: 0;
+    overflow-y: auto;
+  }
+}
+
+@media (min-width: 769px) and (max-height: 760px) {
+
+  .wd-panel-right,
+  .wd-panel-left {
+    height: 100dvh;
+    min-height: 0;
+  }
+
+  .wd-right-logo {
+    width: 38px;
+    height: 38px;
+  }
+
+  .wd-right-scroll,
+  .wd-left-scroll {
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  .wd-section-block {
+    margin-bottom: 10px;
+  }
+
+  .wd-items-stack {
+    max-height: none;
+  }
+}
+
+@media (min-width: 1920px) {
+
+  .wd-canvas-zone,
+  .wd-canvas-frame {
+    min-width: 0;
+  }
+}
+
+.wd-app-shell,
+.wd-canvas-zone,
+.wd-canvas-frame,
+.wd-panel-right,
+.wd-panel-left,
+.wd-right-scroll,
+.wd-left-scroll {
+  min-width: 0;
+  min-height: 0;
+}
+
+.wd-right-scroll,
+.wd-left-scroll {
+  overflow-x: hidden;
+}
+
+.wd-canvas-controls {
+  position: absolute;
+  top: clamp(15px, 1.2vh, 14px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(480px, 58vw, 900px);
+  height: auto;
+  margin: 0;
+  padding: 0;
+  z-index: 100;
+}
+
+.wd-canvas-controls .wd-view-tools-box {
+  width: 100%;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(13, minmax(0, 1fr));
+  gap: 0;
+  margin: 0;
+  border: 1px solid #e5e7eb;
+  border-radius: clamp(6px, 0.6vw, 10px);
+  overflow: hidden;
+}
+
+.wd-canvas-controls .wd-view-tool {
+  width: 100%;
+  min-width: 0;
+  height: clamp(30px, 3vw, 40px);
+  padding: 0 clamp(2px, 0.4vw, 8px);
+  border: 0;
+  border-left: 1px solid #d1d5db;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(10px, 0.8vw, 13px);
+  line-height: 1;
+  overflow: hidden;
+}
+
+.wd-canvas-controls .wd-view-tool i {
+  font-size: clamp(13px, 1.25vw, 18px);
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.wd-canvas-controls .wd-view-tool:last-child {
+  border-left: 1px solid #d1d5db;
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+  .wd-canvas-controls {
+    width: 40vw;
+  }
+
+  .wd-canvas-controls .wd-view-tool {
+    height: 34px;
+  }
+
+  .wd-canvas-controls .wd-view-tool i {
+    font-size: 15px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1000px) {
+  .wd-canvas-controls {
+    width: 40vw;
+  }
+
+  .wd-canvas-controls .wd-view-tool {
+    height: 32px;
+    padding: 0 2px;
+  }
+
+  .wd-canvas-controls .wd-view-tool i {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 769px) and (max-height: 700px) {
+  .wd-canvas-controls .wd-view-tool {
+    height: 35px;
+  }
+
+  .wd-canvas-controls .wd-view-tool i {
+    font-size: 13px;
+  }
+}
+
+@media (min-width: 1201px) and (max-width: 1600px) {
+  .wd-canvas-controls {
+    width: 40vw;
+  }
+
+  .wd-canvas-controls .wd-view-tool {
+    height: 40px;
+  }
+
+  .wd-canvas-controls .wd-view-tool i {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1601px) {
+  .wd-canvas-controls {
+    width: min(900px, 58vw);
+  }
+
+  .wd-canvas-controls .wd-view-tool {
+    height: 40px;
+  }
+
+  .wd-canvas-controls .wd-view-tool i {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 768px) {
+  .wd-canvas-controls {
+    display: none;
+  }
+}
+
+.wd-main-tool,
+.wd-create-unit-main,
+.wd-create-unit-options,
+.wd-component-button,
+.wd-mobile-menu-button,
+.wd-view-tool {
+  font-size: clamp(15px, 0.75vw, 14px);
+}
+
+.wd-main-tool i,
+.wd-create-unit-main i,
+.wd-create-unit-options i,
+.wd-component-button i,
+.wd-view-tool i {
+  font-size: clamp(14px, 1.15vw, 19px);
+}
+
+.wd-section-block-image,
+.wd-component-icon {
+  width: clamp(20px, 3vw, 32px);
+  height: clamp(20px, 3vw, 32px);
+}
+
+.wd-main-tool {
+  min-height: clamp(32px, 2.7vw, 44px);
+  padding-inline: clamp(4px, 0.55vw, 12px);
+}
+
+.wd-create-unit-main,
+.wd-create-unit-options {
+  min-height: clamp(36px, 3vw, 48px);
+}
+
+.wd-component-button {
+  min-height: clamp(58px, 5.5vw, 86px);
+  padding: clamp(5px, 0.6vw, 12px);
+}
+
+.wd-component-name {
+  font-size: clamp(10px, 0.72vw, 14px);
+}
+
+متن‌های منوی راست .wd-right-site-name {
+  font-size: clamp(14px, 0.9vw, 18px);
+}
+
+.wd-right-site-subtitle {
+  font-size: clamp(11px, 0.65vw, 13px);
+}
+
+متن‌های منوی چپ .wd-user-name {
+  font-size: clamp(12px, 0.85vw, 17px);
+}
+
+.wd-user-role {
+  font-size: clamp(11px, 0.62vw, 13px);
+}
+
+.wd-form-label,
+.wd-select-box,
+.wd-unit-detail-label,
+.wd-unit-detail-value,
+.wd-unit-detail-note {
+  font-size: clamp(10px, 0.7vw, 14px);
+}
+
+کنترل‌های داخل فرم .wd-select-box {
+  min-height: clamp(30px, 2.5vw, 42px);
+  padding-inline: clamp(5px, 0.5vw, 10px);
+}
+
+.wd-form-line {
+  min-height: clamp(34px, 2.8vw, 46px);
+}
+
+دکمه‌های پایین جزئیات .wd-left-bottom-button {
+  width: clamp(30px, 2.5vw, 42px);
+  height: clamp(30px, 2.5vw, 42px);
+}
+
+.wd-left-bottom-button i {
+  font-size: clamp(14px, 1.1vw, 19px);
+}
+
+.wd-right-logo {
+  width: clamp(34px, 3vw, 48px);
+  height: clamp(34px, 3vw, 48px);
+}
+
+.wd-right-logo svg {
+  width: clamp(18px, 1.5vw, 26px);
+  height: clamp(18px, 1.5vw, 26px);
+}
+
+.wd-user-avatar {
+  width: clamp(34px, 3vw, 48px);
+  height: clamp(34px, 3vw, 48px);
+}
+
+.wd-user-avatar i {
+  font-size: clamp(17px, 1.4vw, 24px);
+}
+
+@media (max-width: 599px) and (orientation: portrait) {
+
+  .wd-main-tool,
+  .wd-create-unit-main,
+  .wd-component-button {
+    font-size: clamp(10px, 3.1vw, 13px);
+  }
+
+  .wd-main-tool i,
+  .wd-component-button i {
+    font-size: clamp(15px, 4.5vw, 20px);
+  }
+
+  .wd-component-name {
+    font-size: clamp(10px, 3vw, 13px);
+  }
+
+  .wd-section-block-image,
+  .wd-component-icon {
+    width: clamp(22px, 7vw, 30px);
+    height: clamp(22px, 7vw, 30px);
+  }
+
+  .wd-form-label,
+  .wd-select-box,
+  .wd-unit-detail-label,
+  .wd-unit-detail-value,
+  .wd-unit-detail-note {
+    font-size: clamp(10px, 3vw, 13px);
+  }
+}
+
+@media (min-width: 600px) and (max-width: 768px) and (orientation: portrait) {
+
+  .wd-main-tool,
+  .wd-create-unit-main,
+  .wd-component-button {
+    font-size: clamp(11px, 2vw, 14px);
+  }
+
+  .wd-main-tool i,
+  .wd-component-button i {
+    font-size: clamp(16px, 3vw, 21px);
+  }
+
+  .wd-component-name {
+    font-size: clamp(11px, 1.9vw, 14px);
+  }
+
+  .wd-form-label,
+  .wd-select-box,
+  .wd-unit-detail-label,
+  .wd-unit-detail-value,
+  .wd-unit-detail-note {
+    font-size: clamp(11px, 1.8vw, 14px);
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1199px) {
+
+  .wd-main-tool,
+  .wd-create-unit-main,
+  .wd-component-button {
+    font-size: clamp(10px, 1vw, 12px);
+  }
+
+  .wd-main-tool i,
+  .wd-component-button i {
+    font-size: clamp(13px, 1.4vw, 17px);
+  }
+
+  .wd-component-name {
+    font-size: clamp(10px, 0.9vw, 12px);
+  }
+
+  .wd-form-label,
+  .wd-select-box,
+  .wd-unit-detail-label,
+  .wd-unit-detail-value,
+  .wd-unit-detail-note {
+    font-size: clamp(10px, 0.85vw, 12px);
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1599px) {
+
+  .wd-main-tool,
+  .wd-create-unit-main,
+  .wd-component-button {
+    font-size: clamp(12px, 0.8vw, 14px);
+  }
+
+  .wd-main-tool i,
+  .wd-component-button i {
+    font-size: clamp(14px, 1.15vw, 19px);
+  }
+
+  .wd-component-name {
+    font-size: clamp(11px, 0.75vw, 14px);
+  }
+}
+
+@media (min-width: 1600px) {
+
+  .wd-main-tool,
+  .wd-create-unit-main,
+  .wd-component-button {
+    font-size: clamp(12px, 0.75vw, 17px);
+  }
+
+  .wd-main-tool i,
+  .wd-component-button i {
+    font-size: clamp(16px, 1.1vw, 23px);
+  }
+
+  .wd-component-name {
+    font-size: clamp(12px, 0.7vw, 16px);
+  }
+
+  .wd-form-label,
+  .wd-select-box,
+  .wd-unit-detail-label,
+  .wd-unit-detail-value,
+  .wd-unit-detail-note {
+    font-size: clamp(12px, 0.65vw, 16px);
+  }
+}
+
+.wd-component-selection {
+  width: 100%;
+}
+
+.wd-selection-title {
+  font-size: clamp(11px, 0.8vw, 16px);
+}
+
+.wd-profile-items-grid {
+  gap: clamp(6px, 0.7vw, 12px);
+}
+
+.wd-profile-item {
+  min-width: 0;
+  min-height: clamp(70px, 7vw, 110px);
+  padding: clamp(5px, 0.6vw, 12px);
+}
+
+.wd-profile-item-image {
+  width: clamp(40px, 4.5vw, 72px);
+  height: clamp(40px, 4.5vw, 72px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wd-profile-item-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-inline: auto;
+}
+
+.wd-profile-item-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  margin: 0 auto;
+}
+
+.wd-profile-item-name {
+  font-size: clamp(10px, 0.7vw, 14px);
+  line-height: 1.3;
+}
+
+@media (max-width: 599px) and (orientation: portrait) {
+  .wd-selection-title {
+    font-size: clamp(11px, 3.2vw, 14px);
+  }
+
+  .wd-profile-items-grid {
+    gap: clamp(5px, 1.5vw, 9px);
+  }
+
+  .wd-profile-item {
+    min-height: clamp(65px, 22vw, 90px);
+    padding: clamp(4px, 1.5vw, 8px);
+  }
+
+  .wd-profile-item-image {
+    width: clamp(35px, 14vw, 58px);
+    height: clamp(35px, 14vw, 58px);
+  }
+
+  .wd-profile-item-name {
+    font-size: clamp(9px, 2.8vw, 13px);
+  }
+}
+
+@media (min-width: 600px) and (max-width: 768px) and (orientation: portrait) {
+  .wd-selection-title {
+    font-size: clamp(12px, 2vw, 15px);
+  }
+
+  .wd-profile-items-grid {
+    gap: clamp(6px, 1vw, 10px);
+  }
+
+  .wd-profile-item {
+    min-height: clamp(75px, 13vw, 100px);
+    padding: clamp(5px, 1vw, 10px);
+  }
+
+  .wd-profile-item-image {
+    width: clamp(42px, 8vw, 66px);
+    height: clamp(42px, 8vw, 66px);
+  }
+
+  .wd-profile-item-name {
+    font-size: clamp(10px, 1.7vw, 14px);
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1199px) {
+  .wd-selection-title {
+    font-size: clamp(10px, 1vw, 13px);
+  }
+
+  .wd-profile-items-grid {
+    gap: clamp(5px, 0.7vw, 9px);
+  }
+
+  .wd-profile-item {
+    min-height: clamp(65px, 7vw, 90px);
+    padding: clamp(4px, 0.6vw, 8px);
+  }
+
+  .wd-profile-item-image {
+    width: clamp(38px, 4.5vw, 58px);
+    height: clamp(38px, 4.5vw, 58px);
+  }
+
+  .wd-profile-item-name {
+    font-size: clamp(9px, 0.8vw, 12px);
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1599px) {
+  .wd-selection-title {
+    font-size: clamp(10px, 0.8vw, 15px);
+  }
+
+  .wd-profile-item {
+    min-height: clamp(75px, 7vw, 105px);
+  }
+
+  .wd-profile-item-image {
+    width: clamp(45px, 4.5vw, 68px);
+    height: clamp(45px, 4.5vw, 68px);
+  }
+
+  .wd-profile-item-name {
+    font-size: clamp(10px, 0.7vw, 14px);
+  }
+}
+
+@media (min-width: 1600px) {
+  .wd-selection-title {
+    font-size: clamp(13px, 0.75vw, 17px);
+  }
+
+  .wd-profile-items-grid {
+    gap: clamp(8px, 0.7vw, 14px);
+  }
+
+  .wd-profile-item {
+    min-height: clamp(85px, 6vw, 125px);
+    padding: clamp(7px, 0.6vw, 14px);
+  }
+
+  .wd-profile-item-image {
+    width: clamp(50px, 4vw, 78px);
+    height: clamp(50px, 4vw, 78px);
+  }
+
+  .wd-profile-item-name {
+    font-size: clamp(12px, 0.65vw, 16px);
+  }
+}
+
+.wd-panel-left.offcanvas#ofcMullian,
+.wd-panel-left.offcanvas#ofcWindow,
+.wd-panel-left.offcanvas#ofcDoor,
+.wd-panel-left.offcanvas#ofcPanel,
+.wd-panel-left.offcanvas#ofcCoupling {
+  width: clamp(260px, 28vw, 300px);
+}
+
+@media (max-width: 599px) and (orientation: portrait) {
+
+  .wd-panel-left.offcanvas#ofcMullian,
+  .wd-panel-left.offcanvas#ofcWindow,
+  .wd-panel-left.offcanvas#ofcDoor,
+  .wd-panel-left.offcanvas#ofcPanel,
+  .wd-panel-left.offcanvas#ofcCoupling {
+    width: min(320px, 84vw);
+  }
+}
+
+@media (min-width: 600px) and (max-width: 768px) and (orientation: portrait) {
+
+  .wd-panel-left.offcanvas#ofcMullian,
+  .wd-panel-left.offcanvas#ofcWindow,
+  .wd-panel-left.offcanvas#ofcDoor,
+  .wd-panel-left.offcanvas#ofcPanel,
+  .wd-panel-left.offcanvas#ofcCoupling {
+    width: min(380px, 78vw);
   }
 }

@@ -309,6 +309,7 @@ export function initClickEvents() {
             if (oldModal) {
                 oldModal.remove();
             }
+    
             const modal = document.createElement("div");
             modal.className = "wd-edit-item-modal";
             modal.innerHTML = `
@@ -390,40 +391,56 @@ export function initClickEvents() {
                     </div>
                 </div>
             `;
+    
             document.body.appendChild(modal);
+    
             requestAnimationFrame(() => {
                 modal.classList.add("show");
             });
-            const widthInput = modal.querySelector("#wFrame-input");
-            const heightInput = modal.querySelector("#hFrame-input");
-            const positionInput = modal.querySelector("#position-input");
-            const errorBox = modal.querySelector("#extensionError");
+    
+            const widthInput =
+                modal.querySelector("#wFrame-input");
+    
+            const heightInput =
+                modal.querySelector("#hFrame-input");
+    
+            const positionInput =
+                modal.querySelector("#position-input");
+    
+            const errorBox =
+                modal.querySelector("#extensionError");
+    
             function closeExtensionModal() {
                 modal.classList.remove("show");
+    
                 setTimeout(() => {
                     if (modal.parentNode) {
                         modal.remove();
                     }
                 }, 200);
             }
-            // بستن با ضربدر
+    
+            // بستن
             modal
                 .querySelector(".wd-edit-item-close")
                 .addEventListener("click", function () {
                     closeExtensionModal();
                 });
+    
             // لغو
             modal
                 .querySelector(".wd-edit-item-cancel")
                 .addEventListener("click", function () {
                     closeExtensionModal();
                 });
-            // کلیک روی پس زمینه
+    
+            // پس زمینه
             modal
                 .querySelector(".wd-edit-item-overlay")
                 .addEventListener("click", function () {
                     closeExtensionModal();
                 });
+    
             // تغییر
             modal
                 .querySelector(".wd-edit-item-save")
@@ -431,22 +448,25 @@ export function initClickEvents() {
                     let w = Number(widthInput.value);
                     let h = Number(heightInput.value);
                     let position = positionInput.value;
-                    // اعتبارسنجی
+    
                     if (w <= 50 || h <= 50) {
                         errorBox.textContent =
                             "لطفاً ابعاد معتبر وارد نمایید.";
                         return;
                     }
+    
                     errorBox.textContent = "";
+    
                     let sections =
                         state.paper.project.activeLayer.getItems({
                             name: "section"
                         });
+    
                     let lastSection =
                         sections[sections.length - 1] || false;
+    
                     // وقتی بیشتر از یک فریم داریم
                     if (sections.length > 1) {
-                        // باید فریم انتخاب شده باشد
                         if (
                             !state.selectedItem ||
                             (
@@ -460,13 +480,16 @@ export function initClickEvents() {
                             );
                             return;
                         }
+    
                         lastSection = state.selectedItem;
+    
                         // سمت راست
                         if (position == "right") {
                             let vCouplings =
                                 state.paper.project.activeLayer.getItems({
                                     name: "vCoupling"
                                 });
+    
                             for (let n = 0; n < vCouplings.length; n++) {
                                 if (
                                     vCouplings[n].hitTest(
@@ -481,12 +504,14 @@ export function initClickEvents() {
                                 }
                             }
                         }
+    
                         // پایین
                         else {
                             let hCouplings =
                                 state.paper.project.activeLayer.getItems({
                                     name: "hCoupling"
                                 });
+    
                             for (let n = 0; n < hCouplings.length; n++) {
                                 if (
                                     hCouplings[n].hitTest(
@@ -502,6 +527,7 @@ export function initClickEvents() {
                             }
                         }
                     }
+    
                     if (lastSection) {
                         if (!state.firstCoupling_width) {
                             showMessage(
@@ -510,18 +536,20 @@ export function initClickEvents() {
                             );
                             return;
                         }
+    
                         // رنگ فریم
                         state.frameColor =
-                            state.unitData['profile_color_hex'];
+                            state.unitData["profile_color_hex"];
+    
                         let coupling;
-                        // =========================
+    
                         // سمت راست
-                        // =========================
                         if (position == "right") {
                             let couplingHeight =
                                 (h > lastSection.bounds.height)
                                     ? lastSection.bounds.height
                                     : h;
+    
                             coupling =
                                 new state.paper.Path.Rectangle(
                                     lastSection.bounds.topRight,
@@ -530,56 +558,69 @@ export function initClickEvents() {
                                         couplingHeight
                                     ]
                                 );
+    
                             coupling.strokeColor =
                                 state.strokeColor;
+    
                             coupling.fillColor =
                                 state.frameColor;
-                            coupling.name = 'vCoupling';
+    
+                            coupling.name =
+                                "vCoupling";
+    
                             setDefaultData(
                                 coupling,
-                                'coupling'
+                                "coupling"
                             );
+    
                             // ساخت فریم جدید
                             let tmpShape =
                                 new state.paper.Path();
+    
                             tmpShape.moveTo(
                                 coupling.bounds.topRight
                             );
+    
                             tmpShape.lineTo(
                                 new state.paper.Point(
                                     coupling.bounds.topRight.x + w,
                                     coupling.bounds.topRight.y
                                 )
                             );
+    
                             tmpShape.lineTo(
                                 new state.paper.Point(
                                     coupling.bounds.topRight.x + w,
                                     coupling.bounds.topRight.y + h
                                 )
                             );
+    
                             tmpShape.lineTo(
                                 new state.paper.Point(
                                     coupling.bounds.topRight.x,
                                     coupling.bounds.topRight.y + h
                                 )
                             );
+    
                             tmpShape.closed = true;
+    
                             buildFrame(
                                 tmpShape,
                                 false,
                                 false,
                                 true
                             );
+    
                             setZoom();
                         }
-                        // =========================
+    
                         // پایین
-                        // =========================
                         else {
                             let couplingWidth =
                                 (w > lastSection.bounds.width)
                                     ? lastSection.bounds.width
                                     : w;
+    
                             coupling =
                                 new state.paper.Path.Rectangle(
                                     lastSection.bounds.bottomLeft,
@@ -588,80 +629,102 @@ export function initClickEvents() {
                                         state.firstCoupling_width
                                     ]
                                 );
+    
                             coupling.strokeColor =
                                 state.strokeColor;
+    
                             coupling.fillColor =
                                 state.frameColor;
-                            coupling.name = 'hCoupling';
+    
+                            coupling.name =
+                                "hCoupling";
+    
                             setDefaultData(
                                 coupling,
-                                'coupling'
+                                "coupling"
                             );
+    
                             // ساخت فریم جدید
                             let tmpShape =
                                 new state.paper.Path();
+    
                             tmpShape.moveTo(
                                 coupling.bounds.bottomLeft
                             );
+    
                             tmpShape.lineTo(
                                 new state.paper.Point(
                                     coupling.bounds.bottomLeft.x + w,
                                     coupling.bounds.bottomLeft.y
                                 )
                             );
+    
                             tmpShape.lineTo(
                                 new state.paper.Point(
                                     coupling.bounds.bottomLeft.x + w,
                                     coupling.bounds.bottomLeft.y + h
                                 )
                             );
+    
                             tmpShape.lineTo(
                                 new state.paper.Point(
                                     coupling.bounds.bottomLeft.x,
                                     coupling.bounds.bottomLeft.y + h
                                 )
                             );
+    
                             tmpShape.closed = true;
+    
                             buildFrame(
                                 tmpShape,
                                 false,
                                 false,
                                 true
                             );
+    
                             setZoom();
                         }
                     }
-                    // فقط بعد از موفقیت مدال بسته شود
+    
+                    // فقط بعد از موفقیت بسته شود
                     closeExtensionModal();
                 });
+    
             // پاک کردن خطا
             widthInput.addEventListener("input", function () {
                 errorBox.textContent = "";
             });
+    
             heightInput.addEventListener("input", function () {
                 errorBox.textContent = "";
             });
+    
             // Enter
             widthInput.addEventListener("keydown", function (e) {
                 if (e.key === "Enter") {
                     e.preventDefault();
+    
                     modal
                         .querySelector(".wd-edit-item-save")
                         .click();
                 }
             });
+    
             heightInput.addEventListener("keydown", function (e) {
                 if (e.key === "Enter") {
                     e.preventDefault();
+    
                     modal
                         .querySelector(".wd-edit-item-save")
                         .click();
                 }
             });
+    
             // فوکوس
             setTimeout(() => {
                 widthInput.focus();
             }, 200);
+    
         } else {
             showMessage(
                 "در اشکال غیرمستطیل امکان افزودن وجود ندارد.",
@@ -669,6 +732,7 @@ export function initClickEvents() {
             );
         }
     });
+    
     $(document).on('click', '.addNewItem', function () {
         state.addNewItemType = $(this).attr('data-type');
         cancelAll();

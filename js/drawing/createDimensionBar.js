@@ -13,19 +13,6 @@ import { itemsDimensionText } from "../utils/itemsDimensionText.js";
 export function createDimensionBar() {
     let text = null;
     // let extra_frame_lenght = 0;
-    console.log(
-        "SECTION COUNT:",
-        state.paper.project.activeLayer.getItems({
-            name: "section"
-        }).length
-    );
-    console.log(
-        "SECTION ITEMS:",
-        state.paper.project.activeLayer.getItems({
-            name: "section"
-        })
-    );
-    // حذف تمام اندازه‌گذاری‌های قبلی
     const allDimensions =
         state.paper.project.activeLayer.getItems({
             name: "dbG"

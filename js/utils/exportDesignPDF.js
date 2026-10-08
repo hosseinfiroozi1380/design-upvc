@@ -367,11 +367,6 @@ export async function exportDesignPDF() {
         ) {
             const data =
                 item.unitData || {};
-            console.log(
-                "PDF ITEM:",
-                index + 1,
-                item
-            );
             const width =
                 Number(
                     item.width ||
@@ -454,13 +449,6 @@ export async function exportDesignPDF() {
                 await paperJSONToPNGDataURL(
                     item.paperJSON
                 );
-            console.log(
-                "PDF DESIGN IMAGE:",
-                index + 1,
-                unitDesignImage
-                    ? "OK"
-                    : "EMPTY"
-            );
             unitsHTML += `
                 <tr>
                     <td>
@@ -991,7 +979,7 @@ export async function exportDesignPDF() {
         }
         box.remove();
         pdf.save(
-            "pish-factor.pdf"
+            "فاکتور عایق فیروز.pdf"
         );
     } catch (error) {
         console.error(

@@ -9,10 +9,6 @@ import { filterAutomateCreationBtns } from "../utils/filterAutomateCreationBtns.
 import { enableSave } from "../services/enableSave.js";
 import { loadLayerList } from "../services/loadLayerList.js";
 export function drawFirstShape(formData, redraw = false, mainFrameData = false, section = false) {
-    console.log("ENTER drawFirstShape", {
-        formData,
-        paper: state.paper
-    });
     state.unitData.name = (
         redraw
             ? state.unitData.name
@@ -581,25 +577,6 @@ export function drawFirstShape(formData, redraw = false, mainFrameData = false, 
         new state.paper.Color(glassColor);
     state.frameColor =
         state.unitData.profile_color_hex;
-    console.log("EXIT drawFirstShape", {
-        children: state.paper.project.activeLayer.children.length,
-        mainFrame: state.mainFrame
-    });
-    console.log("========== BEFORE BUILD FRAME ==========");
-    console.log("state.firstFrame:", state.firstFrame);
-    console.log("formData.profile_id:", formData.profile_id);
-    console.log(
-        "frame option:",
-        $('.frameInput option[value="' + state.firstFrame + '"]').length
-    );
-    console.log(
-        "profile option:",
-        $('.frameInput option[value="' + formData.profile_id + '"]').length
-    );
-    console.log("tmpShape:", tmpShape);
-    console.log("itemWidth:", itemWidth);
-    console.log("itemHeight:", itemHeight);
-    console.log("========================================");
     if (state.mainFrame && state.mainFrame.parent) {
         state.mainFrame.remove();
     }

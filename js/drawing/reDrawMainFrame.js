@@ -1,5 +1,6 @@
 // src/drawing/reDrawMainFrame.js
 import state from "../core/state.js";
+import { buildFrame } from "./buildFrame.js";
 import { drawFirstShape } from "./drawFirstShape.js";
 import { addMullian } from "../items/addMullian.js";
 import { addSlide } from "../items/addSlide.js";
@@ -33,8 +34,41 @@ export function reDrawMainFrame(section, changeSize = false) {
     let mainFrame = section.children.find(
         item => item.name === "mainFrame"
     );
-    if(!mainFrame){
+    if (!mainFrame) {
         return false;
+    }
+    // تغییر اندازه فریم کناری
+    if (section !== state.mainSection) {
+        const oldSection = section;
+        const oldFrameData = { ...mainFrame.data };
+        const x = oldSection.bounds.x;
+        const y = oldSection.bounds.y;
+        const width = Number(changeSize[0]);
+        const height = Number(changeSize[1]);
+
+        oldSection.remove();
+
+        const tmpShape = new state.paper.Path.Rectangle(
+            new state.paper.Rectangle(
+                x,
+                y,
+                width,
+                height
+            )
+        );
+
+        const newSection = buildFrame(
+            tmpShape,
+            false,
+            oldFrameData,
+            true
+        );
+
+        createDimensionBar();
+        setZoom();
+        filterAutomateCreationBtns();
+
+        return newSection;
     }
     state.frameSize = mainFrame.data.profile_width;
     state.frameColor = state.unitData.profile_color_hex;
@@ -140,17 +174,17 @@ export function reDrawMainFrame(section, changeSize = false) {
                 );
                 $.each(
                     windowsMullianMemory,
-                    function(key3, mullian) {
+                    function (key3, mullian) {
                         let windowFlats =
                             window.getItems({
-                                name:"flat"
+                                name: "flat"
                             });
-                        $.each(windowFlats,function(key4,windowFlat){
-                            if(
+                        $.each(windowFlats, function (key4, windowFlat) {
+                            if (
                                 windowFlat.hitTest(
                                     mullian.bounds.center
                                 )
-                            ){
+                            ) {
                                 addMullian(
                                     mullian.name,
                                     windowFlat,
@@ -169,26 +203,26 @@ export function reDrawMainFrame(section, changeSize = false) {
                     flat,
                     flat.parent,
                     {
-                        profile:item.children[0].data,
-                        flat:openingFlatData,
-                        flatFillColor:openingFlatFillColor
+                        profile: item.children[0].data,
+                        flat: openingFlatData,
+                        flatFillColor: openingFlatFillColor
                     }
                 );
                 $.each(
                     windowsMullianMemory,
-                    function(key3,mullian){
+                    function (key3, mullian) {
                         let doorFlats =
                             door.getItems({
-                                name:"flat"
+                                name: "flat"
                             });
                         $.each(
                             doorFlats,
-                            function(key4,doorFlat){
-                                if(
+                            function (key4, doorFlat) {
+                                if (
                                     doorFlat.hitTest(
                                         mullian.bounds.center
                                     )
-                                ){
+                                ) {
                                     addMullian(
                                         mullian.name,
                                         doorFlat,
@@ -206,17 +240,17 @@ export function reDrawMainFrame(section, changeSize = false) {
         });
     });
     let panels = oldSection.getItems({
-        name(value){
+        name(value) {
             return value.indexOf("Panel") !== -1;
         }
     });
-    $.each(panels,function(key,item){
+    $.each(panels, function (key, item) {
         let flats =
             state.paper.project.activeLayer.getItems({
-                name:"flat"
+                name: "flat"
             });
-        $.each(flats,function(key2,flat){
-            if(flat.hitTest(item.bounds.center)){
+        $.each(flats, function (key2, flat) {
+            if (flat.hitTest(item.bounds.center)) {
                 addPanel(
                     item.name,
                     flat,

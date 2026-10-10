@@ -1,12 +1,20 @@
-// src/services/saveHistory.js
 import state from '../core/state.js';
-//save Undo Redo record
 export function saveHistory() {
-    if (state.history.length >= 15) {
+    if (!state.paper?.project) {
+        return;
+    }
+    const currentState = state.paper.project.exportJSON();
+    if (
+        state.history[state.history_index] === currentState
+    ) {
+        return;
+    }
+    state.history = state.history.slice(0, state.history_index + 1);
+    state.history.push(currentState);
+    if (state.history.length > 15) {
         state.history.shift();
     }
-    state.history.push(state.paper.project.exportJSON());
     state.history_index = state.history.length - 1;
+    $('.undo').prop('disabled', state.history_index <= 0);
     $('.redo').prop('disabled', true);
-    $('.undo').prop('disabled', false);
 }

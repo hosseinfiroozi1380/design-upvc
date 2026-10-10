@@ -40,6 +40,94 @@ export function deleteItem(toDeleteItem) {
             let baseToFlat = findedBase.clone();
             baseToFlat.moveAbove(findedBase.parent);
             baseToFlat.name = "flat";
+            const glassBorders = findedBase.parent.getItems({ name: "glassBorders" });
+            glassBorders.forEach(border => border.remove());
+            
+            const flat = baseToFlat;
+            flat.name = "flat";
+            flat.fillColor = "#8acde8";
+            flat.strokeColor = state.strokeColor;
+            flat.strokeWidth = 1;
+            
+            const blackWidth = 1.5;
+            const whiteWidth = 12;
+            const innerBlackWidth = 1.5;
+            
+            const borders = new state.paper.Group();
+            borders.name = "glassBorders";
+            borders.data.glassId = flat.id;
+            
+            const outerBlackInner = PaperOffset.offset(flat, -blackWidth);
+            const outerBlack = flat.subtract(outerBlackInner);
+            outerBlack.fillColor = "#222222";
+            outerBlack.strokeColor = null;
+            outerBlack.name = "glassOuterBlack";
+            borders.addChild(outerBlack);
+            
+            const whiteInner = PaperOffset.offset(outerBlackInner, -whiteWidth);
+            const whiteBorder = outerBlackInner.subtract(whiteInner);
+            whiteBorder.fillColor = "#ffffff";
+            whiteBorder.strokeColor = null;
+            whiteBorder.name = "glassWhiteBorder";
+            borders.addChild(whiteBorder);
+            
+            // چهار خط گوشه
+            const outerBounds = outerBlackInner.bounds;
+            const innerBounds = whiteInner.bounds;
+            
+            const cornerGroup = new state.paper.Group();
+            cornerGroup.name = "glassCornerBisectors";
+            
+            [
+                [[outerBounds.left, outerBounds.top], [innerBounds.left, innerBounds.top]],
+                [[outerBounds.right, outerBounds.top], [innerBounds.right, innerBounds.top]],
+                [[outerBounds.left, outerBounds.bottom], [innerBounds.left, innerBounds.bottom]],
+                [[outerBounds.right, outerBounds.bottom], [innerBounds.right, innerBounds.bottom]]
+            ].forEach(points => {
+                const line = new state.paper.Path.Line({
+                    from: points[0],
+                    to: points[1]
+                });
+            
+                line.strokeColor = "#222222";
+                line.strokeWidth = 1.5;
+                line.strokeCap = "butt";
+                line.name = "glassCornerBisector";
+            
+                cornerGroup.addChild(line);
+            });
+            
+            borders.addChild(cornerGroup);
+            
+            const innerBlackInner = PaperOffset.offset(whiteInner, -innerBlackWidth);
+            const innerBlack = whiteInner.subtract(innerBlackInner);
+            innerBlack.fillColor = "#222222";
+            innerBlack.strokeColor = null;
+            innerBlack.name = "glassInnerBlack";
+            borders.addChild(innerBlack);
+            
+            state.mainSection.addChild(borders);
+            
+            outerBlackInner.remove();
+            whiteInner.remove();
+            innerBlackInner.remove();
+            
+            baseToFlat.insertAbove(state.mainSection.getItem({
+                name: "mainFrame"
+            }));
+            console.log(
+                "گروه قبل از حذف:",
+                JSON.stringify(
+                    findedBase.parent.children.map(item => ({
+                        name: item.name,
+                        id: item.id,
+                        className: item.className,
+                        bounds: item.bounds.toJSON()
+                    })),
+                    null,
+                    2
+                )
+            );
             findedBase.parent.remove();
             state.vMGL.visible = false;
             state.vMGLT.visible = false;
@@ -144,6 +232,16 @@ export function deleteItem(toDeleteItem) {
                 let baseToFlat = findedBase.clone();
                 baseToFlat.moveAbove(findedBase.parent);
                 baseToFlat.name = "flat";
+                const glassBorders = state.mainSection.getItems({
+                    name: "glassBorders"
+                });
+                
+                glassBorders.forEach(border => {
+                    if (border.data?.glassId === findedBase.id) {
+                        border.data.glassId = baseToFlat.id;
+                        border.moveAbove(baseToFlat);
+                    }
+                });
                 findedBase.parent.remove();
                 return state.removedDependenceMemory;
             }

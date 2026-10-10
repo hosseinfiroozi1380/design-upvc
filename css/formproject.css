@@ -523,9 +523,113 @@ body {
     text-align: center;
   }
 }
+
 @media (min-width: 701px) {
   .project-info-wrapper {
     align-items: flex-start;
     padding-top: 70px;
+  }
+}
+
+/* تبلت */
+@media (min-width: 701px) and (max-width: 1100px) {
+  .project-info-wrapper {
+    min-height: 100vh;
+    padding: 20px 24px;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .project-info-box {
+    width: 100%;
+    max-width: 680px;
+  }
+
+  .project-info-header {
+    margin-bottom: 22px;
+  }
+
+  .project-info-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 14px;
+    row-gap: 12px;
+  }
+
+  .project-info-field label {
+    font-size: 13px;
+    margin-bottom: 5px;
+  }
+
+  .project-info-field input,
+  .project-info-field select {
+    height: 40px;
+    font-size: 13px;
+  }
+
+  .project-info-buttons {
+    margin-top: 20px;
+  }
+}
+
+/* تلویزیون‌های بزرگ، از جمله 65 و 70 اینچ */
+@media (min-width: 1800px) {
+  .project-info-wrapper {
+    min-height: 100vh;
+    padding: 15px 30px;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  .project-info-box {
+    width: 100%;
+    max-width: 760px;
+  }
+
+  .project-info-header {
+    margin-bottom: 18px;
+  }
+
+  .project-info-logo {
+    width: 44px;
+    height: 44px;
+  }
+
+  .project-info-title-text h2 {
+    font-size: 18px;
+  }
+
+  .project-info-title-text p {
+    font-size: 12px;
+    margin-top: -3px;
+  }
+
+  .project-info-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 14px;
+    row-gap: 10px;
+  }
+
+  .project-info-field label {
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+
+  .project-info-field input,
+  .project-info-field select {
+    height: 38px;
+    font-size: 13px;
+  }
+
+  .project-info-field textarea {
+    font-size: 13px;
+  }
+
+  .project-info-buttons {
+    margin-top: 16px;
+  }
+
+  .project-info-buttons button {
+    padding: 8px 24px;
+    font-size: 13px;
   }
 }

@@ -88,7 +88,7 @@ export function drawOpeningLines(
             olPath.lineTo(leftTip);
             olPath.lineTo(
                 hingePositions["right"][
-                    hingePositions["right"].length - 1
+                hingePositions["right"].length - 1
                 ] ?? itemGroup.bounds.bottomRight
             );
             olPath.strokeColor = state.olColor;
@@ -103,7 +103,7 @@ export function drawOpeningLines(
             olPath.lineTo(rightTip);
             olPath.lineTo(
                 hingePositions["left"][
-                    hingePositions["left"].length - 1
+                hingePositions["left"].length - 1
                 ] ?? itemGroup.bounds.bottomLeft
             );
             olPath.strokeColor = state.olColor;
@@ -120,7 +120,7 @@ export function drawOpeningLines(
         olPath.lineTo(topTip);
         olPath.lineTo(
             hingePositions["bottom"][
-                hingePositions["bottom"].length - 1
+            hingePositions["bottom"].length - 1
             ] ?? itemGroup.bounds.bottomRight
         );
         olPath.strokeColor = state.olColor;
@@ -161,63 +161,155 @@ export function drawOpeningLines(
     }
     else if (["volkswagen"].includes(olType)) {
         const offset = 25;
-        const tipLength = 180;
+        const tipLength = 60;
+        const tipHeight = 60;
+        const bounds = itemGroup.bounds;
+    
+        // پیدا کردن محدوده واقعی شیشه
+        const glass = itemGroup.getItems({
+            name: "flat",
+            recursive: true
+        })[0];
+    
+        const glassBounds = glass ? glass.bounds : bounds;
+    
+        // نقطه وسط بالای فاصله بین فریم اصلی و شیشه
+        const topPoint = new state.paper.Point(
+            glassBounds.center.x,
+            bounds.top + (glassBounds.top - bounds.top) / 2
+        );
+    
         if (handlePosition === "left") {
-            const left = handlePositions["left"] ?? itemGroup.bounds.center;
-            const top = handlePositions["top"] ?? itemGroup.bounds.center;
-            const right = handlePositions["right"] ?? itemGroup.bounds.center;
+            // شروع دقیقاً از کف شیشه در سمت چپ
+            const startPoint = new state.paper.Point(
+                glassBounds.left,
+                glassBounds.bottom
+            );
+    
+            // نقطه میانی کمی سمت راست مرکز شیشه
+            const middlePoint = new state.paper.Point(
+                glassBounds.center.x + glassBounds.width * 0.20,
+                glassBounds.center.y
+            );
+    
+            // انتهای مسیر در سمت راست
+            const handlePoint = new state.paper.Point(
+                glassBounds.right - offset,
+                middlePoint.y
+            );
+    
+            // مسیر اصلی؛ همه خطوط حفظ شده‌اند
             olPath = new state.paper.Path();
-            olPath.moveTo(
-                new state.paper.Point(left.x + offset, left.y)
-            );
-            olPath.lineTo(top);
-            olPath.lineTo(
-                new state.paper.Point(top.x, left.y)
-            );
-            olPath.lineTo(
-                new state.paper.Point(right.x - offset, right.y)
-            );
-            olPath.lineTo(
-                new state.paper.Point(
-                    right.x - offset,
-                    right.y - tipLength
-                )
-            );
+            olPath.add(startPoint);
+            olPath.add(topPoint);
+            olPath.add(middlePoint);
+            olPath.add(handlePoint);
+    
             olPath.style = {
                 strokeColor: state.olColor,
                 strokeWidth: 2,
-                dashArray: [10, 10]
+                fillColor: null
             };
+    
             olPath.name = "ol";
             itemGroup.addChild(olPath);
+    
+            // مثلث فلش کامل با سه ضلع
+            const arrowPath = new state.paper.Path();
+    
+            const arrowTop = new state.paper.Point(
+                handlePoint.x - tipLength,
+                handlePoint.y - tipHeight
+            );
+    
+            const arrowBottom = new state.paper.Point(
+                handlePoint.x - tipLength,
+                handlePoint.y + tipHeight
+            );
+    
+            arrowPath.add(arrowTop);
+            arrowPath.add(handlePoint);
+            arrowPath.add(arrowBottom);
+            arrowPath.add(arrowTop);
+    
+            arrowPath.style = {
+                strokeColor: state.olColor,
+                strokeWidth: 2,
+                fillColor: null
+            };
+    
+            arrowPath.name = "olArrow";
+            itemGroup.addChild(arrowPath);
+    
         } else if (handlePosition === "right") {
-            const right = handlePositions["right"] ?? itemGroup.bounds.center;
-            const top = handlePositions["top"] ?? itemGroup.bounds.center;
-            const left = handlePositions["left"] ?? itemGroup.bounds.center;
+            // شروع دقیقاً از کف شیشه در سمت راست
+            const startPoint = new state.paper.Point(
+                glassBounds.right,
+                glassBounds.bottom
+            );
+    
+            // نقطه میانی کمی سمت چپ مرکز شیشه
+            const middlePoint = new state.paper.Point(
+                glassBounds.center.x - glassBounds.width * 0.20,
+                glassBounds.center.y
+            );
+    
+            // انتهای مسیر در سمت چپ
+            const handlePoint = new state.paper.Point(
+                glassBounds.left + offset,
+                middlePoint.y
+            );
+    
+            // مسیر اصلی؛ همه خطوط حفظ شده‌اند
             olPath = new state.paper.Path();
-            olPath.moveTo(
-                new state.paper.Point(right.x - offset, right.y)
-            );
-            olPath.lineTo(top);
-            olPath.lineTo(
-                new state.paper.Point(top.x, right.y)
-            );
-            olPath.lineTo(
-                new state.paper.Point(left.x + offset, left.y)
-            );
-            olPath.lineTo(
-                new state.paper.Point(
-                    left.x + offset,
-                    left.y - tipLength
-                )
-            );
+            olPath.add(startPoint);
+            olPath.add(topPoint);
+            olPath.add(middlePoint);
+            olPath.add(handlePoint);
+    
             olPath.style = {
                 strokeColor: state.olColor,
                 strokeWidth: 2,
-                dashArray: [10, 10]
+                fillColor: null
             };
+    
             olPath.name = "ol";
             itemGroup.addChild(olPath);
+    
+            // مثلث فلش کامل با سه ضلع
+            const arrowPath = new state.paper.Path();
+    
+            arrowPath.add(
+                new state.paper.Point(
+                    handlePoint.x + tipLength,
+                    handlePoint.y - tipHeight
+                )
+            );
+    
+            arrowPath.add(handlePoint);
+    
+            arrowPath.add(
+                new state.paper.Point(
+                    handlePoint.x + tipLength,
+                    handlePoint.y + tipHeight
+                )
+            );
+    
+            arrowPath.add(
+                new state.paper.Point(
+                    handlePoint.x + tipLength,
+                    handlePoint.y - tipHeight
+                )
+            );
+    
+            arrowPath.style = {
+                strokeColor: state.olColor,
+                strokeWidth: 2,
+                fillColor: null
+            };
+    
+            arrowPath.name = "olArrow";
+            itemGroup.addChild(arrowPath);
         }
     }
 }

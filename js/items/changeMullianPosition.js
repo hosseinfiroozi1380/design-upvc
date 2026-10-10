@@ -8,7 +8,8 @@ import { deleteItem } from '../utils/deleteItem.js';
 import { enableSave } from '../services/enableSave.js';
 import { saveHistory } from "../services/saveHistory.js";
 import { cancelAll } from '../utils/cancelAll.js';
-// change Mullian Position
+import { showMessage } from "../utils/showMessage.js";
+
 export function changeMullianPosition(newPoint) {
     if (state.selectedItem) {
         if (state.selectedItem.parent.name == "window_slide") {
@@ -49,27 +50,60 @@ export function changeMullianPosition(newPoint) {
                     }
                 });
             } else {
-                let newMullian;
                 let selectedItemCopy = state.selectedItem;
-                let memory = deleteItem(state.selectedItem);
                 let allFlats = state.paper.project.activeLayer.getItems({ name: "flat" });
-                $.each(allFlats, function (key, flat) {
-                    if (flat.hitTest(newPoint)) {
-                        newMullian = addMullian(
-                            selectedItemCopy.name,
-                            flat,
-                            newPoint,
-                            flat.parent,
-                            selectedItemCopy.data
-                        );
-                        return;
+
+                let targetFlat = allFlats.find(flat => {
+                    let parent = flat;
+
+                    while (parent && parent !== state.mainSection) {
+                        parent = parent.parent;
                     }
+
+                    return parent === state.mainSection && flat.hitTest(newPoint);
                 });
+
+                if (!targetFlat) {
+                    showMessage("مولین را نمی‌توان خارج از فریم اصلی جابه‌جا کرد", "warning");
+                    cancelAll();
+                    return;
+                }
+
+                let memory = deleteItem(state.selectedItem);
+
+                allFlats = state.paper.project.activeLayer.getItems({ name: "flat" });
+
+                targetFlat = allFlats.find(flat => {
+                    let parent = flat;
+
+                    while (parent && parent !== state.mainSection) {
+                        parent = parent.parent;
+                    }
+
+                    return parent === state.mainSection && flat.hitTest(newPoint);
+                });
+
+                if (!targetFlat) {
+                    reDrawMullianChildsOnDelete(memory);
+                    createDimensionBar();
+                    cancelAll();
+                    return;
+                }
+
+                let newMullian = addMullian(
+                    selectedItemCopy.name,
+                    targetFlat,
+                    newPoint,
+                    targetFlat.parent,
+                    selectedItemCopy.data
+                );
+
                 enableSave();
                 reDrawMullianChildsOnDelete(memory);
                 createDimensionBar();
                 saveHistory();
                 cancelAll();
+
                 return newMullian;
             }
         }

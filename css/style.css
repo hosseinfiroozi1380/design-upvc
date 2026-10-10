@@ -1631,7 +1631,7 @@ button {
 .wd-unit-detail-label {
   flex-shrink: 0;
   color: #6b7280;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .wd-unit-detail-value {
@@ -4645,7 +4645,7 @@ button {
 .wd-unit-detail-label,
 .wd-unit-detail-value,
 .wd-unit-detail-note {
-  font-size: clamp(10px, 0.7vw, 14px);
+  font-size: clamp(12px, 0.7vw, 14px);
 }
 
 کنترل‌های داخل فرم .wd-select-box {

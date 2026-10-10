@@ -10,6 +10,7 @@ import { initHistory } from "./events/initHistory.js";
 import { initContextMenu } from "./events/initContextMenu.js";
 import { initPinchZoom } from "./events/initPinchZoom.js";
 import { initConfigItemEvents } from "./events/initConfigItemEvents.js";
+import { initNetworkStatus } from "./utils/initNetworkStatus.js";
 
 $(function () {
   try {
@@ -42,6 +43,8 @@ $(function () {
 
     // منوی راست‌کلیک
     initContextMenu();
+
+    initNetworkStatus();
 
   } catch (e) {
     console.error("START ERROR:", e);

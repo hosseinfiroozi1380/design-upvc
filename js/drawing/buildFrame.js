@@ -6,6 +6,7 @@ import { setZoom } from "../events/setZoom.js";
 import { showMessage } from "../utils/showMessage.js";
 import { setDefaultData } from "../utils/setDefaultData.js";
 import PaperOffset from "../utils/PaperOffset.js";
+import { saveHistory } from "../services/saveHistory.js";
 export function buildFrame(
     tmpShape,
     newFrameSize = false,
@@ -436,5 +437,6 @@ export function buildFrame(
         innerBlackInner.remove();
         return glassBorders;
     }
+    saveHistory();
     return state.mainSection;
 }

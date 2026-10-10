@@ -11,7 +11,6 @@ import { enableSave } from "../services/enableSave.js";
 import { drawDoorOpeningLines } from "../drawing/drawDoorOpeningLines.js";
 import { updateTempDesignSnapshot } from "../utils/updateTempDesignSnapshot.js";
 import { updateLayerPreview } from "../utils/updateLayerPreview.js";
-// ساخت قسمت وسط و چهار نیم‌ساز شیشه
 function createGlassBorders(glassShape, group) {
     const blackWidth = 1.5;
     const whiteWidth = 12;

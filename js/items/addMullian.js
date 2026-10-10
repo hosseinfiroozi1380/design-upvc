@@ -8,7 +8,7 @@ import { round2decimal } from '../utils/round2decimal.js';
 import { updateLayerPreview } from "../utils/updateLayerPreview.js";
 import { updateTempDesignSnapshot } from "../utils/updateTempDesignSnapshot.js";
 import PaperOffset from "../utils/PaperOffset.js";
-// create glass borders
+
 function createGlassBorders(glassShape, group) {
     const blackWidth = 1.5;
     const whiteWidth = 12;
@@ -108,7 +108,6 @@ function createGlassBorders(glassShape, group) {
     innerBlackInner.remove();
     return glassBorders;
 }
-// add mullian function
 export function addMullian(
     addNewItemType,
     flatToAdd,

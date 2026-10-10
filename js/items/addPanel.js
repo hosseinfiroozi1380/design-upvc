@@ -78,8 +78,15 @@ export function addPanel(addNewItemType, flatToAdd, toAddGroup = false, data = f
     let panelFlat = glassFlat.clone();
     panelFlat.name = "panelArea";
     if (addNewItemType == 'vPanel') {
-        const glassBounds =
-            panelFlat.bounds;
+        const frame = state.mainSection.getItem({
+            name: "mainFrame"
+        });
+        
+        const frameBounds = frame.bounds;
+        const glassBounds = panelFlat.bounds;
+        
+        const topY = (frameBounds.top + glassBounds.top) / 2;
+        const bottomY = (frameBounds.bottom + glassBounds.bottom) / 2;
         const startX =
             glassBounds.left;
         const endX =
@@ -128,8 +135,15 @@ export function addPanel(addNewItemType, flatToAdd, toAddGroup = false, data = f
             tempPanelItem.remove();
         }
     } else if (addNewItemType == 'hPanel') {
-        const glassBounds =
-            panelFlat.bounds;
+        const frame = state.mainSection.getItem({
+            name: "mainFrame"
+        });
+        
+        const frameBounds = frame.bounds;
+        const glassBounds = panelFlat.bounds;
+        
+        const topY = (frameBounds.top + glassBounds.top) / 2;
+        const bottomY = (frameBounds.bottom + glassBounds.bottom) / 2;
         const startY =
             glassBounds.top;
         const endY =

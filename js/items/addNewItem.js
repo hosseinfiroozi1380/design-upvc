@@ -57,19 +57,52 @@ export function addNewItem(addNewItemType, flatToAdd, toAddPoint = false) {
                 }
             } else if (addNewItemType == '2vMullian') {
                 if (flatToAdd.bounds.width > 160) {
-                    //find Points
-                    let flatPartWidth = flatToAdd.bounds.width / 3;
-                    let firstAddingPoint = new state.paper.Point(flatToAdd.bounds.x + flatPartWidth - state.frameSize / 6, flatToAdd.bounds.centerY);
-                    let secondAddingPoint = new state.paper.Point(flatToAdd.bounds.x + flatPartWidth * 2 + state.frameSize / 6, flatToAdd.bounds.centerY);
-                    //add First Mullian
-                    addMullian('vMullian', flatToAdd, firstAddingPoint, flatToAdd.parent);
-                    //add Second Mullian
-                    let allFlats = state.paper.project.activeLayer.getItems({ name: "flat" });
-                    $.each(allFlats, function (key, findNewFlat) {
-                        if (findNewFlat.hitTest(secondAddingPoint)) {
-                            addMullian('vMullian', findNewFlat, secondAddingPoint, findNewFlat.parent);
-                        }
+                    const activeLayer = state.paper.project.activeLayer;
+                    // محدوده اصلی برای محاسبه محل مولین‌ها
+                    const sectionBounds = state.mainSection
+                        ? state.mainSection.bounds
+                        : flatToAdd.bounds;
+                    const firstX = Math.round(
+                        sectionBounds.left + sectionBounds.width / 3
+                    );
+                    const secondX = Math.round(
+                        sectionBounds.left + (sectionBounds.width * 2) / 3
+                    );
+                    const centerY = flatToAdd.bounds.centerY;
+                    // اضافه کردن مولین اول
+                    addMullian(
+                        'vMullian',
+                        flatToAdd,
+                        new state.paper.Point(firstX, centerY),
+                        flatToAdd.parent
+                    );
+                    // پیدا کردن شیشه‌ای که محل مولین دوم داخل آن است
+                    const allFlats = activeLayer.getItems({
+                        name: 'flat'
                     });
+                    const secondFlat = allFlats.find(flat => {
+                        const bounds = flat.bounds;
+                        return (
+                            secondX > bounds.left &&
+                            secondX < bounds.right &&
+                            centerY > bounds.top &&
+                            centerY < bounds.bottom
+                        );
+                    });
+                    // اضافه کردن مولین دوم
+                    if (secondFlat) {
+                        addMullian(
+                            'vMullian',
+                            secondFlat,
+                            new state.paper.Point(secondX, centerY),
+                            secondFlat.parent
+                        );
+                    } else {
+                        showMessage(
+                            'محل مولین دوم پیدا نشد',
+                            'error'
+                        );
+                    }
                 } else {
                     showMessage('صفحه بیش از اندازه کوچک است');
                 }
@@ -77,22 +110,18 @@ export function addNewItem(addNewItemType, flatToAdd, toAddPoint = false) {
                 if (flatToAdd.bounds.width > 240) {
                     // تقسیم عرض اصلی به 4 قسمت مساوی
                     let sectionWidth = state.mainSection.bounds.width / 4;
-
                     let firstAddingPoint = new state.paper.Point(
                         state.mainSection.bounds.x + sectionWidth,
                         flatToAdd.bounds.centerY
                     );
-
                     let secondAddingPoint = new state.paper.Point(
                         state.mainSection.bounds.x + sectionWidth * 2,
                         flatToAdd.bounds.centerY
                     );
-
                     let thirdAddingPoint = new state.paper.Point(
                         state.mainSection.bounds.x + sectionWidth * 3,
                         flatToAdd.bounds.centerY
                     );
-
                     // add First Mullian
                     addMullian(
                         'vMullian',
@@ -100,12 +129,10 @@ export function addNewItem(addNewItemType, flatToAdd, toAddPoint = false) {
                         firstAddingPoint,
                         flatToAdd.parent
                     );
-
                     // add Second Mullian
                     let allFlats = state.paper.project.activeLayer.getItems({
                         name: "flat"
                     });
-
                     $.each(allFlats, function (key, findNewFlat) {
                         if (findNewFlat.hitTest(secondAddingPoint)) {
                             addMullian(
@@ -116,12 +143,10 @@ export function addNewItem(addNewItemType, flatToAdd, toAddPoint = false) {
                             );
                         }
                     });
-
                     // add Third Mullian
                     allFlats = state.paper.project.activeLayer.getItems({
                         name: "flat"
                     });
-
                     $.each(allFlats, function (key, findNewFlat) {
                         if (findNewFlat.hitTest(thirdAddingPoint)) {
                             addMullian(
@@ -137,43 +162,71 @@ export function addNewItem(addNewItemType, flatToAdd, toAddPoint = false) {
                 }
             } else if (addNewItemType == '2hMullian') {
                 if (flatToAdd.bounds.height > 160) {
-                    //find Points
-                    let flatPartHeight = flatToAdd.bounds.height / 3;
-                    let firstAddingPoint = new state.paper.Point(flatToAdd.bounds.centerX, flatToAdd.bounds.y + flatPartHeight - state.frameSize / 6);
-                    let secondAddingPoint = new state.paper.Point(flatToAdd.bounds.centerX, flatToAdd.bounds.y + flatPartHeight * 2 + state.frameSize / 6);
-                    //add First Mullian
-                    addMullian('hMullian', flatToAdd, firstAddingPoint, flatToAdd.parent);
-                    //add Second Mullian
-                    let allFlats = state.paper.project.activeLayer.getItems({ name: "flat" });
-                    $.each(allFlats, function (key, findNewFlat) {
-                        if (findNewFlat.hitTest(secondAddingPoint)) {
-                            addMullian('hMullian', findNewFlat, secondAddingPoint, findNewFlat.parent);
-                        }
+                    const activeLayer = state.paper.project.activeLayer;
+                    // محدوده اصلی برای محاسبه محل مولین‌ها
+                    const sectionBounds = state.mainSection
+                        ? state.mainSection.bounds
+                        : flatToAdd.bounds;
+                    const firstY = Math.round(
+                        sectionBounds.top + sectionBounds.height / 3
+                    );
+                    const secondY = Math.round(
+                        sectionBounds.top + (sectionBounds.height * 2) / 3
+                    );
+                    const centerX = flatToAdd.bounds.centerX;
+                    // اضافه کردن مولین افقی اول
+                    addMullian(
+                        'hMullian',
+                        flatToAdd,
+                        new state.paper.Point(centerX, firstY),
+                        flatToAdd.parent
+                    );
+                    // پیدا کردن شیشه‌ای که محل مولین دوم داخل آن است
+                    const allFlats = activeLayer.getItems({
+                        name: 'flat'
                     });
+                    const secondFlat = allFlats.find(flat => {
+                        const bounds = flat.bounds;
+                        return (
+                            centerX > bounds.left &&
+                            centerX < bounds.right &&
+                            secondY > bounds.top &&
+                            secondY < bounds.bottom
+                        );
+                    });
+                    // اضافه کردن مولین افقی دوم
+                    if (secondFlat) {
+                        addMullian(
+                            'hMullian',
+                            secondFlat,
+                            new state.paper.Point(centerX, secondY),
+                            secondFlat.parent
+                        );
+                    } else {
+                        showMessage(
+                            'محل مولین افقی دوم پیدا نشد',
+                            'error'
+                        );
+                    }
                 } else {
                     showMessage('صفحه بیش از اندازه کوچک است');
                 }
             } else if (addNewItemType == '3hMullian') {
                 if (flatToAdd.bounds.height > 240) {
-
                     // تقسیم ارتفاع اصلی به 4 قسمت مساوی
                     let sectionHeight = state.mainSection.bounds.height / 4;
-
                     let firstAddingPoint = new state.paper.Point(
                         flatToAdd.bounds.centerX,
                         state.mainSection.bounds.y + sectionHeight
                     );
-
                     let secondAddingPoint = new state.paper.Point(
                         flatToAdd.bounds.centerX,
                         state.mainSection.bounds.y + sectionHeight * 2
                     );
-
                     let thirdAddingPoint = new state.paper.Point(
                         flatToAdd.bounds.centerX,
                         state.mainSection.bounds.y + sectionHeight * 3
                     );
-
                     // add First Mullian
                     addMullian(
                         'hMullian',
@@ -181,12 +234,10 @@ export function addNewItem(addNewItemType, flatToAdd, toAddPoint = false) {
                         firstAddingPoint,
                         flatToAdd.parent
                     );
-
                     // add Second Mullian
                     let allFlats = state.paper.project.activeLayer.getItems({
                         name: "flat"
                     });
-
                     $.each(allFlats, function (key, findNewFlat) {
                         if (findNewFlat.hitTest(secondAddingPoint)) {
                             addMullian(
@@ -197,12 +248,10 @@ export function addNewItem(addNewItemType, flatToAdd, toAddPoint = false) {
                             );
                         }
                     });
-
                     // add Third Mullian
                     allFlats = state.paper.project.activeLayer.getItems({
                         name: "flat"
                     });
-
                     $.each(allFlats, function (key, findNewFlat) {
                         if (findNewFlat.hitTest(thirdAddingPoint)) {
                             addMullian(
@@ -213,7 +262,6 @@ export function addNewItem(addNewItemType, flatToAdd, toAddPoint = false) {
                             );
                         }
                     });
-
                 } else {
                     showMessage('صفحه بیش از اندازه کوچک است');
                 }

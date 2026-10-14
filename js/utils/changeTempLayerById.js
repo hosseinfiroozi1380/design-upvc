@@ -36,6 +36,41 @@ export function changeTempLayerById(designID) {
   state.paper.project.importJSON(
     design.paperJSON
   );
+  // بازیابی تاریخچه مخصوص طراحی انتخاب‌شده
+  if (
+    Array.isArray(design.history) &&
+    design.history.length > 0
+  ) {
+    state.history = [...design.history];
+    state.history_index =
+      Number.isInteger(design.history_index)
+        ? design.history_index
+        : state.history.length - 1;
+    // بررسی معتبر بودن موقعیت تاریخچه
+    if (
+      state.history_index < 0 ||
+      state.history_index >= state.history.length
+    ) {
+      state.history_index = state.history.length - 1;
+    }
+  } else {
+    // ایجاد تاریخچه اولیه برای طراحی
+    state.history = [
+      state.paper.project.exportJSON()
+    ];
+    state.history_index = 0;
+    design.history = [...state.history];
+    design.history_index = 0;
+  }
+  // تنظیم وضعیت دکمه‌ها
+  $(".undo").prop(
+    "disabled",
+    state.history_index <= 0
+  );
+  $(".redo").prop(
+    "disabled",
+    state.history_index >= state.history.length - 1
+  );
   const activeLayer =
     state.paper.project.activeLayer;
   const sections =

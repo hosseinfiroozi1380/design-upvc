@@ -42,20 +42,51 @@ export function createDimensionBar() {
         //add mulians positions
         for (let j = 0; j < AllvMullians.length; j++) {
             if (allSections[i].contains(AllvMullians[j].bounds.center)) {
-                vMulliansPositions.push(round2decimal(AllvMullians[j].bounds.x + AllvMullians[j].bounds.width / 2))
+                vMulliansPositions.push(
+                    Math.round(
+                        AllvMullians[j].bounds.x +
+                        AllvMullians[j].bounds.width / 2
+                    )
+                );
             }
         }
         for (let j = 0; j < AllhMullians.length; j++) {
             if (allSections[i].contains(AllhMullians[j].bounds.center)) {
-                hMulliansPositions.push(round2decimal(AllhMullians[j].bounds.y + AllhMullians[j].bounds.height / 2))
+                hMulliansPositions.push(
+                    Math.round(
+                        AllhMullians[j].bounds.y +
+                        AllhMullians[j].bounds.height / 2
+                    )
+                );
             }
         }
         //add sections start and end positions
+
+        // ابتدا و انتهای فریم و محل مولین‌ها
         if (vMulliansPositions.length > 0) {
-            vMulliansPositions.push(round2decimal(allSections[i].bounds.x + allSections[i].bounds.width));
+            vMulliansPositions.push(
+                Math.round(
+                    allSections[i].bounds.x +
+                    allSections[i].bounds.width
+                )
+            );
+
+            vMulliansPositions.unshift(
+                Math.round(allSections[i].bounds.x)
+            );
         }
+
         if (hMulliansPositions.length > 0) {
-            hMulliansPositions.push(round2decimal(allSections[i].bounds.y + allSections[i].bounds.height));
+            hMulliansPositions.push(
+                Math.round(
+                    allSections[i].bounds.y +
+                    allSections[i].bounds.height
+                )
+            );
+
+            hMulliansPositions.unshift(
+                Math.round(allSections[i].bounds.y)
+            );
         }
         //remove duplicate value
         vMulliansPositions =
@@ -74,19 +105,16 @@ export function createDimensionBar() {
             return 0;
         });
         //draw vMullian bars
-        //draw vMullian bars
-        for (let index = 0; index < vMulliansPositions.length; index++) {
+        for (let index = 1; index < vMulliansPositions.length; index++) {
             let previousX = allSections[i].bounds.x;
             if (index > 0) {
                 previousX = vMulliansPositions[index - 1];
             }
-            let textcontent =
-                round2decimal(
-                    Math.abs(
-                        previousX -
-                        vMulliansPositions[index]
-                    )
-                );
+            let textcontent = Math.round(
+                Math.abs(
+                    previousX - vMulliansPositions[index]
+                )
+            );
             if (textcontent > 0) {
                 let newxBar =
                     new state.paper.Group();

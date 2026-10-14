@@ -4,6 +4,7 @@ import { updateLayerPreview } from "./updateLayerPreview.js";
 import { createDimensionBar } from "../drawing/createDimensionBar.js";
 import { changeTempLayerById } from "./changeTempLayerById.js";
 import { showMessage } from "./showMessage.js";
+import { setItemProfileName } from "./setItemProfileName.js";
 export function createTempLayerCard() {
     const name =
         state.unitData?.itemName ||
@@ -113,34 +114,30 @@ export function createTempLayerCard() {
         state.paper.project.exportJSON({
             asString: true
         });
+    // شروع تاریخچه از ابتدا برای طراحی جدید
+    state.history = [paperJSON];
+    state.history_index = 0;
+    // هر دو دکمه در شروع غیرفعال باشند
+    $(".undo, .redo").prop("disabled", true);
     const svg =
         state.paper.project.activeLayer.exportSVG({
             bounds: "content",
             asString: true
         });
     state.tempDesigns.push({
-        id:
-            designID,
-        sectionId:
-            currentSectionId,
-        paperJSON:
-            paperJSON,
-        svg:
-            svg,
-        unitData:
-            JSON.parse(
-                JSON.stringify(
-                    state.unitData || {}
-                )
-            ),
-        name:
-            name,
-        width:
-            width,
-        height:
-            height,
-        system:
-            system
+        id: designID,
+        sectionId: currentSectionId,
+        paperJSON: paperJSON,
+        svg: svg,
+        history: [...state.history],
+        history_index: state.history_index,
+        unitData: JSON.parse(
+            JSON.stringify(state.unitData || {})
+        ),
+        name: name,
+        width: width,
+        height: height,
+        system: system
     });
     // ساخت کارت
     const itemNumber = state.unitData?.itemNumber || "";
@@ -408,22 +405,32 @@ $(document)
                             }
                         }
                         const remainingDesign =
-                            Array.isArray(
-                                state.tempDesigns
-                            )
+                            Array.isArray(state.tempDesigns)
                                 ? state.tempDesigns[0]
                                 : null;
                         if (remainingDesign) {
-                            changeTempLayerById(
-                                remainingDesign.id
-                            );
+                            // نمایش طراحی باقی‌مانده
+                            changeTempLayerById(remainingDesign.id);
+                            // به‌روزرسانی اطلاعات پروفیل، شیشه و یراق
+                            setItemProfileName();
+                            $(".wd-unit-empty-note").hide();
+                            $(".wd-unit-summary").show();
                         } else {
+                            // پاک‌سازی آخرین آیتم
                             state.currentDesignID = 0;
                             state.mainSection = null;
+                            state.history = [];
+                            state.history_index = 0;
+                            $(".undo, .redo").prop("disabled", true);
                             if (state.paper?.project) {
                                 state.paper.project.clear();
                                 state.paper.project.view.update();
                             }
+                            // پاک کردن اطلاعات قبلی
+                            $(".profileName, .glassName, .accessoryName").text("");
+                            // مخفی کردن خلاصه و نمایش راهنما
+                            $(".wd-unit-summary").hide();
+                            $(".wd-unit-empty-note").show();
                         }
                         if (
                             state.mainSection &&

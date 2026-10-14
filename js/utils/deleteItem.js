@@ -5,7 +5,25 @@ import { hideGLs } from './hideGLs.js';
 import { createDimensionBar } from '../drawing/createDimensionBar.js';
 import { showMessage } from './showMessage.js';
 import { extendSectionDelete } from './extendSectionDelete.js';
-//delete items
+function preserveGlassBorders(baseToFlat, groupToRemove) {
+    if (!baseToFlat || !groupToRemove || !state.mainSection) {
+        return;
+    }
+    const borders = groupToRemove.getItems({
+        name: "glassBorders"
+    });
+    borders.forEach(border => {
+        // حاشیه را قبل از حذف گروه، به والد شیشه منتقل کن
+        const parent = baseToFlat.parent;
+        if (parent && border.parent) {
+            border.data = {
+                ...(border.data || {}),
+                glassId: baseToFlat.id
+            };
+            border.insertAbove(baseToFlat);
+        }
+    });
+}
 export function deleteItem(toDeleteItem) {
     enableSave();
     if (['vMullian', 'hMullian'].includes(toDeleteItem.name)) {
@@ -30,105 +48,41 @@ export function deleteItem(toDeleteItem) {
             name: "base"
         });
         if (findedBase) {
-            //remeber depencies
             $.each(toDeleteItem.parent.children, function (key, item) {
                 if (item.id !== toDeleteItem.id) {
                     state.removedDependenceMemory.push(item);
                 }
             });
-            //clone and delete item prent
-            let baseToFlat = findedBase.clone();
-            baseToFlat.moveAbove(findedBase.parent);
-            baseToFlat.name = "flat";
-            const glassBorders = findedBase.parent.getItems({ name: "glassBorders" });
-            glassBorders.forEach(border => border.remove());
-            
-            const flat = baseToFlat;
-            flat.name = "flat";
-            flat.fillColor = "#8acde8";
-            flat.strokeColor = state.strokeColor;
-            flat.strokeWidth = 1;
-            
-            const blackWidth = 1.5;
-            const whiteWidth = 12;
-            const innerBlackWidth = 1.5;
-            
-            const borders = new state.paper.Group();
-            borders.name = "glassBorders";
-            borders.data.glassId = flat.id;
-            
-            const outerBlackInner = PaperOffset.offset(flat, -blackWidth);
-            const outerBlack = flat.subtract(outerBlackInner);
-            outerBlack.fillColor = "#222222";
-            outerBlack.strokeColor = null;
-            outerBlack.name = "glassOuterBlack";
-            borders.addChild(outerBlack);
-            
-            const whiteInner = PaperOffset.offset(outerBlackInner, -whiteWidth);
-            const whiteBorder = outerBlackInner.subtract(whiteInner);
-            whiteBorder.fillColor = "#ffffff";
-            whiteBorder.strokeColor = null;
-            whiteBorder.name = "glassWhiteBorder";
-            borders.addChild(whiteBorder);
-            
-            // چهار خط گوشه
-            const outerBounds = outerBlackInner.bounds;
-            const innerBounds = whiteInner.bounds;
-            
-            const cornerGroup = new state.paper.Group();
-            cornerGroup.name = "glassCornerBisectors";
-            
-            [
-                [[outerBounds.left, outerBounds.top], [innerBounds.left, innerBounds.top]],
-                [[outerBounds.right, outerBounds.top], [innerBounds.right, innerBounds.top]],
-                [[outerBounds.left, outerBounds.bottom], [innerBounds.left, innerBounds.bottom]],
-                [[outerBounds.right, outerBounds.bottom], [innerBounds.right, innerBounds.bottom]]
-            ].forEach(points => {
-                const line = new state.paper.Path.Line({
-                    from: points[0],
-                    to: points[1]
-                });
-            
-                line.strokeColor = "#222222";
-                line.strokeWidth = 1.5;
-                line.strokeCap = "butt";
-                line.name = "glassCornerBisector";
-            
-                cornerGroup.addChild(line);
+            let groupToRemove = findedBase.parent;
+            const bordersToRemove = groupToRemove.getItems({
+                name: "glassBorders"
             });
-            
-            borders.addChild(cornerGroup);
-            
-            const innerBlackInner = PaperOffset.offset(whiteInner, -innerBlackWidth);
-            const innerBlack = whiteInner.subtract(innerBlackInner);
-            innerBlack.fillColor = "#222222";
-            innerBlack.strokeColor = null;
-            innerBlack.name = "glassInnerBlack";
-            borders.addChild(innerBlack);
-            
-            state.mainSection.addChild(borders);
-            
-            outerBlackInner.remove();
-            whiteInner.remove();
-            innerBlackInner.remove();
-            
-            baseToFlat.insertAbove(state.mainSection.getItem({
-                name: "mainFrame"
-            }));
-            console.log(
-                "گروه قبل از حذف:",
-                JSON.stringify(
-                    findedBase.parent.children.map(item => ({
-                        name: item.name,
-                        id: item.id,
-                        className: item.className,
-                        bounds: item.bounds.toJSON()
-                    })),
-                    null,
-                    2
-                )
-            );
-            findedBase.parent.remove();
+            bordersToRemove.forEach(border => {
+                if (
+                    !border.data ||
+                    border.data.isMainGlassBorder !== true
+                ) {
+                    border.remove();
+                }
+            });
+            // بازگرداندن شیشهٔ پایه
+            let baseToFlat = findedBase.clone();
+            baseToFlat.name = "flat";
+            baseToFlat.moveAbove(groupToRemove);
+            // حذف گروه مولیون
+            groupToRemove.remove();
+            const mainGlassBorders = state.mainGlassBorders;
+            if (
+                mainGlassBorders &&
+                baseToFlat.parent &&
+                mainGlassBorders.data?.isMainGlassBorder === true
+            ) {
+                mainGlassBorders.data.glassId = baseToFlat.id;
+                if (mainGlassBorders.parent !== baseToFlat.parent) {
+                    baseToFlat.parent.addChild(mainGlassBorders);
+                }
+                mainGlassBorders.insertAbove(baseToFlat);
+            }
             state.vMGL.visible = false;
             state.vMGLT.visible = false;
             state.vMGRT.visible = false;
@@ -177,13 +131,11 @@ export function deleteItem(toDeleteItem) {
                     state.removedDependenceMemory.push(item);
                 }
             );
-            // clone original glass
             let baseToFlat = findedBase.clone();
             baseToFlat.moveAbove(
                 findedBase.parent
             );
             baseToFlat.name = "flat";
-            // glass borders belong to the restored glass
             if (state.mainSection) {
                 const glassBorders =
                     state.mainSection.getItems({
@@ -203,7 +155,7 @@ export function deleteItem(toDeleteItem) {
                     }
                 });
             }
-            // remove panel/window/door group
+            preserveGlassBorders(baseToFlat);
             findedBase.parent.remove();
             return state.removedDependenceMemory;
         }
@@ -235,7 +187,6 @@ export function deleteItem(toDeleteItem) {
                 const glassBorders = state.mainSection.getItems({
                     name: "glassBorders"
                 });
-                
                 glassBorders.forEach(border => {
                     if (border.data?.glassId === findedBase.id) {
                         border.data.glassId = baseToFlat.id;

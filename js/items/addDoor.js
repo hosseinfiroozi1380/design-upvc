@@ -15,131 +15,107 @@ function createGlassBorders(glassShape, group) {
     const blackWidth = 1.5;
     const whiteWidth = 12;
     const innerBlackWidth = 1.5;
-    const glassBorders =
-        new state.paper.Group();
-    glassBorders.name =
-        "glassBorders";
-    glassBorders.data.glassId =
-        glassShape.id;
+    const glassBorders = new state.paper.Group();
+    glassBorders.name = "glassBorders";
+    glassBorders.data.glassId = glassShape.id;
     // لایه مشکی بیرونی
-    const outerBlackInner =
-        PaperOffset.offset(
-            glassShape,
-            -blackWidth
-        );
+    const outerBlackInner = PaperOffset.offset(
+        glassShape,
+        -blackWidth
+    );
     if (!outerBlackInner) {
+        glassBorders.remove();
         return null;
     }
-    const outerBlack =
-        glassShape.subtract(
-            outerBlackInner
-        );
-    outerBlack.fillColor =
-        "#222222";
-    outerBlack.strokeColor =
-        null;
-    outerBlack.name =
-        "glassOuterBlack";
-    glassBorders.addChild(
-        outerBlack
+    const outerBlack = glassShape.subtract(
+        outerBlackInner
     );
+    outerBlack.fillColor = "#222222";
+    outerBlack.strokeColor = null;
+    outerBlack.name = "glassOuterBlack";
+    glassBorders.addChild(outerBlack);
     // قسمت سفید / وسط
-    const whiteInner =
-        PaperOffset.offset(
-            outerBlackInner,
-            -whiteWidth
-        );
+    const whiteInner = PaperOffset.offset(
+        outerBlackInner,
+        -whiteWidth
+    );
     if (!whiteInner) {
         outerBlackInner.remove();
+        group.addChild(glassBorders);
         return glassBorders;
     }
-    const whiteBorder =
-        outerBlackInner.subtract(
-            whiteInner
-        );
-    whiteBorder.fillColor =
-        "#ffffff";
-    whiteBorder.strokeColor =
-        null;
-    whiteBorder.name =
-        "glassWhiteBorder";
-    glassBorders.addChild(
-        whiteBorder
+    const whiteBorder = outerBlackInner.subtract(
+        whiteInner
     );
-    // چهار نیم‌ساز گوشه
-    const outerBounds =
-        outerBlackInner.bounds;
-    const innerBounds =
-        whiteInner.bounds;
-    const cornerGroup =
-        new state.paper.Group();
-    cornerGroup.name =
-        "glassCornerBisectors";
-    const corners = [
-        [
-            [outerBounds.left, outerBounds.top],
-            [innerBounds.left, innerBounds.top]
-        ],
-        [
-            [outerBounds.right, outerBounds.top],
-            [innerBounds.right, innerBounds.top]
-        ],
-        [
-            [outerBounds.left, outerBounds.bottom],
-            [innerBounds.left, innerBounds.bottom]
-        ],
-        [
-            [outerBounds.right, outerBounds.bottom],
-            [innerBounds.right, innerBounds.bottom]
-        ]
-    ];
-    corners.forEach(points => {
-        const line =
-            new state.paper.Path.Line({
-                from: points[0],
-                to: points[1]
-            });
-        line.strokeColor =
-            "#222222";
-        line.strokeWidth =
-            1.5;
-        line.strokeCap =
-            "butt";
-        line.name =
-            "glassCornerBisector";
-        cornerGroup.addChild(
-            line
-        );
+    whiteBorder.fillColor = "#ffffff";
+    whiteBorder.strokeColor = null;
+    whiteBorder.name = "glassWhiteBorder";
+    glassBorders.addChild(whiteBorder);
+    // پیدا کردن گوشه‌های واقعی شکل شیشه
+    function getCornerPoints(item) {
+        const points = [];
+        function collect(path) {
+            if (path.className === "Path") {
+                path.segments.forEach(segment => {
+                    const point = segment.point;
+                    if (
+                        !points.some(
+                            p => p.getDistance(point) < 0.1
+                        )
+                    ) {
+                        points.push(point.clone());
+                    }
+                });
+            } else if (path.children) {
+                path.children.forEach(collect);
+            }
+        }
+        collect(item);
+        return points;
+    }
+    // رسم نیم‌سازها با توجه به گوشه‌های واقعی شکل
+    const cornerGroup = new state.paper.Group();
+    cornerGroup.name = "glassCornerBisectors";
+    const corners = getCornerPoints(glassShape);
+    corners.forEach(point => {
+        const outerPoint =
+            outerBlackInner.getNearestPoint(point);
+        if (!outerPoint) {
+            return;
+        }
+        const innerPoint =
+            whiteInner.getNearestPoint(outerPoint);
+        if (!innerPoint) {
+            return;
+        }
+        const line = new state.paper.Path.Line({
+            from: outerPoint,
+            to: innerPoint
+        });
+        line.strokeColor = "#222222";
+        line.strokeWidth = 1.5;
+        line.strokeCap = "butt";
+        line.name = "glassCornerBisector";
+        cornerGroup.addChild(line);
     });
-    glassBorders.addChild(
-        cornerGroup
-    );
+    glassBorders.addChild(cornerGroup);
     // خط مشکی داخلی
-    const innerBlackInner =
-        PaperOffset.offset(
-            whiteInner,
-            -innerBlackWidth
-        );
+    const innerBlackInner = PaperOffset.offset(
+        whiteInner,
+        -innerBlackWidth
+    );
     if (innerBlackInner) {
-        const innerBlack =
-            whiteInner.subtract(
-                innerBlackInner
-            );
-        innerBlack.fillColor =
-            "#222222";
-        innerBlack.strokeColor =
-            null;
-        innerBlack.name =
-            "glassInnerBlack";
-        glassBorders.addChild(
-            innerBlack
+        const innerBlack = whiteInner.subtract(
+            innerBlackInner
         );
+        innerBlack.fillColor = "#222222";
+        innerBlack.strokeColor = null;
+        innerBlack.name = "glassInnerBlack";
+        glassBorders.addChild(innerBlack);
         innerBlackInner.remove();
     }
     // اضافه کردن به گروه درب
-    group.addChild(
-        glassBorders
-    );
+    group.addChild(glassBorders);
     outerBlackInner.remove();
     whiteInner.remove();
     return glassBorders;

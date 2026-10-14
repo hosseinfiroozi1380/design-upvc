@@ -1161,37 +1161,67 @@ export function initClickEvents() {
         $('.location').blur();
         $('.layerQuantity').blur();
     });
-    // Undo 
-    $(document).off('click', '.undo');
-    $(document).on('click', '.undo', function () {
-        if (!Array.isArray(state.history) || state.history_index <= 0) {
-            $('.undo').prop('disabled', true);
+    // Undo
+    $(document).off("click", ".undo");
+    $(document).on("click", ".undo", function () {
+        if (
+            !Array.isArray(state.history) ||
+            state.history_index <= 0
+        ) {
+            $(".undo").prop("disabled", true);
             return;
         }
         state.history_index--;
-        importToProject(state.history[state.history_index]);
-        $('.undo').prop('disabled', state.history_index <= 0);
-        $('.redo').prop('disabled', false);
+        importToProject(
+            state.history[state.history_index]
+        );
+        // ذخیره موقعیت تاریخچه در طراحی فعال
+        const design = state.tempDesigns?.find(
+            item =>
+                String(item.id) ===
+                String(state.currentDesignID)
+        );
+        if (design) {
+            design.history = [...state.history];
+            design.history_index = state.history_index;
+        }
+        $(".undo").prop(
+            "disabled",
+            state.history_index <= 0
+        );
+        $(".redo").prop("disabled", false);
         requestAnimationFrame(() => {
             updateLayerPreview();
             updateTempDesignSnapshot();
         });
     });
-    // Redo 
-    $(document).off('click', '.redo');
-    $(document).on('click', '.redo', function () {
+    // Redo
+    $(document).off("click", ".redo");
+    $(document).on("click", ".redo", function () {
         if (
             !Array.isArray(state.history) ||
             state.history_index >= state.history.length - 1
         ) {
-            $('.redo').prop('disabled', true);
+            $(".redo").prop("disabled", true);
             return;
         }
         state.history_index++;
-        importToProject(state.history[state.history_index]);
-        $('.undo').prop('disabled', false);
-        $('.redo').prop(
-            'disabled',
+        importToProject(
+            state.history[state.history_index]
+        );
+        // ذخیره موقعیت تاریخچه در طراحی فعال
+        const design = state.tempDesigns?.find(
+            item =>
+                String(item.id) ===
+                String(state.currentDesignID)
+        );
+        if (design) {
+            design.history = [...state.history];
+            design.history_index = state.history_index;
+        }
+        $(".undo").prop("disabled", false);
+        $(".redo").prop(
+            "disabled",
             state.history_index >= state.history.length - 1
         );
         requestAnimationFrame(() => {
@@ -1213,79 +1243,6 @@ export function initClickEvents() {
     });
     $(document).on('click', '.mouseHelperBg', function () {
         cancelAll();
-    });
-    //animate btn
-    $(document).on('click', '#playAnimation', function () {
-        $('#playAnimation').prop('disabled', true);
-        let animationPromises = [];
-        // slides
-        let slides = state.paper.project.activeLayer.getItems({ name: 'slide' });
-        $.each(slides, function (key, item) {
-            let promise = new Promise((resolve) => {
-                let originalX = item.position.x;
-                if (item.data.movement == "r") {
-                    item.tween({
-                        'position.x': originalX + item.bounds.width * 0.8
-                    }, {
-                        easing: 'easeInOutCubic',
-                        duration: 2000
-                    }).then(function () {
-                        item.tweenTo({
-                            'position.x': originalX
-                        }, {
-                            easing: 'easeInOutCubic',
-                            duration: 2000
-                        }).then(resolve);
-                    });
-                } else if (item.data.movement == "l") {
-                    item.tween({
-                        'position.x': originalX - item.bounds.width * 0.8
-                    }, {
-                        easing: 'easeInOutCubic',
-                        duration: 2000
-                    }).then(function () {
-                        item.tweenTo({
-                            'position.x': originalX
-                        }, {
-                            easing: 'easeInOutCubic',
-                            duration: 2000
-                        }).then(resolve);
-                    });
-                } else {
-                    resolve();
-                }
-            });
-            animationPromises.push(promise);
-        });
-        // hinge
-        let windoors = state.paper.project.activeLayer.getItems({
-            name: function (value) {
-                return value && (value.indexOf("window_") !== -1 || value.indexOf("door_") !== -1);
-            }
-        });
-        $.each(windoors, function (key, item) {
-            let hingeDirection = null;
-            if (item.name.indexOf("left") !== -1) {
-                hingeDirection = 'right';
-            } else if (item.name.indexOf("right") !== -1) {
-                hingeDirection = 'left';
-            } else if (item.name.indexOf("top") !== -1) {
-                hingeDirection = 'bottom';
-            } else if (item.name.indexOf("bottom") !== -1) {
-                hingeDirection = 'top';
-            }
-            if (hingeDirection) {
-                let promise = animateHingedItem(item, hingeDirection);
-                animationPromises.push(promise);
-            }
-        });
-        if (animationPromises.length > 0) {
-            Promise.all(animationPromises).then(() => {
-                $('#playAnimation').prop('disabled', false);
-            });
-        } else {
-            $('#playAnimation').prop('disabled', false);
-        }
     });
     //change quantity BTN
     $(document).on('click', '.quantity_minus', function () {

@@ -247,6 +247,7 @@ export function initFormEvents() {
             .text("")
             .hide();
         drawFirstShape(formData);
+        $(".wd-unit-empty-note").hide();
         $(".wd-unit-summary").show();
         $(".wd-unit-details").hide();
         $("#ofcAddNew").modal("hide");

@@ -8,7 +8,6 @@ import { round2decimal } from '../utils/round2decimal.js';
 import { updateLayerPreview } from "../utils/updateLayerPreview.js";
 import { updateTempDesignSnapshot } from "../utils/updateTempDesignSnapshot.js";
 import PaperOffset from "../utils/PaperOffset.js";
-
 function createGlassBorders(glassShape, group) {
     const blackWidth = 1.5;
     const whiteWidth = 12;
@@ -26,9 +25,7 @@ function createGlassBorders(glassShape, group) {
     outerBlack.fillColor = "#222222";
     outerBlack.strokeColor = null;
     outerBlack.name = "glassOuterBlack";
-    glassBorders.addChild(
-        outerBlack
-    );
+    glassBorders.addChild(outerBlack);
     const whiteInner = PaperOffset.offset(
         outerBlackInner,
         -whiteWidth
@@ -39,70 +36,67 @@ function createGlassBorders(glassShape, group) {
     whiteBorder.fillColor = "#ffffff";
     whiteBorder.strokeColor = null;
     whiteBorder.name = "glassWhiteBorder";
-    glassBorders.addChild(
-        whiteBorder
-    );
-    const outerBounds =
-        outerBlackInner.bounds;
-    const innerBounds =
-        whiteInner.bounds;
-    const cornerGroup =
-        new state.paper.Group();
-    cornerGroup.name =
-        "glassCornerBisectors";
-    const corners = [
-        [
-            [outerBounds.left, outerBounds.top],
-            [innerBounds.left, innerBounds.top]
-        ],
-        [
-            [outerBounds.right, outerBounds.top],
-            [innerBounds.right, innerBounds.top]
-        ],
-        [
-            [outerBounds.left, outerBounds.bottom],
-            [innerBounds.left, innerBounds.bottom]
-        ],
-        [
-            [outerBounds.right, outerBounds.bottom],
-            [innerBounds.right, innerBounds.bottom]
-        ]
-    ];
-    corners.forEach(points => {
-        const line =
-            new state.paper.Path.Line({
-                from: points[0],
-                to: points[1]
-            });
+    glassBorders.addChild(whiteBorder);
+    // پیدا کردن گوشه‌های واقعی مسیر شیشه
+    function getCornerPoints(item) {
+        const points = [];
+        function collect(path) {
+            if (path.className === "Path") {
+                path.segments.forEach(segment => {
+                    const point = segment.point;
+                    if (
+                        !points.some(
+                            p => p.getDistance(point) < 0.1
+                        )
+                    ) {
+                        points.push(point.clone());
+                    }
+                });
+            } else if (path.children) {
+                path.children.forEach(collect);
+            }
+        }
+        collect(item);
+        return points;
+    }
+    // رسم نیم‌سازها برای همین قسمت از شیشه
+    const cornerGroup = new state.paper.Group();
+    cornerGroup.name = "glassCornerBisectors";
+    const corners = getCornerPoints(glassShape);
+    corners.forEach(point => {
+        const outerPoint =
+            outerBlackInner.getNearestPoint(point);
+        if (!outerPoint) {
+            return;
+        }
+        const innerPoint =
+            whiteInner.getNearestPoint(outerPoint);
+        if (!innerPoint) {
+            return;
+        }
+        const line = new state.paper.Path.Line({
+            from: outerPoint,
+            to: innerPoint
+        });
         line.strokeColor = "#222222";
         line.strokeWidth = 1.5;
         line.strokeCap = "butt";
-        line.name =
-            "glassCornerBisector";
+        line.name = "glassCornerBisector";
         cornerGroup.addChild(line);
     });
-    glassBorders.addChild(
-        cornerGroup
+    glassBorders.addChild(cornerGroup);
+    const innerBlackInner = PaperOffset.offset(
+        whiteInner,
+        -innerBlackWidth
     );
-    const innerBlackInner =
-        PaperOffset.offset(
-            whiteInner,
-            -innerBlackWidth
-        );
-    const innerBlack =
-        whiteInner.subtract(
-            innerBlackInner
-        );
+    const innerBlack = whiteInner.subtract(
+        innerBlackInner
+    );
     innerBlack.fillColor = "#222222";
     innerBlack.strokeColor = null;
-    innerBlack.name =
-        "glassInnerBlack";
-    glassBorders.addChild(
-        innerBlack
-    );
-    group.addChild(
-        glassBorders
-    );
+    innerBlack.name = "glassInnerBlack";
+    glassBorders.addChild(innerBlack);
+    group.addChild(glassBorders);
     outerBlackInner.remove();
     whiteInner.remove();
     innerBlackInner.remove();

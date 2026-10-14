@@ -4564,7 +4564,7 @@ button {
 
 @media (min-width: 1601px) {
   .wd-canvas-controls {
-    width: min(900px, 58vw);
+    width: min(550px, 58vw);
   }
 
   .wd-canvas-controls .wd-view-tool {
@@ -5004,4 +5004,18 @@ button {
   .wd-panel-left.offcanvas#ofcCoupling {
     width: min(380px, 78vw);
   }
+}
+
+.wd-unit-empty-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px 12px;
+  color: #475569;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.9;
+  text-align: center;
 }

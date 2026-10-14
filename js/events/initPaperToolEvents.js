@@ -215,125 +215,131 @@ export function initPaperToolEvents() {
                     $('.positionConfigInput').val(round2decimal(state.selectedItem.bounds.top + +state.frameSize / 2));
                 }
                 $(".mullianInput").val(state.selectedItem.data.profile);
-            } else if (["mXBarT", "mYBarT"].includes(state.selectedItem.name)) {
-                let sectionID = state.selectedItem.data.section;
-                let section = state.paper.project.activeLayer.getItem({
+            } else if (
+                ["mXBarT", "mYBarT"].includes(state.selectedItem.name)
+            ) {
+                const isWidth = state.selectedItem.name === "mXBarT";
+                const sectionID = state.selectedItem.data.section;
+                const section = state.paper.project.activeLayer.getItem({
                     id: sectionID
                 });
-                let mXBarT, mYBarT;
-                let dbG = state.paper.project.activeLayer.getItem({
+                let mXBarT;
+                let mYBarT;
+                const dbG = state.paper.project.activeLayer.getItem({
                     name: "dbG"
                 });
                 for (let n = 0; n < dbG.children.length; n++) {
-                    if (dbG.children[n].name == "mXBarT" && dbG.children[n].data.section == sectionID) {
-                        mXBarT = dbG.children[n];
+                    const item = dbG.children[n];
+                    if (
+                        item.name === "mXBarT" &&
+                        item.data.section === sectionID
+                    ) {
+                        mXBarT = item;
                     }
-                    if (dbG.children[n].name == "mYBarT" && dbG.children[n].data.section == sectionID) {
-                        mYBarT = dbG.children[n];
+                    if (
+                        item.name === "mYBarT" &&
+                        item.data.section === sectionID
+                    ) {
+                        mYBarT = item;
                     }
                 }
-                let mXBarT_Text = parseInt(mXBarT.content.match(/\d+/)[0]);
-                let mYBarT_Text = parseInt(mYBarT.content.match(/\d+/)[0]);
-                // حذف مودال قبلی
+                if (!section || !mXBarT || !mYBarT) {
+                    console.error("ابعاد یا بخش اصلی پیدا نشد.");
+                    return;
+                }
+                const mXBarT_Text = parseInt(
+                    mXBarT.content.match(/\d+/)[0],
+                    10
+                );
+                const mYBarT_Text = parseInt(
+                    mYBarT.content.match(/\d+/)[0],
+                    10
+                );
+                // حذف فرم قبلی
                 const oldModal = document.querySelector(".wd-edit-item-modal");
                 if (oldModal) {
                     oldModal.remove();
                 }
-                // ایجاد مودال
+                // تعیین نوع فرم
+                const dimensionTitle = isWidth
+                    ? "ویرایش عرض"
+                    : "ویرایش ارتفاع";
+                const dimensionLabel = isWidth
+                    ? "عرض"
+                    : "ارتفاع";
+                const currentValue = isWidth
+                    ? mXBarT_Text
+                    : mYBarT_Text;
+                // ساخت فرم با یک ورودی
                 const modal = document.createElement("div");
                 modal.className = "wd-edit-item-modal wd-single-field-modal";
                 modal.innerHTML = `
-<div class="wd-edit-item-overlay"></div>
-<div class="wd-edit-item-container">
-<!-- Header -->
-<header class="wd-right-brand">
-   <div class="wd-right-brand-inner">
-       <div class="wd-right-site-info-addedit">
-           <strong class="wd-right-site-title">
-               ویرایش ابعاد
-           </strong>
-           <button
-               type="button"
-               class="wd-selection-close wd-edit-item-close"
-               aria-label="Close"
-           >
-               <i class="ti ti-x"></i>
-           </button>
-       </div>
-   </div>
-</header>
-<!-- Body -->
-<div class="wd-edit-item-body">
-   <!-- اطلاعات ابعاد -->
-   <div class="wd-edit-item-fields">
-       <!-- عرض -->
-       <div class="wd-edit-item-field">
-           <label
-               class="wd-form-label"
-               for="editItemWidth"
-           >
-               عرض
-           </label>
-           <input
-               type="number"
-               id="editItemWidth"
-               class="wd-input-box"
-               value="${mXBarT_Text}"
-               min="1"
-           >
-       </div>
-       <!-- ارتفاع -->
-       <div class="wd-edit-item-field">
-           <label
-               class="wd-form-label"
-               for="editItemHeight"
-           >
-               ارتفاع
-           </label>
-           <input
-               type="number"
-               id="editItemHeight"
-               class="wd-input-box"
-               value="${mYBarT_Text}"
-               min="1"
-           >
-       </div>
-   </div>
-   <!-- خطا -->
-   <div
-       class="wd-edit-item-error"
-       id="editItemError"
-   ></div>
-   <!-- عملیات -->
-   <div class="wd-edit-item-actions">
-       <button
-           type="button"
-           class="wd-right-confirm wd-edit-item-save"
-       >
-           تغییر
-       </button>
-       <button
-           type="button"
-           class="wd-right-cancel wd-edit-item-cancel"
-       >
-           لغو
-       </button>
-   </div>
-</div>
-</div>
-`;
+        <div class="wd-edit-item-overlay"></div>
+        <div class="wd-edit-item-container">
+            <header class="wd-right-brand">
+                <div class="wd-right-brand-inner">
+                    <div class="wd-right-site-info-addedit">
+                        <strong class="wd-right-site-title">
+                            ${dimensionTitle}
+                        </strong>
+                        <button
+                            type="button"
+                            class="wd-selection-close wd-edit-item-close"
+                            aria-label="بستن"
+                        >
+                            <i class="ti ti-x"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+            <div class="wd-edit-item-body">
+                <div class="wd-edit-item-fields">
+                    <div class="wd-edit-item-field">
+                        <label
+                            class="wd-form-label"
+                            for="editItemDimension"
+                        >
+                            ${dimensionLabel}
+                        </label>
+                        <input
+                            type="number"
+                            id="editItemDimension"
+                            class="wd-input-box"
+                            value="${currentValue}"
+                            min="1"
+                        >
+                    </div>
+                </div>
+                <div
+                    class="wd-edit-item-error"
+                    id="editItemError"
+                ></div>
+                <div class="wd-edit-item-actions">
+                    <button
+                        type="button"
+                        class="wd-right-confirm wd-edit-item-save"
+                    >
+                        تغییر
+                    </button>
+                    <button
+                        type="button"
+                        class="wd-right-cancel wd-edit-item-cancel"
+                    >
+                        لغو
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
                 document.body.appendChild(modal);
                 setTimeout(() => {
                     modal.classList.add("show");
                 }, 10);
-                // ورودی‌ها
-                const widthInput =
-                    modal.querySelector("#editItemWidth");
-                const heightInput =
-                    modal.querySelector("#editItemHeight");
-                const errorBox =
-                    modal.querySelector("#editItemError");
-                // بستن مودال
+                const dimensionInput = modal.querySelector(
+                    "#editItemDimension"
+                );
+                const errorBox = modal.querySelector("#editItemError");
+                // بستن فرم
                 function closeEditModal() {
                     modal.classList.remove("show");
                     setTimeout(() => {
@@ -342,78 +348,58 @@ export function initPaperToolEvents() {
                         }
                     }, 200);
                 }
-                // تغییر
+                // ثبت تغییر اندازه
                 modal
                     .querySelector(".wd-edit-item-save")
                     .addEventListener("click", function () {
-                        const width =
-                            parseInt(widthInput.value);
-                        const height =
-                            parseInt(heightInput.value);
-                        if (!width || width < 1) {
-                            errorBox.textContent =
-                                "لطفاً عرض را وارد کنید.";
-                            widthInput.focus();
+                        const newValue = Number(dimensionInput.value);
+                        if (
+                            !Number.isFinite(newValue) ||
+                            !Number.isInteger(newValue) ||
+                            newValue < 1
+                        ) {
+                            errorBox.textContent = isWidth
+                                ? "لطفاً عرض معتبر وارد کنید."
+                                : "لطفاً ارتفاع معتبر وارد کنید.";
+                            dimensionInput.focus();
                             return;
                         }
-                        if (!height || height < 1) {
-                            errorBox.textContent =
-                                "لطفاً ارتفاع را وارد کنید.";
-                            heightInput.focus();
-                            return;
-                        }
+                        // اندازه دیگر بدون تغییر باقی می‌ماند
+                        const newWidth = isWidth
+                            ? newValue
+                            : mXBarT_Text;
+                        const newHeight = isWidth
+                            ? mYBarT_Text
+                            : newValue;
                         reDrawMainFrame(section, [
-                            width,
-                            height
+                            newWidth,
+                            newHeight
                         ]);
                         closeEditModal();
                     });
-                // لغو
-                modal
-                    .querySelector(".wd-edit-item-cancel")
-                    .addEventListener("click", function () {
-                        closeEditModal();
-                    });
-                // ضربدر
+                // بستن با دکمه ضربدر
                 modal
                     .querySelector(".wd-edit-item-close")
-                    .addEventListener("click", function () {
-                        closeEditModal();
-                    });
-                // کلیک روی پس‌زمینه
+                    .addEventListener("click", closeEditModal);
+                // لغو تغییر
+                modal
+                    .querySelector(".wd-edit-item-cancel")
+                    .addEventListener("click", closeEditModal);
+                // بستن با کلیک روی پس‌زمینه
                 modal
                     .querySelector(".wd-edit-item-overlay")
-                    .addEventListener("click", function () {
-                        closeEditModal();
-                    });
-                // پاک کردن خطا
-                widthInput.addEventListener("input", function () {
-                    errorBox.textContent = "";
-                });
-                heightInput.addEventListener("input", function () {
-                    errorBox.textContent = "";
-                });
-                // Enter برای ثبت
-                widthInput.addEventListener("keypress", function (e) {
-                    if (e.key === "Enter") {
-                        e.preventDefault();
+                    .addEventListener("click", closeEditModal);
+                // تمرکز روی ورودی
+                dimensionInput.focus();
+                // ثبت با کلید Enter
+                dimensionInput.addEventListener("keydown", function (event) {
+                    if (event.key === "Enter") {
+                        event.preventDefault();
                         modal
                             .querySelector(".wd-edit-item-save")
                             .click();
                     }
                 });
-                heightInput.addEventListener("keypress", function (e) {
-                    if (e.key === "Enter") {
-                        e.preventDefault();
-                        modal
-                            .querySelector(".wd-edit-item-save")
-                            .click();
-                    }
-                });
-                // فوکوس
-                setTimeout(() => {
-                    widthInput.focus();
-                }, 200);
             } else if (state.selectedItem.name == "vMGLT") {
                 const modal = document.createElement("div");
                 modal.className = "wd-edit-item-modal wd-single-field-modal";
@@ -1153,18 +1139,15 @@ export function initPaperToolEvents() {
         // تغییر موقعیت Mullian
         if (state.changeMullianPositionFlag) {
             state.changeMullianPositionFlag = false;
-        
             // حذف Cloneهای موقت قبل از جستجوی flat واقعی
             if (state.mouseHelperClone) {
                 state.mouseHelperClone.remove();
                 state.mouseHelperClone = null;
             }
-        
             if (state.flatHover) {
                 state.flatHover.remove();
                 state.flatHover = null;
             }
-        
             changeMullianPosition(
                 new state.paper.Point(
                     Math.ceil(
@@ -1177,23 +1160,19 @@ export function initPaperToolEvents() {
                     ) * state.moveStepFactor
                 )
             );
-        
             hideGLs();
         }
         else if (state.changeWindowDoorPanelPositionFlag) {
             state.changeWindowDoorPanelPositionFlag = false;
-        
             // حذف Cloneهای موقت قبل از پیدا کردن flat واقعی
             if (state.mouseHelperClone) {
                 state.mouseHelperClone.remove();
                 state.mouseHelperClone = null;
             }
-        
             if (state.flatHover) {
                 state.flatHover.remove();
                 state.flatHover = null;
             }
-        
             changeWindowDoorPanelPosition(
                 new state.paper.Point(
                     Math.ceil(
@@ -1206,7 +1185,6 @@ export function initPaperToolEvents() {
                     ) * state.moveStepFactor
                 )
             );
-        
             hideGLs();
         }
         // اضافه کردن آیتم جدید
@@ -1236,12 +1214,10 @@ export function initPaperToolEvents() {
         else if (state.tryingToDrag) {
             state.tryingToDrag = false;
             hideGLs();
-        
             if (state.mouseHelperClone) {
                 state.mouseHelperClone.remove();
                 state.mouseHelperClone = null;
             }
-        
             if (state.flatHover) {
                 state.flatHover.remove();
                 state.flatHover = null;

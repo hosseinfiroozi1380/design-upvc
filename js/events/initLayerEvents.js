@@ -1,20 +1,14 @@
 // src/events/initLayerEvents.js
-
 import state from "../core/state.js";
-
 import { enableSave } from "../services/enableSave.js";
-
 import { reDrawItem } from "../drawing/reDrawItem.js";
 import { rebuildAccessoryMenu } from "../drawing/rebuildAccessoryMenu.js";
-
 import { removeLace } from "../items/removeLace.js";
 import { addLace } from "../items/addLace.js";
 import { removeCornic } from "../items/removeCornic.js";
 import { addCornic } from "../items/addCornic.js";
 import { addLockTypeText } from "../items/addLockTypeText.js";
-
 import { itemDetailsBar } from "../utils/itemDetailsBar.js";
-
 export function initLayerEvents() {
     console.log("INIT LAYER EVENTS START");
     // layer name
@@ -32,22 +26,18 @@ export function initLayerEvents() {
             enableSave(5000, false);
         }
     });
-    
     $(document).on('keydown', '.layerName, .layerQuantity, .location', function (event) {
         if (event.key === 'Enter') {
             $(this).blur();
         }
     });
-
     $(document).on('blur', '.layerQuantity, .layerName, .location', function () {
         if (typeof state.unitData['type'] == "undefined") { //first load and no design
             return
         }
-
         let layerNameVal = $('.layerName').val();
         let locationVal = $('.location').val();
         let layerQuantityVal = parseInt($('.layerQuantity').val());
-
         if (state.unitData.name !== layerNameVal || state.unitData.location !== locationVal || parseInt(state.unitData.quantity) !== layerQuantityVal) {
             state.unitData.name = layerNameVal;
             state.unitData.location = locationVal;
@@ -60,10 +50,8 @@ export function initLayerEvents() {
     //component Inputs on change
     $(document).on('change', '.componentsInput', function () {
         if (state.selectedItem) {
-
             state.selectedItem.data = state.selectedItem.data || {};
             let thisDataName = $(this).attr('data-id');
-
             if (['profile', 'vCoupling', 'hCoupling'].includes(thisDataName)) {
                 let previousProfileWidth = state.selectedItem.data.profile_width;
                 let newProfileWidth = Number(
@@ -168,26 +156,21 @@ export function initLayerEvents() {
         if ($(this).find('option:selected').val() == 0) {
             return;
         }
-
         let selectedSystem = $(this).find('option:selected').data('system');
         $('#system_' + selectedSystem).prop('checked', true);
-
         $('#profile_id option[data-system], #profile_color option[data-system], #accessory_id option[data-system]').each(function () {
             $(this).data('system') == selectedSystem ? $(this).show() : $(this).hide();
         });
-
         $('#profile_id, #profile_color, #accessory_id').each(function () {
             let firstVisible = $(this).find('option').filter(function () {
                 return $(this).css('display') !== 'none';
             }).first();
-
             if (firstVisible.length) {
                 $(this).val(firstVisible.val());
             } else {
                 $(this).val('');
             }
         });
-
         $('#profile_id').val($(this).find('option:selected').data('profile_id'));
         $('#profile_color').val($(this).find('option:selected').data('profile_color'));
         $('#accessory_id').val($(this).find('option:selected').data('accessory_id'));
@@ -195,7 +178,6 @@ export function initLayerEvents() {
         $('#profile_color').val($(this).find('option:selected').data('profile_color'));
         $('#widthSpace').val($(this).find('option:selected').data('widthspace'));
         $('#heightSpace').val($(this).find('option:selected').data('heightspace'));
-
     });
     $(document).on('change', ".system_stat", function () {
         let selectedSystem = $(this).val();

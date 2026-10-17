@@ -54,45 +54,45 @@ export function initContextMenu() {
     console.log("CLICK:", selectedItem.name);
   });
   // راست‌کلیک
-  canvas.addEventListener(
-    "contextmenu",
-    function (event) {
-      event.preventDefault();
-      event.stopPropagation();
-      const selectedItem = getSelectedItem(event);
-      if (!selectedItem) {
-        $(".wd-unit-details").hide();
-        return;
-      }
-      state.selectedItem = selectedItem;
-      console.log(
-        "RIGHT CLICK:",
-        selectedItem.name
-      );
-      itemDetailsBar(selectedItem);
-      const myDiv = $(".wd-unit-details");
-      let left = event.clientX;
-      let top = event.clientY;
-      const divWidth = myDiv.outerWidth();
-      const divHeight = myDiv.outerHeight();
-      const windowWidth = $(window).width();
-      const windowHeight = $(window).height();
-      if (left + divWidth > windowWidth) {
-        left = windowWidth - divWidth - 10;
-      }
-      if (top + divHeight > windowHeight) {
-        top = windowHeight - divHeight - 10;
-      }
-      myDiv.css({
-        display: "block",
-        position: "fixed",
-        left: left + "px",
-        top: top + "px",
-        "z-index": 9999
-      });
-    },
-    true
-  );
+  // canvas.addEventListener(
+  //   "contextmenu",
+  //   function (event) {
+  //     event.preventDefault();
+  //     event.stopPropagation();
+  //     const selectedItem = getSelectedItem(event);
+  //     if (!selectedItem) {
+  //       $(".wd-unit-details").hide();
+  //       return;
+  //     }
+  //     state.selectedItem = selectedItem;
+  //     console.log(
+  //       "RIGHT CLICK:",
+  //       selectedItem.name
+  //     );
+  //     itemDetailsBar(selectedItem);
+  //     const myDiv = $(".wd-unit-details");
+  //     let left = event.clientX;
+  //     let top = event.clientY;
+  //     const divWidth = myDiv.outerWidth();
+  //     const divHeight = myDiv.outerHeight();
+  //     const windowWidth = $(window).width();
+  //     const windowHeight = $(window).height();
+  //     if (left + divWidth > windowWidth) {
+  //       left = windowWidth - divWidth - 10;
+  //     }
+  //     if (top + divHeight > windowHeight) {
+  //       top = windowHeight - divHeight - 10;
+  //     }
+  //     myDiv.css({
+  //       display: "block",
+  //       position: "fixed",
+  //       left: left + "px",
+  //       top: top + "px",
+  //       "z-index": 9999
+  //     });
+  //   },
+  //   true
+  // );
   // جلوگیری از رسیدن کلیک فرم به Canvas
   $(document).on(
     "pointerdown.contextDetails",

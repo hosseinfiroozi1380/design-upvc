@@ -51,27 +51,18 @@ export function initPaperToolEvents() {
         if (!state.paper) {
             return;
         }
+        // بازگرداندن رنگ اصلی تمام آیتم‌هایی که رنگشان تغییر کرده
         state.paper.project.getItems({
             match: function (item) {
                 return (
                     item.data &&
-                    item.data.originalFillColor &&
-                    ["vMullian", "hMullian"].includes(item.name)
+                    item.data.originalFillColor !== undefined
                 );
             }
         }).forEach(item => {
             item.fillColor = item.data.originalFillColor;
             delete item.data.originalFillColor;
         });
-        if (
-            state.selectedItem &&
-            state.selectedItem.data &&
-            state.selectedItem.data.originalFillColor
-        ) {
-            state.selectedItem.fillColor =
-                state.selectedItem.data.originalFillColor;
-            delete state.selectedItem.data.originalFillColor;
-        }
     }
     function applySelectedItemAppearance() {
         if (!state.selectedItem) {

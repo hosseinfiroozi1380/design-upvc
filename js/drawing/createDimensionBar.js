@@ -827,9 +827,9 @@ export function createDimensionBar() {
             new state.paper.Point(couple.bounds.x + couple.bounds.width, xBarPosition),
             new state.paper.Point(couple.bounds.x + couple.bounds.width, xBarPosition + 30)
         );
-        leftBar.strokeColor = '#666';
-        middleBar.strokeColor = '#666';
-        rightBar.strokeColor = '#666';
+        leftBar.strokeColor = '#0611dd';
+        middleBar.strokeColor = '#0611dd';
+        rightBar.strokeColor = '#0611dd';
         leftBar.strokeWidth = 2;
         middleBar.strokeWidth = 2;
         rightBar.strokeWidth = 2;
@@ -840,7 +840,7 @@ export function createDimensionBar() {
         state.dbG.addChild(cBar);
         text = new state.paper.PointText(new state.paper.Point(couple.bounds.centerX - 25, xBarPosition + 90));
         text.content = round2decimal(couple.bounds.width);
-        text.fillColor = '#666';
+        text.fillColor = '#0611dd';
         text.fontSize = state.DimensionBarTextSize2;
         text.rotation = 0;
         text.name = 'cXBarT';
@@ -865,9 +865,9 @@ export function createDimensionBar() {
             new state.paper.Point(yBarPosition, couple.bounds.y + couple.bounds.height),
             new state.paper.Point(yBarPosition - 30, couple.bounds.y + couple.bounds.height)
         );
-        topBar.strokeColor = '#666';
-        middleBar.strokeColor = '#666';
-        bottomBar.strokeColor = '#666';
+        topBar.strokeColor = '#0611dd';
+        middleBar.strokeColor = '#0611dd';
+        bottomBar.strokeColor = '#0611dd';
         topBar.strokeWidth = 2;
         middleBar.strokeWidth = 2;
         bottomBar.strokeWidth = 2;
@@ -878,7 +878,7 @@ export function createDimensionBar() {
         state.dbG.addChild(cBar);
         text = new state.paper.PointText(new state.paper.Point(yBarPosition - 130, couple.bounds.centerY + 20));
         text.content = round2decimal(couple.bounds.height);
-        text.fillColor = '#666';
+        text.fillColor = '#0611dd';
         text.fontSize = state.DimensionBarTextSize2;
         text.rotation = -90;
         text.name = 'cYBarT';

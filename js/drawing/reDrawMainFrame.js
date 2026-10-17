@@ -37,37 +37,25 @@ export function reDrawMainFrame(section, changeSize = false) {
     if (!mainFrame) {
         return false;
     }
-    // تغییر اندازه فریم کناری
     if (section !== state.mainSection) {
-        const oldSection = section;
         const oldFrameData = { ...mainFrame.data };
-        const x = oldSection.bounds.x;
-        const y = oldSection.bounds.y;
-        const width = Number(changeSize[0]);
-        const height = Number(changeSize[1]);
-
-        oldSection.remove();
-
+        const bounds = section.bounds.clone();
+    
+        const width = changeSize ? Number(changeSize[0]) : bounds.width;
+        const height = changeSize ? Number(changeSize[1]) : bounds.height;
+    
+        section.remove();
+    
         const tmpShape = new state.paper.Path.Rectangle(
-            new state.paper.Rectangle(
-                x,
-                y,
-                width,
-                height
-            )
+            new state.paper.Rectangle(bounds.x, bounds.y, width, height)
         );
-
-        const newSection = buildFrame(
-            tmpShape,
-            false,
-            oldFrameData,
-            true
-        );
-
+    
+        const newSection = buildFrame(tmpShape, false, oldFrameData, true);
+    
         createDimensionBar();
         setZoom();
         filterAutomateCreationBtns();
-
+    
         return newSection;
     }
     state.frameSize = mainFrame.data.profile_width;

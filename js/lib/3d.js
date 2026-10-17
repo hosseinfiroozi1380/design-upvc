@@ -1,3 +1,5 @@
+// js/lib/3d.js
+
 import * as THREE from
   "https://esm.sh/three@0.160.0";
 import { OrbitControls } from
@@ -846,11 +848,13 @@ async function build3DFromSVG(
         zOffset = 0;
       }
       else if (type === "panel") {
-        material = new THREE.MeshStandardMaterial({
-          color: svgColor || 0xd1d5db,
-          roughness: 0.35,
-          metalness: 0.08,
-        });
+        if (svgColor) {
+          material = new THREE.MeshStandardMaterial({
+            color: svgColor,
+            roughness: 0.28,
+            metalness: 0.12,
+          });
+        }
         depth = 28;
         zOffset = 10;
       }

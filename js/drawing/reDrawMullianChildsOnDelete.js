@@ -7,10 +7,10 @@ import { addDoor } from "../items/addDoor.js";
 import { addPanel } from "../items/addPanel.js";
 import { enableSave } from "../services/enableSave.js";
 import { getBaseGroupItems } from "../utils/getBaseGroupItems.js";
+import { createGlassBorders } from "../items/addMullian.js";
 export function reDrawMullianChildsOnDelete(memory, newOffset = false) {
-
     let selectedType = state.selectedItem ? state.selectedItem.name : null;
-    if (!memory || memory.length < 0) {
+    if (!memory || memory.length === 0) {
         return;
     }
     $.each(memory, function (key, item) {
@@ -29,12 +29,12 @@ export function reDrawMullianChildsOnDelete(memory, newOffset = false) {
             getBaseGroupItems(item)
         }
     });
-    //first reDraw Mullians except in slide
     $.each(state.mulliansToRedraw, function (key, item) {
         if (item.parent.name == "window_slide") {
             return true;
         }
         let flats = state.paper.project.activeLayer.getItems({ name: "flat" });
+        let added = false;
         $.each(flats, function (k, flat) {
             let testPoint = item.bounds.center;
             if (newOffset) testPoint = new state.paper.Point(testPoint.x + newOffset.x, testPoint.y + newOffset.y);
@@ -51,12 +51,26 @@ export function reDrawMullianChildsOnDelete(memory, newOffset = false) {
                     testPoint = [item.bounds.topCenter.x, item.bounds.topCenter.y + 10];
                 }
             }
-            if (flat.hitTest(testPoint)) {
+            if (!added && flat.hitTest(testPoint)) {
+                added = true;
                 addMullian(item.name, flat, item.bounds.center, flat.parent, item.data);
-                return;
+                return false;
             }
         });
     });
+    const section = state.mainSection;
+    if (section) {
+        const oldBorders = section.getItems({
+            name: "glassBorders"
+        });
+        oldBorders.forEach(border => border.remove());
+        const flats = section.getItems({
+            name: "flat"
+        });
+        flats.forEach(flat => {
+            createGlassBorders(flat, flat.parent);
+        });
+    }
     state.mulliansToRedraw = [];
     //then reDraw Others except Panel
     $.each(state.othersToRedraw, function (key, item) {
